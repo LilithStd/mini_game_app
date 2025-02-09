@@ -2,18 +2,18 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export interface GlobalStoreInterface {
-	chapter: string;
+export interface BattleStoreInterface {
+	total_damage: number;
 }
 
 // Zustand-хранилище
-export const useGlobalStore = create<GlobalStoreInterface>()(
+export const useBattleStore = create<BattleStoreInterface>()(
 	persist(
 		(set, get) => ({
-			chapter: 'origins',
+			total_damage: 0,
 		}),
 		{
-			name: 'favorites-storage',
+			name: 'battle-storage',
 			storage: createJSONStorage(() => AsyncStorage),
 		},
 	),
