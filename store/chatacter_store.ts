@@ -21,63 +21,52 @@ export enum UPDATE_CHARACTER_STATS {
 	ALL = 'all',
 }
 
+// Обратите внимание, что типы параметров updateCharacter можно уточнить
+// Например, можно использовать объединённые типы или перегрузки, но для простоты здесь применяем тип any для второго параметра.
 export interface CharacterStoreInterface {
-	character_stats: Character_Type;
-	updateCharacter: <K extends UPDATE_CHARACTER_STATS>(
-		key: K,
-		value: K extends UPDATE_CHARACTER_STATS.ALL
-			? Partial<Character_Type>
-			: K extends keyof Character_Type
-			? Character_Type[K]
-			: never,
+	character_name: string;
+	character_model: number | null;
+	character_level: number;
+	updateCharacter: (
+		update_request: string,
+		updated_value: any, // можно заменить на более точное объединение типов
 	) => void;
 }
 
 export const useCharacterStore = create<CharacterStoreInterface>()(
 	persist(
 		(set, get) => ({
-			character_stats: {
-				name: '',
-				model: null,
-				level: 1,
-			},
-			updateCharacter: (key, value) => {
-				switch (key) {
+			character_name: '',
+			character_level: 1,
+			character_model: null,
+			updateCharacter: (update_request, updated_value) => {
+				switch (update_request) {
 					case UPDATE_CHARACTER_STATS.NAME:
-						set({
-							character_stats: {
-								...get().character_stats,
-								name: value as string,
-							},
-						});
+						// Обновляем только имя персонажа
+						set({character_name: updated_value as string});
 						break;
 					case UPDATE_CHARACTER_STATS.MODEL:
-						set({
-							character_stats: {
-								...get().character_stats,
-								model: value as number | null,
-							},
-						});
+						// Обновляем модель персонажа
+						set({character_model: updated_value as number | null});
 						break;
 					case UPDATE_CHARACTER_STATS.LEVEL:
-						set({
-							character_stats: {
-								...get().character_stats,
-								level: value as number,
-							},
-						});
+						// Обновляем уровень персонажа
+						set({character_level: updated_value as number});
 						break;
 					case UPDATE_CHARACTER_STATS.ALL:
+						// Обновляем все характеристики сразу.
+						// Ожидается, что updated_value имеет тип Character_Type
+						const {name, model, level} = updated_value as Character_Type;
 						set({
-							character_stats: {
-								...get().character_stats,
-								...(value as Partial<Character_Type>),
-							},
+							character_name: name,
+							character_model: model,
+							character_level: level,
 						});
 						break;
 					default:
-						const _exhaustiveCheck: never = key;
-						return _exhaustiveCheck;
+						console.warn(
+							`Неподдерживаемый запрос обновления: ${update_request}`,
+						);
 				}
 			},
 		}),
