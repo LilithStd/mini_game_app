@@ -1,7 +1,11 @@
-import { Text } from "react-native";
+import { Image, Text, View } from "react-native";
 
 export default function Player() {
     return (
-        <Text>Player Component</Text>
+        <View>
+            <Image />
+            <Text>Player Component</Text>
+        </View>
+
     )
 }
