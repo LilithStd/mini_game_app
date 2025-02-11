@@ -1,7 +1,17 @@
-import { Text } from 'react-native'
+import Character from '@/components/player/character'
+import { useRouter } from 'expo-router';
+import { Alert, Button, Text } from 'react-native'
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 export default function App() {
+    const router = useRouter();
     return (
-        <Text>Mini game app</Text>
+        <SafeAreaProvider>
+            <Button
+                title='start'
+                onPress={() => router.push('/story_screen?text=Push_text')}
+
+            />
+        </SafeAreaProvider>
     )
 }

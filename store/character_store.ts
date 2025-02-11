@@ -3,14 +3,14 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Character = {
-	CHARACTER_1: require('../assets/character/character_0'),
-	CHARACTER_2: require('../assets/character/character_1'),
-	CHARACTER_3: require('../assets/character/character_2'),
+	CHARACTER_1: require('../assets/character/character_5.png'),
+	CHARACTER_2: require('../assets/character/character_1.png'),
+	CHARACTER_3: require('../assets/character/character_2.png'),
 };
 
 type Character_Type = {
 	name: string;
-	model: number | null;
+	model: number;
 	level: number;
 };
 
@@ -25,7 +25,7 @@ export enum UPDATE_CHARACTER_STATS {
 // Например, можно использовать объединённые типы или перегрузки, но для простоты здесь применяем тип any для второго параметра.
 export interface CharacterStoreInterface {
 	character_name: string;
-	character_model: number | null;
+	character_model: number;
 	character_level: number;
 	updateCharacter: (
 		update_request: string,
@@ -38,7 +38,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 		(set, get) => ({
 			character_name: '',
 			character_level: 1,
-			character_model: null,
+			character_model: Character.CHARACTER_2,
 			updateCharacter: (update_request, updated_value) => {
 				switch (update_request) {
 					case UPDATE_CHARACTER_STATS.NAME:
@@ -47,7 +47,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 						break;
 					case UPDATE_CHARACTER_STATS.MODEL:
 						// Обновляем модель персонажа
-						set({character_model: updated_value as number | null});
+						set({character_model: updated_value as number});
 						break;
 					case UPDATE_CHARACTER_STATS.LEVEL:
 						// Обновляем уровень персонажа

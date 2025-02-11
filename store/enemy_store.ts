@@ -18,7 +18,7 @@ const default_enemy = {
 };
 
 // Zustand-хранилище
-export const useCharacterStore = create<CharacterStoreInterface>()(
+export const useEnemyStore = create<CharacterStoreInterface>()(
 	persist(
 		(set, get) => ({
 			enemy: default_enemy,
