@@ -3,6 +3,12 @@ import { Image, Text, View } from "react-native";
 
 export default function Character() {
     const character_models = useCharacterStore(state => state.character_model)
+    const default_state = useCharacterStore(state => state.default_state)
+    const characters_pull_for_choose = useCharacterStore(state => state.choose_character)
+    // const choose_player_character_in_pull = () => {
+
+    // }
+
     return (
         <View style={{
             flex: 1,
@@ -12,15 +18,20 @@ export default function Character() {
             <Text style={{
                 textAlign: 'center'
             }}>Character Component</Text>
-            <Image
-                style={{
-                    width: 200,
-                    height: 400,
-                    alignItems: 'center',
+            {default_state ?
+                characters_pull_for_choose().flatMap((item) => <Image source={item.model} />)
 
-                }}
-                source={character_models}
-            />
+                :
+                <Image
+                    style={{
+                        width: 200,
+                        height: 400,
+                        alignItems: 'center',
+
+                    }}
+                    source={require('')}
+                />}
+
 
         </View>
 
