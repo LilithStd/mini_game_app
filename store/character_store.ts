@@ -2,6 +2,8 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+export const Character_Default = require('../assets/character/character_8.png');
+
 const Character = {
 	CHARACTER_1: require('../assets/character/character_5.png'),
 	CHARACTER_2: require('../assets/character/character_1.png'),
@@ -10,7 +12,7 @@ const Character = {
 
 const count_character_in_pull = 3;
 
-type Character_Pull_Type = {
+export type Character_Pull_Type = {
 	name: string;
 	model: number;
 };
@@ -30,7 +32,7 @@ const Character_Pull: Character_Pull_Type[] = [
 	},
 ];
 
-type Character_Type = {
+export type Character_Type = {
 	name: string;
 	model: number;
 	level: number;
@@ -46,17 +48,17 @@ export enum UPDATE_CHARACTER_STATS {
 // Обратите внимание, что типы параметров updateCharacter можно уточнить
 // Например, можно использовать объединённые типы или перегрузки, но для простоты здесь применяем тип any для второго параметра.
 export interface CharacterStoreInterface {
-	default_state: true;
+	default_state: boolean;
 	character_pull: Character_Pull_Type[];
-	character_name: string | null;
-	character_model: number | null;
-	character_level: number | null;
+	character_name: string;
+	character_model: number;
+	character_level: number;
 	update_character: (
 		update_request: string,
-		updated_value: string | number | null | Character_Type, // можно заменить на более точное объединение типов
+		updated_value: string | number | null | Character_Pull_Type, // можно заменить на более точное объединение типов
 	) => void;
 	set_default_state: () => void;
-	choose_character: () => Character_Pull_Type[];
+	choose_character_pull: () => Character_Pull_Type[];
 }
 
 export const useCharacterStore = create<CharacterStoreInterface>()(
@@ -64,10 +66,10 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 		(set, get) => ({
 			default_state: true,
 			character_pull: Character_Pull,
-			character_name: null,
+			character_name: '',
 			character_level: 1,
 			character_model: Character.CHARACTER_2,
-			choose_character: () => {
+			choose_character_pull: () => {
 				if (count_character_in_pull > Character_Pull.length) {
 					throw new Error(
 						'Запрашиваемое количество элементов превышает размер исходного массива.',
@@ -108,7 +110,8 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 						set({
 							character_name: name,
 							character_model: model,
-							character_level: level,
+							// character_level: level,
+							default_state: false,
 						});
 						break;
 					default:

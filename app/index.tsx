@@ -8,12 +8,12 @@ export default function App() {
     const router = useRouter();
     const chapter = useStoryStore(state => state.chapter)
     return (
-        <SafeAreaProvider>
+        <SafeAreaView>
             <Button
                 title='start'
                 onPress={() => router.push(`/story_screen?chapter=${chapter}`)}
 
             />
-        </SafeAreaProvider>
+        </SafeAreaView>
     )
 }
