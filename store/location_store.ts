@@ -59,6 +59,7 @@ const LOCATION_CONTENT = [
 export interface LocationStoreInterface {
 	defaultState: boolean;
 	locations: Location_content_type[];
+	listLocations: () => string[];
 	setDefaultState: () => void;
 	getPullLocations: (location: string) => Location_content_type[];
 }
@@ -68,6 +69,9 @@ export const useLocationStore = create<LocationStoreInterface>()(
 		(set, get) => ({
 			defaultState: true,
 			locations: LOCATION_CONTENT,
+			listLocations: () => {
+				return get().locations.map((item) => item.name);
+			},
 			setDefaultState: () => {
 				set({
 					defaultState: true,

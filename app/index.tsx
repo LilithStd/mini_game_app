@@ -1,4 +1,5 @@
 
+import { GLOBAL_APP_PATH } from '@/constants/global_path';
 import { useGlobalStore } from '@/store/global_store';
 import { useStoryStore } from '@/store/story_store';
 import { useRouter } from 'expo-router';
@@ -8,14 +9,17 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 export default function App() {
     const router = useRouter();
     const newGameStatus = useGlobalStore(state => state.newGame)
+    const { currentState } = useGlobalStore()
     const chapter = useStoryStore(state => state.chapter)
     const setNewGameState = useGlobalStore(state => state.setNewGame)
+
     const handleStartNewGame = () => {
         setNewGameState()
-        router.push(`/story_screen?chapter=${chapter}`)
+        router.push(GLOBAL_APP_PATH.STORY_SCREEN)
     }
     const handleContinuePreviousGame = () => {
-        router.push(`/story_screen?chapter=${chapter}`)
+        router.push(currentState);
+
     }
 
     return (
