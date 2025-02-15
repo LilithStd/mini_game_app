@@ -7,12 +7,6 @@ type Content_Type = {
 	background: number;
 };
 
-export interface StoryStoreInterface {
-	chapter: string;
-	setChapter: (chapter: string) => void;
-	getChapterContent: () => Content_Type | null;
-}
-
 enum CHAPTER_LIST {
 	ORIGIN = 'origin',
 	FIRST = 'first',
@@ -57,11 +51,26 @@ const CHAPTER_CONTENT_2 = [
 	},
 ];
 
+export interface StoryStoreInterface {
+	defaultState: true;
+	chapter: string;
+	setChapter: (chapter: string) => void;
+	setDefaultState: () => void;
+	getChapterContent: () => Content_Type | null;
+}
+
 // Zustand-хранилище
 export const useStoryStore = create<StoryStoreInterface>()(
 	persist(
 		(set, get) => ({
-			chapter: CHAPTER_LIST.FIRST,
+			defaultState: true,
+			chapter: CHAPTER_LIST.ORIGIN,
+			setDefaultState: () => {
+				set({
+					defaultState: true,
+					chapter: CHAPTER_LIST.ORIGIN,
+				});
+			},
 			setChapter: (chapter) => {
 				set({chapter});
 			},

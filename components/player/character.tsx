@@ -1,12 +1,15 @@
 import { Character_Default, Character_Pull_Type, Character_Type, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { useGlobalStore } from "@/store/global_store";
 import { Button, Image, Text, View } from "react-native";
 
 export default function Character() {
+    const setContinueGame = useGlobalStore(state => state.setContinueGame)
     const character_model = useCharacterStore(state => state.character_model)
     const default_state = useCharacterStore(state => state.default_state)
     const choose_character = useCharacterStore(state => state.update_character)
     const characters_pull_for_choose = useCharacterStore(state => state.choose_character_pull)
     const handleCharacterChoose = (item: Character_Pull_Type) => {
+        setContinueGame()
         choose_character(UPDATE_CHARACTER_STATS.ALL, item)
     }
     // const choose_player_character_in_pull = () => {

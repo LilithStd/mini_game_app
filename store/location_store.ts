@@ -2,10 +2,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 
-enum LOCATIONS_GROUP {
+export enum LOCATIONS_GROUP {
 	FOREST = 'forest',
 	SWAMP = 'swamp',
 }
+
+export type Location_content_type = {
+	name: string;
+	group: string;
+	model: number;
+};
 
 const LOCATION_CONTENT = [
 	{
@@ -51,13 +57,26 @@ const LOCATION_CONTENT = [
 ];
 
 export interface LocationStoreInterface {
-	location: [];
+	defaultState: boolean;
+	locations: Location_content_type[];
+	setDefaultState: () => void;
+	getPullLocations: (location: string) => Location_content_type[];
 }
 
-export const useEnemyStore = create<LocationStoreInterface>()(
+export const useLocationStore = create<LocationStoreInterface>()(
 	persist(
 		(set, get) => ({
-			location: [],
+			defaultState: true,
+			locations: LOCATION_CONTENT,
+			setDefaultState: () => {
+				set({
+					defaultState: true,
+					locations: LOCATION_CONTENT,
+				});
+			},
+			getPullLocations: (location) => {
+				return get().locations.filter((item) => item.group === location);
+			},
 		}),
 		{
 			name: 'location-storage',

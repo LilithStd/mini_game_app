@@ -57,7 +57,7 @@ export interface CharacterStoreInterface {
 		update_request: string,
 		updated_value: string | number | null | Character_Pull_Type, // можно заменить на более точное объединение типов
 	) => void;
-	set_default_state: () => void;
+	setDefaultState: () => void;
 	choose_character_pull: () => Character_Pull_Type[];
 }
 
@@ -68,7 +68,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 			character_pull: Character_Pull,
 			character_name: '',
 			character_level: 1,
-			character_model: Character.CHARACTER_2,
+			character_model: 0,
 			choose_character_pull: () => {
 				if (count_character_in_pull > Character_Pull.length) {
 					throw new Error(
@@ -86,8 +86,14 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 
 				return arrayCopy.slice(0, count_character_in_pull);
 			},
-			set_default_state: () => {
-				set({default_state: true});
+			setDefaultState: () => {
+				set({
+					default_state: true,
+					character_name: '',
+					character_level: 1,
+					character_model: 0,
+					character_pull: [],
+				});
 			},
 			update_character: (update_request, updated_value) => {
 				switch (update_request) {
