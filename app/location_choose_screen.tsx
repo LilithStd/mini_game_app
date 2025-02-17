@@ -10,7 +10,12 @@ export default function LocationScreen() {
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const listLocations = Object.values(LOCATIONS_GROUP);
     const handleRedirectToLocation = (location: string) => {
-        router.push(`/location_screen?location=${location}`)
+        if (!location) return;
+        // router.push(`/location_screen?location=${location}`)
+        router.push({
+            pathname: GLOBAL_APP_PATH.LOCATION_SCREEN,
+            params: { location }
+        });
     }
 
 

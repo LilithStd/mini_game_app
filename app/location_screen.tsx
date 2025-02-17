@@ -8,10 +8,40 @@ import { Text, View, Image, ImageBackground, Button } from 'react-native'
 export default function LocationScreen() {
     const router = useRouter();
     const { location } = useLocalSearchParams();
+
+    const getRandomNumber = (min: number = 1, max: number = 4): number => {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    };
+    const countScreenToBattle = getRandomNumber()
+    const [countScreen, setCountScreen] = useState(0)
+
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
-    if (!location || location.length === 0 || location === undefined) {
-        router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+
+    const getRandomLocationImage = () => {
+        const defaultImage = require('../assets/backgrounds/bg_2.jpg');
+
+        if (location !== undefined) {
+            const tempImage = locationPull(location.toString())[Math.floor(Math.random() * locationPull(location.toString()).length)]
+            setLocationImage(tempImage)
+        } else {
+            setLocationImage({ name: '', model: defaultImage, group: '' })
+        }
+
     }
+
+    const handleDecrementCountScreen = () => {
+        setCountScreen(countScreen - 1)
+    }
+    const handleIncrementCountScreen = () => {
+        setCountScreen(countScreen + 1)
+    }
+
+    // useEffect(() => {
+    //     if (!location || location.length === 0 || location === undefined) {
+    //         router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+    //     }
+    // }, [location])
+
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.LOCATION_SCREEN)
     }, [])
@@ -20,10 +50,15 @@ export default function LocationScreen() {
         getRandomLocationImage()
     }, [location])
 
-    const getRandomLocationImage = () => {
-        const tempImage = locationPull(location.toString())[Math.floor(Math.random() * locationPull(location.toString()).length)]
-        setLocationImage(tempImage)
-    }
+    useEffect(() => {
+        if (countScreen === countScreenToBattle) {
+            console.log('uslovie');
+
+            router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
+        }
+    }, [countScreen, countScreenToBattle]);
+
+
 
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const locationPull = useLocationStore(state => state.getPullLocations)
@@ -55,12 +90,18 @@ export default function LocationScreen() {
             }}>
                 <Button
                     title="left"
-                    onPress={getRandomLocationImage}
+                    onPress={() => {
+                        getRandomLocationImage(),
+                            handleDecrementCountScreen()
+                    }}
 
                 />
                 <Button
                     title="right"
-                    onPress={getRandomLocationImage}
+                    onPress={() => {
+                        getRandomLocationImage(),
+                            handleIncrementCountScreen()
+                    }}
                 />
             </View>
 

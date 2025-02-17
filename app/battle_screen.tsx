@@ -5,7 +5,6 @@ import Enemy from "@/components/enemy/enemy";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
-    console.log(status);
 
     return (
         <SafeAreaView
@@ -16,7 +15,7 @@ export default function Battle_Screen() {
                 width: '100%',
                 height: '100%'
             }}
-        >
+        >   <Text>Battle Screen</Text>
             <Character />
             <Enemy />
         </SafeAreaView>
