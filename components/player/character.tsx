@@ -10,11 +10,11 @@ export default function Character() {
     const character_model = useCharacterStore(state => state.character_model)
     const default_state = useCharacterStore(state => state.default_state)
 
-    useEffect(() => {
-        if (!default_state) {
-            router.push(GLOBAL_APP_PATH.LOCATION_SCREEN)
-        }
-    }, [default_state])
+    // useEffect(() => {
+    //     if (!default_state) {
+    //         router.push(GLOBAL_APP_PATH.LOCATION_SCREEN)
+    //     }
+    // }, [default_state])
 
     if (!default_state) {
         return null; // Ничего не рендерим, пока идет редирект
