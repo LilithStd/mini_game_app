@@ -52,8 +52,6 @@ export default function LocationScreen() {
 
     useEffect(() => {
         if (countScreen === countScreenToBattle) {
-            console.log('uslovie');
-
             router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
         }
     }, [countScreen, countScreenToBattle]);

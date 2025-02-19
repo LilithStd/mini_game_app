@@ -15,6 +15,7 @@ export default function Character() {
     //         router.push(GLOBAL_APP_PATH.LOCATION_SCREEN)
     //     }
     // }, [default_state])
+    console.log(character_model);
 
     if (!default_state) {
         return null; // Ничего не рендерим, пока идет редирект

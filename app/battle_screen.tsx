@@ -15,7 +15,8 @@ export default function Battle_Screen() {
                 width: '100%',
                 height: '100%'
             }}
-        >   <Text>Battle Screen</Text>
+        >
+            {/* <Text>Battle Screen</Text> */}
             <Character />
             <Enemy />
         </SafeAreaView>
