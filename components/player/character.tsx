@@ -10,17 +10,6 @@ export default function Character() {
     const character_model = useCharacterStore(state => state.character_model)
     const default_state = useCharacterStore(state => state.default_state)
 
-    // useEffect(() => {
-    //     if (!default_state) {
-    //         router.push(GLOBAL_APP_PATH.LOCATION_SCREEN)
-    //     }
-    // }, [default_state])
-    console.log(character_model);
-
-    if (!default_state) {
-        return null; // Ничего не рендерим, пока идет редирект
-    }
-
     return (
         <View style={{
             flex: 1,
@@ -28,7 +17,7 @@ export default function Character() {
             alignItems: 'center', // Центрирует по горизонтали
             width: '100%',
             height: '100%'
-        }}>
+        }}><Text>Character component</Text>
             <View style={{
                 flex: 1,
                 justifyContent: 'center', // Центрирует по вертикали

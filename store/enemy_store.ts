@@ -5,7 +5,7 @@ import {LOCATIONS_GROUP} from './location_store';
 
 interface EnemyTypePull {
 	name: string;
-	model: string;
+	model: number;
 }
 
 interface EnemyType extends EnemyTypePull {

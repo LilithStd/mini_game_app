@@ -8,12 +8,14 @@ import { Text, View, Image, ImageBackground, Button } from 'react-native'
 export default function LocationScreen() {
     const router = useRouter();
     const { location } = useLocalSearchParams();
+    const countScreenToBattle = useLocationStore(state => state.countLocationToRedirectForBattle)
+    const setCountScreenToBattle = useLocationStore(state => state.setCountLocationToRedirectForBattle)
 
     const getRandomNumber = (min: number = 1, max: number = 4): number => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
-    const countScreenToBattle = getRandomNumber()
-    const [countScreen, setCountScreen] = useState(0)
+    getRandomNumber()
+    const [countScreen, setCountScreen] = useState(getRandomNumber())
 
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
@@ -28,30 +30,28 @@ export default function LocationScreen() {
         }
 
     }
+    console.log(countScreen);
 
     const handleDecrementCountScreen = () => {
-        setCountScreen(countScreen - 1)
+        setCountScreen(countScreen + 1)
     }
     const handleIncrementCountScreen = () => {
         setCountScreen(countScreen + 1)
     }
-
-    // useEffect(() => {
-    //     if (!location || location.length === 0 || location === undefined) {
-    //         router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
-    //     }
-    // }, [location])
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.LOCATION_SCREEN)
     }, [])
 
     useEffect(() => {
+        setCountScreenToBattle(getRandomNumber())
         getRandomLocationImage()
     }, [location])
 
+
     useEffect(() => {
         if (countScreen === countScreenToBattle) {
+            setCountScreenToBattle(getRandomNumber())
             router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
         }
     }, [countScreen, countScreenToBattle]);

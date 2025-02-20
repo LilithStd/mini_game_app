@@ -59,6 +59,9 @@ const LOCATION_CONTENT = [
 export interface LocationStoreInterface {
 	defaultState: boolean;
 	locations: Location_content_type[];
+	currentLocation: string;
+	countLocationToRedirectForBattle: number;
+	setCountLocationToRedirectForBattle: (count: number) => void;
 	listLocations: () => string[];
 	setDefaultState: () => void;
 	getPullLocations: (location: string) => Location_content_type[];
@@ -69,16 +72,23 @@ export const useLocationStore = create<LocationStoreInterface>()(
 		(set, get) => ({
 			defaultState: true,
 			locations: LOCATION_CONTENT,
+			currentLocation: '',
+			countLocationToRedirectForBattle: 0,
+			setCountLocationToRedirectForBattle: (count) => {
+				set({countLocationToRedirectForBattle: count});
+			},
 			listLocations: () => {
 				return get().locations.map((item) => item.name);
 			},
 			setDefaultState: () => {
 				set({
 					defaultState: true,
+					currentLocation: '',
 					locations: LOCATION_CONTENT,
 				});
 			},
 			getPullLocations: (location) => {
+				set({currentLocation: location});
 				return get().locations.filter((item) => item.group === location);
 			},
 		}),
