@@ -15,7 +15,7 @@ export default function LocationScreen() {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     };
     getRandomNumber()
-    const [countScreen, setCountScreen] = useState(getRandomNumber())
+    const [countScreen, setCountScreen] = useState(0)
 
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
@@ -52,6 +52,7 @@ export default function LocationScreen() {
     useEffect(() => {
         if (countScreen === countScreenToBattle) {
             setCountScreenToBattle(getRandomNumber())
+            setCountScreen(0)
             router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
         }
     }, [countScreen, countScreenToBattle]);
