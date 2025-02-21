@@ -30,7 +30,6 @@ export default function LocationScreen() {
         }
 
     }
-    console.log(countScreen);
 
     const handleDecrementCountScreen = () => {
         setCountScreen(countScreen + 1)

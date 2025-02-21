@@ -12,43 +12,24 @@ export default function Character() {
 
     return (
         <View style={{
-            flex: 1,
-            justifyContent: 'center', // Прижимает элементы к нижней части экрана
-            alignItems: 'center', // Центрирует по горизонтали
             width: '100%',
-            height: '100%'
+            height: '100%',
+            position: 'relative'
         }}><Text>Character component</Text>
-            <View style={{
-                flex: 1,
-                justifyContent: 'center', // Центрирует по вертикали
-                alignItems: 'center', // Центрирует по горизонтали
-                flexDirection: 'row', // Располагает изображения в ряд
-                flexWrap: 'wrap', // Переносит элементы, если их слишком много
-                gap: 10, // Расстояние между элементами
-                // backgroundColor: 'red', // Временно, чтобы проверить, занимает ли View всю высоту
-                height: '100%'
-            }}>
-                <View style={{
+            <Image
+                style={{
                     flex: 1,
-
-                    justifyContent: 'center',  // вертикальное выравнивание по центру
-                    alignItems: 'flex-start',  // горизонтальное выравнивание по центру
-                    // position: 'relative',
-
-                }}>
-                    <Image
-                        style={{
-                            width: '80%',
-                            height: '80%',
-                            resizeMode: 'contain',
-                            alignSelf: 'center',
-                            marginTop: '50%',
-                            marginLeft: '-50%'
-                        }}
-                        source={character_model}
-                    />
-                </View>
-            </View>
+                    position: 'absolute',
+                    resizeMode: 'contain',
+                    alignSelf: 'center',
+                    height: '100%',
+                    width: '100%',
+                    top: '-50%',
+                    left: '-20%',
+                    zIndex: 1
+                }}
+                source={character_model}
+            />
         </View>
     )
 }
