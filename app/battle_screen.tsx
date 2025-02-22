@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View } from "react-native";
+import { Button, SafeAreaView, Text, View } from "react-native";
 import Character from "../components/player/character";
 import { useLocalSearchParams } from 'expo-router';
 import Enemy from "@/components/enemy/enemy";
@@ -16,6 +16,21 @@ export default function Battle_Screen() {
                 height: '100%'
             }}
         >
+            <View>
+                <Button
+                    title="attack"
+                />
+                <Button
+                    title="defence"
+                />
+                <Button
+                    title="stand"
+                />
+                <Button
+                    title="retreat"
+                />
+
+            </View>
             <Enemy />
             <Character />
         </SafeAreaView>
