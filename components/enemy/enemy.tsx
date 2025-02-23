@@ -14,21 +14,21 @@ export default function Enemy() {
         <View style={{
             width: '100%',
             height: '100%',
-            position: 'relative'
+            // position: 'relative'
         }}>
             <Text>Enemy Component</Text>
             <Text>{randomEnemyForCurrentLocation().name}</Text>
             <Image
                 style={{
-                    flex: 1,
-                    position: 'absolute',
-                    resizeMode: 'contain',
-                    alignSelf: 'center',
-                    height: '100%',
-                    width: '100%',
-                    top: '50%',
-                    right: '-20%',
-                    zIndex: 1
+                    // flex: 1,
+                    // position: 'absolute',
+                    // resizeMode: 'contain',
+                    // alignSelf: 'center',
+                    // height: '100%',
+                    // width: '100%',
+                    // top: '50%',
+                    // right: '-20%',
+                    // zIndex: 1
                 }}
                 source={randomEnemyForCurrentLocation().model}
             />
