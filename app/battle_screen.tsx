@@ -74,7 +74,9 @@ export default function Battle_Screen() {
                     />
                 </View>
                 <View style={{
-                    left: '-30%'
+                    width: '100%',
+                    left: '-30%',
+                    top: '10%',
                 }}>
                     <Character />
                 </View>

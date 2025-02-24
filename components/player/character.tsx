@@ -23,7 +23,7 @@ export default function Character() {
                     // resizeMode: 'contain',
                     // alignSelf: 'center',
                     // height: '100%',
-                    // width: '100%',
+                    // width: '10%',
                     // top: '-50%',
                     // left: '-20%',
                     // zIndex: 1

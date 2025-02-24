@@ -57,6 +57,11 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_7.png'),
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
+	{
+		name: 'enemy_name_8',
+		model: require('../assets/enemy/enemy_8.png'),
+		locations: [LOCATIONS_GROUP.SWAMP],
+	},
 ];
 
 export interface EnemyStoreInterface {

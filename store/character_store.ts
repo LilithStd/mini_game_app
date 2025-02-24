@@ -5,9 +5,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export const Character_Default = require('../assets/character/character_8.png');
 
 const Character = {
-	CHARACTER_1: require('../assets/character/character_5.png'),
-	CHARACTER_2: require('../assets/character/character_1.png'),
-	CHARACTER_3: require('../assets/character/character_2.png'),
+	CHARACTER_1: require('../assets/character/character_1.png'),
+	CHARACTER_2: require('../assets/character/character_2.png'),
+	CHARACTER_3: require('../assets/character/character_3.png'),
 };
 
 const count_character_in_pull = 3;
