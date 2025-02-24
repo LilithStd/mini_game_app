@@ -67,14 +67,15 @@ const ENEMY_CONTENT = [
 export interface EnemyStoreInterface {
 	defaultState: true;
 	enemyPull: EnemyContentType[];
+	currentEnemy: EnemyTypePull;
+	setCurrentEnemy: (currentEnemy: EnemyTypePull) => void;
 	setDefaultState: () => void;
 	getEnemyPullForLocations: (location: string) => EnemyTypePull[];
 }
 
 const default_enemy = {
 	name: '',
-	model: '',
-	level: 1,
+	model: 0,
 };
 
 // Zustand-хранилище
@@ -83,6 +84,10 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 		(set, get) => ({
 			defaultState: true,
 			enemyPull: ENEMY_CONTENT,
+			currentEnemy: default_enemy,
+			setCurrentEnemy: (currentEnemy) => {
+				set({currentEnemy: currentEnemy});
+			},
 			setDefaultState: () => {
 				set({
 					defaultState: true,

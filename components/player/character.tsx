@@ -17,6 +17,7 @@ export default function Character() {
             // position: 'relative'
         }}><Text>Character component</Text>
             <Image
+
                 style={{
                     // flex: 1,
                     // position: 'absolute',

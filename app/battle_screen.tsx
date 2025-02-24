@@ -2,8 +2,9 @@ import { Button, SafeAreaView, Text, TouchableOpacity, View } from "react-native
 import Character from "../components/player/character";
 import { useLocalSearchParams } from 'expo-router';
 import Enemy from "@/components/enemy/enemy";
-import { useState } from "react";
+import React, { useState } from "react";
 import { battleScreenStyles } from '../styles/battle_screen_styles'
+import BlurView from 'expo-blur';
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -73,21 +74,36 @@ export default function Battle_Screen() {
                         onPress={handleRetreatButton}
                     />
                 </View>
+
                 <View style={{
                     width: '100%',
                     left: '-30%',
                     top: '10%',
                 }}>
-                    <Character />
+                    {/* <BlurView intensity={6} >
+                        <Character />
+                    </BlurView> */}
                 </View>
             </View>
             <View style={{
-                zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1
+                zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1,
+
+                width: '100%'
             }}>
-                <Button
-                    title="return to character"
+                <TouchableOpacity
+                    style={{
+                        backgroundColor: 'green',
+                        // position: 'absolute',
+                        top: '50%',
+                        left: '40%',
+                        width: '30%',
+                        alignItems: 'center',
+                        zIndex: 2
+                    }}
                     onPress={enemyTempButton}
-                />
+                >
+                    <Text>return</Text>
+                </TouchableOpacity>
                 <Enemy />
             </View>
         </SafeAreaView>
