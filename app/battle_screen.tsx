@@ -41,7 +41,7 @@ export default function Battle_Screen() {
 
     const scaleUp = (scaleValue: Animated.Value) => {
         Animated.timing(scaleValue, {
-            toValue: 1.5,
+            toValue: 1.2,
             duration: 500,
             useNativeDriver: true,
         }).start();
