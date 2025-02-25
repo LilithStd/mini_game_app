@@ -14,20 +14,11 @@ export default function Character() {
         <View style={{
             width: '100%',
             height: '100%',
-            // position: 'relative'
+
         }}><Text>Character component</Text>
             <Image
-
                 style={{
-                    // flex: 1,
-                    // position: 'absolute',
-                    // resizeMode: 'contain',
-                    // alignSelf: 'center',
-                    // height: '100%',
-                    // width: '10%',
-                    // top: '-50%',
-                    // left: '-20%',
-                    // zIndex: 1
+
                 }}
                 source={character_model}
             />
