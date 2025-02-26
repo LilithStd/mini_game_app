@@ -10,6 +10,7 @@ export default function LocationScreen() {
     const { location } = useLocalSearchParams();
     const countScreenToBattle = useLocationStore(state => state.countLocationToRedirectForBattle)
     const setCountScreenToBattle = useLocationStore(state => state.setCountLocationToRedirectForBattle)
+    const setLocationToBattleScreen = useLocationStore(state => state.setLocationToBattleScreen)
 
     const getRandomNumber = (min: number = 1, max: number = 4): number => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,6 +25,7 @@ export default function LocationScreen() {
 
         if (location !== undefined) {
             const tempImage = locationPull(location.toString())[Math.floor(Math.random() * locationPull(location.toString()).length)]
+            setLocationToBattleScreen(tempImage)
             setLocationImage(tempImage)
         } else {
             setLocationImage({ name: '', model: defaultImage, group: '' })

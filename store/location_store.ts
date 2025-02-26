@@ -60,8 +60,10 @@ export interface LocationStoreInterface {
 	defaultState: boolean;
 	locations: Location_content_type[];
 	currentLocation: string;
+	locationToBattleScreen: Location_content_type;
 	countLocationToRedirectForBattle: number;
 	setCountLocationToRedirectForBattle: (count: number) => void;
+	setLocationToBattleScreen: (location: Location_content_type) => void;
 	listLocations: () => string[];
 	setDefaultState: () => void;
 	getPullLocations: (location: string) => Location_content_type[];
@@ -74,6 +76,20 @@ export const useLocationStore = create<LocationStoreInterface>()(
 			locations: LOCATION_CONTENT,
 			currentLocation: '',
 			countLocationToRedirectForBattle: 0,
+			locationToBattleScreen: {
+				name: '',
+				group: '',
+				model: 0,
+			},
+			setLocationToBattleScreen: (location: Location_content_type) => {
+				set({
+					locationToBattleScreen: {
+						name: location.name,
+						group: location.group,
+						model: location.model,
+					},
+				});
+			},
 			setCountLocationToRedirectForBattle: (count) => {
 				set({countLocationToRedirectForBattle: count});
 			},
@@ -85,6 +101,11 @@ export const useLocationStore = create<LocationStoreInterface>()(
 					defaultState: true,
 					currentLocation: '',
 					locations: LOCATION_CONTENT,
+					locationToBattleScreen: {
+						name: '',
+						group: '',
+						model: 0,
+					},
 				});
 			},
 			getPullLocations: (location) => {
