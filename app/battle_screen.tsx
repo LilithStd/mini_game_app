@@ -6,6 +6,8 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { battleScreenStyles } from '../styles/battle_screen_styles'
 import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
+import { MotiView } from "moti";
+import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -16,58 +18,21 @@ export default function Battle_Screen() {
         NOTHING: 'nothing'
     }
     const [currentElementOnFocus, setCurrentElementOnFocus] = useState(FOCUS_ELEMENT.CHARACTER)
+    const [scale, setScale] = useState(0.7);
     const [elementHide, setElementHide] = useState(FOCUS_ELEMENT.ENEMY)
-    const characterPosition = useRef(new Animated.Value(0)).current;
-    const enemyPostion = useRef(new Animated.Value(0)).current;
-
-
-    const moveCharacter = useCallback((element: string) => {
-        Animated.timing(characterPosition, {
-            toValue: element === FOCUS_ELEMENT.CHARACTER ? 160 : -10,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
-    }, []);
-
-    const moveEnemy = useCallback((element: string) => {
-        Animated.timing(enemyPostion, {
-            toValue: element === FOCUS_ELEMENT.CHARACTER ? 80 : -10,
-            duration: 500,
-            useNativeDriver: false,
-        }).start();
-
-    }, []);
-
-    const scaleEnemy = useRef(new Animated.Value(1)).current;
-    const scaleCharacter = useRef(new Animated.Value(1)).current;
-
-
-    const scaleUp = (scaleValue: Animated.Value) => {
-        Animated.timing(scaleValue, {
-            toValue: 1.1,
-            duration: 500,
-            useNativeDriver: true,
-        }).start();
-    };
-
-    const scaleDown = (scaleValue: Animated.Value) => {
-        Animated.timing(scaleValue, {
-            toValue: 1,
-            duration: 500,
-            useNativeDriver: true,
-        }).start();
-    };
+    const moveCharacterScaleElement = useSharedValue(0.7)
+    const moveCharacterPositionElement = useSharedValue(0)
+    const animatedStyle = useAnimatedStyle(() => {
+        return {
+            transform: [{ scale: moveCharacterScaleElement.value }],
+        };
+    });
 
 
     const handleAttackButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.ENEMY);
         setElementHide(FOCUS_ELEMENT.CHARACTER);
-
-        scaleUp(scaleEnemy);   // Увеличиваем ENEMY (прямое указание)
-        scaleDown(scaleCharacter); // Уменьшаем CHARACTER (прямое указание)
-
-        moveCharacter(FOCUS_ELEMENT.CHARACTER);
-        moveEnemy(FOCUS_ELEMENT.ENEMY);
+        setScale(0.7)
     };
     const handleDefenseButton = () => {
 
@@ -81,12 +46,7 @@ export default function Battle_Screen() {
     const enemyTempButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
         setElementHide(FOCUS_ELEMENT.ENEMY);
-
-        scaleUp(scaleCharacter);
-        scaleDown(scaleEnemy);
-
-        moveCharacter(FOCUS_ELEMENT.ENEMY);
-        moveEnemy(FOCUS_ELEMENT.CHARACTER);
+        setScale(1)
     };
 
     return (
@@ -111,7 +71,15 @@ export default function Battle_Screen() {
                 }}
             >
 
-                <Animated.View
+                <MotiView
+                    animate={{
+                        scale: scale, // Используем shared value для анимации
+                    }}
+                    transition={{
+                        type: 'spring', // Тип анимации
+                        damping: 10,     // Затухание
+                        stiffness: 100,  // Жесткость
+                    }}
                     style={{
                         position: 'absolute',
                         flex: 1,
@@ -119,9 +87,8 @@ export default function Battle_Screen() {
                         height: '100%',
                         left: '20%',
                         zIndex: currentElementOnFocus === FOCUS_ELEMENT.CHARACTER ? 3 : 1,
-                        transform: [{ scale: scaleCharacter }]
-                        // left: characterPosition
-                    }}>
+                    }}
+                >
 
                     <View
                         style={{
@@ -160,12 +127,11 @@ export default function Battle_Screen() {
                         <Character />
                     </View>
 
-                </Animated.View>
+                </MotiView>
                 <Animated.View style={{
                     position: 'absolute',
                     zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1,
                     width: '100%',
-                    transform: [{ scale: scaleEnemy }],
                     left: '-10%'
                     // right: enemyPostion
                 }}>
