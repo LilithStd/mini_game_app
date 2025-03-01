@@ -8,10 +8,12 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
+import { UPDATE_CHARACTER_STATS, useBattleStore } from "@/store/battle_store";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
+    const updateCharacter = useBattleStore(state => state.updateCharacterStats)
     const FOCUS_ELEMENT = {
         CHARACTER: 'character',
         ENEMY: 'enemy',
@@ -22,11 +24,14 @@ export default function Battle_Screen() {
     const [elementHide, setElementHide] = useState(FOCUS_ELEMENT.ENEMY)
     const moveCharacterScaleElement = useSharedValue(0.7)
     const moveCharacterPositionElement = useSharedValue(0)
-    const animatedStyle = useAnimatedStyle(() => {
-        return {
-            transform: [{ scale: moveCharacterScaleElement.value }],
-        };
-    });
+
+
+    const default_stats = {
+        level: 1,
+        attack: 10,
+        defense: 5,
+        healPoints: 30
+    }
 
 
     const handleAttackButton = () => {
@@ -48,6 +53,10 @@ export default function Battle_Screen() {
         setElementHide(FOCUS_ELEMENT.ENEMY);
         setScale(1)
     };
+
+    useEffect(() => {
+        updateCharacter(UPDATE_CHARACTER_STATS.ALL, default_stats)
+    }, [])
 
     return (
         <SafeAreaView
