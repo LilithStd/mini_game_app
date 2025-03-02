@@ -7,6 +7,7 @@ interface Stats {
 	attack: number;
 	defense: number;
 	healPoints: number;
+	death: boolean;
 }
 
 export interface BattleStoreInterface {
@@ -14,16 +15,16 @@ export interface BattleStoreInterface {
 	enemy: Stats;
 	total_damage: number;
 	updateCharacterStats: (
-		updateRequest: UPDATE_CHARACTER_STATS,
+		updateRequest: UPDATE_STATS,
 		updateValue: number | Stats,
 	) => void;
 	updateEnemyStats: (
-		updateRequest: UPDATE_CHARACTER_STATS,
+		updateRequest: UPDATE_STATS,
 		updateValue: number | Stats,
 	) => void;
 }
 
-export enum UPDATE_CHARACTER_STATS {
+export enum UPDATE_STATS {
 	ATTACK = 'attack',
 	DEFENSE = 'defense',
 	HP = 'healPoints',
@@ -36,6 +37,7 @@ const defaultValues: Stats = {
 	attack: 0,
 	defense: 0,
 	healPoints: 0,
+	death: false,
 };
 
 export const useBattleStore = create<BattleStoreInterface>()(
@@ -44,25 +46,24 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			total_damage: 0,
 			character: {...defaultValues},
 			enemy: {...defaultValues},
-
 			updateCharacterStats: (updateRequest, updateValue) => {
 				set((state) => {
 					const updatedCharacter = {...state.character};
 
 					switch (updateRequest) {
-						case UPDATE_CHARACTER_STATS.ATTACK:
+						case UPDATE_STATS.ATTACK:
 							updatedCharacter.attack = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.DEFENSE:
+						case UPDATE_STATS.DEFENSE:
 							updatedCharacter.defense = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.HP:
+						case UPDATE_STATS.HP:
 							updatedCharacter.healPoints = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.LEVEL:
+						case UPDATE_STATS.LEVEL:
 							updatedCharacter.level = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.ALL:
+						case UPDATE_STATS.ALL:
 							return {character: updateValue as Stats};
 						default:
 							console.warn(
@@ -79,19 +80,26 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					const updatedEnemy = {...state.enemy};
 
 					switch (updateRequest) {
-						case UPDATE_CHARACTER_STATS.ATTACK:
+						case UPDATE_STATS.ATTACK:
 							updatedEnemy.attack = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.DEFENSE:
+						case UPDATE_STATS.DEFENSE:
 							updatedEnemy.defense = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.HP:
-							updatedEnemy.healPoints = updateValue as number;
+						case UPDATE_STATS.HP:
+							const value = updateValue as number;
+							if (value >= updatedEnemy.healPoints) {
+								updatedEnemy.death = true;
+								updatedEnemy.healPoints = 0;
+							} else {
+								updatedEnemy.healPoints -= value;
+							}
+
 							break;
-						case UPDATE_CHARACTER_STATS.LEVEL:
+						case UPDATE_STATS.LEVEL:
 							updatedEnemy.level = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.ALL:
+						case UPDATE_STATS.ALL:
 							return {enemy: updateValue as Stats};
 						default:
 							console.warn(

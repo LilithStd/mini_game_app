@@ -1,6 +1,6 @@
-import { Animated, Button, ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from "react-native";
+import { Animated, Button, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
 import Character from "../components/player/character";
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams, useRouter } from 'expo-router';
 import Enemy from "@/components/enemy/enemy";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { battleScreenStyles } from '../styles/battle_screen_styles'
@@ -8,36 +8,53 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import { UPDATE_CHARACTER_STATS, useBattleStore } from "@/store/battle_store";
+import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
+import { GLOBAL_APP_PATH } from "@/constants/global_path";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
+    const router = useRouter();
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
+    const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
+    const updateEnemy = useBattleStore(state => state.updateEnemyStats)
+    const characterStats = useBattleStore(state => state.character)
+    const enemyStats = useBattleStore(state => state.enemy)
+
     const FOCUS_ELEMENT = {
         CHARACTER: 'character',
         ENEMY: 'enemy',
         NOTHING: 'nothing'
     }
     const [currentElementOnFocus, setCurrentElementOnFocus] = useState(FOCUS_ELEMENT.CHARACTER)
-    const [scale, setScale] = useState(0.7);
+    // animations state blocks
+    const [scaleCharacter, setScaleCharacter] = useState(1);
+    const [scaleEnemy, setScaleEnemy] = useState(0.7);
+    const [isPressed, setIsPressed] = useState(false);
+    // 
     const [elementHide, setElementHide] = useState(FOCUS_ELEMENT.ENEMY)
-    const moveCharacterScaleElement = useSharedValue(0.7)
-    const moveCharacterPositionElement = useSharedValue(0)
 
-
-    const default_stats = {
+    const default_stats_character = {
         level: 1,
         attack: 10,
         defense: 5,
-        healPoints: 30
+        healPoints: 30,
+        death: false
+    }
+    const default_stats_enemy = {
+        level: 1,
+        attack: 10,
+        defense: 5,
+        healPoints: 30,
+        death: false
     }
 
 
     const handleAttackButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.ENEMY);
         setElementHide(FOCUS_ELEMENT.CHARACTER);
-        setScale(0.7)
+        setScaleCharacter(0.7)
+        setScaleEnemy(1)
     };
     const handleDefenseButton = () => {
 
@@ -51,12 +68,30 @@ export default function Battle_Screen() {
     const enemyTempButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
         setElementHide(FOCUS_ELEMENT.ENEMY);
-        setScale(1)
+
+        setScaleCharacter(1)
+        setScaleEnemy(0.7)
+        updateEnemy(UPDATE_STATS.HP, characterStats.attack)
     };
 
+    const enemyAttack = () => {
+
+    }
+
     useEffect(() => {
-        updateCharacter(UPDATE_CHARACTER_STATS.ALL, default_stats)
+        updateCharacter(UPDATE_STATS.ALL, default_stats_character)
+        updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
     }, [])
+
+    useEffect(() => {
+        if (enemyStats.death) {
+            router.push({
+                pathname: GLOBAL_APP_PATH.LOCATION_SCREEN,
+                params: { location }
+            });
+            updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
+        }
+    }, [enemyStats.death])
 
     return (
         <SafeAreaView
@@ -78,11 +113,12 @@ export default function Battle_Screen() {
                     height: '100%', // Убедимся, что фон занимает всю высоту
                     position: 'absolute', // Фиксируем фон на заднем плане
                 }}
+
             >
 
                 <MotiView
                     animate={{
-                        scale: scale, // Используем shared value для анимации
+                        scale: scaleCharacter, // Используем shared value для анимации
                     }}
                     transition={{
                         type: 'spring', // Тип анимации
@@ -137,28 +173,34 @@ export default function Battle_Screen() {
                     </View>
 
                 </MotiView>
-                <Animated.View style={{
-                    position: 'absolute',
-                    zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1,
-                    width: '100%',
-                    left: '-10%'
-                    // right: enemyPostion
-                }}>
-                    <TouchableOpacity
+                <MotiView
+                    animate={{
+                        scale: scaleEnemy, // Используем shared value для анимации
+                        backgroundColor: isPressed ? 'white' : ''
+                    }}
+                    transition={{
+                        type: 'spring', // Тип анимации
+                        damping: 10,     // Затухание
+                        stiffness: 100,  // Жесткость
+                    }}
+
+                    style={{
+                        position: 'absolute',
+                        zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1,
+                        width: '100%',
+                        left: '-10%'
+                        // right: enemyPostion
+                    }}>
+                    <Pressable
                         style={{
-                            backgroundColor: 'green',
-                            top: '50%',
-                            left: '40%',
-                            width: '30%',
-                            alignItems: 'center',
-                            zIndex: 1
+
                         }}
                         onPress={enemyTempButton}
                     >
-                        <Text>return</Text>
-                    </TouchableOpacity>
-                    <Enemy />
-                </Animated.View>
+                        <Enemy />
+                    </Pressable>
+
+                </MotiView>
             </ImageBackground>
         </SafeAreaView>
     )
