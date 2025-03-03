@@ -11,6 +11,8 @@ export default function LocationScreen() {
     const countScreenToBattle = useLocationStore(state => state.countLocationToRedirectForBattle)
     const setCountScreenToBattle = useLocationStore(state => state.setCountLocationToRedirectForBattle)
     const setLocationToBattleScreen = useLocationStore(state => state.setLocationToBattleScreen)
+    const currentLocationPrevious = useLocationStore(state => state.locationToBattleScreen)
+    const currentLocation = useLocationStore(state => state.currentLocation)
 
     const getRandomNumber = (min: number = 1, max: number = 4): number => {
         return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -21,10 +23,12 @@ export default function LocationScreen() {
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
     const getRandomLocationImage = () => {
+        // const defaultImage = currentLocationPrevious ? currentLocationPrevious.model : require('../assets/backgrounds/bg_2.jpg');
         const defaultImage = require('../assets/backgrounds/bg_2.jpg');
 
-        if (location !== undefined) {
-            const tempImage = locationPull(location.toString())[Math.floor(Math.random() * locationPull(location.toString()).length)]
+        if (location !== undefined || currentLocation !== '') {
+            const tempElement = location && location !== undefined ? location : currentLocationPrevious.group
+            const tempImage = locationPull(tempElement.toString())[Math.floor(Math.random() * locationPull(tempElement.toString()).length)]
             setLocationToBattleScreen(tempImage)
             setLocationImage(tempImage)
         } else {

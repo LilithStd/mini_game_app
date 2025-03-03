@@ -5,5 +5,6 @@ export const GLOBAL_APP_PATH = {
 	CHARACTER_SCREEN: '/character_screen',
 	CHARACTER_CHOOSE_SCREEN: '/choose_character_screen',
 	STORY_SCREEN: '/story_screen',
+	VICTORY_SCREEN: '/victory_screen',
 	MAIN: '/',
 } as const;

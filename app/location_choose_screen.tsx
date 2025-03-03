@@ -6,12 +6,14 @@ import { useEffect } from "react";
 import { SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { MotiView } from 'moti'
 
-export default function LocationScreen() {
+export default function LocationChooseScreen() {
     const router = useRouter();
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const listLocations = Object.values(LOCATIONS_GROUP);
     const handleRedirectToLocation = (location: string) => {
         if (!location) return;
+
+
         router.push({
             pathname: GLOBAL_APP_PATH.LOCATION_SCREEN,
             params: { location }

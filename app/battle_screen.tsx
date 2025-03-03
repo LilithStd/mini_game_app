@@ -74,9 +74,6 @@ export default function Battle_Screen() {
         updateEnemy(UPDATE_STATS.HP, characterStats.attack)
     };
 
-    const enemyAttack = () => {
-
-    }
 
     useEffect(() => {
         updateCharacter(UPDATE_STATS.ALL, default_stats_character)
@@ -86,7 +83,7 @@ export default function Battle_Screen() {
     useEffect(() => {
         if (enemyStats.death) {
             router.push({
-                pathname: GLOBAL_APP_PATH.LOCATION_SCREEN,
+                pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
                 params: { location }
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)

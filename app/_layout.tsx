@@ -13,6 +13,7 @@ export default function Layout() {
                 <Stack.Screen name="location_screen" options={{ title: "Location" }} />
                 <Stack.Screen name="location_choose_screen" options={{ title: "ChooseLocation" }} />
                 <Stack.Screen name="choose_character_screen" options={{ title: "ChooseCharacter" }} />
+                <Stack.Screen name="victory_screen" options={{ title: "Victory" }} />
             </Stack>
         </SafeAreaProvider>
     );
