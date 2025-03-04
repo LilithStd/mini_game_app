@@ -73,9 +73,11 @@ export default function LocationScreen() {
     return (
         <ImageBackground
             style={{
-                flex: 1, // ✅ Заполняет весь экран
+                flex: 1,
                 width: "100%",
                 height: "100%",
+                alignItems: "center",
+                justifyContent: 'center'
             }}
             source={locationImage.model}
             resizeMode='cover'
@@ -90,7 +92,8 @@ export default function LocationScreen() {
                 width: '80%', // Задаем ширину для адаптивности
                 alignItems: 'center', // Выравниваем кнопки по центру
                 gap: 10, // Добавляем промежуток между кнопками
-                justifyContent: 'center'
+                justifyContent: 'center',
+                flexDirection: 'row'
             }}>
                 <Button
                     title="left"

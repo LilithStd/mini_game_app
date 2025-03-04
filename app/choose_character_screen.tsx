@@ -3,7 +3,7 @@ import { useCharacterStore, Character_Pull_Type, UPDATE_CHARACTER_STATS } from "
 import { useGlobalStore } from "@/store/global_store"
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, Text, View, Image } from "react-native"
+import { Button, Text, View, Image, ImageBackground } from "react-native"
 
 export default function ChooseCharacterScreen() {
     const router = useRouter();
@@ -29,41 +29,55 @@ export default function ChooseCharacterScreen() {
     }
 
     return (
-        <View style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            width: '100%',
-            height: '100%',
-        }}>
+        <ImageBackground
+            style={{
+                flex: 1,
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: 'center'
+            }}
+            resizeMode='cover'
+            source={require('../assets/backgrounds/bg_1.jpg')}
+        >
+
+
             <View style={{
                 flex: 1,
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                gap: 10,
+                width: '100%',
                 height: '100%',
             }}>
-                {characters_pull_for_choose().map((item, index) => (
-                    <View key={index} style={{ alignItems: 'center' }}>
-                        <Image
-                            source={item.model}
-                            style={{
-                                width: 160,
-                                height: 130,
-                                resizeMode: 'contain',
-                                margin: 5,
-                            }}
-                        />
-                        <Button
-                            title="Choose"
-                            onPress={() => handleCharacterChoose(item)}
-                            disabled={isChoosing} // Блокируем кнопку при выборе
-                        />
-                    </View>
-                ))}
+                <View style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    flexDirection: 'row',
+                    flexWrap: 'wrap',
+                    gap: 10,
+                    height: '100%',
+                }}>
+                    {characters_pull_for_choose().map((item, index) => (
+                        <View key={index} style={{ alignItems: 'center' }}>
+                            <Image
+                                source={item.model}
+                                style={{
+                                    width: 160,
+                                    height: 130,
+                                    resizeMode: 'contain',
+                                    margin: 5,
+                                }}
+                            />
+                            <Button
+                                title="Choose"
+                                onPress={() => handleCharacterChoose(item)}
+                                disabled={isChoosing} // Блокируем кнопку при выборе
+                            />
+                        </View>
+                    ))}
+                </View>
             </View>
-        </View>
+        </ImageBackground>
     );
 }

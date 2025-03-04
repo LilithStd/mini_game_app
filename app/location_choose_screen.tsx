@@ -3,7 +3,7 @@ import { useGlobalStore } from "@/store/global_store";
 import { LOCATIONS_GROUP, useLocationStore } from "@/store/location_store"
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
-import { SafeAreaView, Text, TouchableOpacity, View } from "react-native"
+import { ImageBackground, SafeAreaView, Text, TouchableOpacity, View } from "react-native"
 import { MotiView } from 'moti'
 
 export default function LocationChooseScreen() {
@@ -33,33 +33,36 @@ export default function LocationChooseScreen() {
                 alignItems: 'center', // Центрирование по горизонтали
                 gap: 6
             }}
+        ><ImageBackground
+            style={{
+                flex: 1,
+                width: "100%",
+                height: "100%",
+                alignItems: "center",
+                justifyContent: 'center'
+            }}
+            resizeMode='cover'
+            source={require('../assets/backgrounds/bg_1.jpg')}
         >
-            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-                <MotiView
-                    from={{ opacity: 0, translateY: -50 }}
-                    animate={{ opacity: 1, translateY: 0 }}
-                    transition={{ type: 'timing', duration: 500 }}
-                    style={{ width: 100, height: 100, backgroundColor: 'blue' }}
-                />
-            </View>
-            {listLocations.map((item) => (
-                <TouchableOpacity
-                    key={item}
-                    style={{
-                        backgroundColor: 'green',
-                        padding: 10,
-                        borderRadius: 5
-                    }}
-                    onPress={() => handleRedirectToLocation(item)}
-                >
-                    <Text
+                {listLocations.map((item) => (
+                    <TouchableOpacity
                         key={item}
                         style={{
-                            color: 'white'
+                            backgroundColor: 'green',
+                            padding: 10,
+                            borderRadius: 5
                         }}
-                    >{item}</Text>
-                </TouchableOpacity>
-            ))}
+                        onPress={() => handleRedirectToLocation(item)}
+                    >
+                        <Text
+                            key={item}
+                            style={{
+                                color: 'white'
+                            }}
+                        >{item}</Text>
+                    </TouchableOpacity>
+                ))}
+            </ImageBackground>
         </SafeAreaView>
 
     )
