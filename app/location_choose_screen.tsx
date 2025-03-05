@@ -10,6 +10,12 @@ export default function LocationChooseScreen() {
     const router = useRouter();
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const listLocations = Object.values(LOCATIONS_GROUP);
+    const locationImagePull = [
+        { name: 'forest', model: require('../assets/location/forest/location_06.png') },
+        { name: 'swamp', model: require('../assets/location/swamp/location_02.png') }
+    ]
+
+    const defaultBackground = require('../assets/backgrounds/bg_1.jpg')
     const handleRedirectToLocation = (location: string) => {
         if (!location) return;
 
@@ -45,22 +51,45 @@ export default function LocationChooseScreen() {
             source={require('../assets/backgrounds/bg_1.jpg')}
         >
                 {listLocations.map((item) => (
-                    <TouchableOpacity
+                    <View
                         key={item}
                         style={{
-                            backgroundColor: 'green',
-                            padding: 10,
-                            borderRadius: 5
+                            width: '100%',
+                            gap: 2,
+                            justifyContent: 'center'
+
                         }}
-                        onPress={() => handleRedirectToLocation(item)}
                     >
-                        <Text
-                            key={item}
+                        <TouchableOpacity
+
                             style={{
-                                color: 'white'
+                                backgroundColor: 'green',
+                                padding: 10,
+                                borderRadius: 5,
+                                margin: 2
                             }}
-                        >{item}</Text>
-                    </TouchableOpacity>
+                            onPress={() => handleRedirectToLocation(item)}
+                        >
+                            <ImageBackground
+                                style={{
+                                    height: 100,
+                                    justifyContent: 'center'
+                                }}
+                                source={locationImagePull.find(location => location.name === item)?.model || defaultBackground}
+                                resizeMode="cover"
+                            >
+                                <Text
+                                    key={item}
+                                    style={{
+                                        color: 'white',
+                                        fontSize: 20,
+                                        justifyContent: 'center'
+                                    }}
+                                >{item}</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </View>
+
                 ))}
             </ImageBackground>
         </SafeAreaView>
