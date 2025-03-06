@@ -64,7 +64,7 @@ export default function LocationChooseScreen() {
 
                             style={{
                                 backgroundColor: 'green',
-                                padding: 10,
+                                padding: 2,
                                 borderRadius: 5,
                                 margin: 2
                             }}

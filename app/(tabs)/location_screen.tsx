@@ -23,7 +23,7 @@ export default function LocationScreen() {
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
     const getRandomLocationImage = () => {
-        const defaultImage = require('../assets/backgrounds/bg_2.jpg');
+        const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
 
         if (location !== undefined || currentLocation !== '') {
             const tempElement = location && location !== undefined ? location : currentLocationPrevious.group
