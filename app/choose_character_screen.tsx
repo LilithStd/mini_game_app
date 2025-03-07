@@ -1,5 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
-import { useCharacterStore, Character_Pull_Type, UPDATE_CHARACTER_STATS } from "@/store/character_store"
+import { useCharacterStore, UPDATE_CHARACTER_STATS, CharacterStats } from "@/store/character_store"
 import { useGlobalStore } from "@/store/global_store"
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ export default function ChooseCharacterScreen() {
     const [isChoosing, setIsChoosing] = useState(false);
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const characters_pull_for_choose = useCharacterStore(state => state.choose_character_pull)
-    const choose_character = useCharacterStore(state => state.update_character)
+    const choose_character = useCharacterStore(state => state.updateCharacterStats)
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
 
 
@@ -18,7 +18,7 @@ export default function ChooseCharacterScreen() {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
     }, [])
 
-    const handleCharacterChoose = (item: Character_Pull_Type) => {
+    const handleCharacterChoose = (item: CharacterStats) => {
         setIsChoosing(true);
         setContinueGame()
         choose_character(UPDATE_CHARACTER_STATS.ALL, item)
