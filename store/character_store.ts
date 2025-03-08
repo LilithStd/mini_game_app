@@ -10,6 +10,19 @@ const Character = {
 	CHARACTER_3: require('../assets/character/character_3.png'),
 };
 
+const LEVELS = [
+	{level: 1, experience: 0, reward: 'none'},
+	{level: 2, experience: 100, reward: 'small potion'},
+	{level: 3, experience: 250, reward: 'medium potion'},
+	{level: 4, experience: 500, reward: 'large potion'},
+	{level: 5, experience: 1000, reward: 'bronze sword'},
+	{level: 6, experience: 1800, reward: 'silver sword'},
+	{level: 7, experience: 3000, reward: 'golden armor'},
+	{level: 8, experience: 4500, reward: 'magic ring'},
+	{level: 9, experience: 6500, reward: 'legendary scroll'},
+	{level: 10, experience: 9000, reward: 'dragon slayer sword'},
+];
+
 const count_character_in_pull = 3;
 
 // export type Character_Pull_Type = {
@@ -160,9 +173,47 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
 							updatedCharacter.healPoints = updateValue as number;
 							break;
-						case UPDATE_CHARACTER_STATS.EXPIRIENCE:
-							updatedCharacter.expirience = updateValue as number;
+						case UPDATE_CHARACTER_STATS.EXPIRIENCE: {
+							let incomeExp = updateValue as number;
+							let currentLevel = get().characterStats.level;
+							let currentExp = get().characterStats.expirience;
+
+							// Находим максимальный уровень из LEVELS
+							const maxLevel = Math.max(...LEVELS.map((lvl) => lvl.level));
+
+							while (incomeExp > 0 && currentLevel < maxLevel) {
+								const foundLevel = LEVELS.find(
+									(lvl) => lvl.level === currentLevel,
+								);
+
+								if (!foundLevel) break; // Если уровень не найден, выходим из цикла
+
+								const requiredExp = foundLevel.experience;
+
+								if (currentExp + incomeExp >= requiredExp) {
+									// Повышаем уровень
+									incomeExp -= requiredExp - currentExp; // Вычитаем использованный опыт
+									currentLevel += 1;
+									currentExp = 0; // Опыт сбрасывается на 0 при повышении уровня
+								} else {
+									currentExp += incomeExp; // Если не хватает на уровень, просто добавляем опыт
+									incomeExp = 0;
+								}
+							}
+
+							// Если достигнут максимальный уровень, ограничиваем опыт
+							if (currentLevel === maxLevel) {
+								const maxExp =
+									LEVELS.find((lvl) => lvl.level === maxLevel)?.experience || 0;
+								currentExp = Math.min(currentExp + incomeExp, maxExp);
+							}
+
+							updatedCharacter.level = currentLevel;
+							updatedCharacter.expirience = currentExp;
+
 							break;
+						}
+
 						case UPDATE_CHARACTER_STATS.TOTAL_DAMAGE:
 							updatedCharacter.totalDamage = updateValue as number;
 							break;

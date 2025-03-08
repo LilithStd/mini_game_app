@@ -1,5 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
-import { Character_Default, Character_Pull_Type, Character_Type, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { Character_Default, Character_Type, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
 import { useRouter } from "expo-router";
 import { useEffect } from "react";
@@ -7,7 +7,7 @@ import { Button, Image, Text, View } from "react-native";
 
 export default function Character() {
     const router = useRouter();
-    const character_model = useCharacterStore(state => state.character_model)
+    const characterStats = useCharacterStore(state => state.characterStats)
     const default_state = useCharacterStore(state => state.default_state)
 
     return (
@@ -20,7 +20,7 @@ export default function Character() {
                 style={{
 
                 }}
-                source={character_model}
+                source={characterStats.model}
             />
         </View>
     )

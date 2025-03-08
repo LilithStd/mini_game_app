@@ -6,6 +6,7 @@ import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 export default function VictoryScreen() {
     const router = useRouter();
+    const { expirience } = useLocalSearchParams()
     const location = useLocationStore(state => state.locationToBattleScreen)
     const currentLocation = useLocationStore(state => state.currentLocation)
 
@@ -46,7 +47,7 @@ export default function VictoryScreen() {
                 }}
             >
                 <Text style={{ fontSize: 24, fontWeight: "bold" }}>Victory Screen</Text>
-                <Text>EXP:10</Text>
+                <Text>EXP:{expirience}</Text>
                 <View
                     style={{
                         flexDirection: 'row'

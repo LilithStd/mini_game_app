@@ -10,6 +10,8 @@ import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { getRandomNumber } from "@/constants/helpers";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -18,7 +20,9 @@ export default function Battle_Screen() {
     const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
     const updateEnemy = useBattleStore(state => state.updateEnemyStats)
-    const characterStats = useBattleStore(state => state.character)
+    const characterBattleStats = useBattleStore(state => state.character)
+    const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
+    const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useBattleStore(state => state.enemy)
 
     const FOCUS_ELEMENT = {
@@ -71,20 +75,22 @@ export default function Battle_Screen() {
 
         setScaleCharacter(1)
         setScaleEnemy(0.7)
-        updateEnemy(UPDATE_STATS.HP, characterStats.attack)
+        updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
     };
 
 
     useEffect(() => {
-        updateCharacter(UPDATE_STATS.ALL, default_stats_character)
+        updateCharacter(UPDATE_STATS.ALL, characterStats ? characterStats : default_stats_character)
         updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
     }, [])
 
     useEffect(() => {
         if (enemyStats.death) {
+            const expirience = getRandomNumber(100, 300)
+            characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
             router.push({
                 pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-                params: { location }
+                params: { location, expirience }
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }

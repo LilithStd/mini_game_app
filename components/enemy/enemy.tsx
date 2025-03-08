@@ -11,13 +11,13 @@ export default function Enemy() {
     const currentLocation = useLocationStore(state => state.currentLocation)
     const enemyStats = useBattleStore(state => state.enemy)
 
-    const randomEnemyForCurrentLocation = () => {
-        return enemyPull(currentLocation)[Math.floor(Math.random() * enemyPull(currentLocation).length)]
-    }
+    // const randomEnemyForCurrentLocation = () => {
+    //     return enemyPull(currentLocation)[Math.floor(Math.random() * enemyPull(currentLocation).length)]
+    // }
 
-    useEffect(() => {
-        setCurrentEnemy(randomEnemyForCurrentLocation())
-    }, [])
+    // useEffect(() => {
+    //     setCurrentEnemy(randomEnemyForCurrentLocation())
+    // }, [])
 
 
     return (

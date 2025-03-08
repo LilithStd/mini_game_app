@@ -70,6 +70,7 @@ export interface EnemyStoreInterface {
 	currentEnemy: EnemyTypePull;
 	setCurrentEnemy: (currentEnemy: EnemyTypePull) => void;
 	setDefaultState: () => void;
+	getRandomEnemyForBattle: (location: string) => void;
 	getEnemyPullForLocations: (location: string) => EnemyTypePull[];
 }
 
@@ -93,6 +94,15 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 					defaultState: true,
 					enemyPull: ENEMY_CONTENT,
 				});
+			},
+			getRandomEnemyForBattle: (location) => {
+				const enemies = get().getEnemyPullForLocations(location);
+				if (enemies.length === 0) {
+					return null; // Возвращаем null, если врагов нет
+				}
+				const currentEnemey =
+					enemies[Math.floor(Math.random() * enemies.length)];
+				get().setCurrentEnemy(currentEnemey);
 			},
 			getEnemyPullForLocations: (location) => {
 				return get().enemyPull.filter((item) =>
