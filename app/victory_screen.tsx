@@ -6,7 +6,7 @@ import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 export default function VictoryScreen() {
     const router = useRouter();
-    const { expirience } = useLocalSearchParams()
+    const { expirience, retreat } = useLocalSearchParams()
     const location = useLocationStore(state => state.locationToBattleScreen)
     const currentLocation = useLocationStore(state => state.currentLocation)
 
@@ -45,14 +45,9 @@ export default function VictoryScreen() {
                     borderRadius: 20, // Закругляем углы
                     alignItems: "center", // Центрирует текст внутри View
                 }}
-            >
-                <Text style={{ fontSize: 24, fontWeight: "bold" }}>Victory Screen</Text>
-                <Text>EXP:{expirience}</Text>
-                <View
-                    style={{
-                        flexDirection: 'row'
-                    }}
-                >
+            >{retreat ?
+                <View>
+                    <Text>you retreated and lost progress on the location</Text>
                     <TouchableOpacity
                         style={{
                             backgroundColor: 'green',
@@ -66,22 +61,47 @@ export default function VictoryScreen() {
                             color: 'white'
                         }}>Return</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={{
-                            backgroundColor: 'green',
-                            margin: '5%',
-                            padding: '3%',
-                            borderRadius: 6
-                        }}
-                        onPress={handleContinueBattle}
-                    >
-                        <Text
-                            style={{
-                                color: 'white'
-                            }}
-                        >Continue</Text>
-                    </TouchableOpacity>
                 </View>
+                :
+                <View>
+                    <Text style={{ fontSize: 24, fontWeight: "bold" }}>Victory Screen</Text>
+                    <Text>EXP:{expirience}</Text>
+                    <View
+                        style={{
+                            flexDirection: 'row'
+                        }}
+                    >
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'green',
+                                margin: '5%',
+                                padding: '3%',
+                                borderRadius: 6
+                            }}
+                            onPress={handleSwitchScreenToLocation}
+                        >
+                            <Text style={{
+                                color: 'white'
+                            }}>Return</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            style={{
+                                backgroundColor: 'green',
+                                margin: '5%',
+                                padding: '3%',
+                                borderRadius: 6
+                            }}
+                            onPress={handleContinueBattle}
+                        >
+                            <Text
+                                style={{
+                                    color: 'white'
+                                }}
+                            >Continue</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>}
+
             </View>
         </ImageBackground>
     )

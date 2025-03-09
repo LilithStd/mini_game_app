@@ -67,7 +67,11 @@ export default function Battle_Screen() {
 
     }
     const handleRetreatButton = () => {
-
+        const retreat = 'retreat'
+        router.push({
+            pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
+            params: { location, retreat }
+        });
     }
     const enemyTempButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
