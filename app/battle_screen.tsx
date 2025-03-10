@@ -35,6 +35,16 @@ export default function Battle_Screen() {
     const [scaleCharacter, setScaleCharacter] = useState(1);
     const [scaleEnemy, setScaleEnemy] = useState(0.7);
     const [isPressed, setIsPressed] = useState(false);
+    const [visible, setVisible] = useState(false);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setVisible(true);
+        }, 3000); // 3 секунды, можно менять
+
+        return () => clearTimeout(timer); // Очистка таймера при размонтировании
+    }, []);
+
     // 
     const [elementHide, setElementHide] = useState(FOCUS_ELEMENT.ENEMY)
 
@@ -76,7 +86,6 @@ export default function Battle_Screen() {
     const enemyTempButton = () => {
         setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
         setElementHide(FOCUS_ELEMENT.ENEMY);
-
         setScaleCharacter(1)
         setScaleEnemy(0.7)
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
@@ -198,6 +207,34 @@ export default function Battle_Screen() {
                         left: '-10%'
                         // right: enemyPostion
                     }}>
+                    <View style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                        position: 'relative',
+                        zIndex: 4,
+                    }}>
+                        {visible && (
+                            <MotiView
+                                from={{ opacity: 0, scale: 0.8 }}
+                                animate={{ opacity: 1, scale: 1 }}
+                                exit={{ opacity: 0, scale: 0.8 }}
+                                transition={{ type: "spring", duration: 500 }}
+                            >
+                                <Text style={{
+                                    position: 'absolute',
+                                    top: 200,
+                                    fontSize: 20,
+                                    backgroundColor: "black",
+                                    color: "white",
+                                    padding: 10,
+                                    borderRadius: 10
+                                }}>
+                                    {characterBattleStats.attack}
+                                </Text>
+                            </MotiView>
+                        )}
+                    </View>
                     <Pressable
                         style={{
 
@@ -206,8 +243,8 @@ export default function Battle_Screen() {
                     >
                         <Enemy />
                     </Pressable>
-
                 </MotiView>
+
             </ImageBackground>
         </SafeAreaView>
     )
