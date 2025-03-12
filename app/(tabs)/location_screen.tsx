@@ -16,6 +16,8 @@ const rewards = [
     { name: "Ключ от сундука", value: 1 }
 ];
 
+const countTreasureRollDefault = 3
+
 export default function LocationScreen() {
     const router = useRouter();
     const { location } = useLocalSearchParams();
@@ -31,9 +33,9 @@ export default function LocationScreen() {
     const [isModalVisible, setModalVisible] = useState(false);
     const [isTresure, setIsTreausre] = useState(false)
     const [isChooseTreasure, setIsChooseTreasure] = useState(false)
+    const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
 
-
-    const [currentReward, setCurrentReward] = useState(rewards[0]);
+    const [currentReward, setCurrentReward] = useState({ name: 'treasure' });
     const [finalReward, setFinalReward] = useState<null | { name: string; value: number }>(null);
     const [isRolling, setIsRolling] = useState(false);
 
@@ -41,9 +43,12 @@ export default function LocationScreen() {
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
     const startLottery = () => {
+        if (countRollTreasure === 0) {
+            return
+        }
         setIsRolling(true);
         setFinalReward(null);
-
+        setCountRollTreasure(countRollTreasure - 1)
         let count = 0;
         const interval = setInterval(() => {
             setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
@@ -104,6 +109,7 @@ export default function LocationScreen() {
         setIsChooseTreasure(false)
         setIsTreausre(false)
         setModalVisible(false)
+        setCountRollTreasure(countTreasureRollDefault)
     }
     const handleModalChooseBattle = () => {
         setModalVisible(false)
@@ -176,7 +182,9 @@ export default function LocationScreen() {
                     {isTresure ? <View style={styles.modalContainer}>
                         <Text>You Find Treasure!</Text>
                         {isChooseTreasure ?
-                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            <View
+                                style={{
+                                }}>
                                 {currentReward && (
                                     <MotiText
                                         from={{ opacity: 0, scale: 0.8 }}
@@ -199,48 +207,64 @@ export default function LocationScreen() {
                                         {finalReward?.name || currentReward?.name || "Награда"}
                                     </MotiText>
                                 )}
-
-                                <TouchableOpacity
-                                    onPress={startLottery}
-                                    disabled={isRolling}
-                                    style={{
-                                        // marginTop: 20,
+                                <View style={{
+                                    flexDirection: 'row',
+                                    gap: 6,
+                                    alignItems: 'center',
+                                    justifyContent: 'center'
+                                }}>
+                                    <Text style={{
+                                        marginTop: 20,
                                         padding: 10,
-                                        backgroundColor: isRolling ? "gray" : "orange",
-                                        // backgroundColor: 'white',
-                                        // borderRadius: 10,
-                                        // alignItems: "center",
-                                        // justifyContent: "center",
-                                        minWidth: 40,
+                                        backgroundColor: isRolling || countRollTreasure === 0 ? "gray" : "orange",
+                                        height: 40,
                                     }}
-                                >
-                                    <Text
+                                    >{countRollTreasure}</Text>
+                                    <TouchableOpacity
+                                        onPress={startLottery}
+                                        disabled={isRolling || countRollTreasure === 0}
                                         style={{
-                                            zIndex: 5,
-                                            color: "white",
-                                            fontSize: 12,
-                                            fontWeight: "bold",
-                                            textAlign: "center",
+                                            marginTop: 20,
+                                            padding: 10,
+                                            backgroundColor: isRolling || countRollTreasure === 0 ? "gray" : "orange",
+                                            height: 40,
                                         }}
                                     >
-                                        {isRolling ? "Ждём..." : "Запустить лотерею"}
-                                    </Text>
-                                </TouchableOpacity>
+                                        <Text
+                                            style={{
+
+                                                color: "black",
+                                                fontSize: 12,
+                                                fontWeight: "bold",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            {isRolling ? "Waiting..." : "Get Treasure"}
+                                        </Text>
+                                    </TouchableOpacity>
+                                    <TouchableOpacity
+                                        onPress={handleSubmitTreasure}
+                                        disabled={isRolling}
+                                        style={{
+                                            marginTop: 20,
+                                            padding: 10,
+                                            backgroundColor: "orange",
+                                            height: 40,
+                                        }}
+                                    >
+                                        <Text
+                                            style={{
+                                                color: "black",
+                                                fontSize: 12,
+                                                fontWeight: "bold",
+                                                textAlign: "center",
+                                            }}
+                                        >
+                                            Done
+                                        </Text>
+                                    </TouchableOpacity>
+                                </View>
                             </View>
-                            // <View style={{
-                            //     flexDirection: 'row',
-                            //     gap: 10
-                            // }}>
-                            //     <TouchableOpacity
-                            //         onPress={handleSubmitTreasure}
-                            //         style={{
-                            //             backgroundColor: 'red',
-                            //             padding: 4,
-                            //             borderRadius: 6
-                            //         }}>
-                            //         <Text>Submit</Text>
-                            //     </TouchableOpacity>
-                            // </View>
                             :
                             <View style={{
                                 flexDirection: 'row',
