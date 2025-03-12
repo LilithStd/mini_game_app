@@ -1,7 +1,7 @@
 import { useCharacterStore } from "@/store/character_store";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
-import { Image, ImageBackground, Text, View } from "react-native";
+import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 
 export default function CharacterProfile() {
@@ -51,14 +51,38 @@ export default function CharacterProfile() {
                         gap: 10,
                         justifyContent: 'space-around'
                     }}>
-                        <Text>{CURRENT_PAGE.CHARACTER_STATS}</Text>
-                        <Text>{CURRENT_PAGE.CHARACTER_INVENTROY}</Text>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setCurrentList(CURRENT_PAGE.CHARACTER_STATS)
+                            }}
+                            style={{
+                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white'
+                            }}>
+                            <Text style={{
+                                color: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'white' : 'black'
+                            }}>{CURRENT_PAGE.CHARACTER_STATS}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={() => {
+                                setCurrentList(CURRENT_PAGE.CHARACTER_INVENTROY)
+                            }}
+                            style={{
+                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_INVENTROY ? 'green' : 'white'
+                            }}
+                        >
+                            <Text
+                                style={{
+                                    color: currentList === CURRENT_PAGE.CHARACTER_INVENTROY ? 'white' : 'black'
+                                }}
+                            >{CURRENT_PAGE.CHARACTER_INVENTROY}</Text>
+                        </TouchableOpacity>
                     </View>
                     <View style={{
                         flexDirection: 'row'
                     }}>
                         <View style={{
                             margin: 10,
+
                         }}>
                             <Text>Name:{characterStats.name}</Text>
                             <Text>Level:{characterStats.level}</Text>
@@ -70,11 +94,10 @@ export default function CharacterProfile() {
                         </View>
                         <View style={{
                             margin: 10,
+
                         }}>
                             {characterInventory.map((item) => (
-                                <View>
-                                    <Text>{item.name}</Text>
-                                </View>
+                                <Text key={item.name}>{item.name} x {item.value}</Text>
 
                             ))}
                         </View>

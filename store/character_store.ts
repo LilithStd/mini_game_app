@@ -188,6 +188,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 				set({
 					default_state: true,
 					character_pull: [],
+					characterInventory: [],
 				});
 			},
 			updateCharacterStats: (updateRequest, updateValue) => {

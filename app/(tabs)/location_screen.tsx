@@ -114,7 +114,7 @@ export default function LocationScreen() {
         setIsTreausre(false)
         setModalVisible(false)
         setCountRollTreasure(countTreasureRollDefault)
-        setChracterInventory(currentReward)
+        setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
 
     }
     const handleModalChooseBattle = () => {
