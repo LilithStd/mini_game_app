@@ -72,6 +72,18 @@ export type Character_Type = {
 	level: number;
 };
 
+export type CharacterInventoryType = {
+	name: string;
+	value: number;
+	type: string;
+};
+
+export enum INVENTORY_ITEM {
+	WEAPON = 'weapon',
+	ARMOR = 'armor',
+	CONSUMBLES = 'consumables',
+}
+
 export type CharacterStats = {
 	name: string;
 	model: number;
@@ -113,6 +125,8 @@ export interface CharacterStoreInterface {
 	default_state: boolean;
 	character_pull: CharacterStats[];
 	characterStats: CharacterStats;
+	characterInventory: CharacterInventoryType[];
+	characterInventoryUpdate: (item: CharacterInventoryType) => void;
 	updateCharacterStats: (
 		updateRequest: UPDATE_CHARACTER_STATS,
 		updateValue: string | number | boolean | CharacterStats,
@@ -127,6 +141,32 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 			default_state: true,
 			character_pull: Character_Pull,
 			characterStats: Character_Default_Stats,
+			characterInventory: [],
+			characterInventoryUpdate: (item) =>
+				set((state) => {
+					const updatedInventory = state.characterInventory.map((element) => {
+						if (
+							element.name === item.name &&
+							element.type === INVENTORY_ITEM.CONSUMBLES
+						) {
+							return {...element, value: element.value + item.value};
+						}
+						return element;
+					});
+
+					const itemExists = state.characterInventory.some(
+						(element) =>
+							element.name === item.name &&
+							element.type === INVENTORY_ITEM.CONSUMBLES,
+					);
+
+					// Если элемент не найден, добавляем новый
+					if (!itemExists) {
+						updatedInventory.push(item);
+					}
+
+					return {characterInventory: updatedInventory};
+				}),
 			choose_character_pull: () => {
 				if (count_character_in_pull > Character_Pull.length) {
 					throw new Error(

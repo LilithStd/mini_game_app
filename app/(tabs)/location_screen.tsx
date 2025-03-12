@@ -1,5 +1,6 @@
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
+import { INVENTORY_ITEM, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
 import { Location_content_type, useLocationStore } from '@/store/location_store';
@@ -9,11 +10,11 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
 const rewards = [
-    { name: "Золотая монета", value: 10 },
-    { name: "Меч героя", value: 1 },
-    { name: "Зелье здоровья", value: 5 },
-    { name: "Редкий кристалл", value: 2 },
-    { name: "Ключ от сундука", value: 1 }
+    { name: "Золотая монета", value: 10, type: INVENTORY_ITEM.CONSUMBLES },
+    { name: "Меч героя", value: 1, type: INVENTORY_ITEM.WEAPON },
+    { name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM.CONSUMBLES },
+    { name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM.CONSUMBLES },
+    { name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM.CONSUMBLES }
 ];
 
 const countTreasureRollDefault = 3
@@ -28,6 +29,9 @@ export default function LocationScreen() {
     const currentLocation = useLocationStore(state => state.currentLocation)
     const currentEnemy = useEnemyStore(state => state.currentEnemy)
     const setRandomCurrentEnemy = useEnemyStore(state => state.getRandomEnemyForBattle)
+    const setChracterInventory = useCharacterStore(state => state.characterInventoryUpdate)
+
+
 
     const [countScreen, setCountScreen] = useState(0)
     const [isModalVisible, setModalVisible] = useState(false);
@@ -35,8 +39,8 @@ export default function LocationScreen() {
     const [isChooseTreasure, setIsChooseTreasure] = useState(false)
     const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
 
-    const [currentReward, setCurrentReward] = useState({ name: 'treasure' });
-    const [finalReward, setFinalReward] = useState<null | { name: string; value: number }>(null);
+    const [currentReward, setCurrentReward] = useState({ name: 'treasure', value: 0, type: '' });
+    const [finalReward, setFinalReward] = useState<null | { name: string; value: number; type: string }>(null);
     const [isRolling, setIsRolling] = useState(false);
 
 
@@ -110,6 +114,8 @@ export default function LocationScreen() {
         setIsTreausre(false)
         setModalVisible(false)
         setCountRollTreasure(countTreasureRollDefault)
+        setChracterInventory(currentReward)
+
     }
     const handleModalChooseBattle = () => {
         setModalVisible(false)
@@ -244,11 +250,11 @@ export default function LocationScreen() {
                                     </TouchableOpacity>
                                     <TouchableOpacity
                                         onPress={handleSubmitTreasure}
-                                        disabled={isRolling}
+                                        disabled={isRolling || currentReward.name === 'treasure'}
                                         style={{
                                             marginTop: 20,
                                             padding: 10,
-                                            backgroundColor: "orange",
+                                            backgroundColor: isRolling || currentReward.name === 'treasure' ? "gray" : "orange",
                                             height: 40,
                                         }}
                                     >
