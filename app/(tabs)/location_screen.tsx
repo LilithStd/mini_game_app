@@ -10,14 +10,16 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
 const rewards = [
-    { name: "Золотая монета", value: 10, type: INVENTORY_ITEM.CONSUMBLES },
-    { name: "Меч героя", value: 1, type: INVENTORY_ITEM.WEAPON },
-    { name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM.CONSUMBLES },
-    { name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM.CONSUMBLES },
-    { name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM.CONSUMBLES }
+    { id: '0', name: "Золотая монета", value: 10, type: INVENTORY_ITEM.CONSUMBLES },
+    { id: '1', name: "Меч героя", value: 1, type: INVENTORY_ITEM.WEAPON },
+    { id: '2', name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM.CONSUMBLES },
+    { id: '3', name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM.CONSUMBLES },
+    { id: '4', name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM.CONSUMBLES }
 ];
 
 const countTreasureRollDefault = 3
+
+const defaultTreasure = { id: '', name: 'treasure', value: 0, type: '' }
 
 export default function LocationScreen() {
     const router = useRouter();
@@ -39,8 +41,8 @@ export default function LocationScreen() {
     const [isChooseTreasure, setIsChooseTreasure] = useState(false)
     const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
 
-    const [currentReward, setCurrentReward] = useState({ name: 'treasure', value: 0, type: '' });
-    const [finalReward, setFinalReward] = useState<null | { name: string; value: number; type: string }>(null);
+    const [currentReward, setCurrentReward] = useState(defaultTreasure);
+    const [finalReward, setFinalReward] = useState<null | { id: string, name: string; value: number; type: string }>(null);
     const [isRolling, setIsRolling] = useState(false);
 
 
@@ -113,6 +115,8 @@ export default function LocationScreen() {
         setIsChooseTreasure(false)
         setIsTreausre(false)
         setModalVisible(false)
+        setCurrentReward(defaultTreasure)
+        setFinalReward(defaultTreasure)
         setCountRollTreasure(countTreasureRollDefault)
         setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
 
@@ -141,7 +145,7 @@ export default function LocationScreen() {
     }, [isTresure, countScreen, countScreenToBattle])
 
     useEffect(() => {
-        if (countScreen === countScreenToBattle) {
+        if (countScreen >= countScreenToBattle) {
             if (isTresure) {
                 setIsTreausre(false)
             }
@@ -369,9 +373,6 @@ export default function LocationScreen() {
             </View>
 
         </ImageBackground>
-
-
-
     )
 }
 

@@ -73,6 +73,7 @@ export type Character_Type = {
 };
 
 export type CharacterInventoryType = {
+	id: string;
 	name: string;
 	value: number;
 	type: string;
@@ -145,19 +146,14 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 			characterInventoryUpdate: (item) =>
 				set((state) => {
 					const updatedInventory = state.characterInventory.map((element) => {
-						if (
-							element.name === item.name &&
-							element.type === INVENTORY_ITEM.CONSUMBLES
-						) {
+						if (element.name === item.name) {
 							return {...element, value: element.value + item.value};
 						}
 						return element;
 					});
 
 					const itemExists = state.characterInventory.some(
-						(element) =>
-							element.name === item.name &&
-							element.type === INVENTORY_ITEM.CONSUMBLES,
+						(element) => element.name === item.name,
 					);
 
 					// Если элемент не найден, добавляем новый

@@ -7,7 +7,7 @@ import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-nati
 export default function CharacterProfile() {
     enum CURRENT_PAGE {
         CHARACTER_STATS = 'character stats',
-        CHARACTER_INVENTROY = 'character inventory'
+        CHARACTER_INVENTORY = 'character inventory'
     }
     const [currentList, setCurrentList] = useState(CURRENT_PAGE.CHARACTER_STATS)
     const characterStats = useCharacterStore(state => state.characterStats)
@@ -25,15 +25,17 @@ export default function CharacterProfile() {
             source={location.model}
             resizeMode="cover"
         >
-            <View
+            <ImageBackground
                 style={{
                     backgroundColor: 'white',
                     borderRadius: 8,
                     justifyContent: 'center',
                     alignItems: 'center',
-                    width: '98%',
-                    height: '98%'
+                    width: '100%',
+                    height: '100%'
                 }}
+                source={require('../../assets/backgrounds/bg_4.jpg')}
+                resizeMode='cover'
             >
                 <Text>Character Profile</Text>
                 <Image
@@ -49,14 +51,20 @@ export default function CharacterProfile() {
                     <View style={{
                         flexDirection: 'row',
                         gap: 10,
-                        justifyContent: 'space-around'
+                        // justifyContent: "space-between"
+                        justifyContent: 'space-around',
+                        backgroundColor: 'grey',
+                        paddingBottom: 10,
+                        paddingTop: 10
                     }}>
                         <TouchableOpacity
                             onPress={() => {
                                 setCurrentList(CURRENT_PAGE.CHARACTER_STATS)
                             }}
                             style={{
-                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white'
+                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white',
+                                padding: 6
+                                // width: '50%'
                             }}>
                             <Text style={{
                                 color: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'white' : 'black'
@@ -64,17 +72,18 @@ export default function CharacterProfile() {
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={() => {
-                                setCurrentList(CURRENT_PAGE.CHARACTER_INVENTROY)
+                                setCurrentList(CURRENT_PAGE.CHARACTER_INVENTORY)
                             }}
                             style={{
-                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_INVENTROY ? 'green' : 'white'
+                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 'green' : 'white',
+                                padding: 6
                             }}
                         >
                             <Text
                                 style={{
-                                    color: currentList === CURRENT_PAGE.CHARACTER_INVENTROY ? 'white' : 'black'
+                                    color: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 'white' : 'black'
                                 }}
-                            >{CURRENT_PAGE.CHARACTER_INVENTROY}</Text>
+                            >{CURRENT_PAGE.CHARACTER_INVENTORY}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -82,6 +91,8 @@ export default function CharacterProfile() {
                     }}>
                         <View style={{
                             margin: 10,
+                            opacity: currentList === CURRENT_PAGE.CHARACTER_STATS ? 1 : 0, // Элемент остается на месте, но невидим
+                            pointerEvents: currentList === CURRENT_PAGE.CHARACTER_STATS ? "auto" : "none", // Блокирует клики, если скрыт
 
                         }}>
                             <Text>Name:{characterStats.name}</Text>
@@ -94,19 +105,17 @@ export default function CharacterProfile() {
                         </View>
                         <View style={{
                             margin: 10,
-
+                            opacity: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 1 : 0, // Элемент остается на месте, но невидим
+                            pointerEvents: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? "auto" : "none", // Блокирует клики, если скрыт
                         }}>
                             {characterInventory.map((item) => (
-                                <Text key={item.name}>{item.name} x {item.value}</Text>
+                                <Text key={item.id}>{item.name} x {item.value}</Text>
 
                             ))}
                         </View>
                     </View>
-
                 </View>
-
-
-            </View>
+            </ImageBackground>
 
         </ImageBackground>
 
