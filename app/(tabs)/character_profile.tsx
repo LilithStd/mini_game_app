@@ -13,6 +13,7 @@ export default function CharacterProfile() {
     const characterStats = useCharacterStore(state => state.characterStats)
     const characterInventory = useCharacterStore(state => state.characterInventory)
     const location = useLocationStore(state => state.locationToBattleScreen)
+    const buttonMask = require('../../assets/mask/mask_02.png')
 
     return (
         <ImageBackground
@@ -57,19 +58,31 @@ export default function CharacterProfile() {
                         paddingBottom: 10,
                         paddingTop: 10
                     }}>
-                        <TouchableOpacity
-                            onPress={() => {
-                                setCurrentList(CURRENT_PAGE.CHARACTER_STATS)
-                            }}
+                        <ImageBackground
                             style={{
-                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white',
-                                padding: 6
-                                // width: '50%'
-                            }}>
-                            <Text style={{
-                                color: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'white' : 'black'
-                            }}>{CURRENT_PAGE.CHARACTER_STATS}</Text>
-                        </TouchableOpacity>
+                                // width: '80%',
+                                // height: '100%'
+                            }}
+                            source={buttonMask}
+                            resizeMode="cover"
+                        >
+                            <TouchableOpacity
+                                onPress={() => {
+                                    setCurrentList(CURRENT_PAGE.CHARACTER_STATS)
+                                }}
+                                style={{
+                                    backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white',
+                                    padding: 6
+                                    // width: '50%'
+                                }}>
+
+                                <Text style={{
+                                    color: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'white' : 'black'
+                                }}>{CURRENT_PAGE.CHARACTER_STATS}</Text>
+
+
+                            </TouchableOpacity>
+                        </ImageBackground>
                         <TouchableOpacity
                             onPress={() => {
                                 setCurrentList(CURRENT_PAGE.CHARACTER_INVENTORY)
