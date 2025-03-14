@@ -54,6 +54,11 @@ const LOCATION_CONTENT = [
 		group: LOCATIONS_GROUP.SWAMP,
 		model: require('../assets/location/swamp/location_04.png'),
 	},
+	{
+		name: 'name_9',
+		group: LOCATIONS_GROUP.FOREST,
+		model: require('../assets/location/forest/location_09.png'),
+	},
 ];
 
 export interface LocationStoreInterface {
