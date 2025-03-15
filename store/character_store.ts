@@ -79,7 +79,7 @@ export type CharacterInventoryType = {
 	type: string;
 };
 
-export enum INVENTORY_ITEM {
+export enum INVENTORY_ITEM_TYPE {
 	WEAPON = 'weapon',
 	ARMOR = 'armor',
 	CONSUMBLES = 'consumables',

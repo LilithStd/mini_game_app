@@ -1,4 +1,4 @@
-import { useCharacterStore } from "@/store/character_store";
+import { INVENTORY_ITEM_TYPE, useCharacterStore } from "@/store/character_store";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
 import { Image, ImageBackground, Text, TouchableOpacity, View } from "react-native";
@@ -13,7 +13,7 @@ export default function CharacterProfile() {
     const characterStats = useCharacterStore(state => state.characterStats)
     const characterInventory = useCharacterStore(state => state.characterInventory)
     const location = useLocationStore(state => state.locationToBattleScreen)
-    const buttonMask = require('../../assets/mask/mask_02.png')
+    const buttonMask = require('../../assets/mask/mask_brush.png')
 
     return (
         <ImageBackground
@@ -48,6 +48,7 @@ export default function CharacterProfile() {
                 />
                 <View style={{
                     width: '100%',
+
                 }}>
                     <View style={{
                         flexDirection: 'row',
@@ -56,22 +57,30 @@ export default function CharacterProfile() {
                         justifyContent: 'space-around',
                         backgroundColor: 'grey',
                         paddingBottom: 10,
-                        paddingTop: 10
+                        paddingTop: 10,
+                        // height: 200,
+                        // width: '100%'
                     }}>
                         <ImageBackground
-                            style={{
-                                // width: '80%',
-                                // height: '100%'
-                            }}
-                            source={buttonMask}
-                            resizeMode="cover"
+                        // style={{
+                        //     width: '100%',
+                        //     height: '80%'
+                        // }}
+                        // source={buttonMask}
+                        // resizeMode="cover"
                         >
+                            {/* <Image
+                            style={{
+                                width: '80%',
+                                height: '100%',
+                            }}
+                            source={buttonMask} /> */}
                             <TouchableOpacity
                                 onPress={() => {
                                     setCurrentList(CURRENT_PAGE.CHARACTER_STATS)
                                 }}
                                 style={{
-                                    backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white',
+                                    // backgroundColor: currentList === CURRENT_PAGE.CHARACTER_STATS ? 'green' : 'white',
                                     padding: 6
                                     // width: '50%'
                                 }}>
@@ -88,7 +97,7 @@ export default function CharacterProfile() {
                                 setCurrentList(CURRENT_PAGE.CHARACTER_INVENTORY)
                             }}
                             style={{
-                                backgroundColor: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 'green' : 'white',
+                                // backgroundColor: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 'green' : 'white',
                                 padding: 6
                             }}
                         >
@@ -121,10 +130,24 @@ export default function CharacterProfile() {
                             opacity: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 1 : 0, // Элемент остается на месте, но невидим
                             pointerEvents: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? "auto" : "none", // Блокирует клики, если скрыт
                         }}>
-                            {characterInventory.map((item) => (
-                                <Text key={item.id}>{item.name} x {item.value}</Text>
-
-                            ))}
+                            <View>
+                                <Text>Weapon:</Text>
+                                {characterInventory.filter((weaponType) => weaponType.type === INVENTORY_ITEM_TYPE.WEAPON).map((element) =>
+                                    <Text key={element.id}>{element.name} x {element.value}</Text>
+                                )}
+                            </View>
+                            <View>
+                                <Text>Armor:</Text>
+                                {characterInventory.filter((armorType) => armorType.type === INVENTORY_ITEM_TYPE.ARMOR).map((element) =>
+                                    <Text key={element.id}>{element.name} x {element.value}</Text>
+                                )}
+                            </View>
+                            <View>
+                                <Text>Consumbles:</Text>
+                                {characterInventory.filter((consumblesType) => consumblesType.type === INVENTORY_ITEM_TYPE.CONSUMBLES).map((element) =>
+                                    <Text key={element.id}>{element.name} x {element.value}</Text>
+                                )}
+                            </View>
                         </View>
                     </View>
                 </View>

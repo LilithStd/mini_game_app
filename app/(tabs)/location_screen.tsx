@@ -1,6 +1,6 @@
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
-import { INVENTORY_ITEM, useCharacterStore } from '@/store/character_store';
+import { INVENTORY_ITEM_TYPE, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
 import { Location_content_type, useLocationStore } from '@/store/location_store';
@@ -10,11 +10,11 @@ import React, { useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
 const rewards = [
-    { id: '0', name: "Золотая монета", value: 10, type: INVENTORY_ITEM.CONSUMBLES },
-    { id: '1', name: "Меч героя", value: 1, type: INVENTORY_ITEM.WEAPON },
-    { id: '2', name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM.CONSUMBLES },
-    { id: '3', name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM.CONSUMBLES },
-    { id: '4', name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM.CONSUMBLES }
+    { id: '0', name: "Золотая монета", value: 10, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
+    { id: '1', name: "Меч героя", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
+    { id: '2', name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
+    { id: '3', name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
+    { id: '4', name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM_TYPE.CONSUMBLES }
 ];
 
 const countTreasureRollDefault = 3
