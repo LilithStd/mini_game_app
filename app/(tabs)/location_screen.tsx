@@ -9,12 +9,18 @@ import { MotiText } from 'moti';
 import React, { useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
+
+
 const rewards = [
     { id: '0', name: "Золотая монета", value: 10, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
     { id: '1', name: "Меч героя", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
     { id: '2', name: "Зелье здоровья", value: 5, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
     { id: '3', name: "Редкий кристалл", value: 2, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
-    { id: '4', name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM_TYPE.CONSUMBLES }
+    { id: '4', name: "Ключ от сундука", value: 1, type: INVENTORY_ITEM_TYPE.CONSUMBLES },
+    { id: '5', name: "Меч дракона", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
+    { id: '6', name: "Эльфийский лук", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
+    { id: '7', name: "Копьё воина", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
+    { id: '8', name: "Булава огра", value: 1, type: INVENTORY_ITEM_TYPE.WEAPON },
 ];
 
 const countTreasureRollDefault = 3
