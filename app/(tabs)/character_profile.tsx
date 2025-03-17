@@ -1,4 +1,4 @@
-import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, useCharacterStore } from "@/store/character_store";
+import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
 import { FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
@@ -21,23 +21,27 @@ export default function CharacterProfile() {
     const [modalVisible, setModalVisible] = useState(false)
     const [currentTypeModal, setCurrentTypeModal] = useState<ModalProps>(DefaultModal)
     const [currentList, setCurrentList] = useState(CURRENT_PAGE.CHARACTER_STATS)
+    //character_store_methods
+    const characterEquipUpdate = useCharacterStore(state => state.characterEquipUpdate)
+    const characterEquipCurrent = useCharacterStore(state => state.characterEquip)
     const characterStats = useCharacterStore(state => state.characterStats)
     const characterInventory = useCharacterStore(state => state.characterInventory)
+    //
     const location = useLocationStore(state => state.locationToBattleScreen)
     const buttonMask = require('../../assets/mask/mask_brush.png')
 
     const ArmorBodyModal = {
-        name: INVENTORY_ITEM_TYPE.ARMOR,
+        name: INVENTORY_ITEM_ARMOR_SUBTYPE.BODY,
         arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
     }
 
     const ArmorHelmetModal = {
-        name: INVENTORY_ITEM_TYPE.ARMOR,
+        name: INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET,
         arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
     }
 
     const ArmorBootsModal = {
-        name: INVENTORY_ITEM_TYPE.ARMOR,
+        name: INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS,
         arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
     }
 
@@ -45,7 +49,6 @@ export default function CharacterProfile() {
         name: INVENTORY_ITEM_TYPE.WEAPON,
         arrayItems: characterInventory.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
     }
-
 
 
     //modal_actions_functions
@@ -143,7 +146,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>--Empty--</Text>
+                            }}> {characterEquipCurrent.weapon !== '' ? characterEquipCurrent.weapon : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -164,7 +167,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>--Empty--</Text>
+                            }}>{characterEquipCurrent.helmet !== '' ? characterEquipCurrent.helmet : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -185,7 +188,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>--Empty--</Text>
+                            }}>{characterEquipCurrent.body !== '' ? characterEquipCurrent.body : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -206,7 +209,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>--Empty--</Text>
+                            }}>{characterEquipCurrent.boots !== '' ? characterEquipCurrent.boots : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -284,13 +287,20 @@ export default function CharacterProfile() {
                         }}><Modal transparent={true} visible={modalVisible} animationType="fade">
                                 <View style={styles.overlay}>
                                     <View style={styles.modalContainer}>
-                                        <Text style={styles.title}>Выберите элемент</Text>
+                                        <Text style={styles.title}>Choose Item</Text>
 
                                         <FlatList
                                             data={currentTypeModal.arrayItems}
                                             keyExtractor={(item, index) => index.toString()}
                                             renderItem={({ item }) =>
-                                                <TouchableOpacity>
+                                                <TouchableOpacity
+                                                    onPress={() => {
+                                                        characterEquipUpdate(currentTypeModal.name, item.name)
+                                                        closeModal()
+                                                    }
+
+                                                    }
+                                                >
                                                     <Text style={styles.item}>{item.name}</Text>
                                                 </TouchableOpacity>
                                             }
@@ -370,9 +380,9 @@ export default function CharacterProfile() {
                         </View>
                     </View>
                 </View>
-            </ImageBackground>
+            </ImageBackground >
 
-        </ImageBackground>
+        </ImageBackground >
 
     )
 }

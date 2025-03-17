@@ -251,6 +251,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 					default_state: true,
 					character_pull: [],
 					characterInventory: [],
+					characterEquip: CharacterEquipDefault,
 				});
 			},
 			updateCharacterStats: (updateRequest, updateValue) => {
