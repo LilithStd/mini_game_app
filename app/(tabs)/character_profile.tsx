@@ -1,4 +1,4 @@
-import { CharacterInventoryType, INVENTORY_ITEM_TYPE, useCharacterStore } from "@/store/character_store";
+import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, useCharacterStore } from "@/store/character_store";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
 import { FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
@@ -9,7 +9,7 @@ enum CURRENT_PAGE {
 }
 const DefaultModal = {
     name: 'default',
-    arrayItems: [{ id: '', name: '', value: 0, type: '' }]
+    arrayItems: [{ id: '', name: '', value: 0, type: '', subType: '' }]
 }
 
 type ModalProps = {
@@ -26,9 +26,19 @@ export default function CharacterProfile() {
     const location = useLocationStore(state => state.locationToBattleScreen)
     const buttonMask = require('../../assets/mask/mask_brush.png')
 
-    const ArmorModal = {
+    const ArmorBodyModal = {
         name: INVENTORY_ITEM_TYPE.ARMOR,
-        arrayItems: characterInventory.filter((item) => item.type === INVENTORY_ITEM_TYPE.ARMOR)
+        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+    }
+
+    const ArmorHelmetModal = {
+        name: INVENTORY_ITEM_TYPE.ARMOR,
+        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
+    }
+
+    const ArmorBootsModal = {
+        name: INVENTORY_ITEM_TYPE.ARMOR,
+        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
     }
 
     const WeaponModal = {
@@ -42,22 +52,35 @@ export default function CharacterProfile() {
     const closeModal = () => {
         setModalVisible(false)
     }
-    const openModal = () => {
+    const openModal = (EquipType: ModalProps) => {
         setModalVisible(true)
-        setCurrentTypeModal(WeaponModal)
+        setCurrentTypeModal(EquipType)
     }
     //
 
     //handle_equip_functions
     const handleWeaponEquip = () => {
-        const weapons = characterInventory.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
         if (!modalVisible) {
-            openModal()
+            openModal(WeaponModal)
         }
 
     }
-    const handleArmorEquip = () => {
+    const handleArmorBodyEquip = () => {
+        if (!modalVisible) {
+            openModal(ArmorBodyModal)
+        }
+    }
 
+    const handleArmorHelmetEquip = () => {
+        if (!modalVisible) {
+            openModal(ArmorHelmetModal)
+        }
+    }
+
+    const handleArmorBootsEquip = () => {
+        if (!modalVisible) {
+            openModal(ArmorBootsModal)
+        }
     }
     //
 
@@ -79,7 +102,7 @@ export default function CharacterProfile() {
                     justifyContent: 'center',
                     alignItems: 'center',
                     width: '100%',
-                    height: '100%'
+                    height: '100%',
                 }}
                 source={require('../../assets/backgrounds/bg_4.jpg')}
                 resizeMode='cover'
@@ -95,7 +118,101 @@ export default function CharacterProfile() {
                 />
                 <View style={{
                     width: '100%',
-
+                    opacity: currentList === CURRENT_PAGE.CHARACTER_INVENTORY ? 1 : 0
+                }}>
+                    <Text style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        textAlign: 'center'
+                    }}>Equip</Text>
+                    <View style={{
+                        position: 'absolute',
+                        left: '20%',
+                        top: '-1100%'
+                    }}>
+                        <Text style={{
+                            backgroundColor: 'yellow',
+                            // width: '50%',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            textAlign: 'center'
+                        }}>Weapon</Text>
+                        <TouchableOpacity
+                            onPress={handleWeaponEquip}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                backgroundColor: 'grey'
+                            }}>--Empty--</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        position: 'absolute',
+                        right: '40%',
+                        bottom: '1760%'
+                    }}>
+                        <Text style={{
+                            backgroundColor: 'yellow',
+                            // width: '50%',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            textAlign: 'center'
+                        }}>Helmet</Text>
+                        <TouchableOpacity
+                            onPress={handleArmorHelmetEquip}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                backgroundColor: 'grey'
+                            }}>--Empty--</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        position: 'absolute',
+                        right: '40%',
+                        top: '-1360%'
+                    }}>
+                        <Text style={{
+                            backgroundColor: 'yellow',
+                            // width: '50%',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            textAlign: 'center'
+                        }}>Body</Text>
+                        <TouchableOpacity
+                            onPress={handleArmorBodyEquip}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                backgroundColor: 'grey'
+                            }}>--Empty--</Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{
+                        position: 'absolute',
+                        left: '40%',
+                        top: '-490%'
+                    }}>
+                        <Text style={{
+                            backgroundColor: 'yellow',
+                            // width: '50%',
+                            borderColor: 'red',
+                            borderWidth: 2,
+                            textAlign: 'center'
+                        }}>Boots</Text>
+                        <TouchableOpacity
+                            onPress={handleArmorBootsEquip}
+                        >
+                            <Text style={{
+                                textAlign: 'center',
+                                backgroundColor: 'grey'
+                            }}>--Empty--</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+                <View style={{
+                    width: '100%',
+                    height: '40%'
                 }}>
                     <View style={{
                         flexDirection: 'row',
@@ -172,7 +289,11 @@ export default function CharacterProfile() {
                                         <FlatList
                                             data={currentTypeModal.arrayItems}
                                             keyExtractor={(item, index) => index.toString()}
-                                            renderItem={({ item }) => <Text style={styles.item}>{item.name}</Text>}
+                                            renderItem={({ item }) =>
+                                                <TouchableOpacity>
+                                                    <Text style={styles.item}>{item.name}</Text>
+                                                </TouchableOpacity>
+                                            }
                                         />
 
                                         <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
@@ -181,88 +302,11 @@ export default function CharacterProfile() {
                                     </View>
                                 </View>
                             </Modal>
-                            <View style={{
-                                width: '50%'
-                            }}>
-                                <Text style={{
-                                    fontSize: 16,
-                                    fontWeight: 'bold',
-                                    textAlign: 'center'
-                                }}>Equip</Text>
-                                <View>
-                                    <Text style={{
-                                        backgroundColor: 'yellow',
-                                        // width: '50%',
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        textAlign: 'center'
-                                    }}>Weapon</Text>
-                                    <TouchableOpacity
-                                        onPress={handleWeaponEquip}
-                                    >
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            backgroundColor: 'grey'
-                                        }}>--Empty--</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={{
-                                        backgroundColor: 'yellow',
-                                        // width: '50%',
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        textAlign: 'center'
-                                    }}>Helmet</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            backgroundColor: 'grey'
-                                        }}>--Empty--</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={{
-                                        backgroundColor: 'yellow',
-                                        // width: '50%',
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        textAlign: 'center'
-                                    }}>Body</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            backgroundColor: 'grey'
-                                        }}>--Empty--</Text>
-                                    </TouchableOpacity>
-                                </View>
-                                <View>
-                                    <Text style={{
-                                        backgroundColor: 'yellow',
-                                        // width: '50%',
-                                        borderColor: 'red',
-                                        borderWidth: 2,
-                                        textAlign: 'center'
-                                    }}>Boots</Text>
-                                    <TouchableOpacity>
-                                        <Text style={{
-                                            textAlign: 'center',
-                                            backgroundColor: 'grey'
-                                        }}>--Empty--</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            <View style={{
-                                width: '50%',
-                                // alignItems: 'center'
 
-                            }}>
-                                <View style={{
-                                }}>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        fontWeight: 'bold'
-                                    }}>Weapon:</Text>
+                            <View style={{ flexDirection: "row", width: "100%" }}>
+                                {/* Левый столбец: Weapon + Armor */}
+                                <View style={{ width: "50%" }}>
+                                    <Text style={{ fontSize: 16, fontWeight: "bold" }}>Weapon:</Text>
                                     <View>
                                         {[
                                             ...characterInventory
@@ -271,21 +315,17 @@ export default function CharacterProfile() {
                                                     text: `${element.name} x ${element.value}`,
                                                     opacity: 1
                                                 })),
-                                            ...Array(3).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty" с полупрозрачностью
+                                            ...Array(4).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
                                         ]
-                                            .slice(0, 3) // Обрезаем до 3 элементов
+                                            .slice(0, 4)
                                             .map((item, index) => (
                                                 <Text key={index} style={{ opacity: item.opacity }}>
                                                     {item.text}
                                                 </Text>
                                             ))}
                                     </View>
-                                </View>
-                                <View>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        fontWeight: 'bold'
-                                    }}>Armor:</Text>
+
+                                    <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 10 }}>Armor:</Text>
                                     <View>
                                         {[
                                             ...characterInventory
@@ -294,22 +334,20 @@ export default function CharacterProfile() {
                                                     text: `${element.name} x ${element.value}`,
                                                     opacity: 1
                                                 })),
-                                            ...Array(3).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty" с полупрозрачностью
+                                            ...Array(5).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
                                         ]
-                                            .slice(0, 3) // Обрезаем до 3 элементов
+                                            .slice(0, 5)
                                             .map((item, index) => (
                                                 <Text key={index} style={{ opacity: item.opacity }}>
                                                     {item.text}
                                                 </Text>
                                             ))}
                                     </View>
-
                                 </View>
-                                <View>
-                                    <Text style={{
-                                        fontSize: 16,
-                                        fontWeight: 'bold'
-                                    }}>Consumbles:</Text>
+
+                                {/* Правый столбец: Consumbles */}
+                                <View style={{ width: "50%" }}>
+                                    <Text style={{ fontSize: 16, fontWeight: "bold" }}>Consumbles:</Text>
                                     <View>
                                         {[
                                             ...characterInventory
@@ -318,9 +356,9 @@ export default function CharacterProfile() {
                                                     text: `${element.name} x ${element.value}`,
                                                     opacity: 1
                                                 })),
-                                            ...Array(3).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty" с полупрозрачностью
+                                            ...Array(10).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
                                         ]
-                                            .slice(0, 3) // Обрезаем до 3 элементов
+                                            .slice(0, 10)
                                             .map((item, index) => (
                                                 <Text key={index} style={{ opacity: item.opacity }}>
                                                     {item.text}
@@ -329,7 +367,6 @@ export default function CharacterProfile() {
                                     </View>
                                 </View>
                             </View>
-
                         </View>
                     </View>
                 </View>
@@ -361,6 +398,8 @@ const styles = StyleSheet.create({
     item: {
         fontSize: 16,
         paddingVertical: 5,
+        borderColor: 'red',
+        borderWidth: 2
     },
     closeButton: {
         marginTop: 20,

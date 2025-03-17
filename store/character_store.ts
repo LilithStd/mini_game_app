@@ -77,12 +77,35 @@ export type CharacterInventoryType = {
 	name: string;
 	value: number;
 	type: string;
+	subType: string;
 };
 
 export enum INVENTORY_ITEM_TYPE {
 	WEAPON = 'weapon',
 	ARMOR = 'armor',
 	CONSUMBLES = 'consumables',
+}
+
+export enum INVENTORY_ITEM_ARMOR_SUBTYPE {
+	HELMET = 'helmet',
+	BODY = 'body',
+	BOOTS = 'boots',
+}
+
+export enum INVENTORY_ITEM_WEAPON_SUBTYPE {
+	SWORD = 'sword',
+	SPEAR = 'spear',
+	BOW = 'bow',
+	BLUNT = 'blunt',
+	AXE = 'axe',
+	STAFF = 'staff',
+}
+
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE {
+	POTION = 'potion',
+	CURRENCY = 'currency',
+	KEY = 'key',
+	CRYSTAL = 'crystal',
 }
 
 export type CharacterStats = {
@@ -97,7 +120,21 @@ export type CharacterStats = {
 	death: boolean;
 };
 
-const Character_Default_Stats = {
+const CharacterEquipDefault = {
+	weapon: '',
+	body: '',
+	helmet: '',
+	boots: '',
+};
+
+export type CharacterEquip = {
+	weapon: string;
+	body: string;
+	helmet: string;
+	boots: string;
+};
+
+const CharacterDefaultStats = {
 	name: '',
 	model: Character_Default,
 	level: 0,
@@ -127,6 +164,11 @@ export interface CharacterStoreInterface {
 	character_pull: CharacterStats[];
 	characterStats: CharacterStats;
 	characterInventory: CharacterInventoryType[];
+	characterEquip: CharacterEquip;
+	characterEquipUpdate: (
+		updateEquipRequest: string,
+		updateEquipItem: string,
+	) => void;
 	characterInventoryUpdate: (item: CharacterInventoryType) => void;
 	updateCharacterStats: (
 		updateRequest: UPDATE_CHARACTER_STATS,
@@ -141,8 +183,32 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 		(set, get) => ({
 			default_state: true,
 			character_pull: Character_Pull,
-			characterStats: Character_Default_Stats,
+			characterStats: CharacterDefaultStats,
 			characterInventory: [],
+			characterEquip: CharacterEquipDefault,
+			characterEquipUpdate: (updateEquipRequest, updateEquipItem) =>
+				set((state) => {
+					const updatedCharacterEquip = {...state.characterEquip};
+					switch (updateEquipRequest) {
+						case INVENTORY_ITEM_TYPE.WEAPON:
+							updatedCharacterEquip.weapon = updateEquipItem;
+							break;
+						case INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET:
+							updatedCharacterEquip.helmet = updateEquipItem;
+							break;
+						case INVENTORY_ITEM_ARMOR_SUBTYPE.BODY:
+							updatedCharacterEquip.body = updateEquipItem;
+							break;
+						case INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS:
+							updatedCharacterEquip.boots = updateEquipItem;
+							break;
+						default:
+							console.warn(
+								`Неподдерживаемый запрос обновления: ${updateEquipRequest}`,
+							);
+					}
+					return {characterEquip: updatedCharacterEquip};
+				}),
 			characterInventoryUpdate: (item) =>
 				set((state) => {
 					const updatedInventory = state.characterInventory.map((element) => {
