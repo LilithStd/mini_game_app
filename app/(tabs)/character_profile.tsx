@@ -167,7 +167,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.helmet !== '' ? characterEquipCurrent.helmet : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.helmet !== '' ? characterEquipCurrent.armor.helmet : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -188,7 +188,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.body !== '' ? characterEquipCurrent.body : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.body !== '' ? characterEquipCurrent.armor.body : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -209,7 +209,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.boots !== '' ? characterEquipCurrent.boots : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.boots !== '' ? characterEquipCurrent.armor.boots : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -323,13 +323,19 @@ export default function CharacterProfile() {
                                                 .filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
                                                 .map((element) => ({
                                                     text: `${element.name} x ${element.value}`,
-                                                    opacity: 1
+                                                    opacity: 1,
                                                 })),
                                             ...Array(4).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
                                         ]
                                             .slice(0, 4)
                                             .map((item, index) => (
-                                                <Text key={index} style={{ opacity: item.opacity }}>
+                                                <Text
+                                                    key={index}
+                                                    style={{
+                                                        opacity: item.opacity,
+                                                        backgroundColor: item.text.split(' x ')[0] === characterEquipCurrent.weapon ? 'red' : 'transparent'
+                                                    }}
+                                                >
                                                     {item.text}
                                                 </Text>
                                             ))}
@@ -347,12 +353,27 @@ export default function CharacterProfile() {
                                             ...Array(5).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
                                         ]
                                             .slice(0, 5)
-                                            .map((item, index) => (
-                                                <Text key={index} style={{ opacity: item.opacity }}>
-                                                    {item.text}
-                                                </Text>
-                                            ))}
+                                            .map((item, index) => {
+                                                const itemName = item.text.split(' x ')[0]; // Убираем количество
+                                                const isEquipped = [
+                                                    characterEquipCurrent.armor.body,
+                                                    characterEquipCurrent.armor.helmet,
+                                                    characterEquipCurrent.armor.boots
+                                                ].includes(itemName); // Проверяем, есть ли предмет в экипировке
+
+                                                return (
+                                                    <Text
+                                                        key={index}
+                                                        style={{
+                                                            opacity: item.opacity,
+                                                            backgroundColor: isEquipped ? 'red' : 'transparent'
+                                                        }}>
+                                                        {item.text}
+                                                    </Text>
+                                                );
+                                            })}
                                     </View>
+
                                 </View>
 
                                 {/* Правый столбец: Consumbles */}

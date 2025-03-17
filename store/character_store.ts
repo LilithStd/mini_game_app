@@ -122,16 +122,20 @@ export type CharacterStats = {
 
 const CharacterEquipDefault = {
 	weapon: '',
-	body: '',
-	helmet: '',
-	boots: '',
+	armor: {
+		body: '',
+		helmet: '',
+		boots: '',
+	},
 };
 
 export type CharacterEquip = {
 	weapon: string;
-	body: string;
-	helmet: string;
-	boots: string;
+	armor: {
+		body: string;
+		helmet: string;
+		boots: string;
+	};
 };
 
 const CharacterDefaultStats = {
@@ -191,16 +195,34 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 					const updatedCharacterEquip = {...state.characterEquip};
 					switch (updateEquipRequest) {
 						case INVENTORY_ITEM_TYPE.WEAPON:
-							updatedCharacterEquip.weapon = updateEquipItem;
+							if (updatedCharacterEquip.weapon === updateEquipItem) {
+								updatedCharacterEquip.weapon = '';
+							} else {
+								updatedCharacterEquip.weapon = updateEquipItem;
+							}
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET:
-							updatedCharacterEquip.helmet = updateEquipItem;
+							if (updatedCharacterEquip.armor.helmet === updateEquipItem) {
+								updatedCharacterEquip.armor.helmet = '';
+							} else {
+								updatedCharacterEquip.armor.helmet = updateEquipItem;
+							}
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.BODY:
-							updatedCharacterEquip.body = updateEquipItem;
+							if (updatedCharacterEquip.armor.body === updateEquipItem) {
+								updatedCharacterEquip.armor.body = '';
+							} else {
+								updatedCharacterEquip.armor.body = updateEquipItem;
+							}
+
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS:
-							updatedCharacterEquip.boots = updateEquipItem;
+							if (updatedCharacterEquip.armor.boots === updateEquipItem) {
+								updatedCharacterEquip.armor.boots = '';
+							} else {
+								updatedCharacterEquip.armor.boots = updateEquipItem;
+							}
+
 							break;
 						default:
 							console.warn(
