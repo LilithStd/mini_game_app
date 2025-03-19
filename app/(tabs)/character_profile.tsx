@@ -1,4 +1,5 @@
 import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
+import { useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
 import { FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";

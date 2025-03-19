@@ -1,6 +1,6 @@
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
-import { INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_SUBTYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from '@/store/character_store';
+import { INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_TYPE, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
 import { rewards } from '@/store/items_strore';

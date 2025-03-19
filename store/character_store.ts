@@ -92,6 +92,12 @@ export enum INVENTORY_ITEM_ARMOR_SUBTYPE {
 	BOOTS = 'boots',
 }
 
+export enum INVENTORY_ITEM_ARMOR_TYPE {
+	HEAVY = 'heavy',
+	LIGHT = 'light',
+	ROBE = 'robe',
+}
+
 export enum INVENTORY_ITEM_WEAPON_SUBTYPE {
 	SWORD = 'sword',
 	SPEAR = 'spear',
@@ -101,11 +107,42 @@ export enum INVENTORY_ITEM_WEAPON_SUBTYPE {
 	STAFF = 'staff',
 }
 
-export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE {
+// export enum INVENTORY_ITEM_WEAPON_SUBTYPE {
+// 	ONE_HAND = 'one_hand',
+// 	DOUBLE_HANDS = 'double_hands',
+// }
+
+export enum INVENTORY_ITEM_CONSUMBLES_TYPE {
 	POTION = 'potion',
 	CURRENCY = 'currency',
 	KEY = 'key',
 	CRYSTAL = 'crystal',
+}
+
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF {
+	ATTACK_BUFF = 'attack_buff',
+	DEFENSE_BUFF = 'defense_buff',
+	EVASION_BUFF = 'evasion_buff',
+}
+
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS {
+	TREASURE = 'treasure',
+	DOOR = 'door',
+	DUNGEON = 'dungeon',
+}
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS {
+	HEAL_RESTORE = 'heal_restore',
+	BUFF_CHARACTER = 'buff_character',
+	ESCAPE_CHARACTER = 'escape_character',
+}
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY {
+	GOLD = 'gold',
+	FANG_MONSTERS = 'fang_monsters',
+}
+
+export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL {
+	CHARACTER_UP = 'character_up',
+	ITEM_UP = 'item_up',
 }
 
 export type CharacterStats = {

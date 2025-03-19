@@ -3,7 +3,7 @@ import {
 	INVENTORY_ITEM_WEAPON_SUBTYPE,
 } from '@/store/character_store';
 
-export const weapons = [
+const swords = [
 	// Swords
 	{
 		id: 'sword_001',
@@ -80,7 +80,9 @@ export const weapons = [
 			itemSkill: 'Dark Slice',
 		},
 	},
+];
 
+const spears = [
 	// Spears
 	{
 		id: 'spear_001',
@@ -157,6 +159,9 @@ export const weapons = [
 			itemSkill: 'Dark Impale',
 		},
 	},
+];
+
+const bows = [
 	{
 		id: 'bow_001',
 		name: 'Hunting Bow',
@@ -232,7 +237,9 @@ export const weapons = [
 			itemSkill: 'Dark Shot',
 		},
 	},
+];
 
+const blunts = [
 	// Blunt Weapons
 	{
 		id: 'blunt_001',
@@ -309,6 +316,9 @@ export const weapons = [
 			itemSkill: 'Dark Smash',
 		},
 	},
+];
+
+const axes = [
 	// Axes
 	{
 		id: 'axe_001',
@@ -385,7 +395,9 @@ export const weapons = [
 			itemSkill: "Titan's Wrath",
 		},
 	},
+];
 
+const staffs = [
 	// Staffs
 	{
 		id: 'staff_001',
@@ -462,4 +474,13 @@ export const weapons = [
 			itemSkill: 'Divine Light',
 		},
 	},
+];
+
+export const WEAPON = [
+	...swords,
+	...spears,
+	...bows,
+	...blunts,
+	...axes,
+	...staffs,
 ];

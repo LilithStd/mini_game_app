@@ -3,11 +3,13 @@ import {create} from 'zustand';
 import {createJSONStorage, persist} from 'zustand/middleware';
 import {
 	INVENTORY_ITEM_ARMOR_SUBTYPE,
-	INVENTORY_ITEM_CONSUMBLES_SUBTYPE,
+	INVENTORY_ITEM_CONSUMBLES_TYPE,
 	INVENTORY_ITEM_TYPE,
 	INVENTORY_ITEM_WEAPON_SUBTYPE,
 } from './character_store';
-import {weapons} from '@/constants/store/items/weapons';
+import {WEAPON} from '@/constants/store/items/weapons';
+import {ARMOR} from '@/constants/store/items/armors';
+import {CONSUMBLES} from '@/constants/store/items/consumbles';
 
 export const rewards = [
 	{
@@ -15,7 +17,7 @@ export const rewards = [
 		name: 'Золотая монета',
 		value: 10,
 		type: INVENTORY_ITEM_TYPE.CONSUMBLES,
-		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE.CURRENCY,
+		subType: INVENTORY_ITEM_CONSUMBLES_TYPE.CURRENCY,
 	},
 	{
 		id: '1',
@@ -29,21 +31,21 @@ export const rewards = [
 		name: 'Зелье здоровья',
 		value: 5,
 		type: INVENTORY_ITEM_TYPE.CONSUMBLES,
-		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE.POTION,
+		subType: INVENTORY_ITEM_CONSUMBLES_TYPE.POTION,
 	},
 	{
 		id: '3',
 		name: 'Редкий кристалл',
 		value: 2,
 		type: INVENTORY_ITEM_TYPE.CONSUMBLES,
-		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE.CRYSTAL,
+		subType: INVENTORY_ITEM_CONSUMBLES_TYPE.CRYSTAL,
 	},
 	{
 		id: '4',
 		name: 'Ключ от сундука',
 		value: 1,
 		type: INVENTORY_ITEM_TYPE.CONSUMBLES,
-		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE.KEY,
+		subType: INVENTORY_ITEM_CONSUMBLES_TYPE.KEY,
 	},
 	{
 		id: '5',
@@ -117,12 +119,20 @@ export const rewards = [
 	},
 ];
 
-interface WeaponType {
+interface BaseItemsType<TType = string, TSubType = string> {
 	id: string;
 	name: string;
-	type: string;
-	subType: string;
+	type: TType; // Позволяет передавать конкретный ENUM типа
+	subType: TSubType; // Позволяет передавать конкретный ENUM подтипа
 	description: string;
+}
+
+// Оружие
+interface WeaponType
+	extends BaseItemsType<
+		INVENTORY_ITEM_TYPE.WEAPON,
+		INVENTORY_ITEM_WEAPON_SUBTYPE
+	> {
 	stats: {
 		attack: number;
 		accuracy: number;
@@ -133,19 +143,50 @@ interface WeaponType {
 	};
 }
 
+// Броня
+interface ArmorType
+	extends BaseItemsType<
+		INVENTORY_ITEM_TYPE.ARMOR,
+		INVENTORY_ITEM_ARMOR_SUBTYPE
+	> {
+	stats: {
+		defense: number;
+		evasion: number;
+		reduceCriticalDamage: number;
+		resistAtribute: string;
+		itemSkill: string;
+	};
+}
+
+// Расходники
+interface Stats {
+	attack?: number;
+	defense?: number;
+	evasion?: number;
+	healPotion?: number;
+}
+
+interface ConsumableType
+	extends BaseItemsType<
+		INVENTORY_ITEM_TYPE.CONSUMBLES,
+		INVENTORY_ITEM_CONSUMBLES_TYPE
+	> {
+	stats?: Stats;
+}
+
 export interface ItemsStoreInterface {
-	weaponItems: WeaponType[];
-	armorItems: [];
-	consumblesItems: [];
+	weapons: WeaponType[];
+	armors: ArmorType[];
+	consumbles: ConsumableType[];
 	rewardFindTreasure: [];
 }
 
-export const useEnemyStore = create<ItemsStoreInterface>()(
+export const useItemsStore = create<ItemsStoreInterface>()(
 	persist(
 		(set, get) => ({
-			weaponItems: weapons,
-			armorItems: [],
-			consumblesItems: [],
+			weapons: WEAPON as WeaponType[],
+			armors: ARMOR as ArmorType[],
+			consumbles: [],
 			rewardFindTreasure: [],
 		}),
 		{
