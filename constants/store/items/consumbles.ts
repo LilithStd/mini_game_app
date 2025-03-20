@@ -4,6 +4,7 @@ import {
 	INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS,
 	INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY,
 	INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL,
+	INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS,
 } from '@/store/character_store';
 
 const statsPotions = [
@@ -97,7 +98,7 @@ const healPotions = [
 		id: 'potion_heal_001',
 		name: 'Small Healing Potion',
 		type: INVENTORY_ITEM_CONSUMBLES_TYPE.POTION,
-		subType: 'heal_potion',
+		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE,
 		description: 'Восстанавливает небольшое количество здоровья.',
 		stats: {
 			attack: 0,
