@@ -1,5 +1,5 @@
 import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
-import { useItemsStore } from "@/store/items_strore";
+import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
 import { FlatList, Image, ImageBackground, Modal, Text, TouchableOpacity, View, StyleSheet } from "react-native";
@@ -27,9 +27,12 @@ export default function CharacterProfile() {
     const characterEquipCurrent = useCharacterStore(state => state.characterEquip)
     const characterStats = useCharacterStore(state => state.characterStats)
     const characterInventory = useCharacterStore(state => state.characterInventory)
+    //items__store_methods
+    const getReward = useItemsStore(state => state.getReward)
     //
     const location = useLocationStore(state => state.locationToBattleScreen)
     const buttonMask = require('../../assets/mask/mask_brush.png')
+
 
     const ArmorBodyModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BODY,

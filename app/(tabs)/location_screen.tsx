@@ -1,9 +1,10 @@
+import Reward from '@/components/reward/reward';
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
-import { INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_TYPE, useCharacterStore } from '@/store/character_store';
+import { INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
-import { rewards } from '@/store/items_strore';
+import { REWARD_VARIANT, rewards } from '@/store/items_strore';
 import { Location_content_type, useLocationStore } from '@/store/location_store';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MotiText } from 'moti';
@@ -77,14 +78,7 @@ export default function LocationScreen() {
 
     }
 
-
-
-    const getRandomReward = (): { name: string; value: number } => {
-        const randomIndex = Math.floor(Math.random() * rewards.length);
-        return rewards[randomIndex];
-    }
-
-    const chanceFindTreasurePercent = 30
+    const chanceFindTreasurePercent = 60
 
     const chanceFindTreasure = (percent: number): boolean => {
         return Math.random() * 100 < percent;
@@ -182,120 +176,11 @@ export default function LocationScreen() {
                 transparent={true} // Прозрачный фон
                 onRequestClose={() => setModalVisible(false)} // Закрытие на Android кнопкой "Назад"
             >
-                <View style={styles.modalBackground}>
-                    {isTresure ? <View style={styles.modalContainer}>
-                        <Text>You Find Treasure!</Text>
-                        {isChooseTreasure ?
-                            <View
-                                style={{
-                                }}>
-                                {currentReward && (
-                                    <MotiText
-                                        from={{ opacity: 0, scale: 0.8 }}
-                                        animate={{ opacity: 1, scale: 1 }}
-                                        transition={{ type: "spring", damping: 10 }}
-                                        style={{
-                                            fontSize: 12,
-                                            fontWeight: "bold",
-                                            color: "black", // Убедись, что цвет текста виден
-                                            padding: 20,
-                                            backgroundColor: "gold",
-                                            borderRadius: 10,
-                                            textAlign: "center",
-                                            minWidth: 200,
-                                            minHeight: 60, // Увеличиваем высоту, чтобы текст не сжимался
-                                            justifyContent: "center",
-                                            alignItems: "center",
-                                        }}
-                                    >
-                                        {finalReward?.name || currentReward?.name || "Награда"}
-                                    </MotiText>
-                                )}
-                                <View style={{
-                                    flexDirection: 'row',
-                                    gap: 6,
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}>
-                                    <Text style={{
-                                        marginTop: 20,
-                                        padding: 10,
-                                        backgroundColor: isRolling || countRollTreasure === 0 ? "gray" : "orange",
-                                        height: 40,
-                                    }}
-                                    >{countRollTreasure}</Text>
-                                    <TouchableOpacity
-                                        onPress={startLottery}
-                                        disabled={isRolling || countRollTreasure === 0}
-                                        style={{
-                                            marginTop: 20,
-                                            padding: 10,
-                                            backgroundColor: isRolling || countRollTreasure === 0 ? "gray" : "orange",
-                                            height: 40,
-                                        }}
-                                    >
-                                        <Text
-                                            style={{
 
-                                                color: "black",
-                                                fontSize: 12,
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            {isRolling ? "Waiting..." : "Get Treasure"}
-                                        </Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        onPress={handleSubmitTreasure}
-                                        disabled={isRolling || currentReward.name === 'treasure'}
-                                        style={{
-                                            marginTop: 20,
-                                            padding: 10,
-                                            backgroundColor: isRolling || currentReward.name === 'treasure' ? "gray" : "orange",
-                                            height: 40,
-                                        }}
-                                    >
-                                        <Text
-                                            style={{
-                                                color: "black",
-                                                fontSize: 12,
-                                                fontWeight: "bold",
-                                                textAlign: "center",
-                                            }}
-                                        >
-                                            Done
-                                        </Text>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                            :
-                            <View style={{
-                                flexDirection: 'row',
-                                gap: 10
-                            }}>
-                                <TouchableOpacity
-                                    onPress={handleGetTreasure}
-                                    style={{
-                                        backgroundColor: 'red',
-                                        padding: 4,
-                                        borderRadius: 6
-                                    }}>
-                                    <Text>Get!</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={handleCancelGetTreasure}
-                                    style={{
-                                        backgroundColor: 'gray',
-                                        padding: 4,
-                                        borderRadius: 6
-                                    }}
-                                >
-                                    <Text>Cancel</Text>
-                                </TouchableOpacity>
-                            </View>
-                        }
-                    </View> :
+                <View style={styles.modalBackground}>
+                    {isTresure ?
+                        <Reward callback={setModalVisible} />
+                        :
                         <View style={styles.modalContainer}>
                             <Text>Player Choose Window</Text>
                             <Text>Enemy attack you.</Text>

@@ -421,6 +421,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 									element.subType ===
 									INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE,
 							);
+
 							treasureReward.push(...healPotions);
 						}
 						if (getChancePercent(REWARD.treasure.potions.buffPotions.chance)) {
@@ -440,7 +441,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 							);
 							treasureReward.push(...currency);
 						}
-						// reward.push(...treasureReward);
+						return [...treasureReward];
 						break;
 					case REWARD_VARIANT.GOLD_TREASURE:
 						break;
