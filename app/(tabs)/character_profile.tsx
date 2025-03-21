@@ -1,4 +1,4 @@
-import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
+import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
 import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
@@ -10,7 +10,7 @@ enum CURRENT_PAGE {
 }
 const DefaultModal = {
     name: 'default',
-    arrayItems: [{ id: '', name: '', value: 0, type: '', subType: '' }]
+    arrayItems: [{ id: '', name: '', count: 0 }]
 }
 
 type ModalProps = {
@@ -29,29 +29,69 @@ export default function CharacterProfile() {
     const characterInventory = useCharacterStore(state => state.characterInventory)
     //items__store_methods
     const getReward = useItemsStore(state => state.getReward)
+    const weaponItems = useItemsStore(state => state.weapons)
+    const armorsItems = useItemsStore(state => state.armors)
+    const consumblesItems = useItemsStore(state => state.consumbles)
     //
     const location = useLocationStore(state => state.locationToBattleScreen)
     const buttonMask = require('../../assets/mask/mask_brush.png')
 
+    const fullDescriptionWeapons = weaponItems
+        .filter((weapon) =>
+            characterInventory.some((item) => item.name === weapon.name && item.id === weapon.id)
+        )
+        .map((weapon) => ({
+            ...weapon,
+            count: characterInventory.find((item) => item.name === weapon.name && item.id === weapon.id)?.count ?? 1,
+        }));
+
+
+    const fullDescriptionArmors = armorsItems.filter((armor) =>
+        characterInventory.some((item) => item.name === armor.name && item.id === armor.id)
+    )
+        .map((armor) => ({
+            ...armor,
+            count: characterInventory.find((item) => item.name === armor.name && item.id === armor.id)?.count ?? 1,
+        }));
+    const fullDescriptionConsumbles = consumblesItems.filter((consumbles) =>
+        characterInventory.some((item) => item.name === consumbles.name && item.id === consumbles.id)
+    )
+        .map((consumbles) => ({
+            ...consumbles,
+            count: characterInventory.find((item) => item.name === consumbles.name && item.id === consumbles.id)?.count ?? 1,
+        }));
+
+
+
+
 
     const ArmorBodyModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BODY,
-        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+        arrayItems: fullDescriptionArmors
+            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+
     }
 
     const ArmorHelmetModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET,
-        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
+        arrayItems: fullDescriptionArmors
+            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+
     }
 
     const ArmorBootsModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS,
-        arrayItems: characterInventory.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
+        arrayItems: fullDescriptionArmors
+            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+
     }
 
     const WeaponModal = {
         name: INVENTORY_ITEM_TYPE.WEAPON,
-        arrayItems: characterInventory.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
+        arrayItems: fullDescriptionWeapons.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON).map((item) => ({
+            ...item,
+            count: 1,
+        }))
     }
 
 
@@ -323,10 +363,10 @@ export default function CharacterProfile() {
                                     <Text style={{ fontSize: 16, fontWeight: "bold" }}>Weapon:</Text>
                                     <View>
                                         {[
-                                            ...characterInventory
+                                            ...fullDescriptionWeapons
                                                 .filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
                                                 .map((element) => ({
-                                                    text: `${element.name} x ${element.value}`,
+                                                    text: `${element.name} x ${element.count}`,
                                                     opacity: 1,
                                                 })),
                                             ...Array(4).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
@@ -348,10 +388,10 @@ export default function CharacterProfile() {
                                     <Text style={{ fontSize: 16, fontWeight: "bold", marginTop: 10 }}>Armor:</Text>
                                     <View>
                                         {[
-                                            ...characterInventory
+                                            ...fullDescriptionArmors
                                                 .filter((item) => item.type === INVENTORY_ITEM_TYPE.ARMOR)
                                                 .map((element) => ({
-                                                    text: `${element.name} x ${element.value}`,
+                                                    text: `${element.name} x ${element.count}`,
                                                     opacity: 1
                                                 })),
                                             ...Array(5).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"
@@ -385,10 +425,10 @@ export default function CharacterProfile() {
                                     <Text style={{ fontSize: 16, fontWeight: "bold" }}>Consumbles:</Text>
                                     <View>
                                         {[
-                                            ...characterInventory
-                                                .filter((item) => item.type === INVENTORY_ITEM_TYPE.CONSUMBLES)
+                                            ...fullDescriptionConsumbles
+                                                .filter((item) => item.type === INVENTORY_ITEM_CONSUMBLES_TYPE.POTION || INVENTORY_ITEM_CONSUMBLES_TYPE.CRYSTAL || INVENTORY_ITEM_CONSUMBLES_TYPE.CURRENCY || INVENTORY_ITEM_CONSUMBLES_TYPE.KEY)
                                                 .map((element) => ({
-                                                    text: `${element.name} x ${element.value}`,
+                                                    text: `${element.name} x ${element.count}`,
                                                     opacity: 1
                                                 })),
                                             ...Array(10).fill({ text: "--Empty--", opacity: 0.5 }) // Добавляем "Empty"

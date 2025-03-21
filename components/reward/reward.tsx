@@ -14,7 +14,7 @@ type RewardTypes = {
 export default function Reward(rewardProps: RewardTypes) {
     const { callback } = rewardProps
     const getReward = useItemsStore(state => state.getReward)
-    const [currentReward, setCurrentReward] = useState(getReward(REWARD_VARIANT.TREASURE))
+    const [currentReward, setCurrentReward] = useState([{ id: '', name: '', count: 0 }])
     const setChracterInventory = useCharacterStore(state => state.characterInventoryUpdate)
 
     const [isChooseTreasure, setIsChooseTreasure] = useState(false)
@@ -25,8 +25,10 @@ export default function Reward(rewardProps: RewardTypes) {
 
     const handleGetTreasure = () => {
         setIsChooseTreasure(true)
+        setCurrentReward(getReward(REWARD_VARIANT.TREASURE))
     }
     const handleCancelGetTreasure = () => {
+        setChracterInventory(currentReward)
         callback(false)
     }
 

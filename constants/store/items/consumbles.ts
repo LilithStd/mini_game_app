@@ -111,7 +111,7 @@ const healPotions = [
 		id: 'potion_heal_002',
 		name: 'Big Healing Potion',
 		type: INVENTORY_ITEM_CONSUMBLES_TYPE.POTION,
-		subType: 'heal_potion',
+		subType: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE,
 		description: 'Восстанавливает большое количество здоровья.',
 		stats: {
 			attack: 0,

@@ -75,9 +75,7 @@ export type Character_Type = {
 export type CharacterInventoryType = {
 	id: string;
 	name: string;
-	value: number;
-	type: string;
-	subType: string;
+	count: number;
 };
 
 export enum INVENTORY_ITEM_TYPE {
@@ -210,7 +208,7 @@ export interface CharacterStoreInterface {
 		updateEquipRequest: string,
 		updateEquipItem: string,
 	) => void;
-	characterInventoryUpdate: (item: CharacterInventoryType) => void;
+	characterInventoryUpdate: (item: CharacterInventoryType[]) => void;
 	updateCharacterStats: (
 		updateRequest: UPDATE_CHARACTER_STATS,
 		updateValue: string | number | boolean | CharacterStats,
@@ -268,23 +266,23 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 					}
 					return {characterEquip: updatedCharacterEquip};
 				}),
-			characterInventoryUpdate: (item) =>
+			characterInventoryUpdate: (items: CharacterInventoryType[]) =>
 				set((state) => {
-					const updatedInventory = state.characterInventory.map((element) => {
-						if (element.name === item.name) {
-							return {...element, value: element.value + item.value};
+					const updatedInventory = [...state.characterInventory];
+
+					items.forEach((item) => {
+						const existingItem = updatedInventory.find(
+							(element) => element.name === item.name,
+						);
+
+						if (existingItem) {
+							// Если предмет уже есть, обновляем его количество
+							existingItem.count += item.count;
+						} else {
+							// Если предмета нет, добавляем его в инвентарь
+							updatedInventory.push(item);
 						}
-						return element;
 					});
-
-					const itemExists = state.characterInventory.some(
-						(element) => element.name === item.name,
-					);
-
-					// Если элемент не найден, добавляем новый
-					if (!itemExists) {
-						updatedInventory.push(item);
-					}
 
 					return {characterInventory: updatedInventory};
 				}),
