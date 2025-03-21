@@ -16,7 +16,7 @@ import {
 import {WEAPON} from '@/constants/store/items/weapons';
 import {ARMOR} from '@/constants/store/items/armors';
 import {CONSUMBLES} from '@/constants/store/items/consumbles';
-import {getChancePercent} from '@/constants/helpers';
+import {getChancePercent, getRandomEnumValue} from '@/constants/helpers';
 
 export const rewards = [
 	{
@@ -189,179 +189,197 @@ export enum REWARD_VARIANT {
 	BOSS = 'boss',
 }
 
-interface TreasureRewards {
-	potions?: {
-		healPotions?: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-			chance: number;
-			count: number;
-		};
-		buffPotions?: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-			chance: number;
-			count: number;
-		};
-	};
-	currency?: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
-		chance: number;
-		count: number;
-	};
-}
+// interface TreasureRewards {
+// 	potions?: {
+// 		healPotions?: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		buffPotions?: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 	};
+// 	currency?: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
+// 		chance: number;
+// 		count: number;
+// 	};
+// }
 
-interface GoldTreasureRewards {
-	potions: {
-		healPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-			chance: number;
-			count: number;
-		};
-		buffPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-			chance: number;
-			count: number;
-		};
-	};
-	currency: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
-		chance: number;
-		count: number;
-	};
-	armor: {
-		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-	weapon: {
-		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-}
+// interface GoldTreasureRewards {
+// 	potions: {
+// 		healPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		buffPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 	};
+// 	currency: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	armor: {
+// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	weapon: {
+// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// }
 
-interface MonsterRewards {
-	currency: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-		chance: number;
-		count: number;
-	};
-	keys: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-		chance: number;
-		count: number;
-	};
-	armor: {
-		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-	weapon: {
-		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-}
+// interface MonsterRewards {
+// 	currency: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	keys: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	armor: {
+// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	weapon: {
+// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// }
 
-interface BossRewards {
-	potions: {
-		healPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-			chance: number;
-			count: number;
-		};
-		buffPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-			chance: number;
-			count: number;
-		};
-	};
-	keys: {
-		dungeonKeys: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.DUNGEON;
-			chance: number;
-			count: number;
-		};
-		treasueKeys: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-			chance: number;
-			count: number;
-		};
-	};
-	currency: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-		chance: number;
-		count: number;
-	};
-	armor: {
-		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-	weapon: {
-		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-}
+// interface BossRewards {
+// 	potions: {
+// 		healPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		buffPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 	};
+// 	keys: {
+// 		dungeonKeys: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.DUNGEON;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		treasueKeys: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 	};
+// 	currency: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	armor: {
+// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	weapon: {
+// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// }
 
-interface DungeonRewards {
-	potions: {
-		healPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-			chance: number;
-			count: number;
-		};
-		buffPotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-			chance: number;
-			count: number;
-		};
-		escapePotions: {
-			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.ESCAPE_CHARACTER;
-			chance: number;
-			count: number;
-		};
-	};
-	keys: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-		chance: number;
-		count: number;
-	};
-	crystal: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL;
-		chance: number;
-		count: number;
-	};
-	currency: {
-		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-		chance: number;
-		count: number;
-	};
-	armor: {
-		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-	weapon: {
-		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-		chance: number;
-		count: number;
-	};
-}
+// interface DungeonRewards {
+// 	potions: {
+// 		healPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		buffPotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 		escapePotions: {
+// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.ESCAPE_CHARACTER;
+// 			chance: number;
+// 			count: number;
+// 		};
+// 	};
+// 	keys: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	crystal: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	currency: {
+// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	armor: {
+// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// 	weapon: {
+// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
+// 		chance: number;
+// 		count: number;
+// 	};
+// }
 
-type RewardAllTypes =
-	| TreasureRewards
-	| GoldTreasureRewards
-	| MonsterRewards
-	| BossRewards
-	| DungeonRewards;
+// type RewardAllTypes =
+// 	| TreasureRewards
+// 	| GoldTreasureRewards
+// 	| MonsterRewards
+// 	| BossRewards
+// 	| DungeonRewards;
+
+type AllTypesReward =
+	| INVENTORY_ITEM_CONSUMBLES_TYPE
+	| INVENTORY_ITEM_ARMOR_SUBTYPE
+	| INVENTORY_ITEM_ARMOR_TYPE
+	| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL
+	| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY
+	| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS
+	| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS
+	| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF
+	| INVENTORY_ITEM_TYPE
+	| INVENTORY_ITEM_WEAPON_SUBTYPE;
+
+type RewardTypeReturn = {
+	id: string;
+	name: string;
+	count: number;
+};
 
 interface ItemsStoreInterface {
 	weapons: WeaponType[];
 	armors: ArmorType[];
 	consumbles: ConsumableType[];
 	rewardFindTreasure: [];
-	getReward: (variant: REWARD_VARIANT) => RewardAllTypes[];
+	getReward: (variant: REWARD_VARIANT) => RewardTypeReturn[];
 }
 
 const CHANCE_PERCENT = {
@@ -410,39 +428,70 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 			armors: ARMOR as ArmorType[],
 			consumbles: CONSUMBLES as ConsumableType[],
 			rewardFindTreasure: [],
-			getReward: (variant) => {
-				const reward: RewardAllTypes[] = [];
+			getReward: (variant: REWARD_VARIANT): RewardTypeReturn[] => {
+				const reward: RewardTypeReturn[] = [];
+
 				switch (variant) {
-					case REWARD_VARIANT.TREASURE:
-						const treasureReward = [];
+					case REWARD_VARIANT.TREASURE: {
+						const treasureReward: RewardTypeReturn[] = [];
+						const consumables = get().consumbles; // Получаем инвентарь сразу
+
+						// Проверка на выпадение лечебных зелий
 						if (getChancePercent(REWARD.treasure.potions.healPotions.chance)) {
-							const healPotions = get().consumbles.filter(
-								(element) =>
-									element.subType ===
-									INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE,
-							);
+							const healPotions = consumables
+								.filter(
+									(item) =>
+										item.subType ===
+										INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE,
+								)
+								.map((item) => ({
+									id: item.id,
+									name: item.name as AllTypesReward,
+									count: COUNT_ITEMS.LOW,
+								}));
 
 							treasureReward.push(...healPotions);
 						}
+
+						// Проверка на выпадение бафф-зелий
 						if (getChancePercent(REWARD.treasure.potions.buffPotions.chance)) {
-							const buffPotions = get().consumbles.filter(
-								(element) =>
-									element.subType ===
-									INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.BUFF_CHARACTER,
+							const buffType = getRandomEnumValue(
+								INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF,
 							);
-							treasureReward.push(...buffPotions);
+							const buffPotions = get().consumbles.filter(
+								(element) => element.subType === buffType,
+							);
+
+							if (buffPotions.length > 0) {
+								const randomBuffPotion =
+									buffPotions[Math.floor(Math.random() * buffPotions.length)];
+								treasureReward.push({
+									id: randomBuffPotion.id,
+									name: randomBuffPotion.name as AllTypesReward,
+									count: COUNT_ITEMS.LOW,
+								});
+							}
+						}
+						// Проверка на выпадение валюты
+						if (getChancePercent(REWARD.treasure.currency.chance)) {
+							const gold = consumables
+								.filter(
+									(item) =>
+										item.subType ===
+										INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD,
+								)
+								.map((item) => ({
+									id: item.id,
+									name: item.name as AllTypesReward,
+									count: COUNT_ITEMS.LOW,
+								}));
+
+							treasureReward.push(...gold);
 						}
 
-						if (getChancePercent(REWARD.treasure.currency.chance)) {
-							const currency = get().consumbles.filter(
-								(element) =>
-									element.subType ===
-									INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD,
-							);
-							treasureReward.push(...currency);
-						}
-						return [...treasureReward];
-						break;
+						return treasureReward;
+					}
+
 					case REWARD_VARIANT.GOLD_TREASURE:
 						break;
 					case REWARD_VARIANT.MONSTER:
@@ -454,6 +503,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 					default:
 						break;
 				}
+
 				return reward;
 			},
 		}),

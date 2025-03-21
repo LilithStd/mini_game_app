@@ -1,5 +1,5 @@
 import { useCharacterStore } from '@/store/character_store'
-import { rewards, useItemsStore } from '@/store/items_strore'
+import { REWARD_VARIANT, rewards, useItemsStore } from '@/store/items_strore'
 import { MotiText } from 'moti'
 import { useState } from 'react'
 import { Text, TouchableOpacity, View, Image, StyleSheet } from 'react-native'
@@ -14,14 +14,11 @@ type RewardTypes = {
 export default function Reward(rewardProps: RewardTypes) {
     const { callback } = rewardProps
     const getReward = useItemsStore(state => state.getReward)
+    const [currentReward, setCurrentReward] = useState(getReward(REWARD_VARIANT.TREASURE))
     const setChracterInventory = useCharacterStore(state => state.characterInventoryUpdate)
-    const [isTresure, setIsTreausre] = useState(false)
-    const [isChooseTreasure, setIsChooseTreasure] = useState(false)
-    const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
 
-    const [currentReward, setCurrentReward] = useState(defaultTreasure);
-    const [finalReward, setFinalReward] = useState<null | { id: string, name: string; value: number; type: string, subType: string }>(null);
-    const [isRolling, setIsRolling] = useState(false);
+    const [isChooseTreasure, setIsChooseTreasure] = useState(false)
+
 
 
 
@@ -33,38 +30,6 @@ export default function Reward(rewardProps: RewardTypes) {
         callback(false)
     }
 
-    const handleSubmitTreasure = () => {
-        setIsChooseTreasure(false)
-        setIsTreausre(false)
-        callback(false)
-        setCurrentReward(defaultTreasure)
-        setFinalReward(defaultTreasure)
-        setCountRollTreasure(countTreasureRollDefault)
-        setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
-
-    }
-
-
-    const startLottery = () => {
-        if (countRollTreasure === 0) {
-            return
-        }
-        setIsRolling(true);
-        setFinalReward(null);
-        setCountRollTreasure(countRollTreasure - 1)
-        let count = 0;
-        const interval = setInterval(() => {
-            setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
-            count++;
-
-            if (count > 10) { // Через 10 итераций останавливаемся
-                clearInterval(interval);
-                const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
-                setFinalReward(selectedReward);
-                setIsRolling(false);
-            }
-        }, 100); // Скорость смены элементов (100мс)
-    };
 
     return (
         <View style={styles.modalContainer}>
@@ -73,7 +38,91 @@ export default function Reward(rewardProps: RewardTypes) {
                 <View
                     style={{
                     }}>
-                    {currentReward && (
+                    {currentReward.length === 0 ? <Text>Empty - try again</Text> :
+                        currentReward.map((item) => <Text key={item.id}>{item.name} x {item.count}</Text>)
+                    }
+                    <TouchableOpacity
+                        onPress={handleCancelGetTreasure}
+                        style={{
+                            backgroundColor: 'yellow'
+                        }}
+                    >
+                        <Text>Done</Text>
+                    </TouchableOpacity>
+                </View>
+                :
+                <View style={{
+                    flexDirection: 'row',
+                    gap: 10
+                }}>
+                    <TouchableOpacity
+                        onPress={handleGetTreasure}
+                        style={{
+                            backgroundColor: 'red',
+                            padding: 4,
+                            borderRadius: 6
+                        }}>
+                        <Text>Get!</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        onPress={handleCancelGetTreasure}
+                        style={{
+                            backgroundColor: 'gray',
+                            padding: 4,
+                            borderRadius: 6
+                        }}
+                    >
+                        <Text>Cancel</Text>
+                    </TouchableOpacity>
+                </View>
+            }
+        </View>
+    )
+}
+
+//loot box mechanics
+////loot box mechanics
+// const [isTresure, setIsTreausre] = useState(false)
+// const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
+
+// const [currentReward, setCurrentReward] = useState(defaultTreasure);
+// const [finalReward, setFinalReward] = useState<null | { id: string, name: string; value: number; type: string, subType: string }>(null);
+// const [isRolling, setIsRolling] = useState(false);
+
+// const handleSubmitTreasure = () => {
+//     setIsChooseTreasure(false)
+//     setIsTreausre(false)
+//     callback(false)
+//     setCurrentReward(defaultTreasure)
+//     setFinalReward(defaultTreasure)
+//     setCountRollTreasure(countTreasureRollDefault)
+//     setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
+
+// }
+
+
+// const startLottery = () => {
+//     if (countRollTreasure === 0) {
+//         return
+//     }
+//     setIsRolling(true);
+//     setFinalReward(null);
+//     setCountRollTreasure(countRollTreasure - 1)
+//     let count = 0;
+//     const interval = setInterval(() => {
+//         setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
+//         count++;
+
+//         if (count > 10) { // Через 10 итераций останавливаемся
+//             clearInterval(interval);
+//             const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
+//             setFinalReward(selectedReward);
+//             setIsRolling(false);
+//         }
+//     }, 100); // Скорость смены элементов (100мс)
+// };
+
+{/* {currentReward && (
                         <MotiText
                             from={{ opacity: 0, scale: 0.8 }}
                             animate={{ opacity: 1, scale: 1 }}
@@ -94,8 +143,8 @@ export default function Reward(rewardProps: RewardTypes) {
                         >
                             {finalReward?.name || currentReward?.name || "Награда"}
                         </MotiText>
-                    )}
-                    <View style={{
+                    )} */}
+{/* <View style={{
                         flexDirection: 'row',
                         gap: 6,
                         alignItems: 'center',
@@ -151,37 +200,8 @@ export default function Reward(rewardProps: RewardTypes) {
                                 Done
                             </Text>
                         </TouchableOpacity>
-                    </View>
-                </View>
-                :
-                <View style={{
-                    flexDirection: 'row',
-                    gap: 10
-                }}>
-                    <TouchableOpacity
-                        onPress={handleGetTreasure}
-                        style={{
-                            backgroundColor: 'red',
-                            padding: 4,
-                            borderRadius: 6
-                        }}>
-                        <Text>Get!</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                        onPress={handleCancelGetTreasure}
-                        style={{
-                            backgroundColor: 'gray',
-                            padding: 4,
-                            borderRadius: 6
-                        }}
-                    >
-                        <Text>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            }
-        </View>
-    )
-}
+                    </View> */}
+//
 
 const styles = StyleSheet.create({
     container: {
