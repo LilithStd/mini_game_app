@@ -1,4 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { useCharacterStore } from "@/store/character_store";
 import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
@@ -15,10 +16,14 @@ export default function VictoryScreen() {
     //items_store
     const getReward = useItemsStore(state => state.getReward)
     //
+    // character_store
+    const updateCharacterInventory = useCharacterStore(state => state.characterInventoryUpdate)
+    // 
     const rewardTarget = REWARD_VARIANT.MONSTER
     const reward = getReward(rewardTarget)
 
     const handleSwitchScreenToLocation = () => {
+        updateCharacterInventory(reward)
         router.push({
             pathname: GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN,
             params: { currentLocation }
@@ -26,6 +31,7 @@ export default function VictoryScreen() {
     }
 
     const handleContinueBattle = () => {
+        updateCharacterInventory(reward)
         router.push({
             pathname: GLOBAL_APP_PATH.LOCATION_SCREEN,
             params: { currentLocation }

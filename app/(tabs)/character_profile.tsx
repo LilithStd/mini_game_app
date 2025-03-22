@@ -75,14 +75,14 @@ export default function CharacterProfile() {
     const ArmorHelmetModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET,
         arrayItems: fullDescriptionArmors
-            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
 
     }
 
     const ArmorBootsModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS,
         arrayItems: fullDescriptionArmors
-            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
 
     }
 
