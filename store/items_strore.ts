@@ -383,6 +383,7 @@ interface ItemsStoreInterface {
 }
 
 const CHANCE_PERCENT = {
+	VERY_LOW: 10,
 	LOW: 30,
 	MEDIUM: 40,
 	HIGH: 70,
@@ -419,6 +420,28 @@ const REWARD = {
 			count: COUNT_CURRENCY.MEDIUM,
 		},
 	},
+	monsters: {
+		currency: {
+			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS,
+			chance: CHANCE_PERCENT.LOW,
+			count: COUNT_CURRENCY.MEDIUM,
+		},
+		keys: {
+			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE,
+			chance: CHANCE_PERCENT.LOW,
+			count: COUNT_ITEMS.LOW,
+		},
+		armor: {
+			name: INVENTORY_ITEM_ARMOR_SUBTYPE,
+			chance: CHANCE_PERCENT.VERY_LOW,
+			count: COUNT_ITEMS.LOW,
+		},
+		weapon: {
+			name: INVENTORY_ITEM_WEAPON_SUBTYPE,
+			chance: CHANCE_PERCENT.VERY_LOW,
+			count: COUNT_ITEMS.LOW,
+		},
+	},
 };
 
 export const useItemsStore = create<ItemsStoreInterface>()(
@@ -447,12 +470,11 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 								.map((item) => ({
 									id: item.id,
 									name: item.name as AllTypesReward,
-									count: COUNT_ITEMS.LOW,
+									count: REWARD.treasure.potions.healPotions.count,
 								}));
 
 							treasureReward.push(...healPotions);
 						}
-
 						// Проверка на выпадение бафф-зелий
 						if (getChancePercent(REWARD.treasure.potions.buffPotions.chance)) {
 							const buffType = getRandomEnumValue(
@@ -468,7 +490,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 								treasureReward.push({
 									id: randomBuffPotion.id,
 									name: randomBuffPotion.name as AllTypesReward,
-									count: COUNT_ITEMS.LOW,
+									count: REWARD.treasure.potions.buffPotions.count,
 								});
 							}
 						}
@@ -483,7 +505,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 								.map((item) => ({
 									id: item.id,
 									name: item.name as AllTypesReward,
-									count: COUNT_ITEMS.LOW,
+									count: REWARD.treasure.currency.count,
 								}));
 
 							treasureReward.push(...gold);
@@ -495,6 +517,72 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 					case REWARD_VARIANT.GOLD_TREASURE:
 						break;
 					case REWARD_VARIANT.MONSTER:
+						const monsterReward: RewardTypeReturn[] = [];
+						const consumables = get().consumbles;
+						const weapons = get().weapons;
+						const armors = get().armors;
+						if (getChancePercent(REWARD.monsters.weapon.chance)) {
+							const weaponType = getRandomEnumValue(
+								INVENTORY_ITEM_WEAPON_SUBTYPE,
+							);
+							const weapon = weapons.filter(
+								(item) => item.subType === weaponType,
+							);
+							if (weapon.length > 0) {
+								const randomWeapon =
+									weapon[Math.floor(Math.random() * weapon.length)];
+								monsterReward.push({
+									id: randomWeapon.id,
+									name: randomWeapon.name as AllTypesReward,
+									count: REWARD.monsters.weapon.count,
+								});
+							}
+						}
+						if (getChancePercent(REWARD.monsters.armor.chance)) {
+							const armorType = getRandomEnumValue(
+								INVENTORY_ITEM_ARMOR_SUBTYPE,
+							);
+							const armor = armors.filter((item) => item.subType === armorType);
+							if (armor.length > 0) {
+								const randomArmor =
+									armor[Math.floor(Math.random() * armor.length)];
+								monsterReward.push({
+									id: randomArmor.id,
+									name: randomArmor.name as AllTypesReward,
+									count: REWARD.monsters.armor.count,
+								});
+							}
+						}
+
+						if (getChancePercent(REWARD.monsters.keys.chance)) {
+							const keys = consumables
+								.filter(
+									(item) =>
+										item.subType ===
+										INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE,
+								)
+								.map((item) => ({
+									id: item.id,
+									name: item.name as AllTypesReward,
+									count: REWARD.monsters.keys.count,
+								}));
+							monsterReward.push(...keys);
+						}
+						if (getChancePercent(REWARD.monsters.currency.chance)) {
+							const monsterFangs = consumables
+								.filter(
+									(item) =>
+										item.subType ===
+										INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS,
+								)
+								.map((item) => ({
+									id: item.id,
+									name: item.name as AllTypesReward,
+									count: REWARD.monsters.currency.count,
+								}));
+							monsterReward.push(...monsterFangs);
+						}
+
 						break;
 					case REWARD_VARIANT.BOSS:
 						break;

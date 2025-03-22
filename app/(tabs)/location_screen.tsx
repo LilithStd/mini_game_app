@@ -99,16 +99,16 @@ export default function LocationScreen() {
         setModalVisible(false)
     }
 
-    const handleSubmitTreasure = () => {
-        setIsChooseTreasure(false)
-        setIsTreausre(false)
-        setModalVisible(false)
-        setCurrentReward(defaultTreasure)
-        setFinalReward(defaultTreasure)
-        setCountRollTreasure(countTreasureRollDefault)
-        setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
+    // const handleSubmitTreasure = () => {
+    //     setIsChooseTreasure(false)
+    //     setIsTreausre(false)
+    //     setModalVisible(false)
+    //     setCurrentReward(defaultTreasure)
+    //     setFinalReward(defaultTreasure)
+    //     setCountRollTreasure(countTreasureRollDefault)
+    //     setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
 
-    }
+    // }
     const handleModalChooseBattle = () => {
         setModalVisible(false)
         router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
