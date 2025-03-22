@@ -1,4 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
@@ -6,9 +7,16 @@ import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 export default function VictoryScreen() {
     const router = useRouter();
-    const { expirience, retreat } = useLocalSearchParams()
+    const { expirience, retreat, targetForReward } = useLocalSearchParams()
+
+    //location_store
     const location = useLocationStore(state => state.locationToBattleScreen)
     const currentLocation = useLocationStore(state => state.currentLocation)
+    //items_store
+    const getReward = useItemsStore(state => state.getReward)
+    //
+    const rewardTarget = REWARD_VARIANT.MONSTER
+    const reward = getReward(rewardTarget)
 
     const handleSwitchScreenToLocation = () => {
         router.push({
@@ -66,6 +74,8 @@ export default function VictoryScreen() {
                 <View>
                     <Text style={{ fontSize: 24, fontWeight: "bold" }}>Victory Screen</Text>
                     <Text>EXP:{expirience}</Text>
+
+                    {reward.length === 0 ? <Text>=Nothing reward=</Text> : reward.map((item) => <Text key={item.id}>{item.name} x {item.count}</Text>)}
                     <View
                         style={{
                             flexDirection: 'row'

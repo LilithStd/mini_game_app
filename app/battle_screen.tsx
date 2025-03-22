@@ -12,6 +12,7 @@ import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
+import { REWARD_VARIANT } from "@/store/items_strore";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -98,12 +99,13 @@ export default function Battle_Screen() {
     }, [])
 
     useEffect(() => {
+        const targetToReward = REWARD_VARIANT.MONSTER
         if (enemyStats.death) {
             const expirience = getRandomNumber(100, 300)
             characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
             router.push({
                 pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-                params: { location, expirience }
+                params: { location, expirience, targetToReward }
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }

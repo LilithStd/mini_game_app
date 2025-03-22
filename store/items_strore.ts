@@ -582,8 +582,7 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 								}));
 							monsterReward.push(...monsterFangs);
 						}
-
-						break;
+						return monsterReward;
 					case REWARD_VARIANT.BOSS:
 						break;
 					case REWARD_VARIANT.DUNGEON:

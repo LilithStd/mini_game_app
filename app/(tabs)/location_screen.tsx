@@ -43,26 +43,26 @@ export default function LocationScreen() {
 
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
-    const startLottery = () => {
-        if (countRollTreasure === 0) {
-            return
-        }
-        setIsRolling(true);
-        setFinalReward(null);
-        setCountRollTreasure(countRollTreasure - 1)
-        let count = 0;
-        const interval = setInterval(() => {
-            setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
-            count++;
+    // const startLottery = () => {
+    //     if (countRollTreasure === 0) {
+    //         return
+    //     }
+    //     setIsRolling(true);
+    //     setFinalReward(null);
+    //     setCountRollTreasure(countRollTreasure - 1)
+    //     let count = 0;
+    //     const interval = setInterval(() => {
+    //         setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
+    //         count++;
 
-            if (count > 10) { // Через 10 итераций останавливаемся
-                clearInterval(interval);
-                const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
-                setFinalReward(selectedReward);
-                setIsRolling(false);
-            }
-        }, 100); // Скорость смены элементов (100мс)
-    };
+    //         if (count > 10) { // Через 10 итераций останавливаемся
+    //             clearInterval(interval);
+    //             const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
+    //             setFinalReward(selectedReward);
+    //             setIsRolling(false);
+    //         }
+    //     }, 100); // Скорость смены элементов (100мс)
+    // };
 
     const getRandomLocationImage = () => {
         const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
@@ -78,7 +78,7 @@ export default function LocationScreen() {
 
     }
 
-    const chanceFindTreasurePercent = 60
+    const chanceFindTreasurePercent = 10
 
     const chanceFindTreasure = (percent: number): boolean => {
         return Math.random() * 100 < percent;
