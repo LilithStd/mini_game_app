@@ -324,6 +324,7 @@ export default function CharacterProfile() {
                             <Text>HP:{characterStats.healPoints}</Text>
                             <Text>Attack:{characterStats.attack}</Text>
                             <Text>Defense:{characterStats.defense}</Text>
+                            <Text>Evasion:{characterStats.evasion}</Text>
                             <Text>Critical Rate:{characterStats.criticalRate}</Text>
                             <Text>EXP:{characterStats.expirience}</Text>
                             <Text>Total Damage:{characterStats.totalDamage}</Text>

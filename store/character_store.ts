@@ -294,7 +294,7 @@ export enum UPDATE_CHARACTER_STATS {
 	MODEL = 'model',
 	LEVEL = 'level',
 	ATTACK = 'attack',
-	DEFENSE = 'defence',
+	DEFENSE = 'defense',
 	EVASION = 'evasion',
 	CRITICAL_RATE = 'criricalRate',
 	CRITICAL_DAMAGE = 'criticalDamage',
@@ -359,70 +359,125 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							}
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET:
-							if (
-								updatedCharacterEquip.armor.helmet.name === updateEquipItem.name
-							) {
-								updatedCharacterEquip.armor.helmet.name = '';
-								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? -updateEquipItem.stats.defense
-										: 0,
-								);
-							} else {
-								updatedCharacterEquip.armor.helmet.name = updateEquipItem.name;
-								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? updateEquipItem.stats.defense
-										: 0,
+							{
+								const isEquipped =
+									updatedCharacterEquip.armor.helmet.name ===
+									updateEquipItem.name;
+
+								// Сбрасываем или устанавливаем новый предмет
+								updatedCharacterEquip.armor.helmet.name = isEquipped
+									? ''
+									: updateEquipItem.name;
+
+								// Коэффициент для прибавления или вычитания характеристик
+								const multiplier = isEquipped ? -1 : 1;
+
+								// Обновление характеристик
+								Object.entries(updateEquipItem.stats).forEach(
+									([key, value]) => {
+										const statValue =
+											typeof value === 'number' ? value * multiplier : 0;
+										get().updateCharacterStats(
+											key as UPDATE_CHARACTER_STATS,
+											statValue,
+										);
+									},
 								);
 							}
+							// if (
+							// 	updatedCharacterEquip.armor.helmet.name === updateEquipItem.name
+							// ) {
+							// 	updatedCharacterEquip.armor.helmet.name = '';
+							// 	get().updateCharacterStats(
+							// 		UPDATE_CHARACTER_STATS.DEFENSE,
+							// 		updateEquipItem.stats.defense
+							// 			? -updateEquipItem.stats.defense
+							// 			: 0,
+							// 	);
+							// } else {
+							// 	updatedCharacterEquip.armor.helmet.name = updateEquipItem.name;
+							// 	get().updateCharacterStats(
+							// 		UPDATE_CHARACTER_STATS.DEFENSE,
+							// 		updateEquipItem.stats.defense
+							// 			? updateEquipItem.stats.defense
+							// 			: 0,
+							// 	);
+							// }
 							break;
+
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.BODY:
-							if (
-								updatedCharacterEquip.armor.body.name === updateEquipItem.name
-							) {
-								updatedCharacterEquip.armor.body.name = '';
-								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? -updateEquipItem.stats.defense
-										: 0,
-								);
-							} else {
-								updatedCharacterEquip.armor.body.name = updateEquipItem.name;
-								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? updateEquipItem.stats.defense
-										: 0,
+							{
+								const isEquipped =
+									updatedCharacterEquip.armor.body.name ===
+									updateEquipItem.name;
+
+								// Сбрасываем или устанавливаем новый предмет
+								updatedCharacterEquip.armor.body.name = isEquipped
+									? ''
+									: updateEquipItem.name;
+
+								// Коэффициент для прибавления или вычитания характеристик
+								const multiplier = isEquipped ? -1 : 1;
+
+								// Обновление характеристик
+								Object.entries(updateEquipItem.stats).forEach(
+									([key, value]) => {
+										const statValue =
+											typeof value === 'number' ? value * multiplier : 0;
+										get().updateCharacterStats(
+											key as UPDATE_CHARACTER_STATS,
+											statValue,
+										);
+									},
 								);
 							}
+							// if (
+							// 	updatedCharacterEquip.armor.body.name === updateEquipItem.name
+							// ) {
+							// 	updatedCharacterEquip.armor.body.name = '';
+							// 	get().updateCharacterStats(
+							// 		UPDATE_CHARACTER_STATS.DEFENSE,
+							// 		updateEquipItem.stats.defense
+							// 			? -updateEquipItem.stats.defense
+							// 			: 0,
+							// 	);
+							// } else {
+							// 	updatedCharacterEquip.armor.body.name = updateEquipItem.name;
+							// 	get().updateCharacterStats(
+							// 		UPDATE_CHARACTER_STATS.DEFENSE,
+							// 		updateEquipItem.stats.defense
+							// 			? updateEquipItem.stats.defense
+							// 			: 0,
+							// 	);
+							// }
 
 							break;
-						case INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS:
-							if (
-								updatedCharacterEquip.armor.boots.name === updateEquipItem.name
-							) {
-								updatedCharacterEquip.armor.boots.name = '';
+
+						case INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS: {
+							const isEquipped =
+								updatedCharacterEquip.armor.boots.name === updateEquipItem.name;
+
+							// Сбрасываем или устанавливаем новый предмет
+							updatedCharacterEquip.armor.boots.name = isEquipped
+								? ''
+								: updateEquipItem.name;
+
+							// Коэффициент для прибавления или вычитания характеристик
+							const multiplier = isEquipped ? -1 : 1;
+
+							// Обновление характеристик
+							Object.entries(updateEquipItem.stats).forEach(([key, value]) => {
+								const statValue =
+									typeof value === 'number' ? value * multiplier : 0;
 								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? -updateEquipItem.stats.defense
-										: 0,
+									key as UPDATE_CHARACTER_STATS,
+									statValue,
 								);
-							} else {
-								updatedCharacterEquip.armor.boots.name = updateEquipItem.name;
-								get().updateCharacterStats(
-									UPDATE_CHARACTER_STATS.DEFENSE,
-									updateEquipItem.stats.defense
-										? updateEquipItem.stats.defense
-										: 0,
-								);
-							}
+							});
 
 							break;
+						}
+
 						default:
 							console.warn(
 								`Неподдерживаемый запрос обновления: ${updateEquipRequest}`,
@@ -490,7 +545,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							updatedCharacter.level = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.ATTACK:
-							updatedCharacter.attack = updateValue as number;
+							updatedCharacter.attack += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.DEFENSE:
 							updatedCharacter.defense += updateValue as number;
@@ -499,19 +554,19 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							updatedCharacter.criticalRate += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.CRITICAL_DAMAGE:
-							updatedCharacter.criticalDamage = updateValue as number;
+							updatedCharacter.criticalDamage += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.EVASION:
-							updatedCharacter.evasion = updateValue as number;
+							updatedCharacter.evasion += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.REDUCE_CRITICAL_DAMAGE:
-							updatedCharacter.criticalDamage = updateValue as number;
+							updatedCharacter.criticalDamage += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.RESIST_ATRIBUTE:
 							updatedCharacter.resistAtribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
-							updatedCharacter.healPoints = updateValue as number;
+							updatedCharacter.healPoints += updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.EXPIRIENCE: {
 							let incomeExp = updateValue as number;
