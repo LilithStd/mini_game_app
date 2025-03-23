@@ -37,6 +37,12 @@ const Character_Pull: CharacterStats[] = [
 		level: 1,
 		attack: 8,
 		defense: 10,
+		accuracy: 2,
+		criticalRate: 5,
+		criticalDamage: 10,
+		evasion: 0,
+		reduceCriticalDamage: 20,
+		resistAtribute: '',
 		healPoints: 100,
 		expirience: 0,
 		totalDamage: 0,
@@ -48,6 +54,12 @@ const Character_Pull: CharacterStats[] = [
 		level: 1,
 		attack: 10,
 		defense: 8,
+		accuracy: 4,
+		criticalRate: 5,
+		criticalDamage: 10,
+		evasion: 4,
+		reduceCriticalDamage: 40,
+		resistAtribute: '',
 		healPoints: 120,
 		expirience: 0,
 		totalDamage: 0,
@@ -59,6 +71,12 @@ const Character_Pull: CharacterStats[] = [
 		level: 1,
 		attack: 12,
 		defense: 6,
+		accuracy: 3,
+		criticalRate: 10,
+		criticalDamage: 10,
+		evasion: 0,
+		reduceCriticalDamage: 40,
+		resistAtribute: '',
 		healPoints: 80,
 		expirience: 0,
 		totalDamage: 0,
@@ -149,6 +167,12 @@ export type CharacterStats = {
 	level: number;
 	attack: number;
 	defense: number;
+	accuracy: number;
+	criticalRate: number;
+	criticalDamage: number;
+	evasion: number;
+	reduceCriticalDamage: number;
+	resistAtribute: string;
 	healPoints: number;
 	expirience: number;
 	totalDamage: number;
@@ -156,20 +180,94 @@ export type CharacterStats = {
 };
 
 const CharacterEquipDefault = {
-	weapon: '',
+	weapon: {
+		name: '',
+		stats: {
+			attack: 0,
+			accuracy: 0,
+			criticalRate: 0,
+			criticalDamage: 0,
+			atribute: '',
+			itemSkill: '',
+		},
+	},
 	armor: {
-		body: '',
-		helmet: '',
-		boots: '',
+		body: {
+			name: '',
+			stats: {
+				defense: 0,
+				evasion: 0,
+				reduceCriticalDamage: 0,
+				resistAtribute: '',
+				itemSkill: '',
+			},
+		},
+		helmet: {
+			name: '',
+			stats: {
+				defense: 0,
+				evasion: 0,
+				reduceCriticalDamage: 0,
+				resistAtribute: '',
+				itemSkill: '',
+			},
+		},
+		boots: {
+			name: '',
+			stats: {
+				defense: 0,
+				evasion: 0,
+				reduceCriticalDamage: 0,
+				resistAtribute: '',
+				itemSkill: '',
+			},
+		},
 	},
 };
 
 export type CharacterEquip = {
-	weapon: string;
+	weapon: {
+		name: string;
+		stats: {
+			attack: number;
+			accuracy: number;
+			criticalRate: number;
+			criticalDamage: number;
+			atribute: string;
+			itemSkill: string;
+		};
+	};
 	armor: {
-		body: string;
-		helmet: string;
-		boots: string;
+		body: {
+			name: string;
+			stats: {
+				defense: number;
+				evasion: number;
+				reduceCriticalDamage: number;
+				resistAtribute: string;
+				itemSkill: string;
+			};
+		};
+		helmet: {
+			name: string;
+			stats: {
+				defense: number;
+				evasion: number;
+				reduceCriticalDamage: number;
+				resistAtribute: string;
+				itemSkill: string;
+			};
+		};
+		boots: {
+			name: string;
+			stats: {
+				defense: number;
+				evasion: number;
+				reduceCriticalDamage: number;
+				resistAtribute: string;
+				itemSkill: string;
+			};
+		};
 	};
 };
 
@@ -179,6 +277,12 @@ const CharacterDefaultStats = {
 	level: 0,
 	attack: 0,
 	defense: 0,
+	accuracy: 0,
+	criticalRate: 0,
+	criticalDamage: 0,
+	evasion: 0,
+	reduceCriticalDamage: 0,
+	resistAtribute: '',
 	healPoints: 0,
 	expirience: 0,
 	totalDamage: 0,
@@ -191,12 +295,29 @@ export enum UPDATE_CHARACTER_STATS {
 	LEVEL = 'level',
 	ATTACK = 'attack',
 	DEFENSE = 'defence',
+	EVASION = 'evasion',
+	CRITICAL_RATE = 'criricalRate',
+	CRITICAL_DAMAGE = 'criticalDamage',
+	REDUCE_CRITICAL_DAMAGE = 'reduceCriticalDamage',
+	RESIST_ATRIBUTE = 'resistAtribute',
 	HEAL_POINTS = 'healPoints',
 	EXPIRIENCE = 'expirience',
 	TOTAL_DAMAGE = 'totalDamage',
 	DEATH = 'death',
 	ALL = 'all',
 }
+
+export type UpdateItemStats = {
+	attack?: number;
+	defense?: number;
+	accuracy?: number;
+	criticalRate?: number;
+	criticalDamage?: number;
+	evasion?: number;
+	reduceCriticalDamage?: number;
+	resistAtribute?: string;
+	healPoints?: number;
+};
 
 export interface CharacterStoreInterface {
 	default_state: boolean;
@@ -206,7 +327,7 @@ export interface CharacterStoreInterface {
 	characterEquip: CharacterEquip;
 	characterEquipUpdate: (
 		updateEquipRequest: string,
-		updateEquipItem: string,
+		updateEquipItem: {id: string; name: string; stats: UpdateItemStats},
 	) => void;
 	characterInventoryUpdate: (item: CharacterInventoryType[]) => void;
 	updateCharacterStats: (
@@ -230,32 +351,75 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 					const updatedCharacterEquip = {...state.characterEquip};
 					switch (updateEquipRequest) {
 						case INVENTORY_ITEM_TYPE.WEAPON:
-							if (updatedCharacterEquip.weapon === updateEquipItem) {
-								updatedCharacterEquip.weapon = '';
+							if (updatedCharacterEquip.weapon.name === updateEquipItem.name) {
+								updatedCharacterEquip.weapon.name = '';
 							} else {
-								updatedCharacterEquip.weapon = updateEquipItem;
+								updatedCharacterEquip.weapon.name = updateEquipItem.name;
+								// get().updateCharacterStats(UPDATE_CHARACTER_STATS.ATTACK, updateEquipItem)
 							}
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET:
-							if (updatedCharacterEquip.armor.helmet === updateEquipItem) {
-								updatedCharacterEquip.armor.helmet = '';
+							if (
+								updatedCharacterEquip.armor.helmet.name === updateEquipItem.name
+							) {
+								updatedCharacterEquip.armor.helmet.name = '';
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? -updateEquipItem.stats.defense
+										: 0,
+								);
 							} else {
-								updatedCharacterEquip.armor.helmet = updateEquipItem;
+								updatedCharacterEquip.armor.helmet.name = updateEquipItem.name;
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? updateEquipItem.stats.defense
+										: 0,
+								);
 							}
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.BODY:
-							if (updatedCharacterEquip.armor.body === updateEquipItem) {
-								updatedCharacterEquip.armor.body = '';
+							if (
+								updatedCharacterEquip.armor.body.name === updateEquipItem.name
+							) {
+								updatedCharacterEquip.armor.body.name = '';
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? -updateEquipItem.stats.defense
+										: 0,
+								);
 							} else {
-								updatedCharacterEquip.armor.body = updateEquipItem;
+								updatedCharacterEquip.armor.body.name = updateEquipItem.name;
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? updateEquipItem.stats.defense
+										: 0,
+								);
 							}
 
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS:
-							if (updatedCharacterEquip.armor.boots === updateEquipItem) {
-								updatedCharacterEquip.armor.boots = '';
+							if (
+								updatedCharacterEquip.armor.boots.name === updateEquipItem.name
+							) {
+								updatedCharacterEquip.armor.boots.name = '';
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? -updateEquipItem.stats.defense
+										: 0,
+								);
 							} else {
-								updatedCharacterEquip.armor.boots = updateEquipItem;
+								updatedCharacterEquip.armor.boots.name = updateEquipItem.name;
+								get().updateCharacterStats(
+									UPDATE_CHARACTER_STATS.DEFENSE,
+									updateEquipItem.stats.defense
+										? updateEquipItem.stats.defense
+										: 0,
+								);
 							}
 
 							break;
@@ -329,7 +493,22 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							updatedCharacter.attack = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.DEFENSE:
-							updatedCharacter.defense = updateValue as number;
+							updatedCharacter.defense += updateValue as number;
+							break;
+						case UPDATE_CHARACTER_STATS.CRITICAL_RATE:
+							updatedCharacter.criticalRate += updateValue as number;
+							break;
+						case UPDATE_CHARACTER_STATS.CRITICAL_DAMAGE:
+							updatedCharacter.criticalDamage = updateValue as number;
+							break;
+						case UPDATE_CHARACTER_STATS.EVASION:
+							updatedCharacter.evasion = updateValue as number;
+							break;
+						case UPDATE_CHARACTER_STATS.REDUCE_CRITICAL_DAMAGE:
+							updatedCharacter.criticalDamage = updateValue as number;
+							break;
+						case UPDATE_CHARACTER_STATS.RESIST_ATRIBUTE:
+							updatedCharacter.resistAtribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
 							updatedCharacter.healPoints = updateValue as number;

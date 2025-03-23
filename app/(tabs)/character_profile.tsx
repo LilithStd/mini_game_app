@@ -1,4 +1,4 @@
-import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from "@/store/character_store";
+import { CharacterInventoryType, INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, UpdateItemStats, useCharacterStore } from "@/store/character_store";
 import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useState } from "react";
@@ -10,12 +10,18 @@ enum CURRENT_PAGE {
 }
 const DefaultModal = {
     name: 'default',
-    arrayItems: [{ id: '', name: '', count: 0 }]
+    arrayItems: [{ id: '', name: '', count: 0, stats: {} }]
+}
+
+type ArrayItemsProps = {
+    id: string,
+    name: string,
+    stats: UpdateItemStats
 }
 
 type ModalProps = {
     name: string,
-    arrayItems: CharacterInventoryType[]
+    arrayItems: ArrayItemsProps[]
 }
 
 export default function CharacterProfile() {
@@ -65,35 +71,25 @@ export default function CharacterProfile() {
 
 
 
+    const WeaponModal = {
+        name: INVENTORY_ITEM_TYPE.WEAPON,
+        arrayItems: fullDescriptionWeapons.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
+    };
+
     const ArmorBodyModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BODY,
-        arrayItems: fullDescriptionArmors
-            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
-
-    }
+        arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+    };
 
     const ArmorHelmetModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET,
-        arrayItems: fullDescriptionArmors
-            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
-
-    }
+        arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
+    };
 
     const ArmorBootsModal = {
         name: INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS,
-        arrayItems: fullDescriptionArmors
-            .filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
-
-    }
-
-    const WeaponModal = {
-        name: INVENTORY_ITEM_TYPE.WEAPON,
-        arrayItems: fullDescriptionWeapons.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON).map((item) => ({
-            ...item,
-            count: 1,
-        }))
-    }
-
+        arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
+    };
 
     //modal_actions_functions
     const closeModal = () => {
@@ -105,31 +101,42 @@ export default function CharacterProfile() {
     }
     //
 
-    //handle_equip_functions
     const handleWeaponEquip = () => {
         if (!modalVisible) {
-            openModal(WeaponModal)
+            openModal({
+                name: INVENTORY_ITEM_TYPE.WEAPON,
+                arrayItems: fullDescriptionWeapons.filter((item) => item.type === INVENTORY_ITEM_TYPE.WEAPON)
+            });
         }
+    };
 
-    }
     const handleArmorBodyEquip = () => {
         if (!modalVisible) {
-            openModal(ArmorBodyModal)
+            openModal({
+                name: INVENTORY_ITEM_ARMOR_SUBTYPE.BODY,
+                arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BODY)
+            });
         }
-    }
+    };
 
     const handleArmorHelmetEquip = () => {
         if (!modalVisible) {
-            openModal(ArmorHelmetModal)
+            openModal({
+                name: INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET,
+                arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET)
+            });
         }
-    }
+    };
 
     const handleArmorBootsEquip = () => {
         if (!modalVisible) {
-            openModal(ArmorBootsModal)
+            openModal({
+                name: INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS,
+                arrayItems: fullDescriptionArmors.filter((item) => item.subType === INVENTORY_ITEM_ARMOR_SUBTYPE.BOOTS)
+            });
         }
-    }
-    //
+    };
+
 
     return (
         <ImageBackground
@@ -190,7 +197,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}> {characterEquipCurrent.weapon !== '' ? characterEquipCurrent.weapon : `--Empty--`}</Text>
+                            }}> {characterEquipCurrent.weapon.name !== '' ? characterEquipCurrent.weapon.name : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -211,7 +218,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.armor.helmet !== '' ? characterEquipCurrent.armor.helmet : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.helmet.name !== '' ? characterEquipCurrent.armor.helmet.name : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -232,7 +239,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.armor.body !== '' ? characterEquipCurrent.armor.body : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.body.name !== '' ? characterEquipCurrent.armor.body.name : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                     <View style={{
@@ -253,7 +260,7 @@ export default function CharacterProfile() {
                             <Text style={{
                                 textAlign: 'center',
                                 backgroundColor: 'grey'
-                            }}>{characterEquipCurrent.armor.boots !== '' ? characterEquipCurrent.armor.boots : `--Empty--`}</Text>
+                            }}>{characterEquipCurrent.armor.boots.name !== '' ? characterEquipCurrent.armor.boots.name : `--Empty--`}</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -317,6 +324,7 @@ export default function CharacterProfile() {
                             <Text>HP:{characterStats.healPoints}</Text>
                             <Text>Attack:{characterStats.attack}</Text>
                             <Text>Defense:{characterStats.defense}</Text>
+                            <Text>Critical Rate:{characterStats.criticalRate}</Text>
                             <Text>EXP:{characterStats.expirience}</Text>
                             <Text>Total Damage:{characterStats.totalDamage}</Text>
                         </View>
@@ -336,19 +344,22 @@ export default function CharacterProfile() {
                                         <FlatList
                                             data={currentTypeModal.arrayItems}
                                             keyExtractor={(item, index) => index.toString()}
-                                            renderItem={({ item }) =>
+                                            renderItem={({ item }) => (
                                                 <TouchableOpacity
                                                     onPress={() => {
-                                                        characterEquipUpdate(currentTypeModal.name, item.name)
-                                                        closeModal()
-                                                    }
-
-                                                    }
+                                                        characterEquipUpdate(currentTypeModal.name, {
+                                                            id: item.id,
+                                                            name: item.name,
+                                                            stats: item.stats // Теперь передается полный объект!
+                                                        });
+                                                        closeModal();
+                                                    }}
                                                 >
                                                     <Text style={styles.item}>{item.name}</Text>
                                                 </TouchableOpacity>
-                                            }
+                                            )}
                                         />
+
 
                                         <TouchableOpacity style={styles.closeButton} onPress={closeModal}>
                                             <Text style={styles.closeText}>Закрыть</Text>
