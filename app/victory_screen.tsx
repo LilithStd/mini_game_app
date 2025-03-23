@@ -3,6 +3,7 @@ import { useCharacterStore } from "@/store/character_store";
 import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import { useEffect } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 
 
@@ -20,6 +21,7 @@ export default function VictoryScreen() {
     const updateCharacterInventory = useCharacterStore(state => state.characterInventoryUpdate)
     // 
     const rewardTarget = REWARD_VARIANT.MONSTER
+
     const reward = getReward(rewardTarget)
 
     const handleSwitchScreenToLocation = () => {

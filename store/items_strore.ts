@@ -187,174 +187,8 @@ export enum REWARD_VARIANT {
 	DUNGEON = 'dungeon',
 	MONSTER = 'monster',
 	BOSS = 'boss',
+	DEFAULT_NOTHNIG = 'default_nothing',
 }
-
-// interface TreasureRewards {
-// 	potions?: {
-// 		healPotions?: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		buffPotions?: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 	};
-// 	currency?: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
-// 		chance: number;
-// 		count: number;
-// 	};
-// }
-
-// interface GoldTreasureRewards {
-// 	potions: {
-// 		healPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		buffPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 	};
-// 	currency: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.GOLD;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	armor: {
-// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	weapon: {
-// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// }
-
-// interface MonsterRewards {
-// 	currency: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	keys: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	armor: {
-// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	weapon: {
-// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// }
-
-// interface BossRewards {
-// 	potions: {
-// 		healPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		buffPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 	};
-// 	keys: {
-// 		dungeonKeys: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.DUNGEON;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		treasueKeys: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 	};
-// 	currency: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	armor: {
-// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	weapon: {
-// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// }
-
-// interface DungeonRewards {
-// 	potions: {
-// 		healPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		buffPotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 		escapePotions: {
-// 			name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.ESCAPE_CHARACTER;
-// 			chance: number;
-// 			count: number;
-// 		};
-// 	};
-// 	keys: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS.TREASURE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	crystal: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	currency: {
-// 		name: INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY.FANG_MONSTERS;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	armor: {
-// 		name: INVENTORY_ITEM_ARMOR_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// 	weapon: {
-// 		name: INVENTORY_ITEM_WEAPON_SUBTYPE;
-// 		chance: number;
-// 		count: number;
-// 	};
-// }
-
-// type RewardAllTypes =
-// 	| TreasureRewards
-// 	| GoldTreasureRewards
-// 	| MonsterRewards
-// 	| BossRewards
-// 	| DungeonRewards;
 
 type AllTypesReward =
 	| INVENTORY_ITEM_CONSUMBLES_TYPE
@@ -378,7 +212,6 @@ interface ItemsStoreInterface {
 	weapons: WeaponType[];
 	armors: ArmorType[];
 	consumbles: ConsumableType[];
-	rewardFindTreasure: [];
 	getReward: (variant: REWARD_VARIANT) => RewardTypeReturn[];
 }
 
@@ -450,11 +283,12 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 			weapons: WEAPON as WeaponType[],
 			armors: ARMOR as ArmorType[],
 			consumbles: CONSUMBLES as ConsumableType[],
-			rewardFindTreasure: [],
 			getReward: (variant: REWARD_VARIANT): RewardTypeReturn[] => {
 				const reward: RewardTypeReturn[] = [];
-
 				switch (variant) {
+					case REWARD_VARIANT.DEFAULT_NOTHNIG: {
+						return [];
+					}
 					case REWARD_VARIANT.TREASURE: {
 						const treasureReward: RewardTypeReturn[] = [];
 						const consumables = get().consumbles; // Получаем инвентарь сразу
@@ -510,7 +344,6 @@ export const useItemsStore = create<ItemsStoreInterface>()(
 
 							treasureReward.push(...gold);
 						}
-
 						return treasureReward;
 					}
 
