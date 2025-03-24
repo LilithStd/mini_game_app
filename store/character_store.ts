@@ -42,7 +42,9 @@ const Character_Pull: CharacterStats[] = [
 		criticalDamage: 10,
 		evasion: 0,
 		reduceCriticalDamage: 20,
+		atribute: '',
 		resistAtribute: '',
+		itemsSkills: [],
 		healPoints: 100,
 		expirience: 0,
 		totalDamage: 0,
@@ -59,7 +61,9 @@ const Character_Pull: CharacterStats[] = [
 		criticalDamage: 10,
 		evasion: 4,
 		reduceCriticalDamage: 40,
+		atribute: '',
 		resistAtribute: '',
+		itemsSkills: [],
 		healPoints: 120,
 		expirience: 0,
 		totalDamage: 0,
@@ -76,7 +80,9 @@ const Character_Pull: CharacterStats[] = [
 		criticalDamage: 10,
 		evasion: 0,
 		reduceCriticalDamage: 40,
+		atribute: '',
 		resistAtribute: '',
+		itemsSkills: [],
 		healPoints: 80,
 		expirience: 0,
 		totalDamage: 0,
@@ -172,7 +178,9 @@ export type CharacterStats = {
 	criticalDamage: number;
 	evasion: number;
 	reduceCriticalDamage: number;
+	atribute: string;
 	resistAtribute: string;
+	itemsSkills: string[];
 	healPoints: number;
 	expirience: number;
 	totalDamage: number;
@@ -282,7 +290,9 @@ const CharacterDefaultStats = {
 	criticalDamage: 0,
 	evasion: 0,
 	reduceCriticalDamage: 0,
+	atribute: '',
 	resistAtribute: '',
+	itemsSkills: [],
 	healPoints: 0,
 	expirience: 0,
 	totalDamage: 0,
@@ -295,11 +305,14 @@ export enum UPDATE_CHARACTER_STATS {
 	LEVEL = 'level',
 	ATTACK = 'attack',
 	DEFENSE = 'defense',
+	ACCURACY = 'accuracy',
 	EVASION = 'evasion',
-	CRITICAL_RATE = 'criricalRate',
+	CRITICAL_RATE = 'criticalRate',
 	CRITICAL_DAMAGE = 'criticalDamage',
 	REDUCE_CRITICAL_DAMAGE = 'reduceCriticalDamage',
+	ATRIBUTE = 'atribute',
 	RESIST_ATRIBUTE = 'resistAtribute',
+	ITEM_SKILL = 'itemSkill',
 	HEAL_POINTS = 'healPoints',
 	EXPIRIENCE = 'expirience',
 	TOTAL_DAMAGE = 'totalDamage',
@@ -351,12 +364,35 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 					const updatedCharacterEquip = {...state.characterEquip};
 					switch (updateEquipRequest) {
 						case INVENTORY_ITEM_TYPE.WEAPON:
-							if (updatedCharacterEquip.weapon.name === updateEquipItem.name) {
-								updatedCharacterEquip.weapon.name = '';
-							} else {
-								updatedCharacterEquip.weapon.name = updateEquipItem.name;
-								// get().updateCharacterStats(UPDATE_CHARACTER_STATS.ATTACK, updateEquipItem)
+							{
+								const isEquipped =
+									updatedCharacterEquip.weapon.name === updateEquipItem.name;
+
+								// Сбрасываем или устанавливаем новый предмет
+								updatedCharacterEquip.weapon.name = isEquipped
+									? ''
+									: updateEquipItem.name;
+
+								// Коэффициент для прибавления или вычитания характеристик
+								const multiplier = isEquipped ? -1 : 1;
+
+								// Обновление характеристик
+								Object.entries(updateEquipItem.stats).forEach(
+									([key, value]) => {
+										const statValue =
+											typeof value === 'number' ? value * multiplier : 0;
+										get().updateCharacterStats(
+											key as UPDATE_CHARACTER_STATS,
+											statValue,
+										);
+									},
+								);
 							}
+							// if (updatedCharacterEquip.weapon.name === updateEquipItem.name) {
+							// 	updatedCharacterEquip.weapon.name = '';
+							// } else {
+							// 	updatedCharacterEquip.weapon.name = updateEquipItem.name;
+							// }
 							break;
 						case INVENTORY_ITEM_ARMOR_SUBTYPE.HELMET:
 							{
@@ -545,58 +581,79 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							updatedCharacter.level = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.ATTACK:
-							updatedCharacter.attack += updateValue as number;
+							updatedCharacter.attack =
+								(updatedCharacter.attack || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.DEFENSE:
-							updatedCharacter.defense += updateValue as number;
+							updatedCharacter.defense =
+								(updatedCharacter.defense || 0) + (updateValue as number);
+							break;
+						case UPDATE_CHARACTER_STATS.ACCURACY:
+							updatedCharacter.accuracy =
+								(updatedCharacter.accuracy || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.CRITICAL_RATE:
-							updatedCharacter.criticalRate += updateValue as number;
+							updatedCharacter.criticalRate =
+								(updatedCharacter.criticalRate || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.CRITICAL_DAMAGE:
-							updatedCharacter.criticalDamage += updateValue as number;
+							updatedCharacter.criticalDamage =
+								(updatedCharacter.criticalDamage || 0) +
+								(updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.EVASION:
-							updatedCharacter.evasion += updateValue as number;
+							updatedCharacter.evasion =
+								(updatedCharacter.evasion || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.REDUCE_CRITICAL_DAMAGE:
-							updatedCharacter.criticalDamage += updateValue as number;
+							updatedCharacter.reduceCriticalDamage =
+								(updatedCharacter.reduceCriticalDamage || 0) +
+								(updateValue as number);
+							break;
+						case UPDATE_CHARACTER_STATS.ITEM_SKILL:
+							const element = updateValue as string;
+							updatedCharacter.itemsSkills =
+								updatedCharacter.itemsSkills.includes(element)
+									? updatedCharacter.itemsSkills.filter(
+											(skill) => skill !== element,
+									  ) // Remove item skill if already present
+									: [...updatedCharacter.itemsSkills, element]; // Add item skill if not present
+							break;
+						case UPDATE_CHARACTER_STATS.ATRIBUTE:
+							updatedCharacter.atribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.RESIST_ATRIBUTE:
 							updatedCharacter.resistAtribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
-							updatedCharacter.healPoints += updateValue as number;
+							updatedCharacter.healPoints =
+								(updatedCharacter.healPoints || 0) + (updateValue as number);
 							break;
-						case UPDATE_CHARACTER_STATS.EXPIRIENCE: {
+						case UPDATE_CHARACTER_STATS.EXPIRIENCE:
+							// Ensure you're adding experience properly and leveling up
 							let incomeExp = updateValue as number;
-							let currentLevel = get().characterStats.level;
-							let currentExp = get().characterStats.expirience;
+							let currentLevel = updatedCharacter.level;
+							let currentExp = updatedCharacter.expirience;
 
-							// Находим максимальный уровень из LEVELS
 							const maxLevel = Math.max(...LEVELS.map((lvl) => lvl.level));
-
 							while (incomeExp > 0 && currentLevel < maxLevel) {
 								const foundLevel = LEVELS.find(
 									(lvl) => lvl.level === currentLevel,
 								);
-
-								if (!foundLevel) break; // Если уровень не найден, выходим из цикла
+								if (!foundLevel) break;
 
 								const requiredExp = foundLevel.experience;
 
 								if (currentExp + incomeExp >= requiredExp) {
-									// Повышаем уровень
-									incomeExp -= requiredExp - currentExp; // Вычитаем использованный опыт
+									incomeExp -= requiredExp - currentExp;
 									currentLevel += 1;
-									currentExp = 0; // Опыт сбрасывается на 0 при повышении уровня
+									currentExp = 0;
 								} else {
-									currentExp += incomeExp; // Если не хватает на уровень, просто добавляем опыт
+									currentExp += incomeExp;
 									incomeExp = 0;
 								}
 							}
 
-							// Если достигнут максимальный уровень, ограничиваем опыт
 							if (currentLevel === maxLevel) {
 								const maxExp =
 									LEVELS.find((lvl) => lvl.level === maxLevel)?.experience || 0;
@@ -605,10 +662,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 
 							updatedCharacter.level = currentLevel;
 							updatedCharacter.expirience = currentExp;
-
 							break;
-						}
-
 						case UPDATE_CHARACTER_STATS.TOTAL_DAMAGE:
 							updatedCharacter.totalDamage = updateValue as number;
 							break;
@@ -618,9 +672,7 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 						case UPDATE_CHARACTER_STATS.ALL:
 							return {characterStats: updateValue as CharacterStats};
 						default:
-							console.warn(
-								`Неподдерживаемый запрос обновления: ${updateRequest}`,
-							);
+							console.warn(`Unsupported update request: ${updateRequest}`);
 					}
 
 					return {characterStats: updatedCharacter};

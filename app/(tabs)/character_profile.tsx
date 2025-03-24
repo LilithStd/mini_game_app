@@ -326,6 +326,9 @@ export default function CharacterProfile() {
                             <Text>Defense:{characterStats.defense}</Text>
                             <Text>Evasion:{characterStats.evasion}</Text>
                             <Text>Critical Rate:{characterStats.criticalRate}</Text>
+                            <Text>Items SKill:{characterStats.itemsSkills.map((item) => <Text key={item}>
+                                {item}
+                            </Text>)}</Text>
                             <Text>EXP:{characterStats.expirience}</Text>
                             <Text>Total Damage:{characterStats.totalDamage}</Text>
                         </View>
@@ -389,7 +392,7 @@ export default function CharacterProfile() {
                                                     key={index}
                                                     style={{
                                                         opacity: item.opacity,
-                                                        backgroundColor: item.text.split(' x ')[0] === characterEquipCurrent.weapon ? 'red' : 'transparent'
+                                                        backgroundColor: item.text.split(' x ')[0] === characterEquipCurrent.weapon.name ? 'red' : 'transparent'
                                                     }}
                                                 >
                                                     {item.text}
@@ -412,9 +415,9 @@ export default function CharacterProfile() {
                                             .map((item, index) => {
                                                 const itemName = item.text.split(' x ')[0]; // Убираем количество
                                                 const isEquipped = [
-                                                    characterEquipCurrent.armor.body,
-                                                    characterEquipCurrent.armor.helmet,
-                                                    characterEquipCurrent.armor.boots
+                                                    characterEquipCurrent.armor.body.name,
+                                                    characterEquipCurrent.armor.helmet.name,
+                                                    characterEquipCurrent.armor.boots.name
                                                 ].includes(itemName); // Проверяем, есть ли предмет в экипировке
 
                                                 return (

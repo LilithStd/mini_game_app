@@ -8,13 +8,11 @@ import { REWARD_VARIANT, rewards } from '@/store/items_strore';
 import { Location_content_type, useLocationStore } from '@/store/location_store';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { MotiText } from 'moti';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
-
-const countTreasureRollDefault = 3
-
-const defaultTreasure = { id: '', name: 'treasure', value: 0, type: '', subType: '' }
+const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
+const chanceFindTreasurePercent = 10
 
 export default function LocationScreen() {
     const router = useRouter();
@@ -26,89 +24,57 @@ export default function LocationScreen() {
     const currentLocation = useLocationStore(state => state.currentLocation)
     const currentEnemy = useEnemyStore(state => state.currentEnemy)
     const setRandomCurrentEnemy = useEnemyStore(state => state.getRandomEnemyForBattle)
-    const setChracterInventory = useCharacterStore(state => state.characterInventoryUpdate)
+    const currentState = useGlobalStore(state => state.currentState)
+    const setCurrentState = useGlobalStore(state => state.setCurrentState)
+    const locationPull = useLocationStore(state => state.getPullLocations)
 
 
 
     const [countScreen, setCountScreen] = useState(0)
     const [isModalVisible, setModalVisible] = useState(false);
     const [isTresure, setIsTreausre] = useState(false)
-    const [isChooseTreasure, setIsChooseTreasure] = useState(false)
-    const [countRollTreasure, setCountRollTreasure] = useState(countTreasureRollDefault)
-
-    const [currentReward, setCurrentReward] = useState(defaultTreasure);
-    const [finalReward, setFinalReward] = useState<null | { id: string, name: string; value: number; type: string, subType: string }>(null);
-    const [isRolling, setIsRolling] = useState(false);
-
 
     const [locationImage, setLocationImage] = useState<Location_content_type>({ name: '', model: 0, group: '' })
 
-    // const startLottery = () => {
-    //     if (countRollTreasure === 0) {
-    //         return
-    //     }
-    //     setIsRolling(true);
-    //     setFinalReward(null);
-    //     setCountRollTreasure(countRollTreasure - 1)
-    //     let count = 0;
-    //     const interval = setInterval(() => {
-    //         setCurrentReward(rewards[Math.floor(Math.random() * rewards.length)]);
-    //         count++;
 
-    //         if (count > 10) { // Через 10 итераций останавливаемся
-    //             clearInterval(interval);
-    //             const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
-    //             setFinalReward(selectedReward);
-    //             setIsRolling(false);
-    //         }
-    //     }, 100); // Скорость смены элементов (100мс)
-    // };
-
-    const getRandomLocationImage = () => {
-        const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
-
+    const getRandomLocationImage = useCallback(() => {
         if (location !== undefined || currentLocation !== '') {
-            const tempElement = location && location !== undefined ? location : currentLocationPrevious.group
-            const tempImage = locationPull(tempElement.toString())[Math.floor(Math.random() * locationPull(tempElement.toString()).length)]
-            setLocationToBattleScreen(tempImage)
-            setLocationImage(tempImage)
-        } else {
-            setLocationImage({ name: '', model: defaultImage, group: '' })
+            const tempElement = location || currentLocationPrevious.group;
+            const tempImage = locationPull(tempElement.toString())[Math.floor(Math.random() * locationPull(tempElement.toString()).length)];
+
+            if (locationImage !== tempImage) {
+                setLocationImage(tempImage);
+                setLocationToBattleScreen(tempImage);
+            }
+        } else if (locationImage.model !== defaultImage) {
+            setLocationImage({ name: '', model: defaultImage, group: '' });
         }
+    }, [location, currentLocationPrevious, locationImage]);
 
-    }
 
-    const chanceFindTreasurePercent = 10
+
 
     const chanceFindTreasure = (percent: number): boolean => {
         return Math.random() * 100 < percent;
     }
 
-    const handleDecrementCountScreen = () => {
-        setCountScreen(countScreen + 1)
-        setIsTreausre(chanceFindTreasure(chanceFindTreasurePercent))
-    }
-    const handleIncrementCountScreen = () => {
-        setCountScreen(countScreen + 1)
-        setIsTreausre(chanceFindTreasure(chanceFindTreasurePercent))
-    }
-    const handleGetTreasure = () => {
-        setIsChooseTreasure(true)
-    }
-    const handleCancelGetTreasure = () => {
-        setModalVisible(false)
-    }
+    const handleCountScreenChange = () => {
+        const treasure = chanceFindTreasure(chanceFindTreasurePercent);
+        setCountScreen(prev => prev + 1);
+        if (treasure) {
+            setIsTreausre(true);
+            setModalVisible(true)
+        }
+        if (countScreen >= countScreenToBattle) {
+            setIsTreausre(false)
+            setModalVisible(true)
+            setCountScreen(0)
+            setRandomCurrentEnemy(currentLocation)
+            setCountScreenToBattle(getRandomNumber(1, 4))
+        }
 
-    // const handleSubmitTreasure = () => {
-    //     setIsChooseTreasure(false)
-    //     setIsTreausre(false)
-    //     setModalVisible(false)
-    //     setCurrentReward(defaultTreasure)
-    //     setFinalReward(defaultTreasure)
-    //     setCountRollTreasure(countTreasureRollDefault)
-    //     setChracterInventory(finalReward && finalReward !== null ? finalReward : currentReward)
+    };
 
-    // }
     const handleModalChooseBattle = () => {
         setModalVisible(false)
         router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
@@ -117,39 +83,18 @@ export default function LocationScreen() {
         setModalVisible(false)
     }
 
-    useEffect(() => {
-        setCurrentState(GLOBAL_APP_PATH.LOCATION_SCREEN)
-    }, [])
+    const handleMovAroundLocation = () => {
+        getRandomLocationImage(),
+            handleCountScreenChange()
+    }
 
     useEffect(() => {
-        setCountScreenToBattle(getRandomNumber(1, 8))
-        getRandomLocationImage()
-    }, [location])
-
-    useEffect(() => {
-        if (isTresure && countScreen !== countScreenToBattle) {
-            setModalVisible(true)
+        if (currentState !== GLOBAL_APP_PATH.LOCATION_SCREEN) {
+            setCurrentState(GLOBAL_APP_PATH.LOCATION_SCREEN)
         }
-    }, [isTresure, countScreen, countScreenToBattle])
-
-    useEffect(() => {
-        if (countScreen >= countScreenToBattle) {
-            if (isTresure) {
-                setIsTreausre(false)
-            }
-            setModalVisible(true)
-            setRandomCurrentEnemy(currentLocation)
+        getRandomLocationImage(),
             setCountScreenToBattle(getRandomNumber(1, 4))
-            setCountScreen(0)
-        }
-    }, [isTresure, countScreen, countScreenToBattle]);
-
-
-
-    const setCurrentState = useGlobalStore(state => state.setCurrentState)
-    const locationPull = useLocationStore(state => state.getPullLocations)
-
-
+    }, [])
 
 
     return (
@@ -236,18 +181,12 @@ export default function LocationScreen() {
             }}>
                 <Button
                     title="left"
-                    onPress={() => {
-                        getRandomLocationImage(),
-                            handleDecrementCountScreen()
-                    }}
+                    onPress={handleMovAroundLocation}
 
                 />
                 <Button
                     title="right"
-                    onPress={() => {
-                        getRandomLocationImage(),
-                            handleIncrementCountScreen()
-                    }}
+                    onPress={handleMovAroundLocation}
                 />
             </View>
 
