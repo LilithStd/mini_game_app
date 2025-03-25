@@ -13,10 +13,15 @@ import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
 import { REWARD_VARIANT } from "@/store/items_strore";
+import ModalWindow from "@/components/modal_window/modal_window";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
     const router = useRouter();
+
+    //
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    //
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
@@ -35,6 +40,12 @@ export default function Battle_Screen() {
     // animations state blocks
     // const [scaleCharacter, setScaleCharacter] = useState(1);
     // const [scaleEnemy, setScaleEnemy] = useState(0.7);
+
+    const handleModalCloseStatus = () => {
+        setIsModalOpen(false)
+    }
+
+
 
     const default_stats_character = {
         level: 1,
@@ -71,12 +82,17 @@ export default function Battle_Screen() {
     const handleStandButton = () => {
 
     }
-    const handleRetreatButton = () => {
-        const retreat = 'retreat'
+    const handleRetreatConfirm = () => {
+        setIsModalOpen(false)
+        const retreat = "retreat";
         router.push({
             pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
             params: { location, retreat }
         });
+    }
+    const handleRetreatButton = () => {
+        setIsModalOpen(true)
+
     }
     const enemyTempButton = () => {
         // setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
@@ -84,6 +100,11 @@ export default function Battle_Screen() {
         // setScaleEnemy(0.7)
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
     };
+
+    const objectModalSettings = {
+        variant: 'retreat',
+        callBack: handleRetreatConfirm
+    }
 
 
     useEffect(() => {
@@ -134,6 +155,10 @@ export default function Battle_Screen() {
                     backgroundColor: 'rgba(0, 0, 0, 0.4)'
                 }}>
                     <Enemy />
+                    {isModalOpen &&
+                        <ModalWindow
+                            onClose={handleModalCloseStatus}
+                            objectSetting={objectModalSettings} />}
                     <View style={{
                         position: 'absolute', // Фиксируем внизу
                         bottom: 0, // Прижимаем к нижнему краю
@@ -164,7 +189,9 @@ export default function Battle_Screen() {
                             <TouchableOpacity style={styles.button}>
                                 <Text style={styles.buttonText}>ITEMS</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={handleRetreatButton}
+                            >
                                 <Text style={styles.buttonText}>RETREAT</Text>
                             </TouchableOpacity>
                         </View>

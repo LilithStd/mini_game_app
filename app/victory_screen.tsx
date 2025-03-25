@@ -92,14 +92,13 @@ export default function VictoryScreen() {
                         <TouchableOpacity
                             style={{
                                 backgroundColor: 'green',
-                                margin: '5%',
-                                padding: '3%',
-                                borderRadius: 6
+                                borderRadius: 6,
                             }}
                             onPress={handleSwitchScreenToLocation}
                         >
                             <Text style={{
-                                color: 'white'
+                                color: 'white',
+                                textAlign: 'center',
                             }}>Return</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
