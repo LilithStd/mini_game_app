@@ -11,15 +11,6 @@ export default function Enemy() {
     const currentLocation = useLocationStore(state => state.currentLocation)
     const enemyStats = useBattleStore(state => state.enemy)
 
-    // const randomEnemyForCurrentLocation = () => {
-    //     return enemyPull(currentLocation)[Math.floor(Math.random() * enemyPull(currentLocation).length)]
-    // }
-
-    // useEffect(() => {
-    //     setCurrentEnemy(randomEnemyForCurrentLocation())
-    // }, [])
-
-
     return (
         <View style={{
             width: '100%',
@@ -29,8 +20,8 @@ export default function Enemy() {
                 style={{
                     backgroundColor: 'white',
                     alignItems: 'center',
-                    width: '50%',
-                    left: '30%'
+                    width: '100%',
+                    // left: '30%'
                 }}
             >
                 <Text>{currentEnemy.name}</Text>
@@ -39,7 +30,8 @@ export default function Enemy() {
             </View>
             <Image
                 style={{
-
+                    width: '100%',
+                    height: '70%'
                 }}
                 source={currentEnemy.model}
             />

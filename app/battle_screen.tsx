@@ -1,4 +1,4 @@
-import { Animated, Button, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View } from "react-native";
+import { Animated, Button, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View, StyleSheet } from "react-native";
 import Character from "../components/player/character";
 import { router, useLocalSearchParams, useRouter } from 'expo-router';
 import Enemy from "@/components/enemy/enemy";
@@ -31,30 +31,25 @@ export default function Battle_Screen() {
         ENEMY: 'enemy',
         NOTHING: 'nothing'
     }
-    const [currentElementOnFocus, setCurrentElementOnFocus] = useState(FOCUS_ELEMENT.CHARACTER)
+    // const [currentElementOnFocus, setCurrentElementOnFocus] = useState(FOCUS_ELEMENT.CHARACTER)
     // animations state blocks
-    const [scaleCharacter, setScaleCharacter] = useState(1);
-    const [scaleEnemy, setScaleEnemy] = useState(0.7);
-    const [isPressed, setIsPressed] = useState(false);
-    const [visible, setVisible] = useState(false);
-
-    useEffect(() => {
-        const timer = setTimeout(() => {
-            setVisible(true);
-        }, 3000); // 3 секунды, можно менять
-
-        return () => clearTimeout(timer); // Очистка таймера при размонтировании
-    }, []);
-
-    // 
-    const [elementHide, setElementHide] = useState(FOCUS_ELEMENT.ENEMY)
+    // const [scaleCharacter, setScaleCharacter] = useState(1);
+    // const [scaleEnemy, setScaleEnemy] = useState(0.7);
 
     const default_stats_character = {
         level: 1,
-        attack: 10,
-        defense: 5,
-        healPoints: 30,
-        death: false
+        attack: 0,
+        defense: 0,
+        accuracy: 0,
+        criticalRate: 0,
+        criticalDamage: 0,
+        evasion: 0,
+        reduceCriticalDamage: 0,
+        atribute: 'none',
+        resistAtribute: '',
+        itemsSkills: [],
+        healPoints: 0,
+        death: false,
     }
     const default_stats_enemy = {
         level: 1,
@@ -65,12 +60,11 @@ export default function Battle_Screen() {
     }
 
 
-    const handleAttackButton = () => {
-        setCurrentElementOnFocus(FOCUS_ELEMENT.ENEMY);
-        setElementHide(FOCUS_ELEMENT.CHARACTER);
-        setScaleCharacter(0.7)
-        setScaleEnemy(1)
-    };
+    // const handleAttackButton = () => {
+    //     setCurrentElementOnFocus(FOCUS_ELEMENT.ENEMY);
+    //     setScaleCharacter(0.7)
+    //     setScaleEnemy(1)
+    // };
     const handleDefenseButton = () => {
 
     }
@@ -85,10 +79,9 @@ export default function Battle_Screen() {
         });
     }
     const enemyTempButton = () => {
-        setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
-        setElementHide(FOCUS_ELEMENT.ENEMY);
-        setScaleCharacter(1)
-        setScaleEnemy(0.7)
+        // setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
+        // setScaleCharacter(1)
+        // setScaleEnemy(0.7)
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
     };
 
@@ -101,7 +94,7 @@ export default function Battle_Screen() {
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER
         if (enemyStats.death) {
-            const expirience = getRandomNumber(100, 300)
+            const expirience = getRandomNumber(5, 200)
             characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
             router.push({
                 pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
@@ -130,10 +123,135 @@ export default function Battle_Screen() {
                     width: '100%',  // Убедимся, что фон занимает всю ширину
                     height: '100%', // Убедимся, что фон занимает всю высоту
                     position: 'absolute', // Фиксируем фон на заднем плане
+
                 }}
 
             >
+                <View style={{
+                    flex: 1,
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.4)'
+                }}>
+                    <Enemy />
+                    <View style={{
+                        position: 'absolute', // Фиксируем внизу
+                        bottom: 0, // Прижимаем к нижнему краю
+                        width: '100%',
+                        height: '30%',
+                        backgroundColor: 'white',
+                        justifyContent: 'center', // Центрируем содержимое
+                        alignItems: 'center', // Центрируем текст
+                        borderTopLeftRadius: 10, // Закруглим углы для красоты
+                        borderTopRightRadius: 10,
+                        shadowColor: '#000',
+                        shadowOffset: { width: 0, height: -2 },
+                        shadowOpacity: 0.2,
+                        shadowRadius: 4,
+                        elevation: 5, // Тень для Android
+                    }}>
+                        <Text>battle interface</Text>
+                        <View style={styles.buttonContainer}>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.buttonText}>ATTACK</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.buttonText}>DEFENSE</Text>
+                            </TouchableOpacity >
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.buttonText}>STAND</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.buttonText}>ITEMS</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.button}>
+                                <Text style={styles.buttonText}>RETREAT</Text>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={styles.characterStatsContainer}>
+                            <Text style={styles.statsTitle}>Character stats:</Text>
+                            <View style={styles.statContainer}>
+                                <Text>Name:</Text>
+                                <Text>{characterStats.name}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Level:</Text>
+                                <Text>{characterStats.level}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>HP:</Text>
+                                <Text>{characterStats.healPoints}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Attack:</Text>
+                                <Text>{characterStats.attack}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Defense:</Text>
+                                <Text>{characterStats.defense}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Accuracy:</Text>
+                                <Text>{characterStats.accuracy}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Evasion:</Text>
+                                <Text>{characterStats.evasion}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Critical:</Text>
+                                <Text>{characterStats.criticalRate}</Text>
+                            </View>
+                            <View style={styles.statContainer}>
+                                <Text>Atribute:</Text>
+                                <Text>{characterStats.atribute}</Text>
+                            </View>
 
+                        </View>
+                    </View>
+                </View>
+            </ImageBackground>
+        </SafeAreaView>
+    )
+}
+const styles = StyleSheet.create({
+    buttonContainer: {
+        alignItems: 'center',
+        position: 'absolute',
+        left: 10,
+        gap: 4
+    },
+    button: {
+        backgroundColor: 'green',
+        padding: 8,
+        borderRadius: 4,
+        width: 100,
+    },
+    buttonText: {
+        textAlign: 'center',
+        color: 'white'
+    },
+    characterStatsContainer: {
+
+        position: 'absolute',
+        width: '70%',
+        right: 10,
+        backgroundColor: 'grey',
+        marginLeft: 50
+    },
+    statContainer: {
+        flexDirection: 'row',
+        paddingRight: 10,
+        paddingLeft: 10,
+        justifyContent: 'space-between',
+    },
+    statsTitle: {
+        textAlign: 'center'
+    }
+})
+
+//alternative_view_reserved
+{/* 
                 <MotiView
                     animate={{
                         scale: scaleCharacter, // Используем shared value для анимации
@@ -194,7 +312,6 @@ export default function Battle_Screen() {
                 <MotiView
                     animate={{
                         scale: scaleEnemy, // Используем shared value для анимации
-                        backgroundColor: isPressed ? 'white' : ''
                     }}
                     transition={{
                         type: 'spring', // Тип анимации
@@ -216,26 +333,26 @@ export default function Battle_Screen() {
                         position: 'relative',
                         zIndex: 4,
                     }}>
-                        {visible && (
-                            <MotiView
-                                from={{ opacity: 0, scale: 0.8 }}
-                                animate={{ opacity: 1, scale: 1 }}
-                                exit={{ opacity: 0, scale: 0.8 }}
-                                transition={{ type: "spring", duration: 500 }}
-                            >
-                                <Text style={{
-                                    position: 'absolute',
-                                    top: 200,
-                                    fontSize: 20,
-                                    backgroundColor: "black",
-                                    color: "white",
-                                    padding: 10,
-                                    borderRadius: 10
-                                }}>
-                                    {characterBattleStats.attack}
-                                </Text>
-                            </MotiView>
-                        )}
+
+                        <MotiView
+                            from={{ opacity: 0, scale: 0.8 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            exit={{ opacity: 0, scale: 0.8 }}
+                            transition={{ type: "spring", duration: 500 }}
+                        >
+                            <Text style={{
+                                position: 'absolute',
+                                top: 200,
+                                fontSize: 20,
+                                backgroundColor: "black",
+                                color: "white",
+                                padding: 10,
+                                borderRadius: 10
+                            }}>
+                                {characterBattleStats.attack}
+                            </Text>
+                        </MotiView>
+
                     </View>
                     <Pressable
                         style={{
@@ -245,9 +362,4 @@ export default function Battle_Screen() {
                     >
                         <Enemy />
                     </Pressable>
-                </MotiView>
-
-            </ImageBackground>
-        </SafeAreaView>
-    )
-}
+                </MotiView> */}
