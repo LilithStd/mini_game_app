@@ -13,7 +13,7 @@ import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
 import { REWARD_VARIANT } from "@/store/items_strore";
-import ModalWindow from "@/components/modal_window/modal_window";
+import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -102,7 +102,7 @@ export default function Battle_Screen() {
     };
 
     const objectModalSettings = {
-        variant: 'retreat',
+        variant: VARIANTS_MODAL_WINDOW.RETREAT,
         callBack: handleRetreatConfirm
     }
 

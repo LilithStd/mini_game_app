@@ -1,13 +1,12 @@
+import ModalWindow, { VARIANTS_MODAL_WINDOW } from '@/components/modal_window/modal_window';
 import Reward from '@/components/reward/reward';
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
-import { INVENTORY_ITEM_ARMOR_SUBTYPE, INVENTORY_ITEM_CONSUMBLES_TYPE, INVENTORY_ITEM_TYPE, INVENTORY_ITEM_WEAPON_SUBTYPE, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
 import { REWARD_VARIANT, rewards } from '@/store/items_strore';
 import { Location_content_type, useLocationStore } from '@/store/location_store';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import { MotiText } from 'moti';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
@@ -58,6 +57,21 @@ export default function LocationScreen() {
         return Math.random() * 100 < percent;
     }
 
+    const handleModalChooseBattle = () => {
+        setModalVisible(false)
+        router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
+    }
+
+    const modalWindowObjectSettings = {
+        variant: isTresure ? VARIANTS_MODAL_WINDOW.TREASURE_REWARD : VARIANTS_MODAL_WINDOW.ATTACK,
+        callBack: !isTresure ? handleModalChooseBattle : () => { }
+    }
+
+    const handleCloseModal = () => {
+        setModalVisible(false)
+    }
+
+
     const handleCountScreenChange = () => {
         const treasure = chanceFindTreasure(chanceFindTreasurePercent);
         setCountScreen(prev => prev + 1);
@@ -75,10 +89,7 @@ export default function LocationScreen() {
 
     };
 
-    const handleModalChooseBattle = () => {
-        setModalVisible(false)
-        router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
-    }
+
     const handleModalReatreatBattle = () => {
         setModalVisible(false)
     }
@@ -115,63 +126,59 @@ export default function LocationScreen() {
                 }}
 
             >locations details, count screen: {countScreen} - counScreenG:{countScreenToBattle}</Text>
-            <Modal
-                visible={isModalVisible}
-                animationType="fade" // Анимация появления
-                transparent={true} // Прозрачный фон
-                onRequestClose={() => setModalVisible(false)} // Закрытие на Android кнопкой "Назад"
-            >
-
-                <View style={styles.modalBackground}>
-                    {isTresure ?
-                        <Reward callback={setModalVisible} />
-                        :
-                        <View style={styles.modalContainer}>
-                            <Text>Player Choose Window</Text>
-                            <Text>Enemy attack you.</Text>
-                            <View style={{
-                                justifyContent: 'center',
-                                alignItems: 'center'
-                            }}>
-                                <Text>{currentEnemy.name}</Text>
-                                <Image
-                                    style={{
-                                        width: 200,
-                                        height: 200
-                                    }}
-                                    source={currentEnemy.model}
-                                />
-                            </View>
-                            <Text>Your choose:</Text>
-                            <View style={{
-                                flexDirection: 'row',
-                                gap: 10
-                            }}>
-                                <TouchableOpacity
-                                    onPress={handleModalChooseBattle}
-                                    style={{
-                                        backgroundColor: 'red',
-                                        padding: 4,
-                                        borderRadius: 6
-                                    }}>
-                                    <Text>Battle!</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    onPress={handleModalReatreatBattle}
-                                    style={{
-                                        backgroundColor: 'gray',
-                                        padding: 4,
-                                        borderRadius: 6
-                                    }}
-                                >
-                                    <Text>Reatreat</Text>
-                                </TouchableOpacity>
-                            </View>
+            <View style={styles.modalBackground}>
+                {isModalVisible && <ModalWindow
+                    objectSetting={modalWindowObjectSettings}
+                    onClose={handleCloseModal}
+                />}
+                {/* {isTresure ?
+                    <Text></Text>
+                    :
+                    <View style={styles.modalContainer}>
+                        <Text>Player Choose Window</Text>
+                        <Text>Enemy attack you.</Text>
+                        <View style={{
+                            justifyContent: 'center',
+                            alignItems: 'center'
+                        }}>
+                            <Text>{currentEnemy.name}</Text>
+                            <Image
+                                style={{
+                                    width: 200,
+                                    height: 200
+                                }}
+                                source={currentEnemy.model}
+                            />
                         </View>
-                    }
+                        <Text>Your choose:</Text>
+                        <View style={{
+                            flexDirection: 'row',
+                            gap: 10
+                        }}>
+                            <TouchableOpacity
+                                onPress={handleModalChooseBattle}
+                                style={{
+                                    backgroundColor: 'red',
+                                    padding: 4,
+                                    borderRadius: 6
+                                }}>
+                                <Text>Battle!</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity
+                                onPress={handleModalReatreatBattle}
+                                style={{
+                                    backgroundColor: 'gray',
+                                    padding: 4,
+                                    borderRadius: 6
+                                }}
+                            >
+                                <Text>Reatreat</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                } */}
 
-                </View>
-            </Modal>
+            </View>
             <View style={{
                 width: '80%', // Задаем ширину для адаптивности
                 alignItems: 'center', // Выравниваем кнопки по центру
