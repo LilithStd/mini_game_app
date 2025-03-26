@@ -21,6 +21,7 @@ export default function Battle_Screen() {
 
     //
     const [isModalOpen, setIsModalOpen] = useState(false)
+    // const [isItemsActive, setIsItemsActive] = useState(false)
     //
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
@@ -80,6 +81,11 @@ export default function Battle_Screen() {
 
     }
     const handleStandButton = () => {
+
+    }
+
+    const handleItemsButton = () => {
+        // setIsItemsActive(true)
 
     }
     const handleRetreatConfirm = () => {
@@ -259,7 +265,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     characterStatsContainer: {
-
         position: 'absolute',
         width: '70%',
         right: 10,

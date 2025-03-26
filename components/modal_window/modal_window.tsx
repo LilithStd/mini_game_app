@@ -27,7 +27,7 @@ type ModalWindowProps = {
             name: string,
             model: number
         }
-        callBack?: (response: boolean) => void;
+        callBack?: () => void;
     }
     onClose: () => void;
 };
@@ -147,7 +147,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
 
     const callBackModalWindow = () => {
         objectSetting.callBack
-            ? objectSetting.callBack(true)
+            ? objectSetting.callBack()
             : defaultCallBack()
     }
 
@@ -184,12 +184,18 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                     <Text>{currentModalProps.name}</Text>
                     <Text>{currentModalProps.description}</Text>
                     {currentTypeModal === VARIANTS_MODAL_WINDOW.ATTACK &&
-                        <View>
+                        <View style={{
+                            width: '100%',
+                            height: '100%'
+
+                        }}>
                             <Text>{MODAL_VARIANTS.attack.monster.name}</Text>
                             <Image
+                                resizeMode="contain"
                                 style={{
-                                    width: 100,
-                                    height: '66%'
+                                    width: '50%',
+                                    height: '20%',
+                                    transform: [{ translateY: 10 }] // Поднимаем изображение вверх
                                 }}
                                 source={MODAL_VARIANTS.attack.monster.model}
                             />
@@ -197,6 +203,13 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         </View>
 
                     }
+                    {currentTypeModal === VARIANTS_MODAL_WINDOW.TREASURE_REWARD &&
+                        <View>
+                            {MODAL_VARIANTS.treasureReward.reward.map((item) =>
+                                <Text key={item.id}>
+                                    {item.name} x {item.count}
+                                </Text>)}
+                        </View>}
                     <View style={{
                         flexDirection: 'row',
                         gap: 10

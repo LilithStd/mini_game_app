@@ -2,6 +2,7 @@ import ModalWindow, { VARIANTS_MODAL_WINDOW } from '@/components/modal_window/mo
 import Reward from '@/components/reward/reward';
 import { GLOBAL_APP_PATH } from '@/constants/global_path'
 import { getRandomNumber } from '@/constants/helpers';
+import { CharacterInventoryType, useCharacterStore } from '@/store/character_store';
 import { useEnemyStore } from '@/store/enemy_store';
 import { useGlobalStore } from '@/store/global_store'
 import { REWARD_VARIANT, rewards } from '@/store/items_strore';
@@ -23,6 +24,7 @@ export default function LocationScreen() {
     const currentLocation = useLocationStore(state => state.currentLocation)
     const currentEnemy = useEnemyStore(state => state.currentEnemy)
     const setRandomCurrentEnemy = useEnemyStore(state => state.getRandomEnemyForBattle)
+    const setRewardToInventary = useCharacterStore(state => state.characterInventoryUpdate)
     const currentState = useGlobalStore(state => state.currentState)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const locationPull = useLocationStore(state => state.getPullLocations)
@@ -60,6 +62,11 @@ export default function LocationScreen() {
     const handleModalChooseBattle = () => {
         setModalVisible(false)
         router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
+    }
+
+    const handleAddRewardToInventry = (reward: CharacterInventoryType[]) => {
+        setModalVisible(false)
+        setRewardToInventary(reward)
     }
 
     const modalWindowObjectSettings = {
