@@ -101,9 +101,6 @@ export default function Battle_Screen() {
 
     }
     const enemyTempButton = () => {
-        // setCurrentElementOnFocus(FOCUS_ELEMENT.CHARACTER);
-        // setScaleCharacter(1)
-        // setScaleEnemy(0.7)
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
     };
 
@@ -183,7 +180,9 @@ export default function Battle_Screen() {
                     }}>
                         <Text>battle interface</Text>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={enemyTempButton}
+                            >
                                 <Text style={styles.buttonText}>ATTACK</Text>
                             </TouchableOpacity>
                             <TouchableOpacity style={styles.button}>
