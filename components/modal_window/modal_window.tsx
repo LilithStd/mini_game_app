@@ -1,6 +1,8 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { CharacterInventoryType, useCharacterStore } from "@/store/character_store";
 import { useEnemyStore } from "@/store/enemy_store";
 import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
+import { useLocationStore } from "@/store/location_store";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { Modal, Text, View, TouchableOpacity, Image } from "react-native";
@@ -27,7 +29,7 @@ type ModalWindowProps = {
             name: string,
             model: number
         }
-        callBack?: () => void;
+        // callBack?: () => void;
     }
     onClose: () => void;
 };
@@ -47,7 +49,7 @@ interface ModalTypes {
         monster: {
             name: string,
             model: number,
-        }
+        },
     },
     treasureReward: {
         name: string,
@@ -69,8 +71,12 @@ interface ModalTypes {
 
 export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps) {
     const router = useRouter();
+    const location = useLocationStore(state => state.currentLocation)
     const getReward = useItemsStore(state => state.getReward)
     const enemyCurrent = useEnemyStore(state => state.currentEnemy)
+    const updateCharacterInventory = useCharacterStore(state => state.characterInventoryUpdate)
+
+
     const MODAL_VARIANTS = {
         retreat: {
             name: 'Reatreat Window',
@@ -82,7 +88,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             monster: {
                 name: enemyCurrent.name,
                 model: enemyCurrent.model,
-            }
+            },
         },
         treasureReward: {
             name: 'Treasure Reward Window',
@@ -142,13 +148,41 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }
 
     const defaultCallBack = () => {
-        router.push(GLOBAL_APP_PATH.MAIN);
+
     }
 
     const callBackModalWindow = () => {
-        objectSetting.callBack
-            ? objectSetting.callBack()
-            : defaultCallBack()
+        switch (currentTypeModal) {
+            case VARIANTS_MODAL_WINDOW.RETREAT:
+
+                const retreat = "retreat";
+                router.push({
+                    pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
+                    params: { location, retreat }
+                });
+                onClose()
+                break;
+            case VARIANTS_MODAL_WINDOW.ATTACK:
+                router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);
+                onClose()
+                break;
+            case VARIANTS_MODAL_WINDOW.TREASURE_REWARD:
+                updateCharacterInventory(MODAL_VARIANTS.treasureReward.reward)
+                onClose()
+                break;
+            case VARIANTS_MODAL_WINDOW.MONSTER_REWARD:
+                router.push(GLOBAL_APP_PATH.LOCATION_SCREEN);
+                updateCharacterInventory(MODAL_VARIANTS.monsterReward.reward)
+                break;
+            case VARIANTS_MODAL_WINDOW.BOSS_REWARD:
+                break;
+            case VARIANTS_MODAL_WINDOW.DUNGEON_REWARD:
+                break;
+            case VARIANTS_MODAL_WINDOW.DEFAULT:
+                router.push(GLOBAL_APP_PATH.MAIN);
+                break
+        }
+
     }
 
     useEffect(() => {

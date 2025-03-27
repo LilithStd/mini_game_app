@@ -71,7 +71,6 @@ export default function LocationScreen() {
 
     const modalWindowObjectSettings = {
         variant: isTresure ? VARIANTS_MODAL_WINDOW.TREASURE_REWARD : VARIANTS_MODAL_WINDOW.ATTACK,
-        callBack: !isTresure ? handleModalChooseBattle : () => { }
     }
 
     const handleCloseModal = () => {
