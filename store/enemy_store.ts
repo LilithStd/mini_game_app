@@ -6,6 +6,7 @@ import {LOCATIONS_GROUP} from './location_store';
 interface EnemyTypePull {
 	name: string;
 	model: number;
+	preview: number;
 }
 
 interface EnemyType extends EnemyTypePull {
@@ -20,47 +21,50 @@ const ENEMY_CONTENT = [
 	{
 		name: 'enemy_name_0',
 		model: require('../assets/enemy/enemy_0.png'),
+		preview: require('../assets/enemy/preview/enemy_0_preview.png'),
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
 		name: 'enemy_name_1',
 		model: require('../assets/enemy/enemy_1.png'),
+		preview: require('../assets/enemy/preview/enemy_1_preview.png'),
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
 		name: 'enemy_name_2',
 		model: require('../assets/enemy/enemy_2.png'),
+		preview: require('../assets/enemy/preview/enemy_2_preview.png'),
 		locations: [LOCATIONS_GROUP.SWAMP],
 	},
 	{
 		name: 'enemy_name_3',
 		model: require('../assets/enemy/enemy_3.png'),
+		preview: require('../assets/enemy/preview/enemy_3_preview.png'),
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
 		name: 'enemy_name_4',
 		model: require('../assets/enemy/enemy_4.png'),
 		locations: [LOCATIONS_GROUP.FOREST, LOCATIONS_GROUP.SWAMP],
+		preview: require('../assets/enemy/preview/enemy_4_preview.png'),
 	},
 	{
 		name: 'enemy_name_5',
 		model: require('../assets/enemy/enemy_5.png'),
+		preview: require('../assets/enemy/preview/enemy_5_preview.png'),
 		locations: [LOCATIONS_GROUP.SWAMP],
 	},
 	{
 		name: 'enemy_name_6',
 		model: require('../assets/enemy/enemy_6.png'),
+		preview: require('../assets/enemy/preview/enemy_6_preview.png'),
 		locations: [LOCATIONS_GROUP.FOREST, LOCATIONS_GROUP.SWAMP],
 	},
 	{
 		name: 'enemy_name_7',
 		model: require('../assets/enemy/enemy_7.png'),
+		preview: require('../assets/enemy/preview/enemy_7_preview.png'),
 		locations: [LOCATIONS_GROUP.FOREST],
-	},
-	{
-		name: 'enemy_name_8',
-		model: require('../assets/enemy/enemy_8.png'),
-		locations: [LOCATIONS_GROUP.SWAMP],
 	},
 ];
 
@@ -77,6 +81,7 @@ export interface EnemyStoreInterface {
 const default_enemy = {
 	name: '',
 	model: 0,
+	preview: 0,
 };
 
 // Zustand-хранилище

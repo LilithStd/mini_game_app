@@ -5,7 +5,7 @@ import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Modal, Text, View, TouchableOpacity, Image } from "react-native";
+import { Modal, Text, View, TouchableOpacity, Image, ImageBackground } from "react-native";
 
 
 
@@ -87,7 +87,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             description: 'Monster Attack you!',
             monster: {
                 name: enemyCurrent.name,
-                model: enemyCurrent.model,
+                preview: enemyCurrent.preview,
             },
         },
         treasureReward: {
@@ -220,19 +220,33 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                     {currentTypeModal === VARIANTS_MODAL_WINDOW.ATTACK &&
                         <View style={{
                             width: '100%',
-                            height: '100%'
+                            height: '60%'
 
                         }}>
-                            <Text>{MODAL_VARIANTS.attack.monster.name}</Text>
-                            <Image
-                                resizeMode="contain"
-                                style={{
-                                    width: '50%',
-                                    height: '20%',
-                                    transform: [{ translateY: 10 }] // Поднимаем изображение вверх
-                                }}
-                                source={MODAL_VARIANTS.attack.monster.model}
-                            />
+                            <Text style={{
+                                textAlign: 'center'
+                            }}>{MODAL_VARIANTS.attack.monster.name}</Text>
+                            <View style={{
+                                position: 'absolute',
+                                borderWidth: 2,
+                                bottom: 20,
+                                left: 0,
+                                width: '100%',
+                                height: 100,
+                                overflow: 'hidden', // Обрезает выходящие части
+                                borderRadius: 10 // Если нужна рамка
+                            }}>
+                                <Image
+                                    source={MODAL_VARIANTS.attack.monster.preview}
+                                    resizeMode="cover" // Заполняет контейнер
+                                    style={{
+                                        width: '100%',
+                                        height: 160,
+                                        // transform: [{ translateY: 0 }, { translateX: -20 }] // Сдвигаем вверх
+                                    }}
+                                />
+                            </View>
+
 
                         </View>
 
