@@ -10,9 +10,9 @@ import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
-import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
-import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
+import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 
 export default function Battle_Screen() {
@@ -41,7 +41,7 @@ export default function Battle_Screen() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isItemsActive, setIsItemsActive] = useState(false)
     const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
-    const [activeConsumbles, setActiveConsumbles] = useState()
+    const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     //
 
     const FOCUS_ELEMENT = {
@@ -99,24 +99,55 @@ export default function Battle_Screen() {
     }
 
     const handleItemsCallBackButton = (variant: string) => {
+        const handleHealPotionsItems = () => {
+            const healPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
+            return consumblesFullItems.filter((potion) =>
+                healPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE)
+            );
+        }
+
+        const handleAttackPotionsItems = () => {
+            const attackPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
+            return consumblesFullItems.filter((potion) =>
+                attackPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF)
+            );
+        }
+
+        const handleDefensePotionsItems = () => {
+            const defensePotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
+            return consumblesFullItems.filter((potion) =>
+                defensePotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.DEFENSE_BUFF)
+            );
+        }
+
+        const handleEvasionPotionsItems = () => {
+            const evasionPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
+            return consumblesFullItems.filter((potion) =>
+                evasionPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.EVASION_BUFF)
+            );
+        }
 
         switch (variant) {
             case BUTTON_LIST.HEALTH:
                 setActiveButton(variant)
-                const healPotions = currentConsumblesOnCharacterInventory
+                setActiveConsumbles(handleHealPotionsItems());
                 break;
             case BUTTON_LIST.ATTACK:
                 setActiveButton(variant)
+                setActiveConsumbles(handleAttackPotionsItems)
                 break;
             case BUTTON_LIST.DEFENSE:
                 setActiveButton(variant)
+                setActiveConsumbles(handleDefensePotionsItems())
                 break;
             case BUTTON_LIST.EVASION:
                 setActiveButton(variant)
+                setActiveConsumbles(handleEvasionPotionsItems())
                 break;
             case BUTTON_LIST.CLOSE:
                 setIsItemsActive(false)
                 setActiveButton(BUTTON_LIST.HEALTH)
+                setActiveConsumbles(handleHealPotionsItems());
                 break;
         }
     }
@@ -258,46 +289,52 @@ export default function Battle_Screen() {
 
 
                         </View>
-                        <View style={styles.characterStatsContainer}>
-                            <Text style={styles.statsTitle}>Character stats:</Text>
-                            <View style={styles.statContainer}>
-                                <Text>Name:</Text>
-                                <Text>{characterStats.name}</Text>
+                        {isItemsActive ? <View>
+                            {activeConsumbles.map((item) => <Text key={item.id}>
+                                {item.name}
+                            </Text>)}
+                        </View> :
+                            <View style={styles.characterStatsContainer}>
+                                <Text style={styles.statsTitle}>Character stats:</Text>
+                                <View style={styles.statContainer}>
+                                    <Text>Name:</Text>
+                                    <Text>{characterStats.name}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Level:</Text>
+                                    <Text>{characterStats.level}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>HP:</Text>
+                                    <Text>{characterStats.healPoints}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Attack:</Text>
+                                    <Text>{characterStats.attack}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Defense:</Text>
+                                    <Text>{characterStats.defense}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Accuracy:</Text>
+                                    <Text>{characterStats.accuracy}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Evasion:</Text>
+                                    <Text>{characterStats.evasion}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Critical:</Text>
+                                    <Text>{characterStats.criticalRate}</Text>
+                                </View>
+                                <View style={styles.statContainer}>
+                                    <Text>Atribute:</Text>
+                                    <Text>{characterStats.atribute}</Text>
+                                </View>
                             </View>
-                            <View style={styles.statContainer}>
-                                <Text>Level:</Text>
-                                <Text>{characterStats.level}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>HP:</Text>
-                                <Text>{characterStats.healPoints}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Attack:</Text>
-                                <Text>{characterStats.attack}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Defense:</Text>
-                                <Text>{characterStats.defense}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Accuracy:</Text>
-                                <Text>{characterStats.accuracy}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Evasion:</Text>
-                                <Text>{characterStats.evasion}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Critical:</Text>
-                                <Text>{characterStats.criticalRate}</Text>
-                            </View>
-                            <View style={styles.statContainer}>
-                                <Text>Atribute:</Text>
-                                <Text>{characterStats.atribute}</Text>
-                            </View>
+                        }
 
-                        </View>
                     </View>
                 </View>
             </ImageBackground>

@@ -165,7 +165,7 @@ interface ArmorType
 	};
 }
 
-interface ConsumableType<
+export interface ConsumableType<
 	TSubType =
 		| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF
 		| INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS
