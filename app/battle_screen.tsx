@@ -12,17 +12,20 @@ import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
-import { REWARD_VARIANT } from "@/store/items_strore";
+import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
     const router = useRouter();
+    const BUTTON_LIST = {
+        HEALTH: 'active',
+        ATTACK: 'attack',
+        DEFENSE: 'defense',
+        EVASION: 'evasion',
+        CLOSE: 'close'
+    }
 
-    //
-    const [isModalOpen, setIsModalOpen] = useState(false)
-    // const [isItemsActive, setIsItemsActive] = useState(false)
-    //
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
@@ -31,16 +34,22 @@ export default function Battle_Screen() {
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useBattleStore(state => state.enemy)
+    const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
+    const consumblesFullItems = useItemsStore(state => state.consumbles)
+
+    //
+    const [isModalOpen, setIsModalOpen] = useState(false)
+    const [isItemsActive, setIsItemsActive] = useState(false)
+    const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
+    const [activeConsumbles, setActiveConsumbles] = useState()
+    //
 
     const FOCUS_ELEMENT = {
         CHARACTER: 'character',
         ENEMY: 'enemy',
         NOTHING: 'nothing'
     }
-    // const [currentElementOnFocus, setCurrentElementOnFocus] = useState(FOCUS_ELEMENT.CHARACTER)
-    // animations state blocks
-    // const [scaleCharacter, setScaleCharacter] = useState(1);
-    // const [scaleEnemy, setScaleEnemy] = useState(0.7);
+
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
@@ -85,9 +94,37 @@ export default function Battle_Screen() {
     }
 
     const handleItemsButton = () => {
-        // setIsItemsActive(true)
+        setIsItemsActive(true)
 
     }
+
+    const handleItemsCallBackButton = (variant: string) => {
+
+        switch (variant) {
+            case BUTTON_LIST.HEALTH:
+                setActiveButton(variant)
+                const healPotions = currentConsumblesOnCharacterInventory
+                break;
+            case BUTTON_LIST.ATTACK:
+                setActiveButton(variant)
+                break;
+            case BUTTON_LIST.DEFENSE:
+                setActiveButton(variant)
+                break;
+            case BUTTON_LIST.EVASION:
+                setActiveButton(variant)
+                break;
+            case BUTTON_LIST.CLOSE:
+                setIsItemsActive(false)
+                setActiveButton(BUTTON_LIST.HEALTH)
+                break;
+        }
+    }
+
+    const handleItemsCloseButton = () => {
+        setIsItemsActive(false)
+    }
+
     const handleRetreatConfirm = () => {
         setIsModalOpen(false)
         const retreat = "retreat";
@@ -180,25 +217,46 @@ export default function Battle_Screen() {
                     }}>
                         <Text>battle interface</Text>
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button}
-                                onPress={enemyTempButton}
-                            >
-                                <Text style={styles.buttonText}>ATTACK</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}>
-                                <Text style={styles.buttonText}>DEFENSE</Text>
-                            </TouchableOpacity >
-                            <TouchableOpacity style={styles.button}>
-                                <Text style={styles.buttonText}>STAND</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}>
-                                <Text style={styles.buttonText}>ITEMS</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}
-                                onPress={handleRetreatButton}
-                            >
-                                <Text style={styles.buttonText}>RETREAT</Text>
-                            </TouchableOpacity>
+                            {isItemsActive ? <View style={styles.buttonView}>
+
+                                {Object.entries(BUTTON_LIST).map(([key, value]) => (
+                                    <TouchableOpacity
+                                        key={key}
+                                        style={[
+                                            styles.button,
+                                            activeButton === value && styles.buttonActive // Подсветка активной кнопки
+                                        ]}
+                                        onPress={() => handleItemsCallBackButton(value)}
+                                    >
+                                        <Text style={styles.buttonText}>{key}</Text>
+                                    </TouchableOpacity>
+                                ))}
+                            </View> : <View style={styles.buttonView}>
+                                <TouchableOpacity style={styles.button}
+                                    onPress={enemyTempButton}
+                                >
+                                    <Text style={styles.buttonText}>ATTACK</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button}>
+                                    <Text style={styles.buttonText}>DEFENSE</Text>
+                                </TouchableOpacity >
+                                <TouchableOpacity style={styles.button}>
+                                    <Text style={styles.buttonText}>STAND</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button}
+                                    onPress={handleItemsButton}
+                                >
+                                    <Text style={styles.buttonText}>ITEMS</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.button}
+                                    onPress={handleRetreatButton}
+                                >
+                                    <Text style={styles.buttonText}>RETREAT</Text>
+                                </TouchableOpacity>
+                            </View>}
+
+
+
                         </View>
                         <View style={styles.characterStatsContainer}>
                             <Text style={styles.statsTitle}>Character stats:</Text>
@@ -251,6 +309,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         position: 'absolute',
         left: 10,
+
+    },
+    buttonView: {
         gap: 4
     },
     button: {
@@ -258,6 +319,9 @@ const styles = StyleSheet.create({
         padding: 8,
         borderRadius: 4,
         width: 100,
+    },
+    buttonActive: {
+        backgroundColor: 'aquamarine',
     },
     buttonText: {
         textAlign: 'center',
