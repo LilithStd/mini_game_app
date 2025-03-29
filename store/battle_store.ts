@@ -22,7 +22,15 @@ interface EnemyStats {
 	level: number;
 	attack: number;
 	defense: number;
+	accuracy: number;
+	criticalRate: number;
+	criticalDamage: number;
+	evasion: number;
+	reduceCriticalDamage: number;
+	atribute: string;
+	resistAtribute: string;
 	healPoints: number;
+	expirience: number;
 	death: boolean;
 }
 
@@ -67,6 +75,14 @@ const defaultValuesEnemy: EnemyStats = {
 	level: 1,
 	attack: 0,
 	defense: 0,
+	accuracy: 0,
+	criticalRate: 0,
+	criticalDamage: 0,
+	evasion: 0,
+	reduceCriticalDamage: 0,
+	atribute: '',
+	resistAtribute: '',
+	expirience: 0,
 	healPoints: 0,
 	death: false,
 };
@@ -131,7 +147,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							updatedEnemy.level = updateValue as number;
 							break;
 						case UPDATE_STATS.ALL:
-							return {enemy: updateValue as Stats};
+							return {enemy: updateValue as EnemyStats};
 						default:
 							console.warn(
 								`Неподдерживаемый запрос обновления: ${updateRequest}`,

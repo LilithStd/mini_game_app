@@ -7,6 +7,7 @@ interface EnemyTypePull {
 	name: string;
 	model: number;
 	preview: number;
+	stats: EnemyStats;
 }
 
 interface EnemyType extends EnemyTypePull {
@@ -30,6 +31,7 @@ interface EnemyStats {
 	resistAtribute: string;
 	healPoints: number;
 	expirience: number;
+	death: boolean;
 }
 
 const defaultStats = {
@@ -45,6 +47,7 @@ const defaultStats = {
 	resistAtribute: 'dark',
 	healPoints: 260,
 	expirience: 140,
+	death: false,
 };
 
 const ENEMY_CONTENT = [
@@ -120,6 +123,7 @@ const default_enemy = {
 	name: '',
 	model: 0,
 	preview: 0,
+	stats: defaultStats,
 };
 
 // Zustand-хранилище

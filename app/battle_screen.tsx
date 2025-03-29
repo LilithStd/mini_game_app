@@ -14,6 +14,7 @@ import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SU
 import { getRandomNumber } from "@/constants/helpers";
 import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
+import { useEnemyStore } from "@/store/enemy_store";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -33,7 +34,8 @@ export default function Battle_Screen() {
     const characterBattleStats = useBattleStore(state => state.character)
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
-    const enemyStats = useBattleStore(state => state.enemy)
+    const enemyStats = useEnemyStore(state => state.currentEnemy)
+    // const enemyStats = useBattleStore(state => state.enemy)
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
 
@@ -74,10 +76,18 @@ export default function Battle_Screen() {
     }
     const default_stats_enemy = {
         level: 1,
-        attack: 10,
-        defense: 5,
-        healPoints: 30,
-        death: false
+        attack: 0,
+        defense: 0,
+        accuracy: 0,
+        criticalRate: 0,
+        criticalDamage: 0,
+        evasion: 0,
+        reduceCriticalDamage: 0,
+        atribute: '',
+        resistAtribute: '',
+        expirience: 0,
+        healPoints: 0,
+        death: false,
     }
 
 
@@ -165,12 +175,12 @@ export default function Battle_Screen() {
 
     useEffect(() => {
         updateCharacter(UPDATE_STATS.ALL, characterStats ? characterStats : default_stats_character)
-        updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
+        updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
     }, [])
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER
-        if (enemyStats.death) {
+        if (enemyStats.stats.death) {
             const expirience = getRandomNumber(5, 200)
             characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
             router.push({
@@ -179,7 +189,7 @@ export default function Battle_Screen() {
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
-    }, [enemyStats.death])
+    }, [enemyStats.stats.death])
 
     return (
         <SafeAreaView

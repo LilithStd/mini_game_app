@@ -12,6 +12,7 @@ export default function Enemy() {
     const enemyStats = useBattleStore(state => state.enemy)
     const initialHP = useRef<number>(enemyStats.healPoints ?? 1);
     const hpPercentage = (enemyStats.healPoints / initialHP.current) * 100;
+    // console.log(enemyStats.healPoints);
 
     return (
         <View style={{
