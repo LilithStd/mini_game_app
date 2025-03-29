@@ -98,34 +98,19 @@ export default function Battle_Screen() {
 
     }
 
+    const getPotionsByType = (subType: string) => {
+        return consumblesFullItems.filter((potion) =>
+            currentConsumblesOnCharacterInventory.some((item) => item.id === potion.id && potion.subType === subType)
+        );
+    };
+
+    const handleHealPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE);
+    const handleAttackPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF);
+    const handleDefensePotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.DEFENSE_BUFF);
+    const handleEvasionPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.EVASION_BUFF);
+
+
     const handleItemsCallBackButton = (variant: string) => {
-        const handleHealPotionsItems = () => {
-            const healPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
-            return consumblesFullItems.filter((potion) =>
-                healPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE)
-            );
-        }
-
-        const handleAttackPotionsItems = () => {
-            const attackPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
-            return consumblesFullItems.filter((potion) =>
-                attackPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF)
-            );
-        }
-
-        const handleDefensePotionsItems = () => {
-            const defensePotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
-            return consumblesFullItems.filter((potion) =>
-                defensePotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.DEFENSE_BUFF)
-            );
-        }
-
-        const handleEvasionPotionsItems = () => {
-            const evasionPotions = currentConsumblesOnCharacterInventory.filter((item) => item.id);
-            return consumblesFullItems.filter((potion) =>
-                evasionPotions.some((item) => item.id === potion.id && potion.subType === INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.EVASION_BUFF)
-            );
-        }
 
         switch (variant) {
             case BUTTON_LIST.HEALTH:
@@ -134,7 +119,7 @@ export default function Battle_Screen() {
                 break;
             case BUTTON_LIST.ATTACK:
                 setActiveButton(variant)
-                setActiveConsumbles(handleAttackPotionsItems)
+                setActiveConsumbles(handleAttackPotionsItems())
                 break;
             case BUTTON_LIST.DEFENSE:
                 setActiveButton(variant)
@@ -289,11 +274,12 @@ export default function Battle_Screen() {
 
 
                         </View>
-                        {isItemsActive ? <View>
-                            {activeConsumbles.map((item) => <Text key={item.id}>
-                                {item.name}
-                            </Text>)}
-                        </View> :
+                        {isItemsActive ?
+                            <View style={styles.characterStatsContainer}>
+                                {activeConsumbles.map((item) => <Text key={item.id}>
+                                    {item.name}
+                                </Text>)}
+                            </View> :
                             <View style={styles.characterStatsContainer}>
                                 <Text style={styles.statsTitle}>Character stats:</Text>
                                 <View style={styles.statContainer}>
@@ -343,13 +329,15 @@ export default function Battle_Screen() {
 }
 const styles = StyleSheet.create({
     buttonContainer: {
-        alignItems: 'center',
         position: 'absolute',
         left: 10,
+        justifyContent: 'space-between',
+        alignItems: 'stretch'
 
     },
     buttonView: {
-        gap: 4
+        gap: 4,
+        alignItems: 'stretch'
     },
     button: {
         backgroundColor: 'green',
@@ -367,6 +355,7 @@ const styles = StyleSheet.create({
     characterStatsContainer: {
         position: 'absolute',
         width: '70%',
+        height: '90%',
         right: 10,
         backgroundColor: 'grey',
         marginLeft: 50
