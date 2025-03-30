@@ -12,7 +12,7 @@ import React, { useCallback, useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
 const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
-const chanceFindTreasurePercent = 10
+const chanceFindTreasurePercent = 40
 
 export default function LocationScreen() {
     const router = useRouter();

@@ -27,6 +27,7 @@ export default function Battle_Screen() {
         CLOSE: 'close'
     }
 
+
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
@@ -40,6 +41,12 @@ export default function Battle_Screen() {
     const consumblesFullItems = useItemsStore(state => state.consumbles)
 
     //
+
+    const handleHealPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE);
+    const handleAttackPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF);
+    const handleDefensePotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.DEFENSE_BUFF);
+    const handleEvasionPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.EVASION_BUFF);
+    //state
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isItemsActive, setIsItemsActive] = useState(false)
     const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
@@ -105,6 +112,7 @@ export default function Battle_Screen() {
 
     const handleItemsButton = () => {
         setIsItemsActive(true)
+        setActiveConsumbles(handleHealPotionsItems())
 
     }
 
@@ -114,10 +122,6 @@ export default function Battle_Screen() {
         );
     };
 
-    const handleHealPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE);
-    const handleAttackPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF);
-    const handleDefensePotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.DEFENSE_BUFF);
-    const handleEvasionPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.EVASION_BUFF);
 
 
     const handleItemsCallBackButton = (variant: string) => {
@@ -220,7 +224,9 @@ export default function Battle_Screen() {
                     height: '100%',
                     backgroundColor: 'rgba(0, 0, 0, 0.4)'
                 }}>
+                    {isItemsActive && <Character />}
                     <Enemy />
+
                     {isModalOpen &&
                         <ModalWindow
                             onClose={handleModalCloseStatus}
@@ -236,6 +242,7 @@ export default function Battle_Screen() {
                         borderTopLeftRadius: 10, // Закруглим углы для красоты
                         borderTopRightRadius: 10,
                         shadowColor: '#000',
+                        zIndex: 3,
                         shadowOffset: { width: 0, height: -2 },
                         shadowOpacity: 0.2,
                         shadowRadius: 4,
