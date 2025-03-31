@@ -1,4 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { useBattleStore } from "@/store/battle_store";
 import { Character_Default, Character_Type, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
 import { useRouter } from "expo-router";
@@ -7,10 +8,16 @@ import { Button, Image, Text, View } from "react-native";
 
 export default function Character() {
     const router = useRouter();
-    const characterStats = useCharacterStore(state => state.characterStats)
+    const globalRoute = useGlobalStore(state => state.currentState)
+    const characterStatsOnBattle = useBattleStore(state => state.character)
+    const characterStatsGLobal = useCharacterStore(state => state.characterStats)
+    const characterStats = globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN ? useBattleStore(state => state.character) : useCharacterStore(state => state.characterStats)
     const default_state = useCharacterStore(state => state.default_state)
 
+
     // const enemyStats = useBattleStore(state => state.enemy)
+
+
 
     const initialHP = useRef<number>(characterStats.healPoints ?? 1);
     const hpPercentage = (characterStats.healPoints / initialHP.current) * 100;
@@ -32,7 +39,7 @@ export default function Character() {
                     top: -120
                 }}
             >
-                <Text>{characterStats.name}</Text>
+                <Text>{characterStatsGLobal.name}</Text>
                 <Text>Level:{characterStats.level}</Text>
 
                 <View style={{
@@ -65,7 +72,7 @@ export default function Character() {
                     top: 0, // Чтобы не было смещения
                     left: 0, // Чтобы не было смещения
                 }}
-                source={characterStats.model}
+                source={characterStatsGLobal.model}
             />
         </View>
     )

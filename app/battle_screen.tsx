@@ -8,13 +8,14 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import { UPDATE_STATS, useBattleStore } from "@/store/battle_store";
+import { CURRENT_TARGET_TO_MOVE, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
 import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { useEnemyStore } from "@/store/enemy_store";
+import { useGlobalStore } from "@/store/global_store";
 
 export default function Battle_Screen() {
     const { status } = useLocalSearchParams();
@@ -26,6 +27,32 @@ export default function Battle_Screen() {
         EVASION: 'evasion',
         CLOSE: 'close'
     }
+    type ActionsTypes = {
+        title: string,
+        description: string
+    }
+    const ACTIONS = {
+        ATTACK: {
+            title: 'attack',
+            description: 'enemy attack you'
+        },
+        DEFENSE: {
+            title: 'defense',
+            description: 'enemy takes a defensive stance'
+        },
+        STAND: {
+            title: 'stand',
+            description: 'enemy looks at you with caution'
+        },
+        RETREAT: {
+            title: 'retreat',
+            description: 'enemy retreats'
+        },
+        NOTHING: {
+            title: 'nothing',
+            description: 'nothing'
+        }
+    }
 
 
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
@@ -36,10 +63,11 @@ export default function Battle_Screen() {
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
-    // const enemyStats = useBattleStore(state => state.enemy)
+    const currentTargetToMove = useBattleStore(state => state.currentTargetToMove)
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
-
+    const currentState = useGlobalStore(state => state.currentState)
+    const setCurrentState = useGlobalStore(state => state.setCurrentState)
     //
 
     const handleHealPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE);
@@ -50,6 +78,7 @@ export default function Battle_Screen() {
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isItemsActive, setIsItemsActive] = useState(false)
     const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
+    const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     //
 
@@ -193,7 +222,32 @@ export default function Battle_Screen() {
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
-    }, [enemyStats.stats.death])
+        if (characterBattleStats.death) {
+            router.push({
+                pathname: GLOBAL_APP_PATH.LOSE_SCREEN
+            })
+        }
+    }, [enemyStats.stats.death, characterBattleStats.death])
+
+    useEffect(() => {
+        if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
+
+        const attackTimeout = setTimeout(() => {
+            setEnemyAction(ACTIONS.ATTACK);
+
+            setTimeout(() => {
+                updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
+            }, 500);
+        }, 2000);
+
+        return () => clearTimeout(attackTimeout);
+    }, [currentTargetToMove]);
+
+    useEffect(() => {
+        if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
+            setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
+        }
+    }, [])
 
     return (
         <SafeAreaView
@@ -225,6 +279,7 @@ export default function Battle_Screen() {
                     backgroundColor: 'rgba(0, 0, 0, 0.4)'
                 }}>
                     {isItemsActive && <Character />}
+                    <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.title : ''}</Text>
                     <Enemy />
 
                     {isModalOpen &&
