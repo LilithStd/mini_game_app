@@ -63,6 +63,7 @@ export default function Battle_Screen() {
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
+    const defaultState = useBattleStore(state => state.setDefaultState)
     const currentTargetToMove = useBattleStore(state => state.currentTargetToMove)
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
@@ -80,6 +81,7 @@ export default function Battle_Screen() {
     const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
     const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
+    const [isTurn, setIsTurn] = useState(false)
     //
 
     const FOCUS_ELEMENT = {
@@ -222,7 +224,11 @@ export default function Battle_Screen() {
             });
             updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
+
         if (characterBattleStats.death) {
+            console.log(characterBattleStats.death);
+
+            defaultState()
             router.push({
                 pathname: GLOBAL_APP_PATH.LOSE_SCREEN
             })
@@ -231,7 +237,7 @@ export default function Battle_Screen() {
 
     useEffect(() => {
         if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
-
+        setIsTurn(true)
         const attackTimeout = setTimeout(() => {
             setEnemyAction(ACTIONS.ATTACK);
 
@@ -240,7 +246,10 @@ export default function Battle_Screen() {
             }, 500);
         }, 2000);
 
-        return () => clearTimeout(attackTimeout);
+        return () => {
+            clearTimeout(attackTimeout);
+            setIsTurn(false)
+        }
     }, [currentTargetToMove]);
 
     useEffect(() => {
@@ -279,7 +288,20 @@ export default function Battle_Screen() {
                     backgroundColor: 'rgba(0, 0, 0, 0.4)'
                 }}>
                     {isItemsActive && <Character />}
-                    <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.title : ''}</Text>
+                    {isTurn && <View style={{
+                        backgroundColor: 'white',
+                        width: '60%',
+                        height: 60,
+                        borderRadius: 10,
+                        position: 'absolute',
+                        right: 70,
+                        top: 100,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        zIndex: 3
+                    }}>
+                        <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.description : ''}</Text>
+                    </View>}
                     <Enemy />
 
                     {isModalOpen &&
@@ -320,24 +342,31 @@ export default function Battle_Screen() {
                                     </TouchableOpacity>
                                 ))}
                             </View> : <View style={styles.buttonView}>
-                                <TouchableOpacity style={styles.button}
+                                <TouchableOpacity style={isTurn ? styles.buttonDisable : styles.button}
                                     onPress={enemyTempButton}
+                                    disabled={isTurn}
                                 >
                                     <Text style={styles.buttonText}>ATTACK</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button}>
+                                <TouchableOpacity style={styles.button}
+                                    disabled={isTurn}
+                                >
                                     <Text style={styles.buttonText}>DEFENSE</Text>
                                 </TouchableOpacity >
-                                <TouchableOpacity style={styles.button}>
+                                <TouchableOpacity style={styles.button}
+                                    disabled={isTurn}
+                                >
                                     <Text style={styles.buttonText}>STAND</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.button}
                                     onPress={handleItemsButton}
+                                    disabled={isTurn}
                                 >
                                     <Text style={styles.buttonText}>ITEMS</Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={styles.button}
                                     onPress={handleRetreatButton}
+                                    disabled={isTurn}
                                 >
                                     <Text style={styles.buttonText}>RETREAT</Text>
                                 </TouchableOpacity>
@@ -413,6 +442,12 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: 'green',
+        padding: 8,
+        borderRadius: 4,
+        width: 100,
+    },
+    buttonDisable: {
+        backgroundColor: 'grey',
         padding: 8,
         borderRadius: 4,
         width: 100,

@@ -18,7 +18,8 @@ export default function App() {
         router.push(GLOBAL_APP_PATH.STORY_SCREEN)
     }
     const handleContinuePreviousGame = () => {
-        router.push(currentState);
+        const redirect = currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN ? currentState : GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN;
+        router.push(redirect);
 
     }
 

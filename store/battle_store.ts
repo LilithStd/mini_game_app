@@ -39,6 +39,7 @@ export interface BattleStoreInterface {
 	enemy: EnemyStats;
 	currentTargetToMove: CURRENT_TARGET_TO_MOVE;
 	totalDamage: number;
+	setDefaultState: () => void;
 	updateCharacterStats: (
 		updateRequest: UPDATE_STATS,
 		updateValue: number | Stats,
@@ -101,6 +102,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			setDefaultState: () => {
+				get().character = defaultValues;
+				get().enemy = defaultValuesEnemy;
+				get().currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
+				get().totalDamage = 0;
+			},
 			updateCharacterStats: (updateRequest, updateValue) => {
 				set((state) => {
 					const updatedCharacter = {...state.character};
