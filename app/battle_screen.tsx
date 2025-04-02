@@ -63,6 +63,7 @@ export default function Battle_Screen() {
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
+    const enemyBattleStats = useBattleStore(state => state.enemy)
     const defaultState = useBattleStore(state => state.setDefaultState)
     const currentTargetToMove = useBattleStore(state => state.currentTargetToMove)
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
@@ -83,6 +84,7 @@ export default function Battle_Screen() {
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     const [isTurn, setIsTurn] = useState(false)
     //
+
 
     const FOCUS_ELEMENT = {
         CHARACTER: 'character',
@@ -215,7 +217,7 @@ export default function Battle_Screen() {
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER
-        if (enemyStats.stats.death) {
+        if (enemyBattleStats.death) {
             const expirience = getRandomNumber(5, 200)
             characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
             router.push({
@@ -226,31 +228,58 @@ export default function Battle_Screen() {
         }
 
         if (characterBattleStats.death) {
-            console.log(characterBattleStats.death);
-
             defaultState()
             router.push({
                 pathname: GLOBAL_APP_PATH.LOSE_SCREEN
             })
         }
-    }, [enemyStats.stats.death, characterBattleStats.death])
+    }, [enemyBattleStats.death, characterBattleStats.death])
 
-    useEffect(() => {
-        if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
-        setIsTurn(true)
-        const attackTimeout = setTimeout(() => {
-            setEnemyAction(ACTIONS.ATTACK);
 
-            setTimeout(() => {
-                updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
-            }, 500);
-        }, 2000);
+    // useEffect(() => {
+    //     if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
 
-        return () => {
-            clearTimeout(attackTimeout);
-            setIsTurn(false)
-        }
-    }, [currentTargetToMove]);
+    //     console.log("Enemy turn started");
+
+    //     setIsTurn(true);
+
+    //     if (attackTimeoutRef.current) {
+    //         clearTimeout(attackTimeoutRef.current);
+    //     }
+
+    //     attackTimeoutRef.current = setTimeout(() => {
+    //         console.log("Enemy attacks!");
+    //         setEnemyAction(ACTIONS.ATTACK);
+
+    //         setTimeout(() => {
+    //             updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
+    //         }, 500);
+    //     }, 2000);
+
+    //     return () => {
+    //         if (attackTimeoutRef.current) {
+    //             clearTimeout(attackTimeoutRef.current);
+    //             console.log("Cleared previous attack timeout");
+    //         }
+    //         setIsTurn(false);
+    //     };
+    // }, [currentTargetToMove]);
+    // useEffect(() => {
+    //     if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
+    //     setIsTurn(true)
+    //     const attackTimeout = setTimeout(() => {
+    //         setEnemyAction(ACTIONS.ATTACK);
+
+    //         setTimeout(() => {
+    //             updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
+    //         }, 500);
+    //     }, 2000);
+
+    //     return () => {
+    //         clearTimeout(attackTimeout);
+    //         setIsTurn(false)
+    //     }
+    // }, [currentTargetToMove]);
 
     useEffect(() => {
         if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
@@ -393,31 +422,31 @@ export default function Battle_Screen() {
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>HP:</Text>
-                                    <Text>{characterStats.healPoints}</Text>
+                                    <Text>{characterBattleStats.healPoints}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Attack:</Text>
-                                    <Text>{characterStats.attack}</Text>
+                                    <Text>{characterBattleStats.attack}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Defense:</Text>
-                                    <Text>{characterStats.defense}</Text>
+                                    <Text>{characterBattleStats.defense}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Accuracy:</Text>
-                                    <Text>{characterStats.accuracy}</Text>
+                                    <Text>{characterBattleStats.accuracy}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Evasion:</Text>
-                                    <Text>{characterStats.evasion}</Text>
+                                    <Text>{characterBattleStats.evasion}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Critical:</Text>
-                                    <Text>{characterStats.criticalRate}</Text>
+                                    <Text>{characterBattleStats.criticalRate}</Text>
                                 </View>
                                 <View style={styles.statContainer}>
                                     <Text>Atribute:</Text>
-                                    <Text>{characterStats.atribute}</Text>
+                                    <Text>{characterBattleStats.atribute}</Text>
                                 </View>
                             </View>
                         }
