@@ -130,61 +130,76 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			updateCharacterStats: (updateRequest, updateValue) => {
 				set((state) => {
 					const updatedCharacter = {...state.character};
+					let newState = {...state};
+					let shouldUpdateTurn = false;
 
 					switch (updateRequest.updateCurrentStats) {
 						case UPDATE_STATS.ATTACK:
 							updatedCharacter.attack = updateValue as number;
-							return {
-								character: updatedCharacter,
-								currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY,
-							};
+							shouldUpdateTurn = true;
+							break;
+
 						case UPDATE_STATS.DEFENSE:
 							updatedCharacter.defense = updateValue as number;
 							break;
+
 						case UPDATE_STATS.HP:
 							const value = updateValue as number;
-							if (
-								value >= updatedCharacter.healPoints &&
-								updateRequest.incomingStatus !== INCOMING_STATUS.ITEM
-							) {
-								updatedCharacter.healPoints = 0;
-								updatedCharacter.death = true;
-								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT});
-							} else {
-								if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
-									updatedCharacter.healPoints -= updateValue as number;
-									set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
-								} else {
-									if (get().character.healPoints >= value) {
-										return;
-									} else {
-										const maxHpCharacter = get().character.healPoints;
-										const updateValueHP = Math.min();
-									}
-									updatedCharacter.healPoints += updateValue as number;
-									set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
-								}
-							}
 
+							if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
+								updatedCharacter.healPoints = Math.max(
+									0,
+									updatedCharacter.healPoints - value,
+								);
+								shouldUpdateTurn = true;
+
+								if (updatedCharacter.healPoints <= 0) {
+									updatedCharacter.death = true;
+									newState.currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
+								}
+							} else if (
+								updateRequest.incomingStatus === INCOMING_STATUS.ITEM
+							) {
+								const maxHp = state.initialParameters.character.healPoints;
+								updatedCharacter.healPoints = Math.min(
+									updatedCharacter.healPoints + value,
+									maxHp,
+								);
+								shouldUpdateTurn = true;
+							}
 							break;
+
 						case UPDATE_STATS.LEVEL:
 							updatedCharacter.level = updateValue as number;
 							break;
+
 						case UPDATE_STATS.ALL:
 							return {
+								...state,
 								character: updateValue as CharacterStats,
 								initialParameters: {
 									...state.initialParameters,
 									character: updateValue as CharacterStats,
 								},
 							};
+
 						default:
 							console.warn(
 								`Неподдерживаемый запрос обновления: ${updateRequest}`,
 							);
+							return state;
 					}
 
-					return {character: updatedCharacter};
+					newState.character = updatedCharacter;
+
+					if (shouldUpdateTurn) {
+						newState.currentTargetToMove =
+							updateRequest.incomingStatus === INCOMING_STATUS.ATTACK
+								? CURRENT_TARGET_TO_MOVE.CHARACTER
+								: CURRENT_TARGET_TO_MOVE.ENEMY;
+					}
+
+					return newState;
 				});
 			},
 
