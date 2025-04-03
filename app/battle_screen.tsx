@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import { CURRENT_TARGET_TO_MOVE, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
+import { CURRENT_TARGET_TO_MOVE, INCOMING_STATUS, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
@@ -210,8 +210,11 @@ export default function Battle_Screen() {
     }
     const handleAttackButton = () => {
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
-        // setEnemyAction(ACTIONS.ATTACK);
-        // updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
+        setEnemyAction(ACTIONS.ATTACK);
+        updateCharacter({
+            updateCurrentStats: UPDATE_STATS.HP,
+            incomingStatus: INCOMING_STATUS.ATTACK
+        }, enemyStats.stats.attack);
     };
 
     const objectModalSettings = {
@@ -229,7 +232,11 @@ export default function Battle_Screen() {
     const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
         switch (variant) {
             case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE:
-                updateCharacter(UPDATE_STATS.HP, items.stats?.healPotion ?? 0)
+                const restoreHP = {
+                    updateCurrentStats: UPDATE_STATS.HP,
+                    incomingStatus: INCOMING_STATUS.ITEM
+                }
+                updateCharacter(restoreHP, items.stats?.healPotion ?? 0)
                 break;
             case VARIANTS_ITEMS.ATTACK:
                 break;
@@ -242,29 +249,10 @@ export default function Battle_Screen() {
 
 
     useEffect(() => {
-        updateCharacter(UPDATE_STATS.ALL, characterStats ? characterStats : default_stats_character)
+        updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
         updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
     }, [])
 
-    useEffect(() => {
-
-        const unsubscribe = useBattleStore.subscribe((state) => {
-            if (state.currentTargetToMove === CURRENT_TARGET_TO_MOVE.ENEMY) {
-                setIsTurn(true)
-                setEnemyAction(ACTIONS.ATTACK);
-
-                // Проверяем, не нанесён ли уже урон
-                if (state.character.healPoints > 0) {
-                    updateCharacter(UPDATE_STATS.HP, state.enemy.attack);
-                }
-            }
-        });
-
-        return () => (
-            unsubscribe(),
-            setIsTurn(false)
-        )
-    }, []);
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER

@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-interface Stats {
+interface CharacterStats {
 	level: number;
 	attack: number;
 	defense: number;
@@ -34,15 +34,28 @@ interface EnemyStats {
 	death: boolean;
 }
 
+export enum INCOMING_STATUS {
+	ATTACK = 'attack',
+	ITEM = 'item',
+	// DEFAULT = 'default',
+}
+
 export interface BattleStoreInterface {
-	character: Stats;
+	character: CharacterStats;
 	enemy: EnemyStats;
 	currentTargetToMove: CURRENT_TARGET_TO_MOVE;
 	totalDamage: number;
 	setDefaultState: () => void;
+	initialParameters: {
+		character: CharacterStats;
+		enemy: EnemyStats;
+	};
 	updateCharacterStats: (
-		updateRequest: UPDATE_STATS,
-		updateValue: number | Stats,
+		updateRequest: {
+			updateCurrentStats: UPDATE_STATS;
+			incomingStatus: INCOMING_STATUS;
+		},
+		updateValue: number | CharacterStats,
 	) => void;
 	updateEnemyStats: (
 		updateRequest: UPDATE_STATS,
@@ -64,7 +77,7 @@ export enum CURRENT_TARGET_TO_MOVE {
 	DEFAULT = 'default',
 }
 
-const defaultValues: Stats = {
+const defaultValues: CharacterStats = {
 	level: 1,
 	attack: 0,
 	defense: 0,
@@ -110,24 +123,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					totalDamage: 0,
 				});
 			},
+			initialParameters: {
+				character: defaultValues,
+				enemy: defaultValuesEnemy,
+			},
 			updateCharacterStats: (updateRequest, updateValue) => {
-				// set((state) => {
-				// 	const updatedCharacter = {...state.character};
-
-				// 	switch (updateRequest) {
-				// 		case UPDATE_STATS.ATTACK:
-				// 			updatedCharacter.attack = updateValue as number;
-				// 			return {
-				// 				character: updatedCharacter,
-				// 				currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY,
-				// 			};
-				// 	}
-				// 	return {character: updatedCharacter};
-				// });
 				set((state) => {
 					const updatedCharacter = {...state.character};
 
-					switch (updateRequest) {
+					switch (updateRequest.updateCurrentStats) {
 						case UPDATE_STATS.ATTACK:
 							updatedCharacter.attack = updateValue as number;
 							return {
@@ -139,13 +143,27 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							break;
 						case UPDATE_STATS.HP:
 							const value = updateValue as number;
-							if (value >= updatedCharacter.healPoints) {
+							if (
+								value >= updatedCharacter.healPoints &&
+								updateRequest.incomingStatus !== INCOMING_STATUS.ITEM
+							) {
 								updatedCharacter.healPoints = 0;
 								updatedCharacter.death = true;
 								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT});
 							} else {
-								updatedCharacter.healPoints -= updateValue as number;
-								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
+								if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
+									updatedCharacter.healPoints -= updateValue as number;
+									set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
+								} else {
+									if (get().character.healPoints >= value) {
+										return;
+									} else {
+										const maxHpCharacter = get().character.healPoints;
+										const updateValueHP = Math.min();
+									}
+									updatedCharacter.healPoints += updateValue as number;
+									set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
+								}
 							}
 
 							break;
@@ -153,7 +171,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							updatedCharacter.level = updateValue as number;
 							break;
 						case UPDATE_STATS.ALL:
-							return {character: updateValue as Stats};
+							return {
+								character: updateValue as CharacterStats,
+								initialParameters: {
+									...state.initialParameters,
+									character: updateValue as CharacterStats,
+								},
+							};
 						default:
 							console.warn(
 								`Неподдерживаемый запрос обновления: ${updateRequest}`,
@@ -192,7 +216,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							updatedEnemy.level = updateValue as number;
 							break;
 						case UPDATE_STATS.ALL:
-							return {enemy: updateValue as EnemyStats};
+							return {
+								enemy: updateValue as EnemyStats,
+								initialParameters: {
+									...state.initialParameters,
+									enemy: updateValue as EnemyStats,
+								},
+							};
 						default:
 							console.warn(
 								`Неподдерживаемый запрос обновления: ${updateRequest}`,
