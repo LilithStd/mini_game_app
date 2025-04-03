@@ -10,7 +10,7 @@ import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { CURRENT_TARGET_TO_MOVE, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
-import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
 import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
@@ -31,6 +31,14 @@ export default function Battle_Screen() {
         title: string,
         description: string
     }
+
+    const VARIANTS_ITEMS = {
+        HEALTH: 'active',
+        ATTACK: 'attack',
+        DEFENSE: 'defense',
+        EVASION: 'evasion',
+    }
+
     const ACTIONS = {
         ATTACK: {
             title: 'attack',
@@ -200,8 +208,10 @@ export default function Battle_Screen() {
         setIsModalOpen(true)
 
     }
-    const enemyTempButton = () => {
+    const handleAttackButton = () => {
         updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
+        // setEnemyAction(ACTIONS.ATTACK);
+        // updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
     };
 
     const objectModalSettings = {
@@ -209,11 +219,52 @@ export default function Battle_Screen() {
         callBack: handleRetreatConfirm
     }
 
+    type SubTypeItems =
+        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF
+        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS
+        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY
+        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL
+        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS;
+
+    const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
+        switch (variant) {
+            case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE:
+                updateCharacter(UPDATE_STATS.HP, items.stats?.healPotion ?? 0)
+                break;
+            case VARIANTS_ITEMS.ATTACK:
+                break;
+            case VARIANTS_ITEMS.DEFENSE:
+                break;
+            case VARIANTS_ITEMS.EVASION:
+                break;
+        }
+    }
+
 
     useEffect(() => {
         updateCharacter(UPDATE_STATS.ALL, characterStats ? characterStats : default_stats_character)
         updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
     }, [])
+
+    useEffect(() => {
+
+        const unsubscribe = useBattleStore.subscribe((state) => {
+            if (state.currentTargetToMove === CURRENT_TARGET_TO_MOVE.ENEMY) {
+                setIsTurn(true)
+                setEnemyAction(ACTIONS.ATTACK);
+
+                // Проверяем, не нанесён ли уже урон
+                if (state.character.healPoints > 0) {
+                    updateCharacter(UPDATE_STATS.HP, state.enemy.attack);
+                }
+            }
+        });
+
+        return () => (
+            unsubscribe(),
+            setIsTurn(false)
+        )
+    }, []);
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER
@@ -372,7 +423,7 @@ export default function Battle_Screen() {
                                 ))}
                             </View> : <View style={styles.buttonView}>
                                 <TouchableOpacity style={isTurn ? styles.buttonDisable : styles.button}
-                                    onPress={enemyTempButton}
+                                    onPress={handleAttackButton}
                                     disabled={isTurn}
                                 >
                                     <Text style={styles.buttonText}>ATTACK</Text>
@@ -406,9 +457,14 @@ export default function Battle_Screen() {
                         </View>
                         {isItemsActive ?
                             <View style={styles.characterStatsContainer}>
-                                {activeConsumbles.map((item) => <Text key={item.id}>
-                                    {item.name}
-                                </Text>)}
+                                {activeConsumbles.map((item) => <TouchableOpacity
+                                    key={item.id}
+                                    onPress={() => handleItemsUse(item.subType, item)}
+                                >
+                                    <Text >
+                                        {item.name}
+                                    </Text>
+                                </TouchableOpacity>)}
                             </View> :
                             <View style={styles.characterStatsContainer}>
                                 <Text style={styles.statsTitle}>Character stats:</Text>

@@ -103,20 +103,37 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			setDefaultState: () => {
-				get().character = defaultValues;
-				get().enemy = defaultValuesEnemy;
-				get().currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
-				get().totalDamage = 0;
+				set({
+					character: {...defaultValues},
+					enemy: {...defaultValuesEnemy},
+					currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
+					totalDamage: 0,
+				});
 			},
 			updateCharacterStats: (updateRequest, updateValue) => {
+				// set((state) => {
+				// 	const updatedCharacter = {...state.character};
+
+				// 	switch (updateRequest) {
+				// 		case UPDATE_STATS.ATTACK:
+				// 			updatedCharacter.attack = updateValue as number;
+				// 			return {
+				// 				character: updatedCharacter,
+				// 				currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY,
+				// 			};
+				// 	}
+				// 	return {character: updatedCharacter};
+				// });
 				set((state) => {
 					const updatedCharacter = {...state.character};
 
 					switch (updateRequest) {
 						case UPDATE_STATS.ATTACK:
 							updatedCharacter.attack = updateValue as number;
-							set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY});
-							break;
+							return {
+								character: updatedCharacter,
+								currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY,
+							};
 						case UPDATE_STATS.DEFENSE:
 							updatedCharacter.defense = updateValue as number;
 							break;
@@ -164,7 +181,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							if (value >= updatedEnemy.healPoints) {
 								updatedEnemy.healPoints = 0;
 								updatedEnemy.death = true;
-								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT});
+								get().setDefaultState();
 							} else {
 								updatedEnemy.healPoints -= value;
 								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY});
