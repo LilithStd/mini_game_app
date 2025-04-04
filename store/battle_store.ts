@@ -50,6 +50,11 @@ export interface BattleStoreInterface {
 		character: CharacterStats;
 		enemy: EnemyStats;
 	};
+	currentBuffAndDebuff: {
+		character: string[];
+		enemy: string[];
+	};
+	setCurrentBuffAndDebuff: (status: string) => void;
 	updateCharacterStats: (
 		updateRequest: {
 			updateCurrentStats: UPDATE_STATS;
@@ -115,6 +120,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			currentBuffAndDebuff: {
+				character: [],
+				enemy: [],
+			},
+			setCurrentBuffAndDebuff: (status) => {},
 			setDefaultState: () => {
 				set({
 					character: {...defaultValues},
@@ -135,8 +145,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 					switch (updateRequest.updateCurrentStats) {
 						case UPDATE_STATS.ATTACK:
-							updatedCharacter.attack = updateValue as number;
-							shouldUpdateTurn = true;
+							if (updateRequest.incomingStatus !== INCOMING_STATUS.ATTACK) {
+								updatedCharacter.attack += updateValue as number;
+								shouldUpdateTurn = true;
+							} else {
+								shouldUpdateTurn = true;
+							}
 							break;
 
 						case UPDATE_STATS.DEFENSE:

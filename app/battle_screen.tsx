@@ -238,11 +238,26 @@ export default function Battle_Screen() {
                 }
                 updateCharacter(restoreHP, items.stats?.healPotion ?? 0)
                 break;
-            case VARIANTS_ITEMS.ATTACK:
+            case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF:
+                const attackBuff = {
+                    updateCurrentStats: UPDATE_STATS.ATTACK,
+                    incomingStatus: INCOMING_STATUS.ITEM
+                }
+                updateCharacter(attackBuff, items.stats?.attack ?? 0)
                 break;
             case VARIANTS_ITEMS.DEFENSE:
+                const defenseBuff = {
+                    updateCurrentStats: UPDATE_STATS.ATTACK,
+                    incomingStatus: INCOMING_STATUS.ITEM
+                }
+                updateCharacter(defenseBuff, items.stats?.defense ?? 0)
                 break;
             case VARIANTS_ITEMS.EVASION:
+                const evasionBuff = {
+                    updateCurrentStats: UPDATE_STATS.ATTACK,
+                    incomingStatus: INCOMING_STATUS.ITEM
+                }
+                updateCharacter(evasionBuff, items.stats?.evasion ?? 0)
                 break;
         }
     }
@@ -445,14 +460,26 @@ export default function Battle_Screen() {
                         </View>
                         {isItemsActive ?
                             <View style={styles.characterStatsContainer}>
-                                {activeConsumbles.map((item) => <TouchableOpacity
-                                    key={item.id}
-                                    onPress={() => handleItemsUse(item.subType, item)}
-                                >
-                                    <Text >
-                                        {item.name}
-                                    </Text>
-                                </TouchableOpacity>)}
+                                {activeConsumbles.map((item) =>
+                                    <View
+                                        key={item.id}
+                                        style={{
+                                            margin: 4
+                                        }}
+                                    >
+                                        <TouchableOpacity
+
+                                            onPress={() => handleItemsUse(item.subType, item)}
+                                            style={{
+                                                backgroundColor: 'yellow'
+                                            }}
+                                        >
+                                            <Text >
+                                                {item.name}
+                                            </Text>
+                                        </TouchableOpacity>
+                                    </View>
+                                )}
                             </View> :
                             <View style={styles.characterStatsContainer}>
                                 <Text style={styles.statsTitle}>Character stats:</Text>
