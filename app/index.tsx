@@ -38,7 +38,7 @@ export default function App() {
                     justifyContent: 'center'
                 }}
                 resizeMode='cover'
-                source={require('../assets/backgrounds/bg_1.jpg')}
+                source={require('../assets/backgrounds/bg_00.jpg')}
             >
                 <View style={{
                     width: '80%', // Задаем ширину для адаптивности
