@@ -29,18 +29,25 @@ const CharacterDefaultStats = {
 export default function ChooseCharacterScreen() {
     const router = useRouter();
     const [isChoosing, setIsChoosing] = useState(false);
+    const [currentIndex, setCurrentIndex] = useState(0);
     const [currentCharacterToChoose, setCurrentCharacterToChoose] = useState<CharacterStats>(CharacterDefaultStats)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const characters_pull_for_choose = useCharacterStore(state => state.choose_character_pull)
     const choose_character = useCharacterStore(state => state.updateCharacterStats)
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
-
+    //
+    const characters = characters_pull_for_choose();
+    const currentCharacter = characters[currentIndex] ?? CharacterDefaultStats;
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN);
         const randomCharacter = characters_pull_for_choose()[0] ?? CharacterDefaultStats;
         setCurrentCharacterToChoose(randomCharacter);
     }, [])
+
+    useEffect(() => {
+        setCurrentCharacterToChoose(currentCharacter);
+    }, [currentIndex]);
 
     const handleCharacterChoose = (item: CharacterStats) => {
         setIsChoosing(true);
@@ -49,11 +56,17 @@ export default function ChooseCharacterScreen() {
         router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
     }
     const handlePreviousCharacter = () => {
-
+        setCurrentIndex((prevIndex) => {
+            const prev = prevIndex - 1;
+            return prev < 0 ? characters.length - 1 : prev; // циклично
+        });
     }
 
     const handleNextCharacter = () => {
-
+        setCurrentIndex((prevIndex) => {
+            const next = prevIndex + 1;
+            return next >= characters.length ? 0 : next; // циклично
+        });
     }
 
     if (isChoosing) {
@@ -134,10 +147,14 @@ export default function ChooseCharacterScreen() {
 
 
                         <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={handlePreviousCharacter}
+                            >
                                 <Text style={styles.buttonText}>Previous</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}>
+                            <TouchableOpacity style={styles.button}
+                                onPress={handleNextCharacter}
+                            >
                                 <Text style={styles.buttonText}>Next</Text>
                             </TouchableOpacity>
                         </View>
