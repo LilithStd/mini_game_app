@@ -3,7 +3,7 @@ import { getRandomNumber } from "@/constants/helpers";
 import { useCharacterStore, UPDATE_CHARACTER_STATS, CharacterStats } from "@/store/character_store"
 import { useGlobalStore } from "@/store/global_store"
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Button, Text, View, Image, ImageBackground, TouchableOpacity, StyleSheet } from "react-native"
 
 const CharacterDefaultStats = {
@@ -28,6 +28,8 @@ const CharacterDefaultStats = {
 
 export default function ChooseCharacterScreen() {
     const router = useRouter();
+
+
     const [isChoosing, setIsChoosing] = useState(false);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [currentCharacterToChoose, setCurrentCharacterToChoose] = useState<CharacterStats>(CharacterDefaultStats)
@@ -38,16 +40,24 @@ export default function ChooseCharacterScreen() {
     //
     const characters = characters_pull_for_choose();
     const currentCharacter = characters[currentIndex] ?? CharacterDefaultStats;
-
+    // const characterToDisplay = characters[currentIndex] ?? CharacterDefaultStats;
+    const characterToDisplay = useMemo(() => {
+        return characters[currentIndex] ?? CharacterDefaultStats;
+    }, [currentIndex, characters.length]);
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN);
-        const randomCharacter = characters_pull_for_choose()[0] ?? CharacterDefaultStats;
-        setCurrentCharacterToChoose(randomCharacter);
+        // const defaultCharacter = characters[0] ?? CharacterDefaultStats;
+        // setCurrentCharacterToChoose(defaultCharacter);
     }, [])
 
     useEffect(() => {
         setCurrentCharacterToChoose(currentCharacter);
     }, [currentIndex]);
+    // useEffect(() => {
+    //     const newCharacter = characters[currentIndex] ?? CharacterDefaultStats;
+    //     // console.log('⏩ Character updated to:', newCharacter.name);
+    //     setCurrentCharacterToChoose(newCharacter);
+    // }, [currentIndex, characters.length]);
 
     const handleCharacterChoose = (item: CharacterStats) => {
         setIsChoosing(true);
@@ -56,18 +66,16 @@ export default function ChooseCharacterScreen() {
         router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
     }
     const handlePreviousCharacter = () => {
-        setCurrentIndex((prevIndex) => {
-            const prev = prevIndex - 1;
-            return prev < 0 ? characters.length - 1 : prev; // циклично
-        });
-    }
+        setCurrentIndex((prevIndex) =>
+            prevIndex - 1 < 0 ? characters.length - 1 : prevIndex - 1
+        );
+    };
 
     const handleNextCharacter = () => {
-        setCurrentIndex((prevIndex) => {
-            const next = prevIndex + 1;
-            return next >= characters.length ? 0 : next; // циклично
-        });
-    }
+        setCurrentIndex((prevIndex) =>
+            prevIndex + 1 >= characters.length ? 0 : prevIndex + 1
+        );
+    };
 
     if (isChoosing) {
         return null; // Пока происходит переход, ничего не рендерим

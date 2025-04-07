@@ -1,12 +1,15 @@
-
+import * as Font from 'expo-font';
 import { GLOBAL_APP_PATH } from '@/constants/global_path';
 import { useGlobalStore } from '@/store/global_store';
 import { useStoryStore } from '@/store/story_store';
 import { useRouter } from 'expo-router';
-import { Button, ImageBackground, View } from 'react-native'
+import { Button, ImageBackground, Text, View, StyleSheet } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 
 export default function App() {
+    const [fontsLoaded] = Font.useFonts({
+        'Title App': require('../assets/fonts/BungeeSpice-Regular.ttf'),
+    });
     const router = useRouter();
     const newGameStatus = useGlobalStore(state => state.newGame)
     const { currentState } = useGlobalStore()
@@ -40,10 +43,15 @@ export default function App() {
                 resizeMode='cover'
                 source={require('../assets/backgrounds/bg_00.jpg')}
             >
+                <View style={mainStyles.gameTitleContainer}>
+                    <Text style={mainStyles.gameTitle}>MONSTERS DUNGEON</Text>
+                </View>
                 <View style={{
-                    width: '80%', // Задаем ширину для адаптивности
-                    alignItems: 'center', // Выравниваем кнопки по центру
-                    gap: 10 // Добавляем промежуток между кнопками
+                    width: '80%',
+                    alignItems: 'center',
+                    gap: 10,
+
+
                 }}>
                     <Button
                         title="Continue"
@@ -60,3 +68,14 @@ export default function App() {
         </SafeAreaView>
     );
 }
+const mainStyles = StyleSheet.create({
+    gameTitle: {
+        fontFamily: 'Title App',
+        fontSize: 32,
+        alignSelf: 'flex-end'
+    },
+    gameTitleContainer: {
+        position: 'absolute',
+        top: 200
+    }
+})
