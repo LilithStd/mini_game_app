@@ -3,14 +3,24 @@ import { GLOBAL_APP_PATH } from '@/constants/global_path';
 import { useGlobalStore } from '@/store/global_store';
 import { useStoryStore } from '@/store/story_store';
 import { useRouter } from 'expo-router';
-import { Button, ImageBackground, Text, View, StyleSheet } from 'react-native'
+import { Button, ImageBackground, Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
+import { useEffect, useState } from 'react';
+
+const backgroundImageDefault = require('../assets/backgrounds/bg_00.jpg')
+const backgroundImageWithMonster = require('../assets/backgrounds/bg_01_title.jpg')
+const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
+const buttonDisabled = require('../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function App() {
     const [fontsLoaded] = Font.useFonts({
         'Title App': require('../assets/fonts/BungeeSpice-Regular.ttf'),
+        'Text App': require('../assets/fonts/LilitaOne-Regular.ttf')
     });
     const router = useRouter();
+    //state
+    const [currentBackgroundImage, setCurrentBackgroundImage] = useState(backgroundImageWithMonster)
+    //store
     const newGameStatus = useGlobalStore(state => state.newGame)
     const { currentState } = useGlobalStore()
     const chapter = useStoryStore(state => state.chapter)
@@ -26,6 +36,18 @@ export default function App() {
 
     }
 
+    // useEffect(() => {
+    //     const swtichBackgroundImages = setInterval(() => {
+    //         setCurrentBackgroundImage(currentBackgroundImage === backgroundImageDefault ? backgroundImageWithMonster : backgroundImageDefault)
+    //     }, 5000); // 3 секунды
+
+    //     return () => {
+    //         clearTimeout(swtichBackgroundImages);
+    //     };
+    // }, [currentBackgroundImage]);
+    if (!fontsLoaded) {
+        return <Text>Loading</Text> // можно заглушку/сплеш
+    }
     return (
         <SafeAreaView style={{
             flex: 1,
@@ -41,18 +63,40 @@ export default function App() {
                     justifyContent: 'center'
                 }}
                 resizeMode='cover'
-                source={require('../assets/backgrounds/bg_00.jpg')}
+                source={currentBackgroundImage}
             >
                 <View style={mainStyles.gameTitleContainer}>
                     <Text style={mainStyles.gameTitle}>MONSTERS DUNGEON</Text>
                 </View>
-                <View style={{
-                    width: '80%',
-                    alignItems: 'center',
-                    gap: 10,
-
-
-                }}>
+                <View style={mainStyles.buttonsContainer}>
+                    <TouchableOpacity
+                        style={mainStyles.buttonContainer}
+                        disabled={newGameStatus}
+                        onPress={handleContinuePreviousGame}
+                    >
+                        <ImageBackground
+                            source={newGameStatus ? buttonDisabled : buttonOrange}
+                            style={mainStyles.buttonBackground}
+                        >
+                            <Text style={mainStyles.text}>
+                                CONTINUE
+                            </Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={mainStyles.buttonContainer}
+                        onPress={handleStartNewGame}
+                    >
+                        <ImageBackground
+                            source={buttonOrange}
+                            style={mainStyles.buttonBackground}
+                        >
+                            <Text style={mainStyles.text}>
+                                NEW GAME
+                            </Text>
+                        </ImageBackground>
+                    </TouchableOpacity>
+                    {/* 
                     <Button
                         title="Continue"
                         disabled={newGameStatus}
@@ -61,7 +105,7 @@ export default function App() {
                     <Button
                         title="Start New Game"
                         onPress={handleStartNewGame}
-                    />
+                    /> */}
                 </View>
             </ImageBackground>
 
@@ -76,6 +120,31 @@ const mainStyles = StyleSheet.create({
     },
     gameTitleContainer: {
         position: 'absolute',
-        top: 200
+        top: 100
+    },
+    text: {
+        fontFamily: 'Text App',
+        fontSize: 18
+    },
+    buttonsContainer: {
+        width: '80%',
+        position: 'absolute',
+        bottom: 240,
+        gap: 10,
+
+    },
+    buttonContainer: {
+        width: '100%',
+        alignItems: 'center'
+    },
+    buttonDisabled: {
+        backgroundColor: 'grey'
+    },
+    buttonBackground: {
+        width: 182,
+        height: 47,
+        borderRadius: 6,
+        alignItems: 'center',
+        justifyContent: 'center'
     }
 })
