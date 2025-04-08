@@ -4,8 +4,13 @@ import { useGlobalStore } from "@/store/global_store";
 import { useStoryStore } from "@/store/story_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, ImageBackground, Text, View } from "react-native";
+import { Button, ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
+
+const defaultBackground = require('../assets/backgrounds/bg_00.jpg')
+const monsterBackground = require('../assets/enemy/monsters/imp_story_start.jpg')
+const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
+const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function Story_Screen() {
     const { chapter } = useLocalSearchParams();
@@ -19,7 +24,7 @@ export default function Story_Screen() {
     const [skip, setSkip] = useState(false)
     const storyTextContent = getChapter_Story()?.text ? getChapter_Story()?.text : 'no content'
 
-    const handle_switch_screen = (defaultStatus: boolean) => {
+    const handleSwitchScreen = (defaultStatus: boolean) => {
         if (defaultStatus) {
             router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
             return
@@ -34,9 +39,9 @@ export default function Story_Screen() {
 
     return (
         <ImageBackground
-            source={getChapter_Story()?.background || require('../assets/backgrounds/test_bg.png')}
+            source={getChapter_Story()?.background || defaultBackground}
             style={{
-                flex: 1, // Главное: ImageBackground должен растягиваться!
+                flex: 1,
                 width: '100%',
                 height: '100%',
                 justifyContent: 'flex-end',
@@ -49,20 +54,21 @@ export default function Story_Screen() {
                 style={{
                     backgroundColor: 'yellow',
                     width: 400,
-                    height: 200,
+                    height: '50%',
                     padding: 20,
                     margin: 10,
                     borderRadius: 10
                 }}
             >{skip ? <Text style={{
-                fontSize: 14,
-                fontWeight: 'bold',
+                fontFamily: 'Text App',
+                fontSize: 26,
 
             }}>{storyTextContent}</Text> :
                 <Typewriter
                     style={{
-                        fontSize: 14,
-                        fontWeight: 'bold',
+                        fontFamily: 'Text App',
+                        fontSize: 20,
+                        // fontWeight: 'bold',
 
                     }}
                     typing={1}
@@ -73,25 +79,55 @@ export default function Story_Screen() {
                     <Text>{storyTextContent}</Text>
                 </Typewriter>
                 }</Text>
-            <View style={{
-                flexDirection: 'row',
-                gap: 6,
-                justifyContent: 'center',
-                alignItems: 'center',
-
-            }}>
-                <Button
+            <View style={storyStyles.buttonsContainer}>
+                <TouchableOpacity
                     disabled={typing || skip}
-                    title="skip"
                     onPress={() => setSkip(true)}
-                />
-                <Button
-                    title="go to location"
-                    onPress={() => handle_switch_screen(defaultGlobalState)}
-                />
+                    style={storyStyles.buttonContainer}
+                >
+                    <ImageBackground
+                        source={typing || skip ? buttonOrangeDisable : buttonOrange}
+                        style={storyStyles.buttonBackground}
+                    >
+                        <Text style={storyStyles.buttonText}>SKIP</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    onPress={() => handleSwitchScreen(defaultGlobalState)}
+                    style={storyStyles.buttonContainer}
+                >
+                    <ImageBackground
+                        style={storyStyles.buttonBackground}
+                        source={buttonOrange}
+                    >
+                        <Text style={storyStyles.buttonText}>CONTINUE</Text>
+                    </ImageBackground>
+                </TouchableOpacity>
             </View>
 
         </ImageBackground>
 
     )
 }
+const storyStyles = StyleSheet.create({
+    buttonsContainer: {
+        flexDirection: 'row',
+        gap: 6,
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    buttonContainer: {
+
+    },
+    buttonText: {
+        fontFamily: 'Text App',
+        textAlign: 'center',
+        fontSize: 20
+    },
+    buttonBackground: {
+        width: 182,
+        height: 47,
+        alignItems: 'center',
+        justifyContent: 'center'
+    }
+})

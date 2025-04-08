@@ -11,6 +11,7 @@ const backgroundImageDefault = require('../assets/backgrounds/bg_00.jpg')
 const backgroundImageWithMonster = require('../assets/backgrounds/bg_01_title.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../assets/buttons/orange_button_01(small_disabled).png')
+const buttonLogo = require('../assets/buttons/orange_button_main.png')
 
 export default function App() {
     const [fontsLoaded] = Font.useFonts({
@@ -66,7 +67,12 @@ export default function App() {
                 source={currentBackgroundImage}
             >
                 <View style={mainStyles.gameTitleContainer}>
+                    {/* <ImageBackground
+                        source={buttonLogo}
+                        style={mainStyles.gameTitleBackground}
+                    > */}
                     <Text style={mainStyles.gameTitle}>MONSTERS DUNGEON</Text>
+                    {/* </ImageBackground> */}
                 </View>
                 <View style={mainStyles.buttonsContainer}>
                     <TouchableOpacity
@@ -116,11 +122,17 @@ const mainStyles = StyleSheet.create({
     gameTitle: {
         fontFamily: 'Title App',
         fontSize: 32,
-        alignSelf: 'flex-end'
+        alignSelf: 'flex-end',
     },
     gameTitleContainer: {
         position: 'absolute',
         top: 100
+    },
+    gameTitleBackground: {
+        width: 396,
+        height: 83,
+        alignContent: 'center',
+        alignItems: 'center'
     },
     text: {
         fontFamily: 'Text App',
