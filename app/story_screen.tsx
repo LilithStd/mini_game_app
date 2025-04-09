@@ -4,7 +4,7 @@ import { useGlobalStore } from "@/store/global_store";
 import { useStoryStore } from "@/store/story_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Button, ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
 
 const defaultBackground = require('../assets/backgrounds/bg_00.jpg')
@@ -13,23 +13,52 @@ const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function Story_Screen() {
-    const { chapter } = useLocalSearchParams();
+    // const { chapter } = useLocalSearchParams();
     const router = useRouter();
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
     const getChapter_Story = useStoryStore(state => state.getChapterContent)
     const default_status = useCharacterStore(state => state.default_state)
-
+    //const
+    const storyContent = getChapter_Story()
+    // const storyTextContent = storyContent?.text.start ? getChapter_Story()?.text.start : 'no content'
+    //state
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
-    const storyTextContent = getChapter_Story()?.text ? getChapter_Story()?.text : 'no content'
+    const [currentBackground, setCurrentBackgroud] = useState(getChapter_Story()?.background || defaultBackground)
+    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start })
+    // console.log(storyTextContent);
 
-    const handleSwitchScreen = (defaultStatus: boolean) => {
-        if (defaultStatus) {
-            router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
-            return
+    //
+
+    const handleContinue = () => {
+        if (currentPartText.text === storyContent?.text.start) {
+            setTyping(false),
+                setSkip(false)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.middle
+            }))
         }
-        return router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+        if (currentPartText.text === storyContent?.text.middle) {
+            setTyping(false),
+                setSkip(false)
+            setCurrentBackgroud(monsterBackground)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.end
+            }))
+        }
+        if (currentPartText.text === storyContent?.text.end) {
+            setSkip(true)
+
+            if (defaultGlobalState) {
+                router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
+                return
+            }
+            return router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+        }
+
     }
 
     useEffect(() => {
@@ -39,7 +68,7 @@ export default function Story_Screen() {
 
     return (
         <ImageBackground
-            source={getChapter_Story()?.background || defaultBackground}
+            source={currentBackground}
             style={{
                 flex: 1,
                 width: '100%',
@@ -50,20 +79,13 @@ export default function Story_Screen() {
             resizeMode="cover"
         >
             <Text>story_Screen</Text>
-            <Text
-                style={{
-                    backgroundColor: 'yellow',
-                    width: 400,
-                    height: '50%',
-                    padding: 20,
-                    margin: 10,
-                    borderRadius: 10
-                }}
+            <View
+                style={currentPartText.text === storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
                 fontFamily: 'Text App',
-                fontSize: 26,
+                fontSize: 20,
 
-            }}>{storyTextContent}</Text> :
+            }}>{currentPartText.text}</Text> :
                 <Typewriter
                     style={{
                         fontFamily: 'Text App',
@@ -76,9 +98,9 @@ export default function Story_Screen() {
                     onTyped={() => { setTyping(false) }}
                     onTypingEnd={() => { setTyping(false), setSkip(true) }}
                 >
-                    <Text>{storyTextContent}</Text>
+                    <Text>{currentPartText.text}</Text>
                 </Typewriter>
-                }</Text>
+                }</View>
             <View style={storyStyles.buttonsContainer}>
                 <TouchableOpacity
                     disabled={typing || skip}
@@ -93,14 +115,14 @@ export default function Story_Screen() {
                     </ImageBackground>
                 </TouchableOpacity>
                 <TouchableOpacity
-                    onPress={() => handleSwitchScreen(defaultGlobalState)}
+                    onPress={handleContinue}
                     style={storyStyles.buttonContainer}
                 >
                     <ImageBackground
                         style={storyStyles.buttonBackground}
                         source={buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>CONTINUE</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.end ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
@@ -118,6 +140,22 @@ const storyStyles = StyleSheet.create({
     },
     buttonContainer: {
 
+    },
+    maskBackground: {
+        backgroundColor: 'yellow',
+        width: 400,
+        height: '50%',
+        padding: 20,
+        margin: 10,
+        borderRadius: 10
+    },
+    maskBackgroundSlice: {
+        backgroundColor: 'yellow',
+        width: 400,
+        height: '35%',
+        padding: 20,
+        margin: 10,
+        borderRadius: 10
     },
     buttonText: {
         fontFamily: 'Text App',
