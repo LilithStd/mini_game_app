@@ -131,9 +131,12 @@ export default function ChooseCharacterScreen() {
                     }}>
                         <Text>{currentCharacterToChoose.name}</Text>
                         <Image
+                            resizeMode="cover"
                             style={{
                                 justifyContent: 'center',
-                                alignSelf: 'center'
+                                alignSelf: 'center',
+                                width: '100%',
+                                height: '100%'
                             }}
                             source={currentCharacterToChoose.model}
                         />

@@ -71,7 +71,7 @@ const Character_Pull: CharacterStats[] = [
 	},
 	{
 		name: 'character_name_2 - Mage',
-		model: require('../assets/character/character_6.png'),
+		model: require('../assets/character/character_12.png'),
 		level: 1,
 		attack: 12,
 		defense: 6,
