@@ -9,6 +9,7 @@ import { useEffect, useState } from 'react';
 
 const backgroundImageDefault = require('../assets/backgrounds/bg_00.jpg')
 const backgroundImageWithMonster = require('../assets/backgrounds/bg_01_title.jpg')
+
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../assets/buttons/orange_button_01(small_disabled).png')
 const buttonLogo = require('../assets/buttons/orange_button_main.png')
@@ -40,15 +41,6 @@ export default function App() {
 
     }
 
-    // useEffect(() => {
-    //     const swtichBackgroundImages = setInterval(() => {
-    //         setCurrentBackgroundImage(currentBackgroundImage === backgroundImageDefault ? backgroundImageWithMonster : backgroundImageDefault)
-    //     }, 5000); // 3 секунды
-
-    //     return () => {
-    //         clearTimeout(swtichBackgroundImages);
-    //     };
-    // }, [currentBackgroundImage]);
     if (!fontsLoaded) {
         return <Text>Loading</Text> // можно заглушку/сплеш
     }

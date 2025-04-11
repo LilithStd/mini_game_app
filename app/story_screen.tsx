@@ -9,6 +9,7 @@ import Typewriter from 'react-native-typewriter';
 
 const defaultBackground = require('../assets/backgrounds/bg_00.jpg')
 const monsterBackground = require('../assets/enemy/monsters/imp_story_start.jpg')
+const monsterAttackBackground = require('../assets/enemy/monsters/imp_story_start_attack.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
