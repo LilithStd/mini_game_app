@@ -16,6 +16,7 @@ const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_di
 export default function Story_Screen() {
     // const { chapter } = useLocalSearchParams();
     const router = useRouter();
+    const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
     const getChapter_Story = useStoryStore(state => state.getChapterContent)
@@ -27,30 +28,36 @@ export default function Story_Screen() {
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
     const [currentBackground, setCurrentBackgroud] = useState(getChapter_Story()?.background || defaultBackground)
-    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start })
-    // console.log(storyTextContent);
-
-    //
+    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.variantText.en })
 
     const handleContinue = () => {
-        if (currentPartText.text === storyContent?.text.start) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent?.text.middle
-            }))
-        }
-        if (currentPartText.text === storyContent?.text.middle) {
+        if (currentPartText.text === storyContent?.text.start.part_00.variantText.en) {
             setTyping(false),
                 setSkip(false)
             setCurrentBackgroud(monsterBackground)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.end
+                text: storyContent?.text.start.part_01.variantText.en
             }))
         }
-        if (currentPartText.text === storyContent?.text.end) {
+        if (currentPartText.text === storyContent?.text.start.part_01.variantText.en) {
+            setTyping(false),
+                setSkip(false)
+            setCurrentBackgroud(monsterAttackBackground)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.start.part_02.variantText.en
+            }))
+        }
+        if (currentPartText.text === storyContent?.text.start.part_02.variantText.en) {
+            setSkip(true)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.start.part_03.variantText.en
+            }))
+
+        }
+        if (currentPartText.text === storyContent?.text.start.part_03.variantText.en) {
             setSkip(true)
 
             if (defaultGlobalState) {
@@ -81,7 +88,7 @@ export default function Story_Screen() {
         >
             <Text>story_Screen</Text>
             <View
-                style={currentPartText.text === storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
+                style={currentPartText.text === storyContent?.text.middle || storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
                 fontFamily: 'Text App',
                 fontSize: 20,
@@ -123,7 +130,7 @@ export default function Story_Screen() {
                         style={storyStyles.buttonBackground}
                         source={buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.end ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_03.variantText.en ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
