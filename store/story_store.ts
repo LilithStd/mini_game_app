@@ -18,6 +18,8 @@ type TextType = {
 	part_01: PartType;
 	part_02: PartType;
 	part_03: PartType;
+	part_04: PartType;
+	part_05: PartType;
 };
 
 type Content_Type = {
@@ -48,7 +50,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Вы возвращаетесь из соседнего города  и увидев что уже темнеет -  решили сократить дорогу пройдя через лес.',
 						lv: 'Jūs atgriežaties no kaimiņpilsētas un, redzot, ka jau iestājas tumsa, nolemjat izvēlēties īsceļu, dodoties cauri mežam.',
 					},
-					background: require('../assets/template/template_image.jpg'),
+					background: require('../assets/enemy/monsters/background_without_imp.jpg'),
 				},
 				part_01: {
 					variantText: {
@@ -56,23 +58,39 @@ const CHAPTER_CONTENT = [
 						ru: 'Идя по лесу вы слышите  шорохи вокруг, вы смотрите по сторонам и видите что за деревом кто-то стоит.',
 						lv: 'Ejot pa mežu dzirdi šalkoņu apkārt, paskaties apkārt un redzi, ka aiz koka kāds stāv',
 					},
-					background: require('../assets/template/template_image.jpg'),
+					background: require('../assets/enemy/monsters/background_imp.jpg'),
 				},
 				part_02: {
 					variantText: {
-						en: 'You look closely and realize that there is a strange animal behind the tree, it jumps out and comes at you, realizing that you won’t have time to get your weapon, you back away...',
-						ru: 'Вы присматриваетесь и понимаете что за деревом странный зверь, он выпрыгивает и идёт на вас , осознавая что не успеете достать оружие вы пятитесь назад...',
-						lv: 'Jus paskaties cieši un saproti, ka aiz koka ir svešs dzīvnieks, tas izlec un nāk tev klāt, saprotot, ka tev nebūs laika dabūt ieroci, tu atkāpies...',
+						en: 'You look closely and realize that there is a strange animal behind the tree, ',
+						ru: 'Вы присматриваетесь и понимаете что за деревом странный зверь, ',
+						lv: 'Jus paskaties cieši un saproti, ka aiz koka ir svešs dzīvnieks, ',
 					},
-					background: require('../assets/template/template_image.jpg'),
+					background: require('../assets/enemy/monsters/background_imp(zoom).jpg'),
 				},
 				part_03: {
 					variantText: {
-						en: 'A strange beast, seeing that you are retreating, makes a dash towards you - you try to retreat further, but you understand that there was a hole behind you and, unable to stand on the edge, you fall down...',
-						ru: 'Странный зверь видя что вы отступаете - делает рывок  вам навстречу - вы пытаетесь отступить дальше, но понимаете что сзади была яма и не устояв на краю вы падаете вниз...',
-						lv: 'Dīvains zvērs, redzot, ka jus atkāpies, met pretī - jus mēģini atkāpties tālāk, bet saproti, ka aiz tevis bija bedre un, nespēdams nostāties uz malas, jus nokrīti...',
+						en: 'It jumps out and comes at you, realizing that you won’t have time to get your weapon, you back away...',
+						ru: 'Он выпрыгивает и идёт на вас , осознавая что не успеете достать оружие вы пятитесь назад...',
+						lv: 'Tas izlec un nāk tev klāt, saprotot, ka tev nebūs laika dabūt ieroci, tu atkāpies...',
 					},
-					background: require('../assets/template/template_image.jpg'),
+					background: require('../assets/enemy/monsters/imp_story_start.jpg'),
+				},
+				part_04: {
+					variantText: {
+						en: 'A strange beast, seeing that you are retreating, makes a dash towards you',
+						ru: 'Странный зверь видя что вы отступаете - делает рывок  вам навстречу',
+						lv: 'Dīvains zvērs, redzot, ka jus atkāpies, met pretī',
+					},
+					background: require('../assets/enemy/monsters/imp_story_start_attack.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'You try to retreat further, but you understand that there was a hole behind you and, unable to stand on the edge, you fall down...',
+						ru: 'Вы пытаетесь отступить дальше, но понимаете что сзади была яма и не устояв на краю вы падаете вниз...',
+						lv: 'Jus mēģini atkāpties tālāk, bet saproti, ka aiz tevis bija bedre un, nespēdams nostāties uz malas, jus nokrīti...',
+					},
+					background: require('../assets/enemy/monsters/imp_story_start_fall.jpg'),
 				},
 			},
 
@@ -102,6 +120,22 @@ const CHAPTER_CONTENT = [
 					background: require('../assets/template/template_image.jpg'),
 				},
 				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
 					variantText: {
 						en: 'template',
 						ru: 'template',
@@ -143,9 +177,25 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 		},
-		background: require('../assets/backgrounds/bg_00.jpg'),
+		background: require('../assets/enemy/monsters/background_without_imp.jpg'),
 	},
 	{
 		name: CHAPTER_LIST.FIRST,
@@ -175,14 +225,30 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
-			},
-			part_03: {
-				variantText: {
-					en: 'template',
-					ru: 'template',
-					lv: 'template',
+				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
 				},
-				background: require('../assets/template/template_image.jpg'),
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 
 			middle: {
@@ -218,6 +284,22 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 			end: {
 				part_00: {
@@ -245,6 +327,22 @@ const CHAPTER_CONTENT = [
 					background: require('../assets/template/template_image.jpg'),
 				},
 				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
 					variantText: {
 						en: 'template',
 						ru: 'template',
@@ -284,14 +382,30 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
-			},
-			part_03: {
-				variantText: {
-					en: 'template',
-					ru: 'template',
-					lv: 'template',
+				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
 				},
-				background: require('../assets/template/template_image.jpg'),
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 
 			middle: {
@@ -327,6 +441,22 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 			end: {
 				part_00: {
@@ -354,6 +484,22 @@ const CHAPTER_CONTENT = [
 					background: require('../assets/template/template_image.jpg'),
 				},
 				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
 					variantText: {
 						en: 'template',
 						ru: 'template',
@@ -393,14 +539,30 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
-			},
-			part_03: {
-				variantText: {
-					en: 'template',
-					ru: 'template',
-					lv: 'template',
+				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
 				},
-				background: require('../assets/template/template_image.jpg'),
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 
 			middle: {
@@ -436,6 +598,22 @@ const CHAPTER_CONTENT = [
 					},
 					background: require('../assets/template/template_image.jpg'),
 				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
 			},
 			end: {
 				part_00: {
@@ -463,6 +641,22 @@ const CHAPTER_CONTENT = [
 					background: require('../assets/template/template_image.jpg'),
 				},
 				part_03: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_04: {
+					variantText: {
+						en: 'template',
+						ru: 'template',
+						lv: 'template',
+					},
+					background: require('../assets/template/template_image.jpg'),
+				},
+				part_05: {
 					variantText: {
 						en: 'template',
 						ru: 'template',

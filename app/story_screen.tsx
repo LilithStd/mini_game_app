@@ -7,8 +7,9 @@ import { useEffect, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
 
-const defaultBackground = require('../assets/backgrounds/bg_00.jpg')
-const monsterBackground = require('../assets/enemy/monsters/imp_story_start.jpg')
+const defaultBackground = require('../assets/enemy/monsters/background_without_imp.jpg')
+const monsterBackground = require('../assets/enemy/monsters/background_imp.jpg')
+const backgroundWithOutMonster = require('../assets/enemy/monsters/background_without_imp.jpg')
 const monsterAttackBackground = require('../assets/enemy/monsters/imp_story_start_attack.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
@@ -19,22 +20,22 @@ export default function Story_Screen() {
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
-    const getChapter_Story = useStoryStore(state => state.getChapterContent)
+    const getChapterStory = useStoryStore(state => state.getChapterContent)
     const default_status = useCharacterStore(state => state.default_state)
     //const
-    const storyContent = getChapter_Story()
+    const storyContent = getChapterStory()
     // const storyTextContent = storyContent?.text.start ? getChapter_Story()?.text.start : 'no content'
     //state
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
-    const [currentBackground, setCurrentBackgroud] = useState(getChapter_Story()?.background || defaultBackground)
+    const [currentBackground, setCurrentBackgroud] = useState(storyContent?.background || defaultBackground)
     const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.variantText.en })
 
     const handleContinue = () => {
         if (currentPartText.text === storyContent?.text.start.part_00.variantText.en) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(monsterBackground)
+            setCurrentBackgroud(storyContent?.text.start.part_01.background)
             setCurrentPartText((prev) => ({
                 ...prev,
                 text: storyContent?.text.start.part_01.variantText.en
@@ -43,7 +44,7 @@ export default function Story_Screen() {
         if (currentPartText.text === storyContent?.text.start.part_01.variantText.en) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(monsterAttackBackground)
+            setCurrentBackgroud(storyContent?.text.start.part_02.background)
             setCurrentPartText((prev) => ({
                 ...prev,
                 text: storyContent?.text.start.part_02.variantText.en
@@ -51,13 +52,31 @@ export default function Story_Screen() {
         }
         if (currentPartText.text === storyContent?.text.start.part_02.variantText.en) {
             setSkip(true)
+            setCurrentBackgroud(storyContent?.text.start.part_03.background)
             setCurrentPartText((prev) => ({
                 ...prev,
                 text: storyContent?.text.start.part_03.variantText.en
             }))
 
+        } if (currentPartText.text === storyContent?.text.start.part_03.variantText.en) {
+            setSkip(true)
+            setCurrentBackgroud(storyContent?.text.start.part_04.background)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.start.part_04.variantText.en
+            }))
+
         }
-        if (currentPartText.text === storyContent?.text.start.part_03.variantText.en) {
+        if (currentPartText.text === storyContent?.text.start.part_04.variantText.en) {
+            setSkip(true)
+            setCurrentBackgroud(storyContent?.text.start.part_05.background)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.start.part_05.variantText.en
+            }))
+
+        }
+        if (currentPartText.text === storyContent?.text.start.part_05.variantText.en) {
             setSkip(true)
 
             if (defaultGlobalState) {
@@ -160,7 +179,7 @@ const storyStyles = StyleSheet.create({
     maskBackgroundSlice: {
         backgroundColor: 'yellow',
         width: 400,
-        height: '35%',
+        height: '21%',
         padding: 20,
         margin: 10,
         borderRadius: 10
