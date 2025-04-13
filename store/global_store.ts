@@ -9,7 +9,7 @@ import {GLOBAL_APP_PATH} from '@/constants/global_path';
 import {Href} from 'expo-router';
 export type AppPath = (typeof GLOBAL_APP_PATH)[keyof typeof GLOBAL_APP_PATH];
 
-enum LANGUAGE {
+export enum LANGUAGE {
 	EN = 'en',
 	LV = 'lv',
 	RU = 'ru',

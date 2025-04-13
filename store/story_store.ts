@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {LANGUAGE} from './global_store';
 
 type VariantTextType = {
 	en: string;
@@ -8,8 +9,17 @@ type VariantTextType = {
 	lv: string;
 };
 
+type CurrentLanguageVariantTextType = {
+	content: string;
+};
+
 type PartType = {
 	variantText: VariantTextType;
+	background: number;
+};
+
+type PartTypeFiltred = {
+	content: string;
 	background: number;
 };
 
@@ -21,7 +31,23 @@ type TextType = {
 	part_04: PartType;
 	part_05: PartType;
 };
-
+type TextTypeFiltred = {
+	part_00: PartTypeFiltred;
+	part_01: PartTypeFiltred;
+	part_02: PartTypeFiltred;
+	part_03: PartTypeFiltred;
+	part_04: PartTypeFiltred;
+	part_05: PartTypeFiltred;
+};
+type ContentTypeCurrentLanguage = {
+	name: CHAPTER_LIST;
+	text: {
+		start: TextTypeFiltred;
+		middle: TextTypeFiltred;
+		end: TextTypeFiltred;
+	};
+	background: number;
+};
 type Content_Type = {
 	name: CHAPTER_LIST;
 	text: {
@@ -101,7 +127,7 @@ const CHAPTER_CONTENT = [
 						ru: 'template',
 						lv: 'template',
 					},
-					background: require('../assets/template/template_image.jpg'),
+					background: require('../assets/backgrounds/cave/cave_00.jpg'),
 				},
 				part_01: {
 					variantText: {
@@ -352,7 +378,7 @@ const CHAPTER_CONTENT = [
 				},
 			},
 		},
-		background: require('../assets/backgrounds/bg_1.jpg'),
+		background: require('../assets/template/template_image.jpg'),
 	},
 	{
 		name: CHAPTER_LIST.SECOND,
@@ -509,7 +535,7 @@ const CHAPTER_CONTENT = [
 				},
 			},
 		},
-		background: require('../assets/backgrounds/bg_2.jpg'),
+		background: require('../assets/template/template_image.jpg'),
 	},
 	{
 		name: CHAPTER_LIST.THIRD,
@@ -666,7 +692,7 @@ const CHAPTER_CONTENT = [
 				},
 			},
 		},
-		background: require('../assets/backgrounds/bg_3.jpg'),
+		background: require('../assets/template/template_image.jpg'),
 	},
 ];
 
@@ -675,7 +701,9 @@ export interface StoryStoreInterface {
 	chapter: string;
 	setChapter: (chapter: string) => void;
 	setDefaultState: () => void;
-	getChapterContent: () => Content_Type | null;
+	getChapterContent: (
+		currentLanguage: LANGUAGE,
+	) => ContentTypeCurrentLanguage | null;
 }
 
 // Zustand-хранилище
@@ -693,10 +721,106 @@ export const useStoryStore = create<StoryStoreInterface>()(
 			setChapter: (chapter) => {
 				set({chapter: chapter});
 			},
-			getChapterContent: () => {
-				return CHAPTER_CONTENT.find(
+			getChapterContent: (currentLanguage) => {
+				const chapter = CHAPTER_CONTENT.find(
 					(item) => item.name === get().chapter,
-				) as Content_Type | null;
+				);
+				if (!chapter) return null;
+				const getCurrentLanguageContent = (
+					part: PartType,
+					lang: LANGUAGE,
+				): {content: string; background: number} => {
+					return {
+						content: part.variantText[lang],
+						background: part.background,
+					};
+				};
+
+				return {
+					name: chapter.name,
+					text: {
+						start: {
+							part_00: getCurrentLanguageContent(
+								chapter.text.start.part_00,
+								currentLanguage,
+							),
+							part_01: getCurrentLanguageContent(
+								chapter.text.start.part_01,
+								currentLanguage,
+							),
+							part_02: getCurrentLanguageContent(
+								chapter.text.start.part_02,
+								currentLanguage,
+							),
+							part_03: getCurrentLanguageContent(
+								chapter.text.start.part_03,
+								currentLanguage,
+							),
+							part_04: getCurrentLanguageContent(
+								chapter.text.start.part_04,
+								currentLanguage,
+							),
+							part_05: getCurrentLanguageContent(
+								chapter.text.start.part_05,
+								currentLanguage,
+							),
+						},
+
+						middle: {
+							part_00: getCurrentLanguageContent(
+								chapter.text.middle.part_00,
+								currentLanguage,
+							),
+							part_01: getCurrentLanguageContent(
+								chapter.text.middle.part_01,
+								currentLanguage,
+							),
+							part_02: getCurrentLanguageContent(
+								chapter.text.middle.part_02,
+								currentLanguage,
+							),
+							part_03: getCurrentLanguageContent(
+								chapter.text.middle.part_03,
+								currentLanguage,
+							),
+							part_04: getCurrentLanguageContent(
+								chapter.text.middle.part_04,
+								currentLanguage,
+							),
+							part_05: getCurrentLanguageContent(
+								chapter.text.middle.part_05,
+								currentLanguage,
+							),
+						},
+						end: {
+							part_00: getCurrentLanguageContent(
+								chapter.text.end.part_00,
+								currentLanguage,
+							),
+							part_01: getCurrentLanguageContent(
+								chapter.text.end.part_01,
+								currentLanguage,
+							),
+							part_02: getCurrentLanguageContent(
+								chapter.text.end.part_02,
+								currentLanguage,
+							),
+							part_03: getCurrentLanguageContent(
+								chapter.text.end.part_03,
+								currentLanguage,
+							),
+							part_04: getCurrentLanguageContent(
+								chapter.text.end.part_04,
+								currentLanguage,
+							),
+							part_05: getCurrentLanguageContent(
+								chapter.text.end.part_05,
+								currentLanguage,
+							),
+						},
+					},
+					background: chapter.background,
+				};
 			},
 		}),
 		{

@@ -8,9 +8,6 @@ import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react
 import Typewriter from 'react-native-typewriter';
 
 const defaultBackground = require('../assets/enemy/monsters/background_without_imp.jpg')
-const monsterBackground = require('../assets/enemy/monsters/background_imp.jpg')
-const backgroundWithOutMonster = require('../assets/enemy/monsters/background_without_imp.jpg')
-const monsterAttackBackground = require('../assets/enemy/monsters/imp_story_start_attack.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
@@ -20,70 +17,78 @@ export default function Story_Screen() {
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
+    //story_store
     const getChapterStory = useStoryStore(state => state.getChapterContent)
+    const setChapterStory = useStoryStore(state => state.setChapter)
+    //
     const default_status = useCharacterStore(state => state.default_state)
     //const
-    const storyContent = getChapterStory()
+    const storyContent = getChapterStory(currentLanguage)
     // const storyTextContent = storyContent?.text.start ? getChapter_Story()?.text.start : 'no content'
     //state
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
     const [currentBackground, setCurrentBackgroud] = useState(storyContent?.background || defaultBackground)
-    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.variantText.en })
+    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.content })
 
     const handleContinue = () => {
-        if (currentPartText.text === storyContent?.text.start.part_00.variantText.en) {
+        if (currentPartText.text === storyContent?.text.start.part_00.content) {
             setTyping(false),
                 setSkip(false)
             setCurrentBackgroud(storyContent?.text.start.part_01.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_01.variantText.en
+                text: storyContent?.text.start.part_01.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.part_01.variantText.en) {
+        if (currentPartText.text === storyContent?.text.start.part_01.content) {
             setTyping(false),
                 setSkip(false)
             setCurrentBackgroud(storyContent?.text.start.part_02.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_02.variantText.en
+                text: storyContent?.text.start.part_02.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.part_02.variantText.en) {
-            setSkip(true)
+        if (currentPartText.text === storyContent?.text.start.part_02.content) {
+            setTyping(false),
+                setSkip(false)
             setCurrentBackgroud(storyContent?.text.start.part_03.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_03.variantText.en
+                text: storyContent?.text.start.part_03.content
             }))
 
-        } if (currentPartText.text === storyContent?.text.start.part_03.variantText.en) {
-            setSkip(true)
+        } if (currentPartText.text === storyContent?.text.start.part_03.content) {
+            setTyping(false),
+                setSkip(false)
             setCurrentBackgroud(storyContent?.text.start.part_04.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_04.variantText.en
+                text: storyContent?.text.start.part_04.content
             }))
 
         }
-        if (currentPartText.text === storyContent?.text.start.part_04.variantText.en) {
-            setSkip(true)
+        if (currentPartText.text === storyContent?.text.start.part_04.content) {
+            setTyping(false),
+                setSkip(false)
             setCurrentBackgroud(storyContent?.text.start.part_05.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_05.variantText.en
+                text: storyContent?.text.start.part_05.content
             }))
 
         }
-        if (currentPartText.text === storyContent?.text.start.part_05.variantText.en) {
-            setSkip(true)
-
-            if (defaultGlobalState) {
-                router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
-                return
-            }
-            return router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+        if (currentPartText.text === storyContent?.text.start.part_05.content) {
+            setTyping(false),
+                setSkip(false)
+            setCurrentPartText({ name: storyContent?.name, text: storyContent?.text.middle.part_00.content })
+            setCurrentBackgroud(storyContent?.text.middle.part_00.background)
+            // if (defaultGlobalState) {
+            //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
+            //     return
+            // }
+            // return router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
         }
 
     }
@@ -149,7 +154,7 @@ export default function Story_Screen() {
                         style={storyStyles.buttonBackground}
                         source={buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_03.variantText.en ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_03.content ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
