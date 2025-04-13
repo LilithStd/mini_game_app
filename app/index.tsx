@@ -1,6 +1,6 @@
 import * as Font from 'expo-font';
 import { GLOBAL_APP_PATH } from '@/constants/global_path';
-import { useGlobalStore } from '@/store/global_store';
+import { LANGUAGE, useGlobalStore } from '@/store/global_store';
 import { CHAPTER_LIST, useStoryStore } from '@/store/story_store';
 import { useRouter } from 'expo-router';
 import { Button, ImageBackground, Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
@@ -13,6 +13,11 @@ const backgroundImageWithMonster = require('../assets/enemy/monsters/background_
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../assets/buttons/orange_button_01(small_disabled).png')
 const buttonLogo = require('../assets/buttons/orange_button_main.png')
+const LANGUAGE_VARIANT = [
+    LANGUAGE.EN, LANGUAGE.RU, LANGUAGE.LV
+]
+
+
 
 export default function App() {
     const [fontsLoaded] = Font.useFonts({
@@ -22,11 +27,36 @@ export default function App() {
     const router = useRouter();
     //state
     const [currentBackgroundImage, setCurrentBackgroundImage] = useState(backgroundImageWithMonster)
+    const [currentTextToView, setCurrentTextToView] = useState({ continue: '', newGame: '' })
     //store
+    //global
     const newGameStatus = useGlobalStore(state => state.newGame)
-    const { currentState } = useGlobalStore()
-    // const chapter = useStoryStore(state => state.chapter)
+    const currentState = useGlobalStore(state => state.currentState)
+    const currentLanguage = useGlobalStore(state => state.currentLanguage)
+    const setAppLanguage = useGlobalStore(state => state.setCurrentLanguage)
+    //
+
     const setNewGameState = useGlobalStore(state => state.setNewGame)
+
+    const buttonVariant = () => {
+
+    }
+    useEffect(() => {
+        switch (currentLanguage) {
+            case LANGUAGE.EN:
+                const engTextToButton = { continue: 'CONTINUE', newGame: 'NEW GAME' }
+                setCurrentTextToView(engTextToButton)
+                break;
+            case LANGUAGE.RU:
+                const ruTextToButton = { continue: 'ПРОДОЛЖИТЬ', newGame: 'НОВАЯ ИГРА' }
+                setCurrentTextToView(ruTextToButton)
+                break;
+            case LANGUAGE.LV:
+                const lvTextToButton = { continue: 'TURPINĀT', newGame: 'JAUNA SPĒLE' }
+                setCurrentTextToView(lvTextToButton)
+                break;
+        }
+    }, [currentLanguage])
 
     const handleStartNewGame = () => {
         setNewGameState()
@@ -35,6 +65,7 @@ export default function App() {
             pathname: GLOBAL_APP_PATH.STORY_SCREEN,
         })
     }
+
     const handleContinuePreviousGame = () => {
         const redirect = currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN ? currentState : GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN;
         router.push(redirect);
@@ -80,7 +111,7 @@ export default function App() {
                             style={mainStyles.buttonBackground}
                         >
                             <Text style={mainStyles.text}>
-                                CONTINUE
+                                {currentTextToView.continue}
                             </Text>
                         </ImageBackground>
                     </TouchableOpacity>
@@ -93,13 +124,22 @@ export default function App() {
                             style={mainStyles.buttonBackground}
                         >
                             <Text style={mainStyles.text}>
-                                NEW GAME
+                                {currentTextToView.newGame}
                             </Text>
                         </ImageBackground>
                     </TouchableOpacity>
                 </View>
-            </ImageBackground>
+                <View style={mainStyles.languageSwitchContainer}>
+                    {LANGUAGE_VARIANT.map((item) =>
+                        <TouchableOpacity
+                            key={item}
+                            onPress={() => setAppLanguage(item)}
 
+                        >
+                            <Text style={[mainStyles.languageButton, item === currentLanguage ? mainStyles.activeLanguageButton : '']}>{item}</Text>
+                        </TouchableOpacity>)}
+                </View>
+            </ImageBackground>
         </SafeAreaView>
     );
 }
@@ -143,5 +183,21 @@ const mainStyles = StyleSheet.create({
         borderRadius: 6,
         alignItems: 'center',
         justifyContent: 'center'
+    },
+    languageSwitchContainer: {
+        backgroundColor: 'black',
+        flexDirection: 'row',
+        gap: 6,
+        padding: 4,
+        borderRadius: 6,
+        position: 'absolute',
+        bottom: 100
+    },
+    languageButton: {
+        fontFamily: 'Title App',
+        fontSize: 16,
+    },
+    activeLanguageButton: {
+        backgroundColor: 'grey',
     }
 })
