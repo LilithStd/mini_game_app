@@ -28,6 +28,7 @@ export default function Story_Screen() {
     //state
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
+    const [isTimer, setIsTimer] = useState(false)
     const [currentBackground, setCurrentBackgroud] = useState(storyContent?.background || defaultBackground)
     const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.content })
 
@@ -81,9 +82,18 @@ export default function Story_Screen() {
         }
         if (currentPartText.text === storyContent?.text.start.part_05.content) {
             setTyping(false),
-                setSkip(false)
-            setCurrentPartText({ name: storyContent?.name, text: storyContent?.text.middle.part_00.content })
-            setCurrentBackgroud(storyContent?.text.middle.part_00.background)
+                setSkip(true)
+            const timer = setTimeout(() => {
+                setIsTimer(true)
+                setCurrentPartText({ name: storyContent?.name, text: storyContent?.text.middle.part_00.content })
+                setCurrentBackgroud(storyContent?.text.middle.part_00.background)
+            }, 3000);
+
+            return () => {
+                setIsTimer(false)
+                clearTimeout(timer);
+            };
+
             // if (defaultGlobalState) {
             //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
             //     return
@@ -96,6 +106,17 @@ export default function Story_Screen() {
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
+
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         setIsTimer(true)
+    //     }, 3000);
+
+    //     return () => {
+    //         setIsTimer(false)
+    //         clearTimeout(timer);
+    //     };
+    // }, [])
 
 
     return (
@@ -135,7 +156,7 @@ export default function Story_Screen() {
                 }</View>
             <View style={storyStyles.buttonsContainer}>
                 <TouchableOpacity
-                    disabled={typing || skip}
+                    disabled={typing || skip || isTimer}
                     onPress={() => setSkip(true)}
                     style={storyStyles.buttonContainer}
                 >
@@ -149,12 +170,13 @@ export default function Story_Screen() {
                 <TouchableOpacity
                     onPress={handleContinue}
                     style={storyStyles.buttonContainer}
+                    disabled={isTimer}
                 >
                     <ImageBackground
                         style={storyStyles.buttonBackground}
-                        source={buttonOrange}
+                        source={isTimer ? buttonOrangeDisable : buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_03.content ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
