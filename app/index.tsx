@@ -22,12 +22,14 @@ const LANGUAGE_VARIANT = [
 export default function App() {
     const [fontsLoaded] = Font.useFonts({
         'Title App': require('../assets/fonts/BungeeSpice-Regular.ttf'),
-        'Text App': require('../assets/fonts/LilitaOne-Regular.ttf')
+        'Text App': require('../assets/fonts/LilitaOne-Regular.ttf'),
+        'Universal Font': require('../assets/fonts/NotoSans.ttf'),
+        'Game Font': require('../assets/fonts/dehinted-HandveticaNeue-Regular.ttf')
     });
     const router = useRouter();
     //state
     const [currentBackgroundImage, setCurrentBackgroundImage] = useState(backgroundImageWithMonster)
-    const [currentTextToView, setCurrentTextToView] = useState({ continue: '', newGame: '' })
+    const [currentTextToView, setCurrentTextToView] = useState({ continue: '', newGame: '', selectLanguage: '' })
     //store
     //global
     const newGameStatus = useGlobalStore(state => state.newGame)
@@ -44,15 +46,18 @@ export default function App() {
     useEffect(() => {
         switch (currentLanguage) {
             case LANGUAGE.EN:
-                const engTextToButton = { continue: 'CONTINUE', newGame: 'NEW GAME' }
+                const engTextToButton = { continue: 'CONTINUE', newGame: 'NEW GAME', selectLanguage: 'SELECT LANGUAGE' }
                 setCurrentTextToView(engTextToButton)
                 break;
             case LANGUAGE.RU:
-                const ruTextToButton = { continue: 'ПРОДОЛЖИТЬ', newGame: 'НОВАЯ ИГРА' }
+                const ruTextToButton = { continue: 'ПРОДОЛЖИТЬ', newGame: 'НОВАЯ ИГРА', selectLanguage: 'ВЫБЕРИТЕ ЯЗЫК' }
                 setCurrentTextToView(ruTextToButton)
                 break;
             case LANGUAGE.LV:
-                const lvTextToButton = { continue: 'TURPINĀT', newGame: 'JAUNA SPĒLE' }
+                const lvTextToButton = {
+                    continue: 'TURPINĀT', newGame: 'JAUNA SPĒLE',
+                    selectLanguage: 'VALODAS IZVĒLE'
+                }
                 setCurrentTextToView(lvTextToButton)
                 break;
         }
@@ -110,7 +115,7 @@ export default function App() {
                             source={newGameStatus ? buttonDisabled : buttonOrange}
                             style={mainStyles.buttonBackground}
                         >
-                            <Text style={mainStyles.text}>
+                            <Text style={mainStyles.textButton}>
                                 {currentTextToView.continue}
                             </Text>
                         </ImageBackground>
@@ -123,21 +128,24 @@ export default function App() {
                             source={buttonOrange}
                             style={mainStyles.buttonBackground}
                         >
-                            <Text style={mainStyles.text}>
+                            <Text style={mainStyles.textButton}>
                                 {currentTextToView.newGame}
                             </Text>
                         </ImageBackground>
                     </TouchableOpacity>
                 </View>
                 <View style={mainStyles.languageSwitchContainer}>
-                    {LANGUAGE_VARIANT.map((item) =>
-                        <TouchableOpacity
-                            key={item}
-                            onPress={() => setAppLanguage(item)}
+                    <Text style={mainStyles.languageTitle}>{currentTextToView.selectLanguage}:</Text>
+                    <View style={mainStyles.languageButtonContainer}>
+                        {LANGUAGE_VARIANT.map((item) =>
+                            <TouchableOpacity
+                                key={item}
+                                onPress={() => setAppLanguage(item)}
+                            >
+                                <Text style={[mainStyles.languageButton, item === currentLanguage ? mainStyles.activeLanguageButton : '']}>{item}</Text>
+                            </TouchableOpacity>)}
+                    </View>
 
-                        >
-                            <Text style={[mainStyles.languageButton, item === currentLanguage ? mainStyles.activeLanguageButton : '']}>{item}</Text>
-                        </TouchableOpacity>)}
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -159,9 +167,10 @@ const mainStyles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center'
     },
-    text: {
-        fontFamily: 'Text App',
-        fontSize: 18
+    textButton: {
+        fontFamily: 'Game Font',
+        fontSize: 18,
+        fontWeight: '900'
     },
     buttonsContainer: {
         width: '80%',
@@ -186,16 +195,31 @@ const mainStyles = StyleSheet.create({
     },
     languageSwitchContainer: {
         backgroundColor: 'black',
-        flexDirection: 'row',
-        gap: 6,
         padding: 4,
         borderRadius: 6,
+        width: 240,
         position: 'absolute',
-        bottom: 100
+        bottom: 100,
+        justifyContent: 'center',
+        alignContent: 'center',
+        textAlign: 'center'
+    },
+    languageTitle: {
+        fontFamily: 'Game Font',
+        fontSize: 20,
+        fontWeight: '900',
+        color: 'white',
+        textAlign: 'center'
+    },
+    languageButtonContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 10
     },
     languageButton: {
         fontFamily: 'Title App',
-        fontSize: 16,
+        fontSize: 18,
     },
     activeLanguageButton: {
         backgroundColor: 'grey',
