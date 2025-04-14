@@ -83,16 +83,7 @@ export default function Story_Screen() {
         if (currentPartText.text === storyContent?.text.start.part_05.content) {
             setTyping(false),
                 setSkip(true)
-            const timer = setTimeout(() => {
-                setIsTimer(true)
-                setCurrentPartText({ name: storyContent?.name, text: storyContent?.text.middle.part_00.content })
-                setCurrentBackgroud(storyContent?.text.middle.part_00.background)
-            }, 3000);
 
-            return () => {
-                setIsTimer(false)
-                clearTimeout(timer);
-            };
 
             // if (defaultGlobalState) {
             //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
