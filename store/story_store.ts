@@ -76,7 +76,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Вы возвращаетесь из соседнего города  и увидев что уже темнеет -  решили сократить дорогу пройдя через лес.',
 						lv: 'Jūs atgriežaties no kaimiņpilsētas un, redzot, ka jau iestājas tumsa, nolemjat izvēlēties īsceļu, dodoties cauri mežam.',
 					},
-					background: require('../assets/enemy/monsters/background_without_imp.jpg'),
+					background: require('../assets/backgrounds/monsters/background_without_imp.jpg'),
 				},
 				part_01: {
 					variantText: {
@@ -84,7 +84,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Идя по лесу вы слышите  шорохи вокруг, вы смотрите по сторонам и видите что за деревом кто-то стоит.',
 						lv: 'Ejot pa mežu dzirdi šalkoņu apkārt, paskaties apkārt un redzi, ka aiz koka kāds stāv',
 					},
-					background: require('../assets/enemy/monsters/background_imp.jpg'),
+					background: require('../assets/backgrounds/monsters/background_imp.jpg'),
 				},
 				part_02: {
 					variantText: {
@@ -92,7 +92,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Вы присматриваетесь и понимаете что за деревом странный зверь, ',
 						lv: 'Jus paskaties cieši un saproti, ka aiz koka ir svešs dzīvnieks, ',
 					},
-					background: require('../assets/enemy/monsters/background_imp(zoom).jpg'),
+					background: require('../assets/backgrounds/monsters/background_imp(zoom).jpg'),
 				},
 				part_03: {
 					variantText: {
@@ -100,7 +100,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Он выпрыгивает и идёт на вас , осознавая что не успеете достать оружие вы пятитесь назад...',
 						lv: 'Tas izlec un nāk tev klāt, saprotot, ka tev nebūs laika dabūt ieroci, tu atkāpies...',
 					},
-					background: require('../assets/enemy/monsters/imp_story_start.jpg'),
+					background: require('../assets/backgrounds/monsters/imp_story_start.jpg'),
 				},
 				part_04: {
 					variantText: {
@@ -108,7 +108,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Странный зверь видя что вы отступаете - делает рывок  вам навстречу',
 						lv: 'Dīvains zvērs, redzot, ka jus atkāpies, met pretī',
 					},
-					background: require('../assets/enemy/monsters/imp_story_start_attack.jpg'),
+					background: require('../assets/backgrounds/monsters/imp_story_start_attack.jpg'),
 				},
 				part_05: {
 					variantText: {
@@ -116,7 +116,7 @@ const CHAPTER_CONTENT = [
 						ru: 'Вы пытаетесь отступить дальше, но понимаете что сзади была яма и не устояв на краю вы падаете вниз...',
 						lv: 'Jus mēģini atkāpties tālāk, bet saproti, ka aiz tevis bija bedre un, nespēdams nostāties uz malas, jus nokrīti...',
 					},
-					background: require('../assets/enemy/monsters/imp_story_start_fall.jpg'),
+					background: require('../assets/backgrounds/monsters/imp_story_start_fall.jpg'),
 				},
 			},
 
@@ -221,7 +221,7 @@ const CHAPTER_CONTENT = [
 				},
 			},
 		},
-		background: require('../assets/enemy/monsters/background_without_imp.jpg'),
+		background: require('../assets/backgrounds/monsters/background_without_imp.jpg'),
 	},
 	{
 		name: CHAPTER_LIST.FIRST,

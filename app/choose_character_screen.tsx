@@ -26,6 +26,8 @@ const CharacterDefaultStats = {
     death: false,
 };
 
+const defaultImages = require('../assets/template/template_image.jpg')
+
 export default function ChooseCharacterScreen() {
     const router = useRouter();
 
@@ -92,7 +94,7 @@ export default function ChooseCharacterScreen() {
                 justifyContent: 'center'
             }}
             resizeMode='cover'
-            source={require('../assets/backgrounds/bg_1.jpg')}
+            source={defaultImages}
         >
 
 

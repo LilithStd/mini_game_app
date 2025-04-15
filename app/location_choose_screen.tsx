@@ -15,7 +15,7 @@ export default function LocationChooseScreen() {
         { name: 'swamp', model: require('../assets/location/swamp/location_02.png') }
     ]
 
-    const defaultBackground = require('../assets/backgrounds/bg_1.jpg')
+    const defaultBackground = require('../assets/template/template_image.jpg')
     const handleRedirectToLocation = (location: string) => {
         if (!location) return;
 
@@ -48,7 +48,7 @@ export default function LocationChooseScreen() {
                 justifyContent: 'center'
             }}
             resizeMode='cover'
-            source={require('../assets/backgrounds/bg_1.jpg')}
+            source={defaultBackground}
         >
                 {listLocations.map((item) => (
                     <View

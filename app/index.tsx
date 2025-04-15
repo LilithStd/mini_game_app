@@ -7,8 +7,7 @@ import { Button, ImageBackground, Text, View, StyleSheet, TouchableOpacity, Imag
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { useEffect, useState } from 'react';
 
-const backgroundImageDefault = require('../assets/enemy/monsters/background_without_imp.jpg')
-const backgroundImageWithMonster = require('../assets/enemy/monsters/background_imp.jpg')
+const backgroundImageWithMonster = require('../assets/backgrounds/monsters/background_imp.jpg')
 
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../assets/buttons/orange_button_01(small_disabled).png')

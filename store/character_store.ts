@@ -2,12 +2,12 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const Character_Default = require('../assets/character/character_8.png');
+export const Character_Default = require('../assets/character/character_00.jpg');
 
 const Character = {
-	CHARACTER_1: require('../assets/character/character_1.png'),
-	CHARACTER_2: require('../assets/character/character_2.png'),
-	CHARACTER_3: require('../assets/character/character_3.png'),
+	CHARACTER_1: require('../assets/character/character_00.jpg'),
+	CHARACTER_2: require('../assets/character/character_01.jpg'),
+	CHARACTER_3: require('../assets/character/character_02.jpg'),
 };
 
 const LEVELS = [
@@ -33,7 +33,7 @@ const count_character_in_pull = 3;
 const Character_Pull: CharacterStats[] = [
 	{
 		name: 'character_name_0 - Knight',
-		model: require('../assets/character/character_7.png'),
+		model: require('../assets/character/character_00.jpg'),
 		level: 1,
 		attack: 8,
 		defense: 10,
@@ -52,7 +52,7 @@ const Character_Pull: CharacterStats[] = [
 	},
 	{
 		name: 'character_name_1 - Warrior',
-		model: require('../assets/character/character_1.png'),
+		model: require('../assets/character/character_01.jpg'),
 		level: 1,
 		attack: 10,
 		defense: 8,
@@ -71,7 +71,7 @@ const Character_Pull: CharacterStats[] = [
 	},
 	{
 		name: 'character_name_2 - Mage',
-		model: require('../assets/character/character_12.png'),
+		model: require('../assets/character/character_02.jpg'),
 		level: 1,
 		attack: 12,
 		defense: 6,

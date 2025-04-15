@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
 
-const defaultBackground = require('../assets/enemy/monsters/background_without_imp.jpg')
+const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
@@ -84,7 +84,19 @@ export default function Story_Screen() {
             setTyping(false),
                 setSkip(true)
 
+            const timer = setTimeout(() => {
+                setIsTimer(true)
+                setCurrentBackgroud(storyContent?.text.middle.part_00.background)
+                setCurrentPartText((prev) => ({
+                    ...prev,
+                    text: storyContent?.text.middle.part_00.content
+                }))
+            }, 3000);
 
+            return () => {
+                setIsTimer(false)
+                clearTimeout(timer);
+            };
             // if (defaultGlobalState) {
             //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
             //     return

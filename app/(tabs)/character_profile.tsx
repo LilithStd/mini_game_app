@@ -24,6 +24,8 @@ type ModalProps = {
     arrayItems: ArrayItemsProps[]
 }
 
+const defaultImage = require('../../assets/template/template_image.jpg')
+
 export default function CharacterProfile() {
     const [modalVisible, setModalVisible] = useState(false)
     const [currentTypeModal, setCurrentTypeModal] = useState<ModalProps>(DefaultModal)
@@ -158,7 +160,7 @@ export default function CharacterProfile() {
                     width: '100%',
                     height: '100%',
                 }}
-                source={require('../../assets/backgrounds/bg_4.jpg')}
+                source={defaultImage}
                 resizeMode='cover'
             >
                 <Text>Character Profile</Text>
@@ -354,7 +356,7 @@ export default function CharacterProfile() {
                                                         characterEquipUpdate(currentTypeModal.name, {
                                                             id: item.id,
                                                             name: item.name,
-                                                            stats: item.stats // Теперь передается полный объект!
+                                                            stats: item.stats
                                                         });
                                                         closeModal();
                                                     }}

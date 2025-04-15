@@ -11,7 +11,7 @@ import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react'
 import { Text, View, Image, ImageBackground, Button, Modal, StyleSheet, TouchableOpacity } from 'react-native'
 
-const defaultImage = require('../../assets/backgrounds/bg_2.jpg');
+const defaultImage = require('../../assets/template/template_image.jpg');
 const chanceFindTreasurePercent = 40
 
 export default function LocationScreen() {
