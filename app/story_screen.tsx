@@ -30,67 +30,72 @@ export default function Story_Screen() {
     const [skip, setSkip] = useState(false)
     const [isTimer, setIsTimer] = useState(false)
     const [currentBackground, setCurrentBackgroud] = useState(storyContent?.background || defaultBackground)
-    const [currentPartText, setCurrentPartText] = useState({ name: storyContent?.name, text: storyContent?.text.start.part_00.content })
+    const [currentPartText, setCurrentPartText] = useState({
+        name: storyContent?.name,
+        stage: storyContent?.text.start.stage, text: storyContent?.text.start.content.part_00.content
+    })
+
+
+
+    //constant
+
 
     const handleContinue = () => {
-        if (currentPartText.text === storyContent?.text.start.part_00.content) {
+        if (currentPartText.text === storyContent?.text.start.content.part_00.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.part_01.background)
+            setCurrentBackgroud(storyContent?.text.start.content.part_01.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_01.content
+                text: storyContent?.text.start.content.part_01.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.part_01.content) {
+        if (currentPartText.text === storyContent?.text.start.content.part_01.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.part_02.background)
+            setCurrentBackgroud(storyContent?.text.start.content.part_02.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_02.content
+                text: storyContent?.text.start.content.part_02.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.part_02.content) {
+        if (currentPartText.text === storyContent?.text.start.content.part_02.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.part_03.background)
+            setCurrentBackgroud(storyContent?.text.start.content.part_03.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_03.content
+                text: storyContent?.text.start.content.part_03.content
             }))
 
-        } if (currentPartText.text === storyContent?.text.start.part_03.content) {
+        } if (currentPartText.text === storyContent?.text.start.content.part_03.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.part_04.background)
+            setCurrentBackgroud(storyContent?.text.start.content.part_04.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.part_04.content
-            }))
-
-        }
-        if (currentPartText.text === storyContent?.text.start.part_04.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.part_05.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent?.text.start.part_05.content
+                text: storyContent?.text.start.content.part_04.content
             }))
 
         }
-        if (currentPartText.text === storyContent?.text.start.part_05.content) {
+        if (currentPartText.text === storyContent?.text.start.content.part_04.content) {
+            setTyping(false),
+                setSkip(false)
+            setCurrentBackgroud(storyContent?.text.start.content.part_05.background)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent?.text.start.content.part_05.content
+            }))
+
+        }
+        if (currentPartText.text === storyContent?.text.start.content.part_05.content) {
             setTyping(false),
                 setSkip(true)
 
             const timer = setTimeout(() => {
                 setIsTimer(true)
-                setCurrentBackgroud(storyContent?.text.middle.part_00.background)
-                setCurrentPartText((prev) => ({
-                    ...prev,
-                    text: storyContent?.text.middle.part_00.content
-                }))
+                setCurrentBackgroud(storyContent?.text.middle.content.part_00.background)
+                setCurrentPartText({ name: storyContent?.name, stage: storyContent?.text.middle.stage, text: storyContent?.text.start.content.part_00.content })
             }, 3000);
 
             return () => {
@@ -108,19 +113,8 @@ export default function Story_Screen() {
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
+        console.log(storyContent?.text.start);
     }, [])
-
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         setIsTimer(true)
-    //     }, 3000);
-
-    //     return () => {
-    //         setIsTimer(false)
-    //         clearTimeout(timer);
-    //     };
-    // }, [])
-
 
     return (
         <ImageBackground
@@ -179,7 +173,7 @@ export default function Story_Screen() {
                         style={storyStyles.buttonBackground}
                         source={isTimer ? buttonOrangeDisable : buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.content.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>
