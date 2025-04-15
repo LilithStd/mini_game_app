@@ -1,9 +1,9 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
-import { useStoryStore } from "@/store/story_store";
+import { CHAPTER_LIST, StageType, useStoryStore } from "@/store/story_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
 
@@ -29,8 +29,17 @@ export default function Story_Screen() {
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
     const [isTimer, setIsTimer] = useState(false)
+    //
+    if (!storyContent) return null;
     const [currentBackground, setCurrentBackgroud] = useState(storyContent?.background || defaultBackground)
-    const [currentPartText, setCurrentPartText] = useState({
+
+    type ContentTextType = {
+        name: string,
+        stage: StageType,
+        text: string
+    }
+
+    const [currentPartText, setCurrentPartText] = useState<ContentTextType>({
         name: storyContent?.name,
         stage: storyContent?.text.start.stage, text: storyContent?.text.start.content.part_00.content
     })
@@ -41,67 +50,67 @@ export default function Story_Screen() {
 
 
     const handleContinue = () => {
-        if (currentPartText.text === storyContent?.text.start.content.part_00.content) {
+        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_00.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.content.part_01.background)
+            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_01.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.content.part_01.content
+                text: storyContent.text[currentPartText.stage].content.part_01.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.content.part_01.content) {
+        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_01.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.content.part_02.background)
+            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_02.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.content.part_02.content
+                text: storyContent.text[currentPartText.stage].content.part_02.content
             }))
         }
-        if (currentPartText.text === storyContent?.text.start.content.part_02.content) {
+        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_02.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.content.part_03.background)
+            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_03.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.content.part_03.content
+                text: storyContent.text[currentPartText.stage].content.part_03.content
             }))
 
-        } if (currentPartText.text === storyContent?.text.start.content.part_03.content) {
+        } if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_03.content) {
             setTyping(false),
                 setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.content.part_04.background)
+            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_04.background)
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent?.text.start.content.part_04.content
-            }))
-
-        }
-        if (currentPartText.text === storyContent?.text.start.content.part_04.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent?.text.start.content.part_05.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent?.text.start.content.part_05.content
+                text: storyContent.text[currentPartText.stage].content.part_04.content
             }))
 
         }
-        if (currentPartText.text === storyContent?.text.start.content.part_05.content) {
+        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_04.content) {
             setTyping(false),
-                setSkip(true)
+                setSkip(false)
+            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_05.background)
+            setCurrentPartText((prev) => ({
+                ...prev,
+                text: storyContent.text[currentPartText.stage].content.part_05.content
+            }))
 
-            const timer = setTimeout(() => {
-                setIsTimer(true)
-                setCurrentBackgroud(storyContent?.text.middle.content.part_00.background)
-                setCurrentPartText({ name: storyContent?.name, stage: storyContent?.text.middle.stage, text: storyContent?.text.start.content.part_00.content })
-            }, 3000);
+        }
+        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content) {
+            setTyping(false);
+            setSkip(true);
+            setIsTimer(true);
+            // const timer = setTimeout(() => {
+            //     setIsTimer(true)
+            //     setCurrentBackgroud(storyContent.text.middle.content.part_00.background)
+            //     setCurrentPartText({ name: storyContent.name, stage: storyContent.text.middle.stage, text: storyContent.text.start.content.part_00.content })
+            // }, 3000);
 
-            return () => {
-                setIsTimer(false)
-                clearTimeout(timer);
-            };
+            // return () => {
+            //     setIsTimer(false)
+            //     clearTimeout(timer);
+            // };
             // if (defaultGlobalState) {
             //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
             //     return
@@ -113,8 +122,40 @@ export default function Story_Screen() {
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
-        console.log(storyContent?.text.start);
     }, [])
+
+    const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+    // 1. Отслеживаем последнюю часть текста
+    const isLastPart =
+        currentPartText.text === storyContent?.text[currentPartText.stage]?.content.part_05.content;
+
+    useEffect(() => {
+        if (!isLastPart || !storyContent) return;
+
+        setTyping(false);
+        setSkip(true);
+
+        // 2. Устанавливаем таймер
+        timerRef.current = setTimeout(() => {
+            setIsTimer(true);
+            setCurrentBackgroud(storyContent.text.middle.content.part_00.background);
+            setCurrentPartText({
+                name: storyContent.name,
+                stage: storyContent.text.middle.stage,
+                text: storyContent.text.middle.content.part_00.content,
+            });
+        }, 3000);
+
+        // 3. Очистка таймера при изменении или размонтировании
+        return () => {
+            if (timerRef.current) {
+                clearTimeout(timerRef.current);
+                timerRef.current = null;
+            }
+            setIsTimer(false);
+        };
+    }, [isLastPart, storyContent]);
 
     return (
         <ImageBackground
@@ -130,7 +171,7 @@ export default function Story_Screen() {
         >
             <Text>story_Screen</Text>
             <View
-                style={currentPartText.text === storyContent?.text.middle || storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
+                style={currentPartText.text === storyContent?.text.middle.content.part_00.content || storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
                 fontFamily: 'Text App',
                 fontSize: 20,
@@ -173,7 +214,7 @@ export default function Story_Screen() {
                         style={storyStyles.buttonBackground}
                         source={isTimer ? buttonOrangeDisable : buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent?.text.start.content.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>

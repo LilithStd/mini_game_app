@@ -23,16 +23,21 @@ type PartTypeFiltred = {
 	background: number;
 };
 
+export type StageType = 'start' | 'middle' | 'end';
+
 type TextType = {
-	part_00: PartType;
-	part_01: PartType;
-	part_02: PartType;
-	part_03: PartType;
-	part_04: PartType;
-	part_05: PartType;
+	stage: string;
+	content: {
+		part_00: PartType;
+		part_01: PartType;
+		part_02: PartType;
+		part_03: PartType;
+		part_04: PartType;
+		part_05: PartType;
+	};
 };
 type TextTypeFiltred = {
-	stage: string;
+	stage: StageType;
 	content: {
 		part_00: PartTypeFiltred;
 		part_01: PartTypeFiltred;
@@ -51,7 +56,7 @@ type ContentTypeCurrentLanguage = {
 	};
 	background: number;
 };
-type Content_Type = {
+type ContentType = {
 	name: CHAPTER_LIST;
 	text: {
 		start: TextType;
@@ -738,6 +743,7 @@ const CHAPTER_CONTENT = [
 export interface StoryStoreInterface {
 	defaultState: true;
 	chapter: string;
+	chapterContent: ContentType[];
 	setChapter: (chapter: string) => void;
 	setDefaultState: () => void;
 	getChapterContent: (
@@ -751,6 +757,7 @@ export const useStoryStore = create<StoryStoreInterface>()(
 		(set, get) => ({
 			defaultState: true,
 			chapter: CHAPTER_LIST.ORIGIN,
+			chapterContent: CHAPTER_CONTENT,
 			setDefaultState: () => {
 				set({
 					defaultState: true,
@@ -761,7 +768,8 @@ export const useStoryStore = create<StoryStoreInterface>()(
 				set({chapter: chapter});
 			},
 			getChapterContent: (currentLanguage) => {
-				const chapter = CHAPTER_CONTENT.find(
+				const currentContent = get().chapterContent;
+				const chapter = currentContent.find(
 					(item) => item.name === get().chapter,
 				);
 				if (!chapter) return null;
