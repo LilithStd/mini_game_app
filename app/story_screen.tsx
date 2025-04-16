@@ -49,113 +49,88 @@ export default function Story_Screen() {
     //constant
 
 
+    // const handleContinue = () => {
+    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_00.content) {
+    //         setTyping(false),
+    //             setSkip(false)
+    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_01.background)
+    //         setCurrentPartText((prev) => ({
+    //             ...prev,
+    //             text: storyContent.text[currentPartText.stage].content.part_01.content
+    //         }))
+    //     }
+    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_01.content) {
+    //         setTyping(false),
+    //             setSkip(false)
+    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_02.background)
+    //         setCurrentPartText((prev) => ({
+    //             ...prev,
+    //             text: storyContent.text[currentPartText.stage].content.part_02.content
+    //         }))
+    //     }
+    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_02.content) {
+    //         setTyping(false),
+    //             setSkip(false)
+    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_03.background)
+    //         setCurrentPartText((prev) => ({
+    //             ...prev,
+    //             text: storyContent.text[currentPartText.stage].content.part_03.content
+    //         }))
+
+    //     } if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_03.content) {
+    //         setTyping(false),
+    //             setSkip(false)
+    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_04.background)
+    //         setCurrentPartText((prev) => ({
+    //             ...prev,
+    //             text: storyContent.text[currentPartText.stage].content.part_04.content
+    //         }))
+
+    //     }
+    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_04.content) {
+    //         setTyping(false),
+    //             setSkip(false)
+    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_05.background)
+    //         setCurrentPartText((prev) => ({
+    //             ...prev,
+    //             text: storyContent.text[currentPartText.stage].content.part_05.content
+    //         }))
+
+    //     }
+    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content) {
+    //         setTyping(false);
+    //         setSkip(true);
+    //         setIsTimer(true);
+    //     }
+
+    // }
     const handleContinue = () => {
-        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_00.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_01.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent.text[currentPartText.stage].content.part_01.content
-            }))
-        }
-        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_01.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_02.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent.text[currentPartText.stage].content.part_02.content
-            }))
-        }
-        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_02.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_03.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent.text[currentPartText.stage].content.part_03.content
-            }))
+        const stageData = storyContent.text[currentPartText.stage];
+        const partKeys = Object.keys(stageData.content);
+        const currentIndex = partKeys.findIndex(
+            (key) => stageData.content[key].content === currentPartText.text
+        );
 
-        } if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_03.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_04.background)
+        if (currentIndex < partKeys.length - 1) {
+            const nextKey = partKeys[currentIndex + 1];
+            setTyping(false);
+            setSkip(false);
+            setCurrentBackgroud(stageData.content[nextKey].background);
             setCurrentPartText((prev) => ({
                 ...prev,
-                text: storyContent.text[currentPartText.stage].content.part_04.content
-            }))
-
-        }
-        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_04.content) {
-            setTyping(false),
-                setSkip(false)
-            setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_05.background)
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: storyContent.text[currentPartText.stage].content.part_05.content
-            }))
-
-        }
-        if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content) {
+                text: stageData.content[nextKey].content,
+            }));
+        } else {
+            // последняя часть — ждём useEffect
             setTyping(false);
             setSkip(true);
             setIsTimer(true);
-            // const timer = setTimeout(() => {
-            //     setIsTimer(true)
-            //     setCurrentBackgroud(storyContent.text.middle.content.part_00.background)
-            //     setCurrentPartText({ name: storyContent.name, stage: storyContent.text.middle.stage, text: storyContent.text.start.content.part_00.content })
-            // }, 3000);
-
-            // return () => {
-            //     setIsTimer(false)
-            //     clearTimeout(timer);
-            // };
-            // if (defaultGlobalState) {
-            //     router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
-            //     return
-            // }
-            // return router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
         }
-
-    }
+    };
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
-
-    const timerRef = useRef<NodeJS.Timeout | null>(null);
-
-    // 1. Отслеживаем последнюю часть текста
-    const isLastPart =
-        currentPartText.text === storyContent?.text[currentPartText.stage]?.content.part_05.content;
-
-    useEffect(() => {
-        if (!isLastPart || !storyContent) return;
-
-        setTyping(false);
-        setSkip(true);
-
-        // 2. Устанавливаем таймер
-        timerRef.current = setTimeout(() => {
-            setIsTimer(true);
-            setCurrentBackgroud(storyContent.text.middle.content.part_00.background);
-            setCurrentPartText({
-                name: storyContent.name,
-                stage: storyContent.text.middle.stage,
-                text: storyContent.text.middle.content.part_00.content,
-            });
-        }, 3000);
-
-        // 3. Очистка таймера при изменении или размонтировании
-        return () => {
-            if (timerRef.current) {
-                clearTimeout(timerRef.current);
-                timerRef.current = null;
-            }
-            setIsTimer(false);
-        };
-    }, [isLastPart, storyContent]);
 
     return (
         <ImageBackground
