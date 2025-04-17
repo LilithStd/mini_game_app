@@ -1,7 +1,7 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {useStoryStore} from './story_store';
+import {useStoryStore} from './story/story_store';
 import {useCharacterStore} from './character_store';
 import {useEnemyStore} from './enemy_store';
 import {useLocationStore} from './location_store';

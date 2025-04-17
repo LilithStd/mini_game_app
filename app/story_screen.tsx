@@ -1,7 +1,7 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
-import { CHAPTER_LIST, StageType, useStoryStore } from "@/store/story_store";
+import { StageType, useStoryStore } from "@/store/story/story_store";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
@@ -23,7 +23,7 @@ export default function Story_Screen() {
     //
     const default_status = useCharacterStore(state => state.default_state)
     //const
-    const storyContent = getChapterStory(currentLanguage)
+    const storyContent = getChapterStory('start', currentLanguage)
     // const storyTextContent = storyContent?.text.start ? getChapter_Story()?.text.start : 'no content'
     //state
     const [typing, setTyping] = useState(false)
@@ -41,96 +41,110 @@ export default function Story_Screen() {
 
     const [currentPartText, setCurrentPartText] = useState<ContentTextType>({
         name: storyContent?.name,
-        stage: storyContent?.text.start.stage, text: storyContent?.text.start.content.part_00.content
+        stage: storyContent?.text.stage, text: storyContent?.text.content.part_00.content
     })
+    console.log(storyContent);
 
 
 
     //constant
 
 
+    const handleContinue = () => {
+        // if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_00.content) {
+        //     setTyping(false),
+        //         setSkip(false)
+        //     setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_01.background)
+        //     setCurrentPartText((prev) => ({
+        //         ...prev,
+        //         text: storyContent.text[currentPartText.stage].content.part_01.content
+        //     }))
+        // }
+        // if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_01.content) {
+        //     setTyping(false),
+        //         setSkip(false)
+        //     setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_02.background)
+        //     setCurrentPartText((prev) => ({
+        //         ...prev,
+        //         text: storyContent.text[currentPartText.stage].content.part_02.content
+        //     }))
+        // }
+        // if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_02.content) {
+        //     setTyping(false),
+        //         setSkip(false)
+        //     setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_03.background)
+        //     setCurrentPartText((prev) => ({
+        //         ...prev,
+        //         text: storyContent.text[currentPartText.stage].content.part_03.content
+        //     }))
+
+        // } if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_03.content) {
+        //     setTyping(false),
+        //         setSkip(false)
+        //     setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_04.background)
+        //     setCurrentPartText((prev) => ({
+        //         ...prev,
+        //         text: storyContent.text[currentPartText.stage].content.part_04.content
+        //     }))
+
+        // }
+        // if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_04.content) {
+        //     setTyping(false),
+        //         setSkip(false)
+        //     setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_05.background)
+        //     setCurrentPartText((prev) => ({
+        //         ...prev,
+        //         text: storyContent.text[currentPartText.stage].content.part_05.content
+        //     }))
+
+        // }
+        // if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content) {
+        //     setTyping(false);
+        //     setSkip(true);
+        //     // setIsTimer(true);
+        // }
+
+    }
     // const handleContinue = () => {
-    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_00.content) {
-    //         setTyping(false),
-    //             setSkip(false)
-    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_01.background)
-    //         setCurrentPartText((prev) => ({
-    //             ...prev,
-    //             text: storyContent.text[currentPartText.stage].content.part_01.content
-    //         }))
-    //     }
-    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_01.content) {
-    //         setTyping(false),
-    //             setSkip(false)
-    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_02.background)
-    //         setCurrentPartText((prev) => ({
-    //             ...prev,
-    //             text: storyContent.text[currentPartText.stage].content.part_02.content
-    //         }))
-    //     }
-    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_02.content) {
-    //         setTyping(false),
-    //             setSkip(false)
-    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_03.background)
-    //         setCurrentPartText((prev) => ({
-    //             ...prev,
-    //             text: storyContent.text[currentPartText.stage].content.part_03.content
-    //         }))
+    //     const stageData = storyContent.text[currentPartText.stage];
+    //     const partKeys = Object.keys(stageData.content);
+    //     const currentIndex = partKeys.findIndex(
+    //         (key) => stageData.content[key].content === currentPartText.text
+    //     );
 
-    //     } if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_03.content) {
-    //         setTyping(false),
-    //             setSkip(false)
-    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_04.background)
+    //     if (currentIndex < partKeys.length - 1) {
+    //         const nextKey = partKeys[currentIndex + 1];
+    //         setTyping(false);
+    //         setSkip(false);
+    //         setCurrentBackgroud(stageData.content[nextKey].background);
     //         setCurrentPartText((prev) => ({
     //             ...prev,
-    //             text: storyContent.text[currentPartText.stage].content.part_04.content
-    //         }))
-
-    //     }
-    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_04.content) {
-    //         setTyping(false),
-    //             setSkip(false)
-    //         setCurrentBackgroud(storyContent.text[currentPartText.stage].content.part_05.background)
-    //         setCurrentPartText((prev) => ({
-    //             ...prev,
-    //             text: storyContent.text[currentPartText.stage].content.part_05.content
-    //         }))
-
-    //     }
-    //     if (currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content) {
+    //             text: stageData.content[nextKey].content,
+    //         }));
+    //     } else {
     //         setTyping(false);
     //         setSkip(true);
     //         setIsTimer(true);
     //     }
-
-    // }
-    const handleContinue = () => {
-        const stageData = storyContent.text[currentPartText.stage];
-        const partKeys = Object.keys(stageData.content);
-        const currentIndex = partKeys.findIndex(
-            (key) => stageData.content[key].content === currentPartText.text
-        );
-
-        if (currentIndex < partKeys.length - 1) {
-            const nextKey = partKeys[currentIndex + 1];
-            setTyping(false);
-            setSkip(false);
-            setCurrentBackgroud(stageData.content[nextKey].background);
-            setCurrentPartText((prev) => ({
-                ...prev,
-                text: stageData.content[nextKey].content,
-            }));
-        } else {
-            // последняя часть — ждём useEffect
-            setTyping(false);
-            setSkip(true);
-            setIsTimer(true);
-        }
-    };
+    // };
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
+
+    // useEffect(() => {
+    //     console.log(isTimer);
+
+    //     const timer = setTimeout(() => {
+    //         setCurrentBackgroud(storyContent.text.middle.content.part_00.background)
+    //         setCurrentPartText({ name: storyContent.name, stage: storyContent.text.middle.stage, text: storyContent.text.start.content.part_00.content })
+    //     }, 3000);
+
+    //     return () => {
+    //         setIsTimer(false)
+    //         clearTimeout(timer);
+    //     };
+    // }, [isTimer])
 
     return (
         <ImageBackground
@@ -146,7 +160,7 @@ export default function Story_Screen() {
         >
             <Text>story_Screen</Text>
             <View
-                style={currentPartText.text === storyContent?.text.middle.content.part_00.content || storyContent?.text.end ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
+                style={currentPartText.text === storyContent?.text.content.part_00.content || storyContent?.text ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
                 fontFamily: 'Text App',
                 fontSize: 20,
@@ -189,7 +203,7 @@ export default function Story_Screen() {
                         style={storyStyles.buttonBackground}
                         source={isTimer ? buttonOrangeDisable : buttonOrange}
                     >
-                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent.text[currentPartText.stage].content.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
+                        <Text style={storyStyles.buttonText}>{currentPartText.text === storyContent.text.content.part_05.content ? 'NEXT' : 'CONTINUE'}</Text>
                     </ImageBackground>
                 </TouchableOpacity>
             </View>

@@ -1,69 +1,8 @@
-import {create} from 'zustand';
-import {persist, createJSONStorage} from 'zustand/middleware';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {LANGUAGE} from './global_store';
+import {CHAPTER_LIST} from '@/store/story/storyTypes';
 
-type VariantTextType = {
-	en: string;
-	ru: string;
-	lv: string;
-};
+const defaultTemplateImage = require('../../../assets/template/template_image.jpg');
 
-type CurrentLanguageVariantTextType = {
-	content: string;
-};
-
-type PartType = {
-	variantText: VariantTextType;
-	background: number;
-};
-
-type PartTypeFiltred = {
-	content: string;
-	background: number;
-};
-
-export type StageType = 'start' | 'middle' | 'end';
-
-type TextType = {
-	stage: string;
-	content: {
-		[key: string]: PartType;
-	};
-};
-type TextTypeFiltred = {
-	stage: StageType;
-	content: {
-		[key: string]: PartTypeFiltred;
-	};
-};
-type ContentTypeCurrentLanguage = {
-	name: CHAPTER_LIST;
-	text: {
-		start: TextTypeFiltred;
-		middle: TextTypeFiltred;
-		end: TextTypeFiltred;
-	};
-	background: number;
-};
-type ContentType = {
-	name: CHAPTER_LIST;
-	text: {
-		start: TextType;
-		middle: TextType;
-		end: TextType;
-	};
-	background: number;
-};
-
-export enum CHAPTER_LIST {
-	ORIGIN = 'origin',
-	FIRST = 'first',
-	SECOND = 'second',
-	THIRD = 'third',
-}
-
-const CHAPTER_CONTENT = [
+export const CHAPTER_CONTENT = [
 	{
 		name: CHAPTER_LIST.ORIGIN,
 		text: {
@@ -76,7 +15,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Вы возвращаетесь из соседнего города  и увидев что уже темнеет -  решили сократить дорогу пройдя через лес.',
 							lv: 'Jūs atgriežaties no kaimiņpilsētas un, redzot, ka jau iestājas tumsa, nolemjat izvēlēties īsceļu, dodoties cauri mežam.',
 						},
-						background: require('../assets/backgrounds/monsters/background_without_imp.jpg'),
+						background: require('../../../assets/backgrounds/monsters/background_without_imp.jpg'),
 					},
 					part_01: {
 						variantText: {
@@ -84,7 +23,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Идя по лесу вы слышите  шорохи вокруг, вы смотрите по сторонам и видите что за деревом кто-то стоит.',
 							lv: 'Ejot pa mežu dzirdi šalkoņu apkārt, paskaties apkārt un redzi, ka aiz koka kāds stāv',
 						},
-						background: require('../assets/backgrounds/monsters/background_imp.jpg'),
+						background: require('../../../assets/backgrounds/monsters/background_imp.jpg'),
 					},
 					part_02: {
 						variantText: {
@@ -92,7 +31,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Вы присматриваетесь и понимаете что за деревом странный зверь, ',
 							lv: 'Jus paskaties cieši un saproti, ka aiz koka ir svešs dzīvnieks, ',
 						},
-						background: require('../assets/backgrounds/monsters/background_imp(zoom).jpg'),
+						background: require('../../../assets/backgrounds/monsters/background_imp(zoom).jpg'),
 					},
 					part_03: {
 						variantText: {
@@ -100,7 +39,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Он выпрыгивает и идёт на вас , осознавая что не успеете достать оружие вы пятитесь назад...',
 							lv: 'Tas izlec un nāk tev klāt, saprotot, ka tev nebūs laika dabūt ieroci, tu atkāpies...',
 						},
-						background: require('../assets/backgrounds/monsters/imp_story_start.jpg'),
+						background: require('../../../assets/backgrounds/monsters/imp_story_start.jpg'),
 					},
 					part_04: {
 						variantText: {
@@ -108,7 +47,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Странный зверь видя что вы отступаете - делает рывок  вам навстречу',
 							lv: 'Dīvains zvērs, redzot, ka jus atkāpies, met pretī',
 						},
-						background: require('../assets/backgrounds/monsters/imp_story_start_attack.jpg'),
+						background: require('../../../assets/backgrounds/monsters/imp_story_start_attack.jpg'),
 					},
 					part_05: {
 						variantText: {
@@ -116,7 +55,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Вы пытаетесь отступить дальше, но понимаете что сзади была яма и не устояв на краю вы падаете вниз...',
 							lv: 'Jus mēģini atkāpties tālāk, bet saproti, ka aiz tevis bija bedre un, nespēdams nostāties uz malas, jus nokrīti...',
 						},
-						background: require('../assets/backgrounds/monsters/imp_story_start_fall.jpg'),
+						background: require('../../../assets/backgrounds/monsters/imp_story_start_fall.jpg'),
 					},
 				},
 			},
@@ -130,7 +69,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/backgrounds/cave/cave_00.jpg'),
+						background: require('../../../assets/backgrounds/cave/cave_00.jpg'),
 					},
 					part_01: {
 						variantText: {
@@ -138,7 +77,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -146,7 +85,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -154,7 +93,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -162,7 +101,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -170,7 +109,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -183,7 +122,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -191,7 +130,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -199,7 +138,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -207,7 +146,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -215,7 +154,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -223,12 +162,12 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
 		},
-		background: require('../assets/backgrounds/monsters/background_without_imp.jpg'),
+		background: require('../../../assets/backgrounds/monsters/background_without_imp.jpg'),
 	},
 	{
 		name: CHAPTER_LIST.FIRST,
@@ -242,7 +181,7 @@ const CHAPTER_CONTENT = [
 							ru: 'Вы возвращаетесь из соседнего города  и увидев что уже темнеет -  решили сократить дорогу пройдя через лес.',
 							lv: 'Jūs atgriežaties no kaimiņpilsētas un, redzot, ka jau iestājas tumsa, nolemjat izvēlēties īsceļu, dodoties cauri mežam.',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -250,7 +189,7 @@ const CHAPTER_CONTENT = [
 							ru: '',
 							lv: '',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -258,7 +197,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -266,7 +205,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -274,7 +213,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -282,7 +221,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -296,7 +235,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -304,7 +243,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -312,7 +251,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -320,7 +259,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -328,7 +267,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -336,7 +275,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -349,7 +288,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -357,7 +296,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -365,7 +304,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -373,7 +312,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -381,7 +320,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -389,12 +328,12 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
 		},
-		background: require('../assets/template/template_image.jpg'),
+		background: defaultTemplateImage,
 	},
 	{
 		name: CHAPTER_LIST.SECOND,
@@ -408,7 +347,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -416,7 +355,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -424,7 +363,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -432,7 +371,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -440,7 +379,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -448,7 +387,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -462,7 +401,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -470,7 +409,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -478,7 +417,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -486,7 +425,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -494,7 +433,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -502,7 +441,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -515,7 +454,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -523,7 +462,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -531,7 +470,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -539,7 +478,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -547,7 +486,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -555,12 +494,12 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
 		},
-		background: require('../assets/template/template_image.jpg'),
+		background: defaultTemplateImage,
 	},
 	{
 		name: CHAPTER_LIST.THIRD,
@@ -574,7 +513,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -582,7 +521,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -590,7 +529,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -598,7 +537,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -606,7 +545,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -614,7 +553,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -628,7 +567,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -636,7 +575,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -644,7 +583,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -652,7 +591,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -660,7 +599,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -668,7 +607,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
@@ -681,7 +620,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_01: {
 						variantText: {
@@ -689,7 +628,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
@@ -697,7 +636,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_03: {
 						variantText: {
@@ -705,7 +644,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
@@ -713,7 +652,7 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
@@ -721,155 +660,11 @@ const CHAPTER_CONTENT = [
 							ru: 'template',
 							lv: 'template',
 						},
-						background: require('../assets/template/template_image.jpg'),
+						background: defaultTemplateImage,
 					},
 				},
 			},
 		},
-		background: require('../assets/template/template_image.jpg'),
+		background: defaultTemplateImage,
 	},
 ];
-
-export interface StoryStoreInterface {
-	defaultState: true;
-	chapter: string;
-	chapterContent: ContentType[];
-	setChapter: (chapter: string) => void;
-	setDefaultState: () => void;
-	getChapterContent: (
-		currentLanguage: LANGUAGE,
-	) => ContentTypeCurrentLanguage | null;
-}
-
-// Zustand-хранилище
-export const useStoryStore = create<StoryStoreInterface>()(
-	persist(
-		(set, get) => ({
-			defaultState: true,
-			chapter: CHAPTER_LIST.ORIGIN,
-			chapterContent: CHAPTER_CONTENT,
-			setDefaultState: () => {
-				set({
-					defaultState: true,
-					chapter: CHAPTER_LIST.ORIGIN,
-				});
-			},
-			setChapter: (chapter) => {
-				set({chapter: chapter});
-			},
-			getChapterContent: (currentLanguage) => {
-				const currentContent = get().chapterContent;
-				const chapter = currentContent.find(
-					(item) => item.name === get().chapter,
-				);
-				if (!chapter) return null;
-				const getCurrentLanguageContent = (
-					part: PartType,
-					lang: LANGUAGE,
-				): {content: string; background: number} => ({
-					content: part.variantText[lang],
-					background: part.background,
-				});
-
-				return {
-					name: chapter.name,
-					text: {
-						start: {
-							stage: 'start',
-							content: {
-								part_00: getCurrentLanguageContent(
-									chapter.text.start.content.part_00,
-									currentLanguage,
-								),
-								part_01: getCurrentLanguageContent(
-									chapter.text.start.content.part_01,
-									currentLanguage,
-								),
-								part_02: getCurrentLanguageContent(
-									chapter.text.start.content.part_02,
-									currentLanguage,
-								),
-								part_03: getCurrentLanguageContent(
-									chapter.text.start.content.part_03,
-									currentLanguage,
-								),
-								part_04: getCurrentLanguageContent(
-									chapter.text.start.content.part_04,
-									currentLanguage,
-								),
-								part_05: getCurrentLanguageContent(
-									chapter.text.start.content.part_05,
-									currentLanguage,
-								),
-							},
-						},
-
-						middle: {
-							stage: 'middle',
-							content: {
-								part_00: getCurrentLanguageContent(
-									chapter.text.middle.content.part_00,
-									currentLanguage,
-								),
-								part_01: getCurrentLanguageContent(
-									chapter.text.middle.content.part_01,
-									currentLanguage,
-								),
-								part_02: getCurrentLanguageContent(
-									chapter.text.middle.content.part_02,
-									currentLanguage,
-								),
-								part_03: getCurrentLanguageContent(
-									chapter.text.middle.content.part_03,
-									currentLanguage,
-								),
-								part_04: getCurrentLanguageContent(
-									chapter.text.middle.content.part_04,
-									currentLanguage,
-								),
-								part_05: getCurrentLanguageContent(
-									chapter.text.middle.content.part_05,
-									currentLanguage,
-								),
-							},
-						},
-						end: {
-							stage: 'end',
-							content: {
-								part_00: getCurrentLanguageContent(
-									chapter.text.end.content.part_00,
-									currentLanguage,
-								),
-								part_01: getCurrentLanguageContent(
-									chapter.text.end.content.part_01,
-									currentLanguage,
-								),
-								part_02: getCurrentLanguageContent(
-									chapter.text.end.content.part_02,
-									currentLanguage,
-								),
-								part_03: getCurrentLanguageContent(
-									chapter.text.end.content.part_03,
-									currentLanguage,
-								),
-								part_04: getCurrentLanguageContent(
-									chapter.text.end.content.part_04,
-									currentLanguage,
-								),
-								part_05: getCurrentLanguageContent(
-									chapter.text.end.content.part_05,
-									currentLanguage,
-								),
-							},
-						},
-					},
-					background: chapter.background,
-				};
-			},
-		}),
-		{
-			name: 'story-storage',
-			storage: createJSONStorage(() => AsyncStorage),
-		},
-	),
-);

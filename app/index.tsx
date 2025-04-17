@@ -1,7 +1,7 @@
 import * as Font from 'expo-font';
 import { GLOBAL_APP_PATH } from '@/constants/global_path';
 import { LANGUAGE, useGlobalStore } from '@/store/global_store';
-import { CHAPTER_LIST, useStoryStore } from '@/store/story_store';
+import { useStoryStore } from '@/store/story/story_store';
 import { useRouter } from 'expo-router';
 import { Button, ImageBackground, Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
