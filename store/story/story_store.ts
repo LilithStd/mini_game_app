@@ -112,38 +112,6 @@ export type GetChapterContentReturnType = {
 	background: number;
 } | null;
 
-// name: chapter.name,
-// text: {
-// 	stage: stage,
-// 	content: {
-// 		part_00: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_00,
-// 			currentLanguage,
-// 		),
-// 		part_01: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_01,
-// 			currentLanguage,
-// 		),
-// 		part_02: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_02,
-// 			currentLanguage,
-// 		),
-// 		part_03: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_03,
-// 			currentLanguage,
-// 		),
-// 		part_04: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_04,
-// 			currentLanguage,
-// 		),
-// 		part_05: getCurrentLanguageContent(
-// 			chapter.text[stage].content.part_05,
-// 			currentLanguage,
-// 		),
-// 	},
-// },
-// background: chapter.background,
-
 export interface StoryStoreInterface {
 	defaultState: true;
 	chapter: string;

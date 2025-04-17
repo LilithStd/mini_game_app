@@ -66,24 +66,24 @@ export const CHAPTER_CONTENT = [
 					part_00: {
 						variantText: {
 							en: 'You dont remember well what happened before the fall, everything is blurry in your eyes, but you try to remember and with your hand on the floor you feel for the weapon, it reminds you that you...',
-							ru: 'template',
-							lv: 'template',
+							ru: 'template ru',
+							lv: 'template lv',
 						},
 						background: require('../../../assets/backgrounds/cave/cave_00.jpg'),
 					},
 					part_01: {
 						variantText: {
 							en: 'template test 1',
-							ru: 'template',
-							lv: 'template',
+							ru: 'template ru',
+							lv: 'template lv',
 						},
 						background: defaultTemplateImage,
 					},
 					part_02: {
 						variantText: {
 							en: 'template test 2',
-							ru: 'template',
-							lv: 'template',
+							ru: 'template ru',
+							lv: 'template lv',
 						},
 						background: defaultTemplateImage,
 					},
@@ -106,7 +106,7 @@ export const CHAPTER_CONTENT = [
 					part_05: {
 						variantText: {
 							en: 'template teste 5',
-							ru: 'template',
+							ru: 'template ru',
 							lv: 'template',
 						},
 						background: defaultTemplateImage,
@@ -193,7 +193,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -201,7 +201,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -209,7 +209,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -217,7 +217,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -231,7 +231,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -239,7 +239,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -247,7 +247,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -255,7 +255,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -263,7 +263,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -271,7 +271,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -284,7 +284,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -292,7 +292,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -300,7 +300,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -308,7 +308,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -316,7 +316,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -324,7 +324,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 1',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -343,7 +343,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -351,7 +351,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -359,7 +359,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -367,7 +367,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -375,7 +375,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -383,7 +383,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -397,7 +397,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -405,7 +405,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -413,7 +413,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -421,7 +421,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -429,7 +429,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -437,7 +437,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -450,7 +450,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -458,7 +458,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -466,7 +466,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -474,7 +474,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -482,7 +482,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -490,7 +490,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 2',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -509,7 +509,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -517,7 +517,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -525,7 +525,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -533,7 +533,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -541,7 +541,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -549,7 +549,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -563,7 +563,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -571,7 +571,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -579,7 +579,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -587,7 +587,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -595,7 +595,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -603,7 +603,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -616,7 +616,7 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -624,7 +624,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_01: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -632,7 +632,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_02: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -640,7 +640,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_03: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -648,7 +648,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_04: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
@@ -656,7 +656,7 @@ export const CHAPTER_CONTENT = [
 					},
 					part_05: {
 						variantText: {
-							en: 'template',
+							en: 'template 3',
 							ru: 'template',
 							lv: 'template',
 						},
