@@ -77,7 +77,7 @@ export const CHAPTER_CONTENT = [
 							ru: 'template ru',
 							lv: 'template lv',
 						},
-						background: defaultTemplateImage,
+						background: require('../../../assets/backgrounds/cave/cave_01.jpg'),
 					},
 					part_02: {
 						variantText: {
