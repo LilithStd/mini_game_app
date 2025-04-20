@@ -96,37 +96,18 @@ export default function Story_Screen() {
         if (currentPartText.text === currentStageContent.text.content.part_05.content) {
             setTyping(false);
             setSkip(false);
+            const middlePart = getChapterStory('middle', currentLanguage);
+            if (!middlePart) return;
 
-            console.log(currentStageContent);
+            setCurrentStageContent(middlePart);
 
-            // switch (currentPartText.stage) {
-            //     case 'start': {
-            //         if (currentPartText.text !== currentStageContent.text.content.part_05.content) break;
-
-            //         const middlePart = getChapterStory('middle', currentLanguage);
-            //         if (!middlePart) return;
-
-            //         setCurrentStageContent(middlePart);
-            //         setTimeout(() => {
-            //             setCurrentPartText({
-            //                 name: middlePart.name,
-            //                 stage: 'middle',
-            //                 text: middlePart.text.content.part_00.content,
-            //             });
-            //             setCurrentBackgroud(middlePart.text.content.part_00.background);
-            //         }, 0);
-
-            //         return;
-            //     }
-
-            //     case 'middle':
-            //         console.log('last part middle');
-            //         break;
-
-            //     case 'end':
-            //         console.log('last part end');
-            //         break;
-            // }
+            // сразу сбросить currentPartText и фон
+            setCurrentPartText({
+                name: middlePart.name,
+                stage: middlePart.text.stage,
+                text: middlePart.text.content.part_00.content,
+            });
+            setCurrentBackgroud(middlePart.text.content.part_00.background);
         }
 
     }
