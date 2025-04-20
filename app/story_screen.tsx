@@ -12,7 +12,6 @@ const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function Story_Screen() {
-    // const { chapter } = useLocalSearchParams();
     const router = useRouter();
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
@@ -98,40 +97,43 @@ export default function Story_Screen() {
             setTyping(false);
             setSkip(false);
 
-            switch (currentPartText.stage) {
-                case 'start': {
-                    if (currentPartText.text !== currentStageContent.text.content.part_05.content) break;
+            console.log(currentStageContent);
 
-                    const middlePart = getChapterStory('middle', currentLanguage);
-                    if (!middlePart) return;
+            // switch (currentPartText.stage) {
+            //     case 'start': {
+            //         if (currentPartText.text !== currentStageContent.text.content.part_05.content) break;
 
-                    setCurrentStageContent(middlePart);
-                    setTimeout(() => {
-                        setCurrentPartText({
-                            name: middlePart.name,
-                            stage: 'middle',
-                            text: middlePart.text.content.part_00.content,
-                        });
-                        setCurrentBackgroud(middlePart.text.content.part_00.background);
-                    }, 0);
+            //         const middlePart = getChapterStory('middle', currentLanguage);
+            //         if (!middlePart) return;
 
-                    return;
-                }
+            //         setCurrentStageContent(middlePart);
+            //         setTimeout(() => {
+            //             setCurrentPartText({
+            //                 name: middlePart.name,
+            //                 stage: 'middle',
+            //                 text: middlePart.text.content.part_00.content,
+            //             });
+            //             setCurrentBackgroud(middlePart.text.content.part_00.background);
+            //         }, 0);
 
-                case 'middle':
-                    console.log('last part middle');
-                    break;
+            //         return;
+            //     }
 
-                case 'end':
-                    console.log('last part end');
-                    break;
-            }
+            //     case 'middle':
+            //         console.log('last part middle');
+            //         break;
+
+            //     case 'end':
+            //         console.log('last part end');
+            //         break;
+            // }
         }
 
     }
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
+
 
 
     return (
