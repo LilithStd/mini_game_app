@@ -113,7 +113,7 @@ export type GetChapterContentReturnType = {
 } | null;
 
 export interface StoryStoreInterface {
-	defaultState: true;
+	defaultState: boolean;
 	chapter: string;
 	chapterContent: ContentType[];
 	setChapter: (chapter: string) => void;
@@ -138,7 +138,10 @@ export const useStoryStore = create<StoryStoreInterface>()(
 				});
 			},
 			setChapter: (chapter) => {
-				set({chapter: chapter});
+				set({
+					defaultState: false,
+					chapter: chapter,
+				});
 			},
 			getChapterContent: (
 				stage: StageType,

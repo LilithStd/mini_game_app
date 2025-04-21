@@ -98,6 +98,7 @@ export default function Story_Screen() {
             setSkip(false);
             const middlePart = getChapterStory('middle', currentLanguage);
             if (!middlePart) return;
+            console.log('last stage');
 
             setCurrentStageContent(middlePart);
 
