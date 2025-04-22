@@ -98,16 +98,19 @@ export default function Story_Screen() {
             setSkip(false);
             const middlePart = getChapterStory('middle', currentLanguage);
             if (!middlePart) return;
-            console.log('last stage');
 
             setCurrentStageContent(middlePart);
-
-            // сразу сбросить currentPartText и фон
-            setCurrentPartText({
+            setCurrentPartText((prev) => ({
+                ...prev,
                 name: middlePart.name,
                 stage: middlePart.text.stage,
                 text: middlePart.text.content.part_00.content,
-            });
+            }))
+            // setCurrentPartText({
+            //     name: middlePart.name,
+            //     stage: middlePart.text.stage,
+            //     text: middlePart.text.content.part_00.content,
+            // });
             setCurrentBackgroud(middlePart.text.content.part_00.background);
         }
 
