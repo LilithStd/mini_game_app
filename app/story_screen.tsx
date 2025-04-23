@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import Typewriter from 'react-native-typewriter';
 
+
 const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
@@ -27,6 +28,7 @@ export default function Story_Screen() {
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
     const [isTimer, setIsTimer] = useState(false)
+    const [changeStage, setChangeStage] = useState(false)
     const [currentStageContent, setCurrentStageContent] = useState(getChapterStory('start', currentLanguage))
     //
     if (!currentStageContent) return null;
@@ -96,28 +98,57 @@ export default function Story_Screen() {
         if (currentPartText.text === currentStageContent.text.content.part_05.content) {
             setTyping(false);
             setSkip(false);
-            const middlePart = getChapterStory('middle', currentLanguage);
-            if (!middlePart) return;
+            setChangeStage(true)
+            // const middlePart = getChapterStory('middle', currentLanguage);
+            // if (!middlePart) return;
 
-            setCurrentStageContent(middlePart);
-            setCurrentPartText((prev) => ({
-                ...prev,
-                name: middlePart.name,
-                stage: middlePart.text.stage,
-                text: middlePart.text.content.part_00.content,
-            }))
-            // setCurrentPartText({
+            // setCurrentStageContent(middlePart);
+            // setCurrentPartText((prev) => ({
+            //     ...prev,
             //     name: middlePart.name,
             //     stage: middlePart.text.stage,
             //     text: middlePart.text.content.part_00.content,
-            // });
-            setCurrentBackgroud(middlePart.text.content.part_00.background);
+            // }))
+            // setCurrentBackgroud(middlePart.text.content.part_00.background);
         }
 
     }
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
+    useEffect(() => {
+        if (changeStage) {
+            switch (currentPartText.stage) {
+                case 'start':
+                    const middlePart = getChapterStory('middle', currentLanguage);
+                    if (!middlePart) return;
+                    setCurrentStageContent(middlePart);
+                    setCurrentPartText((prev) => ({
+                        ...prev,
+                        name: middlePart.name,
+                        stage: middlePart.text.stage,
+                        text: middlePart.text.content.part_00.content,
+                    }))
+                    setCurrentBackgroud(middlePart.text.content.part_00.background);
+                    setChangeStage(false)
+                    break;
+                case 'middle':
+                    const endPart = getChapterStory('end', currentLanguage);
+                    if (!endPart) return;
+                    setCurrentStageContent(endPart);
+                    setCurrentPartText({
+                        name: endPart.name,
+                        stage: endPart.text.stage,
+                        text: endPart.text.content.part_00.content,
+                    })
+                    setCurrentBackgroud(endPart.text.content.part_00.background);
+                    setChangeStage(false)
+                    break;
+            }
+        }
+
+
+    }, [changeStage])
 
 
 
