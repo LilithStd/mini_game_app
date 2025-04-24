@@ -6,6 +6,7 @@ import { useRouter } from 'expo-router';
 import { Button, ImageBackground, Text, View, StyleSheet, TouchableOpacity, Image } from 'react-native'
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context'
 import { useEffect, useState } from 'react';
+import { SCENARIO_HOOKS } from '@/constants/store/items/scenario';
 
 const backgroundImageWithMonster = require('../assets/backgrounds/monsters/background_imp.jpg')
 
@@ -35,13 +36,11 @@ export default function App() {
     const currentState = useGlobalStore(state => state.currentState)
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setAppLanguage = useGlobalStore(state => state.setCurrentLanguage)
+    const setNewGameState = useGlobalStore(state => state.setNewGame)
     //
 
-    const setNewGameState = useGlobalStore(state => state.setNewGame)
 
-    const buttonVariant = () => {
 
-    }
     useEffect(() => {
         switch (currentLanguage) {
             case LANGUAGE.EN:
@@ -67,6 +66,9 @@ export default function App() {
 
         router.push({
             pathname: GLOBAL_APP_PATH.STORY_SCREEN,
+            params: {
+                scenarioHook: SCENARIO_HOOKS.START
+            }
         })
     }
 

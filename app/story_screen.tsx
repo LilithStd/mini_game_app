@@ -1,7 +1,9 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
+import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import { useCharacterStore } from "@/store/character_store";
-import { useGlobalStore } from "@/store/global_store";
+import { LANGUAGE, useGlobalStore } from "@/store/global_store";
 import { StageType, useStoryStore } from "@/store/story/story_store";
+import { CHAPTER_LIST, STORY_STAGE } from "@/store/story/storyTypes";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
@@ -14,23 +16,44 @@ const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_di
 
 export default function Story_Screen() {
     const router = useRouter();
+    const { scenarioHook } = useLocalSearchParams();
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
     //story_store
+    const currentChapter = useStoryStore(state => state.chapter)
     const getChapterStory = useStoryStore(state => state.getChapterContent)
     const setChapterStory = useStoryStore(state => state.setChapter)
     //
     const default_status = useCharacterStore(state => state.default_state)
     //const
-
-    //state
+    const scenarioAction = scenarioHook as SCENARIO_HOOKS;
+    //state_flags
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
     const [isTimer, setIsTimer] = useState(false)
     const [changeStage, setChangeStage] = useState(false)
-    const [currentStageContent, setCurrentStageContent] = useState(getChapterStory('start', currentLanguage))
+    //functions
+    const setCurrentAction = (scenarioAction: SCENARIO_HOOKS, language: LANGUAGE) => {
+        switch (scenarioAction) {
+            case SCENARIO_HOOKS.START:
+                const start = getChapterStory(STORY_STAGE.START, language)
+                return start;
+            case SCENARIO_HOOKS.AFTER_CHOOSE_CHARACTER:
+                const middle = getChapterStory(STORY_STAGE.MIDDLE, language)
+                return middle;
+
+
+
+        }
+    }
+
+
+    //state
+
+    const [currentStageContent, setCurrentStageContent] = useState(setCurrentAction(scenarioAction, currentLanguage))
     //
+
     if (!currentStageContent) return null;
     const [currentBackground, setCurrentBackgroud] = useState(currentStageContent.background || defaultBackground)
 
@@ -98,24 +121,19 @@ export default function Story_Screen() {
         if (currentPartText.text === currentStageContent.text.content.part_05.content) {
             setTyping(false);
             setSkip(false);
-            setChangeStage(true)
-            // const middlePart = getChapterStory('middle', currentLanguage);
-            // if (!middlePart) return;
 
-            // setCurrentStageContent(middlePart);
-            // setCurrentPartText((prev) => ({
-            //     ...prev,
-            //     name: middlePart.name,
-            //     stage: middlePart.text.stage,
-            //     text: middlePart.text.content.part_00.content,
-            // }))
-            // setCurrentBackgroud(middlePart.text.content.part_00.background);
+            if (currentPartText.stage === 'start' && currentChapter === CHAPTER_LIST.ORIGIN) {
+                router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
+            } else {
+                setChangeStage(true)
+            }
         }
 
     }
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
+
     useEffect(() => {
         if (changeStage) {
             switch (currentPartText.stage) {

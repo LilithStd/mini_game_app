@@ -1,5 +1,6 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { getRandomNumber } from "@/constants/helpers";
+import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import { useCharacterStore, UPDATE_CHARACTER_STATS, CharacterStats } from "@/store/character_store"
 import { useGlobalStore } from "@/store/global_store"
 import { useRouter } from "expo-router";
@@ -42,30 +43,29 @@ export default function ChooseCharacterScreen() {
     //
     const characters = characters_pull_for_choose();
     const currentCharacter = characters[currentIndex] ?? CharacterDefaultStats;
-    // const characterToDisplay = characters[currentIndex] ?? CharacterDefaultStats;
+
     const characterToDisplay = useMemo(() => {
         return characters[currentIndex] ?? CharacterDefaultStats;
     }, [currentIndex, characters.length]);
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN);
-        // const defaultCharacter = characters[0] ?? CharacterDefaultStats;
-        // setCurrentCharacterToChoose(defaultCharacter);
     }, [])
 
     useEffect(() => {
         setCurrentCharacterToChoose(currentCharacter);
     }, [currentIndex]);
-    // useEffect(() => {
-    //     const newCharacter = characters[currentIndex] ?? CharacterDefaultStats;
-    //     // console.log('⏩ Character updated to:', newCharacter.name);
-    //     setCurrentCharacterToChoose(newCharacter);
-    // }, [currentIndex, characters.length]);
+
 
     const handleCharacterChoose = (item: CharacterStats) => {
         setIsChoosing(true);
         setContinueGame()
         choose_character(UPDATE_CHARACTER_STATS.ALL, item)
-        router.push(GLOBAL_APP_PATH.LOCATION_CHOOSE_SCREEN)
+        router.push({
+            pathname: GLOBAL_APP_PATH.STORY_SCREEN,
+            params: {
+                scenarioHook: SCENARIO_HOOKS.AFTER_CHOOSE_CHARACTER
+            }
+        });
     }
     const handlePreviousCharacter = () => {
         setCurrentIndex((prevIndex) =>
@@ -80,7 +80,7 @@ export default function ChooseCharacterScreen() {
     };
 
     if (isChoosing) {
-        return null; // Пока происходит переход, ничего не рендерим
+        return null;
     }
 
 

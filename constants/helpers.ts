@@ -9,6 +9,6 @@ export const getChancePercent = (percent: number): boolean => {
 export function getRandomEnumValue<T extends Record<string, string | number>>(
 	enumObj: T,
 ): T[keyof T] {
-	const values = Object.values(enumObj) as T[keyof T][]; // Получаем массив значений enum
+	const values = Object.values(enumObj) as T[keyof T][];
 	return values[Math.floor(Math.random() * values.length)];
 }

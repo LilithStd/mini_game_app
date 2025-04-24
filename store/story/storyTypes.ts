@@ -4,3 +4,9 @@ export enum CHAPTER_LIST {
 	SECOND = 'second',
 	THIRD = 'third',
 }
+
+export enum STORY_STAGE {
+	START = 'start',
+	MIDDLE = 'middle',
+	END = 'end',
+}
