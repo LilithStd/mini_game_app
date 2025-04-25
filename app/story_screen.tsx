@@ -1,3 +1,4 @@
+import Transistion from "@/app/transistion_screen";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import { useCharacterStore } from "@/store/character_store";
@@ -123,7 +124,13 @@ export default function Story_Screen() {
             setSkip(false);
 
             if (currentPartText.stage === 'start' && currentChapter === CHAPTER_LIST.ORIGIN) {
-                router.push(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN)
+                router.push({
+                    pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
+                    params: {
+                        title: 'choose your character',
+                        pathToAfterTransistion: GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN
+                    }
+                })
             } else {
                 setChangeStage(true)
             }

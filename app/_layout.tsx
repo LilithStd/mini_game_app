@@ -14,6 +14,7 @@ export default function Layout() {
                 <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
                 <Stack.Screen name="location_choose_screen" options={{ title: "ChooseLocation" }} />
                 <Stack.Screen name="choose_character_screen" options={{ title: "ChooseCharacter" }} />
+                <Stack.Screen name="transistion_screen" options={{ title: "Transistion" }} />
                 <Stack.Screen name="victory_screen" options={{ title: "Victory" }} />
                 <Stack.Screen name="lose_screen" options={{ title: "Lose" }} />
             </Stack>
