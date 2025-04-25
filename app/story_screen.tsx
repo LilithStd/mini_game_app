@@ -134,6 +134,7 @@ export default function Story_Screen() {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
 
+
     useEffect(() => {
         if (changeStage) {
             switch (currentPartText.stage) {
@@ -141,12 +142,12 @@ export default function Story_Screen() {
                     const middlePart = getChapterStory('middle', currentLanguage);
                     if (!middlePart) return;
                     setCurrentStageContent(middlePart);
-                    setCurrentPartText((prev) => ({
-                        ...prev,
+                    setCurrentPartText({
+
                         name: middlePart.name,
                         stage: middlePart.text.stage,
                         text: middlePart.text.content.part_00.content,
-                    }))
+                    })
                     setCurrentBackgroud(middlePart.text.content.part_00.background);
                     setChangeStage(false)
                     break;
