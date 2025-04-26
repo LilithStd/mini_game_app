@@ -127,7 +127,7 @@ export default function Story_Screen() {
                 router.push({
                     pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
                     params: {
-                        title: 'choose your character',
+                        title: 'As you fall, you try to grab onto the walls with your weapon, and you manage to slow down your fall because you are skilled...',
                         pathToAfterTransistion: GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN
                     }
                 })
