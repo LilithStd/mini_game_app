@@ -12,27 +12,38 @@ export default function Transistion() {
     //state
     const [typing, setTyping] = useState(false)
     const [skip, setSkip] = useState(false)
+    const [isTimer, setIsTimer] = useState(false)
     //types
     const transistionContenxt = { contentTitle: title ? title : 'default transistion context' }
     const transistionPath = getValidPath(pathToAfterTransistion as string)
     //functions
-
+    const handleTransistionChange = () => {
+        if (!skip) {
+            setSkip(true)
+        } else {
+            setIsTimer(true)
+        }
+    }
     //effect
-    // useEffect(() => {
-    //     const timeoutId = setTimeout(() => {
-    //         console.log("Сработал таймер!");
-    //         router.push({
-    //             pathname: pathToAfterTransistion as typeof GLOBAL_APP_PATH[keyof typeof GLOBAL_APP_PATH]
-    //         })
-    //     }, 3000);
+    useEffect(() => {
+        if (isTimer) {
+            const timeoutId = setTimeout(() => {
+                console.log("Сработал таймер!");
+                router.push({
+                    pathname: pathToAfterTransistion as typeof GLOBAL_APP_PATH[keyof typeof GLOBAL_APP_PATH]
+                })
+            }, 3000);
 
 
-    //     return () => {
-    //         clearTimeout(timeoutId);
-    //         console.log("Таймер очищен");
+            return () => {
+                clearTimeout(timeoutId);
+                setIsTimer(false)
+                console.log("Таймер очищен");
 
-    //     };
-    // }, []);
+            };
+        }
+
+    }, [isTimer]);
 
     return (
         <ImageBackground
@@ -42,18 +53,20 @@ export default function Transistion() {
             <View style={transistionStyles.mainContainer}>
                 <Text style={transistionStyles.title}>Transistion</Text>
                 <TouchableOpacity
-                    onPress={() => setSkip(true)}
+                    onPress={handleTransistionChange}
                 >
-
-                    <Typewriter
-                        style={transistionStyles.title}
-                        typing={1}
-                        minDelay={0}
-                        onTyped={() => { setTyping(false) }}
-                        onTypingEnd={() => { setTyping(false), setSkip(true) }}
-                    >
-                        <Text>{transistionContenxt.contentTitle}</Text>
-                    </Typewriter>
+                    {skip ? <Text style={transistionStyles.title}>{transistionContenxt.contentTitle}</Text> :
+                        <Typewriter
+                            style={transistionStyles.title}
+                            disabled={typing || skip}
+                            typing={1}
+                            minDelay={0}
+                            onTyped={() => { setTyping(false) }}
+                            onTypingEnd={() => { setTyping(false), setSkip(true) }}
+                        >
+                            {transistionContenxt.contentTitle}
+                        </Typewriter>
+                    }
                 </TouchableOpacity>
             </View>
         </ImageBackground>
@@ -76,6 +89,6 @@ const transistionStyles = StyleSheet.create({
     },
     title: {
         color: 'white',
-        fontFamily: 'Title App'
+        fontFamily: 'Title App',
     }
 })
