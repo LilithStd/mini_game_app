@@ -41,7 +41,7 @@ export default function ChooseCharacterScreen() {
     const choose_character = useCharacterStore(state => state.updateCharacterStats)
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
     //
-    const characters = characters_pull_for_choose();
+    const characters = useMemo(() => characters_pull_for_choose(), [characters_pull_for_choose])
     const currentCharacter = characters[currentIndex] ?? CharacterDefaultStats;
 
     const characterToDisplay = useMemo(() => {
@@ -52,7 +52,8 @@ export default function ChooseCharacterScreen() {
     }, [])
 
     useEffect(() => {
-        setCurrentCharacterToChoose(currentCharacter);
+        // setCurrentCharacterToChoose(currentCharacter);
+        setCurrentCharacterToChoose(characters[currentIndex]);
     }, [currentIndex]);
 
 
@@ -68,15 +69,13 @@ export default function ChooseCharacterScreen() {
         });
     }
     const handlePreviousCharacter = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex - 1 < 0 ? characters.length - 1 : prevIndex - 1
-        );
+        setCurrentIndex(prev => (prev - 1 + characters.length) % characters.length);
+
     };
 
     const handleNextCharacter = () => {
-        setCurrentIndex((prevIndex) =>
-            prevIndex + 1 >= characters.length ? 0 : prevIndex + 1
-        );
+        setCurrentIndex(prev => (prev + 1) % characters.length);
+
     };
 
     if (isChoosing) {
@@ -131,7 +130,7 @@ export default function ChooseCharacterScreen() {
                         borderRadius: 10,
                         overflow: 'hidden'
                     }}>
-                        <Text>{currentCharacterToChoose.name}</Text>
+                        <Text>{characters[currentIndex].name}</Text>
                         <Image
                             resizeMode="cover"
                             style={{
@@ -142,6 +141,7 @@ export default function ChooseCharacterScreen() {
                             }}
                             source={currentCharacterToChoose.model}
                         />
+                        <Text>{currentIndex}</Text>
                         <View style={styles.statsContainer}>
                             <View>
                                 <Text>Attack:{currentCharacterToChoose.attack}</Text>
