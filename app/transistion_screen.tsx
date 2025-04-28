@@ -15,7 +15,7 @@ export default function Transistion() {
     const [isTimer, setIsTimer] = useState(false)
     //types
     const transistionContenxt = { contentTitle: title ? title : 'default transistion context' }
-    const transistionPath = getValidPath(pathToAfterTransistion as string)
+    const transistionPath = pathToAfterTransistion as typeof GLOBAL_APP_PATH[keyof typeof GLOBAL_APP_PATH] ? pathToAfterTransistion as typeof GLOBAL_APP_PATH[keyof typeof GLOBAL_APP_PATH] : GLOBAL_APP_PATH.MAIN
     //functions
     const handleTransistionChange = () => {
         if (!skip) {
@@ -30,7 +30,7 @@ export default function Transistion() {
             const timeoutId = setTimeout(() => {
                 console.log("Сработал таймер!");
                 router.push({
-                    pathname: pathToAfterTransistion as typeof GLOBAL_APP_PATH[keyof typeof GLOBAL_APP_PATH]
+                    pathname: transistionPath
                 })
             }, 3000);
 
@@ -62,7 +62,7 @@ export default function Transistion() {
                             typing={1}
                             minDelay={0}
                             onTyped={() => { setTyping(false) }}
-                            onTypingEnd={() => { setTyping(false), setSkip(true) }}
+                            onTypingEnd={() => { setTyping(false), setSkip(true), setIsTimer(true) }}
                         >
                             {transistionContenxt.contentTitle}
                         </Typewriter>
