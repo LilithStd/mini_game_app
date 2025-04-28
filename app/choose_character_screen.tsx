@@ -42,11 +42,7 @@ export default function ChooseCharacterScreen() {
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
     //
     const characters = useMemo(() => characters_pull_for_choose(), [characters_pull_for_choose])
-    const currentCharacter = characters[currentIndex] ?? CharacterDefaultStats;
 
-    const characterToDisplay = useMemo(() => {
-        return characters[currentIndex] ?? CharacterDefaultStats;
-    }, [currentIndex, characters.length]);
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN);
     }, [])
