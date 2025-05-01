@@ -48,7 +48,6 @@ export default function ChooseCharacterScreen() {
     }, [])
 
     useEffect(() => {
-        // setCurrentCharacterToChoose(currentCharacter);
         setCurrentCharacterToChoose(characters[currentIndex]);
     }, [currentIndex]);
 
