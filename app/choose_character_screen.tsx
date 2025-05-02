@@ -28,6 +28,9 @@ const CharacterDefaultStats = {
 };
 
 const defaultImages = require('../assets/template/template_image.jpg')
+const forestMaskForBackgroundTop = require('../assets/mask/forest_mask_top_bg.png')
+const forestMaskForBackgroundBottom = require('../assets/mask/forest_mask_bottom.png')
+const background = require('../assets/backgrounds/characters_choose/character_choose_bg.jpg')
 
 export default function ChooseCharacterScreen() {
     const router = useRouter();
@@ -63,9 +66,9 @@ export default function ChooseCharacterScreen() {
             }
         });
     }
+
     const handlePreviousCharacter = () => {
         setCurrentIndex(prev => (prev - 1 + characters.length) % characters.length);
-
     };
 
     const handleNextCharacter = () => {
@@ -80,15 +83,9 @@ export default function ChooseCharacterScreen() {
 
     return (
         <ImageBackground
-            style={{
-                flex: 1,
-                width: "100%",
-                height: "100%",
-                alignItems: "center",
-                justifyContent: 'center'
-            }}
+            style={chooseCharactersStyles.imageBackground}
             resizeMode='cover'
-            source={defaultImages}
+            source={background ? background : defaultImages}
         >
 
 
@@ -99,6 +96,26 @@ export default function ChooseCharacterScreen() {
                 width: '100%',
                 height: '100%',
             }}>
+                <Image
+                    style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: 150,
+                        top: 0,
+                        zIndex: 2
+                    }}
+                    source={forestMaskForBackgroundTop}
+                />
+                <Image
+                    style={{
+                        position: 'absolute',
+                        width: '100%',
+                        height: 150,
+                        bottom: -20,
+                        zIndex: 2
+                    }}
+                    source={forestMaskForBackgroundBottom}
+                />
                 <View style={{
                     flex: 1,
                     justifyContent: 'center',
@@ -110,6 +127,7 @@ export default function ChooseCharacterScreen() {
                     height: '100%',
                     marginTop: 100
                 }}>
+
                     <View style={{
                         padding: 10,
                         borderRadius: 8,
@@ -121,10 +139,12 @@ export default function ChooseCharacterScreen() {
                         width: '80%',
                         height: '80%',
                         // position: 'absolute',
+                        zIndex: 1,
                         backgroundColor: 'white',
                         borderRadius: 10,
                         overflow: 'hidden'
                     }}>
+
                         <Text>{characters[currentIndex].name}</Text>
                         <Image
                             resizeMode="cover"
@@ -137,33 +157,33 @@ export default function ChooseCharacterScreen() {
                             source={currentCharacterToChoose.model}
                         />
                         <Text>{currentIndex}</Text>
-                        <View style={styles.statsContainer}>
+                        <View style={chooseCharactersStyles.statsContainer}>
                             <View>
                                 <Text>Attack:{currentCharacterToChoose.attack}</Text>
                                 <Text>Defense:{currentCharacterToChoose.defense}</Text>
                                 <Text>Evasion:{currentCharacterToChoose.evasion}</Text>
                                 <Text>HP:{currentCharacterToChoose.healPoints}</Text>
                             </View>
-                            <View style={styles.buttonChooseContainer}>
-                                <TouchableOpacity style={styles.buttonChoose}
+                            <View style={chooseCharactersStyles.buttonChooseContainer}>
+                                <TouchableOpacity style={chooseCharactersStyles.buttonChoose}
                                     onPress={() => handleCharacterChoose(currentCharacterToChoose)}
                                 >
-                                    <Text style={styles.buttonText}>Choose</Text>
+                                    <Text style={chooseCharactersStyles.buttonText}>Choose</Text>
                                 </TouchableOpacity>
                             </View>
                         </View>
 
 
-                        <View style={styles.buttonContainer}>
-                            <TouchableOpacity style={styles.button}
+                        <View style={chooseCharactersStyles.buttonContainer}>
+                            <TouchableOpacity style={chooseCharactersStyles.button}
                                 onPress={handlePreviousCharacter}
                             >
-                                <Text style={styles.buttonText}>Previous</Text>
+                                <Text style={chooseCharactersStyles.buttonText}>Previous</Text>
                             </TouchableOpacity>
-                            <TouchableOpacity style={styles.button}
+                            <TouchableOpacity style={chooseCharactersStyles.button}
                                 onPress={handleNextCharacter}
                             >
-                                <Text style={styles.buttonText}>Next</Text>
+                                <Text style={chooseCharactersStyles.buttonText}>Next</Text>
                             </TouchableOpacity>
                         </View>
 
@@ -173,7 +193,16 @@ export default function ChooseCharacterScreen() {
         </ImageBackground>
     );
 }
-const styles = StyleSheet.create({
+const chooseCharactersStyles = StyleSheet.create({
+    imageBackground: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: 'center',
+        zIndex: 2,
+        position: 'absolute'
+    },
     buttonContainer: {
         position: 'absolute',
         bottom: 0,
