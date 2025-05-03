@@ -31,6 +31,8 @@ const defaultImages = require('../assets/template/template_image.jpg')
 const forestMaskForBackgroundTop = require('../assets/mask/forest_mask_top_bg.png')
 const forestMaskForBackgroundBottom = require('../assets/mask/forest_mask_bottom.png')
 const background = require('../assets/backgrounds/characters_choose/character_choose_bg.jpg')
+const button = require('../assets/buttons/orange_button_01(small).png')
+const buttonDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function ChooseCharacterScreen() {
     const router = useRouter();
@@ -44,7 +46,7 @@ export default function ChooseCharacterScreen() {
     const choose_character = useCharacterStore(state => state.updateCharacterStats)
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
     //
-    const characters = useMemo(() => characters_pull_for_choose(), [characters_pull_for_choose])
+    const characters = useMemo(() => characters_pull_for_choose(), [characters_pull_for_choose]);
 
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN);
@@ -133,12 +135,11 @@ export default function ChooseCharacterScreen() {
                         borderRadius: 8,
                         backgroundColor: 'white'
                     }}>
-                        <Text>Choose your character</Text>
+                        {/* <Text>Choose your character</Text> */}
                     </View>
                     <View style={{
                         width: '80%',
                         height: '80%',
-                        // position: 'absolute',
                         zIndex: 1,
                         backgroundColor: 'white',
                         borderRadius: 10,
@@ -156,7 +157,6 @@ export default function ChooseCharacterScreen() {
                             }}
                             source={currentCharacterToChoose.model}
                         />
-                        <Text>{currentIndex}</Text>
                         <View style={chooseCharactersStyles.statsContainer}>
                             <View>
                                 <Text>Attack:{currentCharacterToChoose.attack}</Text>
@@ -175,15 +175,15 @@ export default function ChooseCharacterScreen() {
 
 
                         <View style={chooseCharactersStyles.buttonContainer}>
-                            <TouchableOpacity style={chooseCharactersStyles.button}
-                                onPress={handlePreviousCharacter}
-                            >
-                                <Text style={chooseCharactersStyles.buttonText}>Previous</Text>
+                            <TouchableOpacity onPress={handlePreviousCharacter}>
+                                <ImageBackground source={button} style={chooseCharactersStyles.button}>
+                                    <Text style={chooseCharactersStyles.buttonText}>Previous</Text>
+                                </ImageBackground>
                             </TouchableOpacity>
-                            <TouchableOpacity style={chooseCharactersStyles.button}
-                                onPress={handleNextCharacter}
-                            >
-                                <Text style={chooseCharactersStyles.buttonText}>Next</Text>
+                            <TouchableOpacity onPress={handleNextCharacter}>
+                                <ImageBackground source={button} style={chooseCharactersStyles.button}>
+                                    <Text style={chooseCharactersStyles.buttonText}>Next</Text>
+                                </ImageBackground>
                             </TouchableOpacity>
                         </View>
 
@@ -210,19 +210,22 @@ const chooseCharactersStyles = StyleSheet.create({
         backgroundColor: 'aquamarine',
         width: '100%',
         height: '10%',
-        gap: 10,
+        gap: 0,
         alignItems: 'center',
-        justifyContent: 'space-around'
+        justifyContent: 'center'
     },
     button: {
-        borderWidth: 1,
-        borderRadius: 4,
-        padding: 8,
-        width: 100,
-
+        width: 182,
+        height: 47,
+        alignItems: 'center',
+        justifyContent: 'center',
+        transform: [{ scale: 0.8 }],
     },
     buttonText: {
-        textAlign: 'center'
+        textAlign: 'center',
+        fontFamily: 'Universal Font',
+        fontSize: 26,
+        fontWeight: 900
     },
     buttonChoose: {
         backgroundColor: 'yellow',

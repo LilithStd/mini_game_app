@@ -1,7 +1,8 @@
 import { GLOBAL_APP_PATH } from '@/constants/global_path';
 import { getValidPath } from '@/constants/helpers';
+import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { ImageBackground, Text, View, StyleSheet, TouchableOpacity } from 'react-native'
 import Typewriter from 'react-native-typewriter';
 
@@ -22,6 +23,12 @@ export default function Transistion() {
             setSkip(true)
         } else {
             setIsTimer(true)
+            if (isTimer) {
+                setIsTimer(false)
+                router.push({
+                    pathname: transistionPath
+                })
+            }
         }
     }
     //effect
@@ -44,6 +51,18 @@ export default function Transistion() {
         }
 
     }, [isTimer]);
+    useFocusEffect(
+        useCallback(() => {
+
+            setIsTimer(false)
+            setSkip(false)
+            setTyping(true)
+
+            return () => {
+
+            };
+        }, [])
+    );
 
     return (
         <ImageBackground
@@ -61,7 +80,7 @@ export default function Transistion() {
                             disabled={typing || skip}
                             typing={1}
                             minDelay={0}
-                            onTyped={() => { setTyping(false) }}
+                            onTyped={() => { setTyping(true) }}
                             onTypingEnd={() => { setTyping(false), setSkip(true), setIsTimer(true) }}
                         >
                             {transistionContenxt.contentTitle}
