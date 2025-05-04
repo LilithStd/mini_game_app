@@ -141,6 +141,14 @@ export default function Story_Screen() {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
 
+    useEffect(() => {
+        if (scenarioHook === SCENARIO_HOOKS.AFTER_CHOOSE_CHARACTER) {
+            const middlePart = getChapterStory('middle', currentLanguage);
+            if (!middlePart) return;
+            setCurrentAction(scenarioAction, currentLanguage)
+            setCurrentBackgroud(middlePart.text.content.part_00.background);
+        }
+    }, [scenarioHook])
 
     useEffect(() => {
         if (changeStage) {

@@ -46,6 +46,7 @@ export default function ChooseCharacterScreen() {
     const choose_character = useCharacterStore(state => state.updateCharacterStats)
     const setContinueGame = useGlobalStore(state => state.setContinueGame)
     //
+    // const characters = characters_pull_for_choose()
     const characters = useMemo(() => characters_pull_for_choose(), [characters_pull_for_choose]);
 
     useEffect(() => {
