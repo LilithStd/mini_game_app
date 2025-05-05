@@ -14,10 +14,15 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
-const transistionTextWithCurrentLanguage = {
+const transistionTextMiddle = {
     [LANGUAGE.EN]: "turning its head in your direction it rushed into the attack, you have no choice but to accept the fight",
     [LANGUAGE.LV]: "pagriezis galvu tavā virzienā, tas metās uzbrukumā, tev neatlika nekas cits kā pieņemt cīņu.",
     [LANGUAGE.RU]: "повернув голову в вашу сторону оно ринулось в наступление, у вас нет выбора кроме как принять бой",
+}
+const transistionTextStart = {
+    [LANGUAGE.EN]: "As you fall, you try to grab onto the walls with your weapon, and you manage to slow down your fall because you are skilled...",
+    [LANGUAGE.LV]: "Krītot, jus mēģini ar ieroci satvert sienas, un jus izdodas palēnināt kritienu, jo esam prasmīgs...",
+    [LANGUAGE.RU]: "Падая, вы пытаетесь ухватиться за стены оружием, и вам удаётся замедлить падение, потому что вы искусный...",
 }
 
 export default function Story_Screen() {
@@ -56,9 +61,9 @@ export default function Story_Screen() {
     const transistionTextWithCurrentLanguage = (stage: string, language: LANGUAGE) => {
         switch (stage) {
             case 'start':
-                break;
+                return transistionTextStart[language]
             case 'middle':
-                break;
+                return transistionTextMiddle[language]
             case 'end':
                 break;
         }
@@ -139,10 +144,11 @@ export default function Story_Screen() {
             setSkip(false);
 
             if (currentPartText.stage === 'start' && currentChapter === CHAPTER_LIST.ORIGIN) {
+                const title = transistionTextWithCurrentLanguage(currentPartText.stage, currentLanguage)
                 router.push({
                     pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
                     params: {
-                        title: 'As you fall, you try to grab onto the walls with your weapon, and you manage to slow down your fall because you are skilled...',
+                        title: title,
                         pathToAfterTransistion: GLOBAL_APP_PATH.CHARACTER_CHOOSE_SCREEN
                     }
                 })
@@ -150,10 +156,11 @@ export default function Story_Screen() {
                 setChangeStage(true)
             }
             if (currentPartText.stage === 'middle' && currentChapter === CHAPTER_LIST.ORIGIN) {
+                const title = transistionTextWithCurrentLanguage(currentPartText.stage, currentLanguage)
                 router.push({
                     pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
                     params: {
-                        title: 'повернув голову в вашу сторону оно ринулось в наступление, у вас нет выбора кроме как принять бой',
+                        title: title,
                         pathToAfterTransistion: GLOBAL_APP_PATH.BATTLE_SCREEN
                     }
                 })
