@@ -65,49 +65,49 @@ export const CHAPTER_CONTENT = [
 				content: {
 					part_00: {
 						variantText: {
-							en: 'You dont remember well what happened before the fall, everything is blurry in your eyes, but you try to remember and with your hand on the floor you feel for the weapon, it reminds you that you...',
-							ru: 'template ru',
-							lv: 'template lv',
+							en: 'You dont remember well what happened before the fall, everything is blurry before your eyes, you understand that you are in some kind of cave with weak lighting',
+							ru: 'Вы плохо помните, что было до падения, всё расплывчато перед глазами, вы понимаете что находитесь в какой то пещере со слабым освещением',
+							lv: 'Jus labi neatceries, kas notika pirms kritiena, viss ir miglains jusu acu priekšā, jus saproti, ka atrodies kaut kādā alā ar vāju apgaismojumu.',
 						},
 						background: require('../../../assets/backgrounds/cave/cave_00.jpg'),
 					},
 					part_01: {
 						variantText: {
-							en: 'template test 1',
-							ru: 'template ru',
-							lv: 'template lv',
+							en: 'Realizing that the path is only forward, you make several steps deep into the cave',
+							ru: 'Понимая что путь есть только вперёд , вы делаете несколько шагов вглубь пещеры',
+							lv: 'Saprotot, ka vienīgais ceļš ir uz priekšu, jūs sperat dažus soļus dziļāk alā.',
 						},
 						background: require('../../../assets/backgrounds/cave/cave_01.jpg'),
 					},
 					part_02: {
 						variantText: {
-							en: 'template test 2',
-							ru: 'template ru',
-							lv: 'template lv',
+							en: 'You wander among identical rooms and corridors for a long time',
+							ru: 'Вы блуждаете среди одинаковых комнат и коридоров уже долгое время',
+							lv: 'Jus jau ilgu laiku esam klaiņojis pa vienām un tām pašām istabām un koridoriem.',
 						},
-						background: defaultTemplateImage,
+						background: require('../../../assets/backgrounds/cave/cave_03.jpg'),
 					},
 					part_03: {
 						variantText: {
-							en: 'template teste 3',
-							ru: 'template',
-							lv: 'template',
+							en: 'Sometimes, while taking a break, you hear a terrible growl deep in the corridors',
+							ru: 'Иногда, делая привалы, чтобы отдохнуть, вы слышите грозное рычание где то глубоко в коридорах',
+							lv: 'Reizēm, apstājoties atpūsties, kaut kur dziļi koridoros dzirdama draudīga rūkšana.',
 						},
 						background: defaultTemplateImage,
 					},
 					part_04: {
 						variantText: {
-							en: 'template teste 4',
-							ru: 'template',
-							lv: 'template',
+							en: 'Another roar echoes through the corridors, now he is already quite close to you, fear grips you, but without losing your self-control, tightly clutching your weapon, you walk away from loud, icy blood, animal sounds.',
+							ru: 'Очередной рык эхом распространяется по коридорам, теперь он уже совсем рядом с вами, страх охватывает вас, но не теряя самообладания , крепко сжимая оружие вы идёте в сторону громких, леденящих кровь, звериных звуков.',
+							lv: 'Vēl viens rēciens atskan cauri koridoriem, tagad tas ir pavisam tuvu, bailes tevi pārņem, bet, nezaudējot savaldību, cieši turot ieroci, tu ej pretī skaļajām, asinis stindzinošajām, dzīvnieku skaņām.',
 						},
 						background: defaultTemplateImage,
 					},
 					part_05: {
 						variantText: {
-							en: 'template teste 5',
-							ru: 'template ru',
-							lv: 'template',
+							en: 'Coming closer and closer to the source of the animal sounds, you see a large shadow, and it is definitely not a wild predator from the forest, you have heard about them only from urban legends, but it seems to have noticed you...',
+							ru: 'Подходя всё ближе к источнику звериных звуков, вы видите большую тень, и это точно не дикий хищник из леса, вы слышали про них только из городских легенд, но вот оно кажется заметило вас...',
+							lv: 'Tuvojoties arvien tuvāk dzīvnieku skaņu avotam, jūs redzat lielu ēnu, un tas noteikti nav savvaļas plēsējs no meža, jūs par tiem esat dzirdējuši tikai no pilsētu leģendām, bet šķiet, ka tas jūs ir pamanījis...',
 						},
 						background: defaultTemplateImage,
 					},

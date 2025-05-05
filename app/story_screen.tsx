@@ -7,13 +7,18 @@ import { StageType, useStoryStore } from "@/store/story/story_store";
 import { CHAPTER_LIST, STORY_STAGE } from "@/store/story/storyTypes";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
-import { ImageBackground, Text, TouchableOpacity, View, StyleSheet } from "react-native";
+import { ImageBackground, Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import Typewriter from 'react-native-typewriter';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
 const buttonOrangeDisable = require('../assets/buttons/orange_button_01(small_disabled).png')
+const transistionTextWithCurrentLanguage = {
+    [LANGUAGE.EN]: "turning its head in your direction it rushed into the attack, you have no choice but to accept the fight",
+    [LANGUAGE.LV]: "pagriezis galvu tavā virzienā, tas metās uzbrukumā, tev neatlika nekas cits kā pieņemt cīņu.",
+    [LANGUAGE.RU]: "повернув голову в вашу сторону оно ринулось в наступление, у вас нет выбора кроме как принять бой",
+}
 
 export default function Story_Screen() {
     const router = useRouter();
@@ -46,6 +51,16 @@ export default function Story_Screen() {
 
 
 
+        }
+    }
+    const transistionTextWithCurrentLanguage = (stage: string, language: LANGUAGE) => {
+        switch (stage) {
+            case 'start':
+                break;
+            case 'middle':
+                break;
+            case 'end':
+                break;
         }
     }
 
@@ -134,13 +149,33 @@ export default function Story_Screen() {
             } else {
                 setChangeStage(true)
             }
+            if (currentPartText.stage === 'middle' && currentChapter === CHAPTER_LIST.ORIGIN) {
+                router.push({
+                    pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
+                    params: {
+                        title: 'повернув голову в вашу сторону оно ринулось в наступление, у вас нет выбора кроме как принять бой',
+                        pathToAfterTransistion: GLOBAL_APP_PATH.BATTLE_SCREEN
+                    }
+                })
+            }
         }
 
     }
     useEffect(() => {
         setCurrentState(GLOBAL_APP_PATH.STORY_SCREEN)
     }, [])
-
+    //temp code block for reset store
+    const resetStore = () => {
+        AsyncStorage.removeItem('story-storage').then(() => {
+            console.log('✅ Story store reset');
+        });
+    }
+    // useEffect(() => {
+    //     AsyncStorage.removeItem('story-storage').then(() => {
+    //         console.log('✅ Story store reset');
+    //     });
+    // }, []);
+    //
     useEffect(() => {
         if (scenarioHook === SCENARIO_HOOKS.AFTER_CHOOSE_CHARACTER) {
             const middlePart = getChapterStory('middle', currentLanguage);
@@ -199,6 +234,7 @@ export default function Story_Screen() {
             resizeMode="cover"
         >
             <Text>story_Screen</Text>
+            <Button title="reset store" onPress={resetStore} />
             <View
                 style={currentPartText.text === currentStageContent?.text.content.part_00.content || currentStageContent?.text ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
