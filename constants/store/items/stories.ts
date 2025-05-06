@@ -93,7 +93,7 @@ export const CHAPTER_CONTENT = [
 							ru: 'Иногда, делая привалы, чтобы отдохнуть, вы слышите грозное рычание где то глубоко в коридорах',
 							lv: 'Reizēm, apstājoties atpūsties, kaut kur dziļi koridoros dzirdama draudīga rūkšana.',
 						},
-						background: defaultTemplateImage,
+						background: require('../../../assets/backgrounds/cave/cave_04.jpg'),
 					},
 					part_04: {
 						variantText: {
@@ -101,7 +101,7 @@ export const CHAPTER_CONTENT = [
 							ru: 'Очередной рык эхом распространяется по коридорам, теперь он уже совсем рядом с вами, страх охватывает вас, но не теряя самообладания , крепко сжимая оружие вы идёте в сторону громких, леденящих кровь, звериных звуков.',
 							lv: 'Vēl viens rēciens atskan cauri koridoriem, tagad tas ir pavisam tuvu, bailes tevi pārņem, bet, nezaudējot savaldību, cieši turot ieroci, tu ej pretī skaļajām, asinis stindzinošajām, dzīvnieku skaņām.',
 						},
-						background: defaultTemplateImage,
+						background: require('../../../assets/backgrounds/cave/cave_05.jpg'),
 					},
 					part_05: {
 						variantText: {
