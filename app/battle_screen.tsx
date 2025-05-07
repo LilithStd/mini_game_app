@@ -1,6 +1,6 @@
 import { Animated, Button, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View, StyleSheet } from "react-native";
 import Character from "../components/player/character";
-import { router, useLocalSearchParams, useRouter } from 'expo-router';
+import { useLocalSearchParams, useRouter } from "expo-router";
 import Enemy from "@/components/enemy/enemy";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { battleScreenStyles } from '../styles/battle_screen_styles'
@@ -14,12 +14,16 @@ import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SU
 import { getRandomNumber } from "@/constants/helpers";
 import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
-import { useEnemyStore } from "@/store/enemy_store";
+import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
 import { BATTLE_TYPE_PROPS } from "@/constants/battleScreen";
+import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 
 export default function Battle_Screen() {
-    const { status, scenarioHook, typeBattle } = useLocalSearchParams();
+    const { scenarioHook, typeBattle } = useLocalSearchParams();
+    // const params = useLocalSearchParams();
+    // console.log('income', params);
+
     const router = useRouter();
     const BUTTON_LIST = {
         HEALTH: 'active',
@@ -87,6 +91,8 @@ export default function Battle_Screen() {
     const consumblesFullItems = useItemsStore(state => state.consumbles)
     const currentState = useGlobalStore(state => state.currentState)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
+    const getCurrentBoss = useEnemyStore(state => state.getCurrentBoss)
+    const setCurrentEnemy = useEnemyStore(state => state.setCurrentEnemy)
     //
 
     const handleHealPotionsItems = () => getPotionsByType(INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE);
@@ -267,27 +273,41 @@ export default function Battle_Screen() {
     }
 
 
-    useEffect(() => {
-        updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
-        updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
-    }, [])
+    // useEffect(() => {
+    //     updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
+    //     updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
+    // }, [])
+
 
     useEffect(() => {
-        switch (scenarioHook) {
+        updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
+
+        switch (typeBattle) {
             case BATTLE_TYPE_PROPS.MONSTER:
                 setCurrentTypeBattle(BATTLE_TYPE.MONSTER)
+                updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
                 break;
             case BATTLE_TYPE_PROPS.BOSS:
+                if (scenarioHook === SCENARIO_HOOKS.FIRST_BATTLE) {
+                    const currentBoss = getCurrentBoss(BOSS_STAGE.FIRST)
+                    setCurrentEnemy(currentBoss)
+                    // console.log(currentBoss);
+
+                    updateEnemy(UPDATE_STATS.ALL, currentBoss.stats ? currentBoss.stats : default_stats_enemy)
+                }
                 setCurrentTypeBattle(BATTLE_TYPE.BOSS)
                 break;
             default:
                 setCurrentTypeBattle(BATTLE_TYPE.DEFAULT)
         }
-    }, [scenarioHook])
+    }, [typeBattle])
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     switch(currentTypeBattle) {
+    //         case BATTLE_TYPE.MONSTER:
 
-    }, [currentTypeBattle])
+    //     }
+    // }, [currentTypeBattle])
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER

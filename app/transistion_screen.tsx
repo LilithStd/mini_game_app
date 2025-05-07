@@ -1,5 +1,4 @@
 import { GLOBAL_APP_PATH } from '@/constants/global_path';
-import { getValidPath } from '@/constants/helpers';
 import { useFocusEffect } from '@react-navigation/native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import React, { useCallback, useEffect, useState } from 'react'
@@ -7,7 +6,9 @@ import { ImageBackground, Text, View, StyleSheet, TouchableOpacity } from 'react
 import Typewriter from 'react-native-typewriter';
 
 export default function Transistion() {
-    const { title, pathToAfterTransistion, scenarioHook } = useLocalSearchParams()
+    const { title, pathToAfterTransistion, scenarioHook, typeBattle } = useLocalSearchParams()
+
+
     const router = useRouter();
     const defaultRoute = GLOBAL_APP_PATH.MAIN
     //state
@@ -22,14 +23,18 @@ export default function Transistion() {
         if (!skip) {
             setSkip(true)
         } else {
-            setIsTimer(true)
-            if (isTimer) {
-                setIsTimer(false)
-                router.push({
-                    params: scenarioHook ? { scenarioHook } : undefined,
-                    pathname: transistionPath
-                })
-            }
+            setIsTimer(prevState => {
+                if (!prevState) {
+                    router.push({
+                        pathname: transistionPath,
+                        params: {
+                            scenarioHook: scenarioHook,
+                            typeBattle: typeBattle
+                        },
+                    });
+                }
+                return true;
+            });
         }
     }
     //effect

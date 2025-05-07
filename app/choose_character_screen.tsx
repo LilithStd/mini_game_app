@@ -3,7 +3,7 @@ import { getRandomNumber } from "@/constants/helpers";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import { useCharacterStore, UPDATE_CHARACTER_STATS, CharacterStats } from "@/store/character_store"
 import { useGlobalStore } from "@/store/global_store"
-import { useRouter } from "expo-router";
+import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useMemo, useState } from "react";
 import { Button, Text, View, Image, ImageBackground, TouchableOpacity, StyleSheet } from "react-native"
 

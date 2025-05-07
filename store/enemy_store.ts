@@ -3,7 +3,7 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOCATIONS_GROUP} from './location_store';
 
-interface EnemyTypePull {
+interface EnemyType {
 	name: string;
 	model: number;
 	preview: number;
@@ -13,10 +13,12 @@ interface EnemyTypePull {
 interface BossType {
 	name: string;
 	model: number;
+	stage: BOSS_STAGE;
 	stats: BossStats;
 }
 
-const enum BOSS_STAGE {
+export const enum BOSS_STAGE {
+	DEFAULT = 'DEFAULT',
 	FIRST = 'FIRST',
 	SECOND = 'SECOND',
 	THIRD = 'THIRD',
@@ -25,11 +27,7 @@ const enum BOSS_STAGE {
 	FINISH = 'FINISH',
 }
 
-interface EnemyType extends EnemyTypePull {
-	level: number;
-}
-
-interface EnemyContentType extends EnemyTypePull {
+interface EnemyContentType extends EnemyType {
 	locations: string[];
 }
 
@@ -81,7 +79,21 @@ const defaultStats = {
 	death: false,
 };
 
-const bossStats = {};
+const bossStats = {
+	level: 1,
+	attack: 30,
+	defense: 50,
+	accuracy: 5,
+	criticalRate: 3,
+	criticalDamage: 42,
+	evasion: 2,
+	reduceCriticalDamage: 0,
+	atribute: 'dark',
+	resistAtribute: 'dark',
+	healPoints: 500,
+	expirience: 400,
+	death: false,
+};
 
 const ENEMY_CONTENT = [
 	{
@@ -142,16 +154,25 @@ const ENEMY_CONTENT = [
 	},
 ];
 
-const BOSS_CONTENT = {};
+const BOSS_CONTENT = [
+	{
+		name: 'first boss',
+		model: require('../assets/enemy/boss/boss_00.jpg'),
+		stats: bossStats,
+		stage: BOSS_STAGE.FIRST,
+	},
+];
 
 export interface EnemyStoreInterface {
 	defaultState: true;
 	enemyPull: EnemyContentType[];
-	currentEnemy: EnemyTypePull;
-	setCurrentEnemy: (currentEnemy: EnemyTypePull) => void;
+	bossPull: BossType[];
+	currentEnemy: EnemyType | BossType;
+	getCurrentBoss: (stage: BOSS_STAGE) => BossType;
+	setCurrentEnemy: (currentEnemy: EnemyType | BossType) => void;
 	setDefaultState: () => void;
 	getRandomEnemyForBattle: (location: string) => void;
-	getEnemyPullForLocations: (location: string) => EnemyTypePull[];
+	getEnemyPullForLocations: (location: string) => EnemyType[];
 }
 
 const default_enemy = {
@@ -161,13 +182,28 @@ const default_enemy = {
 	stats: defaultStats,
 };
 
+const default_boss = {
+	name: '',
+	model: 0,
+	stage: BOSS_STAGE.DEFAULT,
+	stats: defaultStats,
+};
+
 // Zustand-хранилище
 export const useEnemyStore = create<EnemyStoreInterface>()(
 	persist(
 		(set, get) => ({
 			defaultState: true,
 			enemyPull: ENEMY_CONTENT,
+			bossPull: BOSS_CONTENT,
 			currentEnemy: default_enemy,
+			getCurrentBoss: (stage) => {
+				const currentBoss = get().bossPull.find((item) => item.stage === stage);
+				console.log(currentBoss?.name);
+
+				return currentBoss ? currentBoss : default_boss;
+			},
+
 			setCurrentEnemy: (currentEnemy) => {
 				set({currentEnemy: currentEnemy});
 			},

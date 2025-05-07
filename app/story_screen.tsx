@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import Typewriter from 'react-native-typewriter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BATTLE_TYPE_PROPS } from "@/constants/battleScreen";
 
 const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
@@ -28,6 +29,7 @@ const transistionTextStart = {
 export default function Story_Screen() {
     const router = useRouter();
     const { scenarioHook } = useLocalSearchParams();
+
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
     const setCurrentState = useGlobalStore(state => state.setCurrentState)
     const defaultGlobalState = useGlobalStore(state => state.newGame)
@@ -161,7 +163,8 @@ export default function Story_Screen() {
                     pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
                     params: {
                         title: title,
-                        scenarionHook: SCENARIO_HOOKS.FIRST_BATTLE,
+                        scenarioHook: SCENARIO_HOOKS.FIRST_BATTLE,
+                        typeBattle: BATTLE_TYPE_PROPS.BOSS,
                         pathToAfterTransistion: GLOBAL_APP_PATH.BATTLE_SCREEN
                     }
                 })
@@ -238,6 +241,14 @@ export default function Story_Screen() {
         >
             <Text>story_Screen</Text>
             <Button title="reset store" onPress={resetStore} />
+            <Button title="battle screen" onPress={() => {
+                router.push({
+                    pathname: GLOBAL_APP_PATH.BATTLE_SCREEN,
+                    params: {
+                        text: 'example'
+                    }
+                })
+            }} />
             <View
                 style={currentPartText.text === currentStageContent?.text.content.part_00.content || currentStageContent?.text ? storyStyles.maskBackgroundSlice : storyStyles.maskBackground}
             >{skip ? <Text style={{
