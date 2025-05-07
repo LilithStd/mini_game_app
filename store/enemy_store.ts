@@ -10,6 +10,21 @@ interface EnemyTypePull {
 	stats: EnemyStats;
 }
 
+interface BossType {
+	name: string;
+	model: number;
+	stats: BossStats;
+}
+
+const enum BOSS_STAGE {
+	FIRST = 'FIRST',
+	SECOND = 'SECOND',
+	THIRD = 'THIRD',
+	FOURTH = 'FOURTH',
+	FIVE = 'FIVE',
+	FINISH = 'FINISH',
+}
+
 interface EnemyType extends EnemyTypePull {
 	level: number;
 }
@@ -19,6 +34,22 @@ interface EnemyContentType extends EnemyTypePull {
 }
 
 interface EnemyStats {
+	level: number;
+	attack: number;
+	defense: number;
+	accuracy: number;
+	criticalRate: number;
+	criticalDamage: number;
+	evasion: number;
+	reduceCriticalDamage: number;
+	atribute: string;
+	resistAtribute: string;
+	healPoints: number;
+	expirience: number;
+	death: boolean;
+}
+
+interface BossStats {
 	level: number;
 	attack: number;
 	defense: number;
@@ -49,6 +80,8 @@ const defaultStats = {
 	expirience: 140,
 	death: false,
 };
+
+const bossStats = {};
 
 const ENEMY_CONTENT = [
 	{
@@ -108,6 +141,8 @@ const ENEMY_CONTENT = [
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 ];
+
+const BOSS_CONTENT = {};
 
 export interface EnemyStoreInterface {
 	defaultState: true;

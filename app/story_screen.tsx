@@ -161,6 +161,7 @@ export default function Story_Screen() {
                     pathname: GLOBAL_APP_PATH.TRANSISTION_SCREEN,
                     params: {
                         title: title,
+                        scenarionHook: SCENARIO_HOOKS.FIRST_BATTLE,
                         pathToAfterTransistion: GLOBAL_APP_PATH.BATTLE_SCREEN
                     }
                 })
@@ -177,12 +178,7 @@ export default function Story_Screen() {
             console.log('✅ Story store reset');
         });
     }
-    // useEffect(() => {
-    //     AsyncStorage.removeItem('story-storage').then(() => {
-    //         console.log('✅ Story store reset');
-    //     });
-    // }, []);
-    //
+
     useEffect(() => {
         if (scenarioHook === SCENARIO_HOOKS.AFTER_CHOOSE_CHARACTER) {
             const middlePart = getChapterStory('middle', currentLanguage);

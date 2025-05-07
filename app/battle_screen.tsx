@@ -18,7 +18,7 @@ import { useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
 
 export default function Battle_Screen() {
-    const { status } = useLocalSearchParams();
+    const { status, scenarioHook } = useLocalSearchParams();
     const router = useRouter();
     const BUTTON_LIST = {
         HEALTH: 'active',

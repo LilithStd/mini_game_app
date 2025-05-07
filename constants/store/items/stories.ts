@@ -109,7 +109,7 @@ export const CHAPTER_CONTENT = [
 							ru: 'Подходя всё ближе к источнику звериных звуков, вы видите большую тень, и это точно не дикий хищник из леса, вы слышали про них только из городских легенд, но вот оно кажется заметило вас...',
 							lv: 'Tuvojoties arvien tuvāk dzīvnieku skaņu avotam, jūs redzat lielu ēnu, un tas noteikti nav savvaļas plēsējs no meža, jūs par tiem esat dzirdējuši tikai no pilsētu leģendām, bet šķiet, ka tas jūs ir pamanījis...',
 						},
-						background: defaultTemplateImage,
+						background: require('../../../assets/backgrounds/cave/cave_06.jpg'),
 					},
 				},
 			},

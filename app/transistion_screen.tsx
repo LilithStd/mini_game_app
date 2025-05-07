@@ -7,7 +7,7 @@ import { ImageBackground, Text, View, StyleSheet, TouchableOpacity } from 'react
 import Typewriter from 'react-native-typewriter';
 
 export default function Transistion() {
-    const { title, pathToAfterTransistion } = useLocalSearchParams()
+    const { title, pathToAfterTransistion, scenarioHook } = useLocalSearchParams()
     const router = useRouter();
     const defaultRoute = GLOBAL_APP_PATH.MAIN
     //state
@@ -26,6 +26,7 @@ export default function Transistion() {
             if (isTimer) {
                 setIsTimer(false)
                 router.push({
+                    params: scenarioHook ? { scenarioHook } : undefined,
                     pathname: transistionPath
                 })
             }
@@ -35,7 +36,6 @@ export default function Transistion() {
     useEffect(() => {
         if (isTimer) {
             const timeoutId = setTimeout(() => {
-                console.log("Сработал таймер!");
                 router.push({
                     pathname: transistionPath
                 })
@@ -45,8 +45,6 @@ export default function Transistion() {
             return () => {
                 clearTimeout(timeoutId);
                 setIsTimer(false)
-                console.log("Таймер очищен");
-
             };
         }
 
@@ -81,7 +79,11 @@ export default function Transistion() {
                             typing={1}
                             minDelay={0}
                             onTyped={() => { setTyping(true) }}
-                            onTypingEnd={() => { setTyping(false), setSkip(true), setIsTimer(true) }}
+                            onTypingEnd={() => {
+                                setTyping(false),
+                                    setSkip(true),
+                                    setIsTimer(true)
+                            }}
                         >
                             {transistionContenxt.contentTitle}
                         </Typewriter>
