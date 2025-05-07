@@ -16,9 +16,10 @@ import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_str
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
+import { BATTLE_TYPE_PROPS } from "@/constants/battleScreen";
 
 export default function Battle_Screen() {
-    const { status, scenarioHook } = useLocalSearchParams();
+    const { status, scenarioHook, typeBattle } = useLocalSearchParams();
     const router = useRouter();
     const BUTTON_LIST = {
         HEALTH: 'active',
@@ -62,6 +63,14 @@ export default function Battle_Screen() {
         }
     }
 
+    const enum BATTLE_TYPE {
+        MONSTER = 'MONSTER',
+        BOSS = 'BOSS',
+        DEFAULT = 'DEFAULT'
+    }
+
+
+
 
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
@@ -90,6 +99,7 @@ export default function Battle_Screen() {
     const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
     const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
+    const [currentTypeBattle, setCurrentTypeBattle] = useState<BATTLE_TYPE>(BATTLE_TYPE.DEFAULT)
     const [isTurn, setIsTurn] = useState(false)
     //
 
@@ -138,12 +148,6 @@ export default function Battle_Screen() {
         death: false,
     }
 
-
-    // const handleAttackButton = () => {
-    //     setCurrentElementOnFocus(FOCUS_ELEMENT.ENEMY);
-    //     setScaleCharacter(0.7)
-    //     setScaleEnemy(1)
-    // };
     const handleDefenseButton = () => {
 
     }
@@ -268,6 +272,22 @@ export default function Battle_Screen() {
         updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
     }, [])
 
+    useEffect(() => {
+        switch (scenarioHook) {
+            case BATTLE_TYPE_PROPS.MONSTER:
+                setCurrentTypeBattle(BATTLE_TYPE.MONSTER)
+                break;
+            case BATTLE_TYPE_PROPS.BOSS:
+                setCurrentTypeBattle(BATTLE_TYPE.BOSS)
+                break;
+            default:
+                setCurrentTypeBattle(BATTLE_TYPE.DEFAULT)
+        }
+    }, [scenarioHook])
+
+    useEffect(() => {
+
+    }, [currentTypeBattle])
 
     useEffect(() => {
         const targetToReward = REWARD_VARIANT.MONSTER
@@ -289,51 +309,6 @@ export default function Battle_Screen() {
         }
     }, [enemyBattleStats.death, characterBattleStats.death])
 
-
-    // useEffect(() => {
-    //     if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
-
-    //     console.log("Enemy turn started");
-
-    //     setIsTurn(true);
-
-    //     if (attackTimeoutRef.current) {
-    //         clearTimeout(attackTimeoutRef.current);
-    //     }
-
-    //     attackTimeoutRef.current = setTimeout(() => {
-    //         console.log("Enemy attacks!");
-    //         setEnemyAction(ACTIONS.ATTACK);
-
-    //         setTimeout(() => {
-    //             updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
-    //         }, 500);
-    //     }, 2000);
-
-    //     return () => {
-    //         if (attackTimeoutRef.current) {
-    //             clearTimeout(attackTimeoutRef.current);
-    //             console.log("Cleared previous attack timeout");
-    //         }
-    //         setIsTurn(false);
-    //     };
-    // }, [currentTargetToMove]);
-    // useEffect(() => {
-    //     if (currentTargetToMove !== CURRENT_TARGET_TO_MOVE.ENEMY) return;
-    //     setIsTurn(true)
-    //     const attackTimeout = setTimeout(() => {
-    //         setEnemyAction(ACTIONS.ATTACK);
-
-    //         setTimeout(() => {
-    //             updateCharacter(UPDATE_STATS.HP, enemyStats.stats.attack);
-    //         }, 500);
-    //     }, 2000);
-
-    //     return () => {
-    //         clearTimeout(attackTimeout);
-    //         setIsTurn(false)
-    //     }
-    // }, [currentTargetToMove]);
 
     useEffect(() => {
         if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
