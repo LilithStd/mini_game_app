@@ -1,8 +1,23 @@
+import {transform} from '@babel/core';
 import {StyleSheet} from 'react-native';
 
 export const battleScreenStyles = StyleSheet.create({
 	switchFocusElement: {
 		zIndex: 3,
+	},
+	mainContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center', // Центрирует по горизонтали
+		width: '100%',
+		height: '100%',
+		position: 'relative',
+	},
+	imageBackground: {
+		flex: 1,
+		width: '100%',
+		height: '100%',
+		position: 'absolute',
 	},
 	buttonContainer: {
 		position: 'absolute',
@@ -11,17 +26,21 @@ export const battleScreenStyles = StyleSheet.create({
 		alignItems: 'stretch',
 	},
 	buttonView: {
-		gap: 4,
-		alignItems: 'stretch',
+		gap: 1,
+		// alignItems: 'stretch',
+	},
+	buttonBackground: {
+		width: 182,
+		height: 47,
+		justifyContent: 'center',
+		alignItems: 'center',
+		transform: [{scale: 0.8}],
 	},
 	button: {
-		backgroundColor: 'green',
-		padding: 8,
-		borderRadius: 4,
-		width: 100,
+		// width: 120,
 	},
 	buttonDisable: {
-		backgroundColor: 'grey',
+		// backgroundColor: 'grey',
 		padding: 8,
 		borderRadius: 4,
 		width: 100,
@@ -31,14 +50,16 @@ export const battleScreenStyles = StyleSheet.create({
 	},
 	buttonText: {
 		textAlign: 'center',
-		color: 'white',
+		fontSize: 20,
+		fontWeight: 900,
+		// color: 'white',
 	},
 	characterStatsContainer: {
 		position: 'absolute',
 		width: '70%',
 		height: '90%',
 		right: 10,
-		backgroundColor: 'grey',
+		// backgroundColor: 'grey',
 		marginLeft: 50,
 	},
 	statContainer: {
