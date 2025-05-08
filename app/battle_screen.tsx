@@ -404,49 +404,49 @@ export default function Battle_Screen() {
                         elevation: 5, // Тень для Android
                     }}>
                         <Text>battle interface</Text>
-                        <View style={styles.buttonContainer}>
-                            {isItemsActive ? <View style={styles.buttonView}>
+                        <View style={battleScreenStyles.buttonContainer}>
+                            {isItemsActive ? <View style={battleScreenStyles.buttonView}>
 
                                 {Object.entries(BUTTON_LIST).map(([key, value]) => (
                                     <TouchableOpacity
                                         key={key}
                                         style={[
-                                            styles.button,
-                                            activeButton === value && styles.buttonActive // Подсветка активной кнопки
+                                            battleScreenStyles.button,
+                                            activeButton === value && battleScreenStyles.buttonActive // Подсветка активной кнопки
                                         ]}
                                         onPress={() => handleItemsCallBackButton(value)}
                                     >
-                                        <Text style={styles.buttonText}>{key}</Text>
+                                        <Text style={battleScreenStyles.buttonText}>{key}</Text>
                                     </TouchableOpacity>
                                 ))}
-                            </View> : <View style={styles.buttonView}>
-                                <TouchableOpacity style={isTurn ? styles.buttonDisable : styles.button}
+                            </View> : <View style={battleScreenStyles.buttonView}>
+                                <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
                                     onPress={handleAttackButton}
                                     disabled={isTurn}
                                 >
-                                    <Text style={styles.buttonText}>ATTACK</Text>
+                                    <Text style={battleScreenStyles.buttonText}>ATTACK</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button}
+                                <TouchableOpacity style={battleScreenStyles.button}
                                     disabled={isTurn}
                                 >
-                                    <Text style={styles.buttonText}>DEFENSE</Text>
+                                    <Text style={battleScreenStyles.buttonText}>DEFENSE</Text>
                                 </TouchableOpacity >
-                                <TouchableOpacity style={styles.button}
+                                <TouchableOpacity style={battleScreenStyles.button}
                                     disabled={isTurn}
                                 >
-                                    <Text style={styles.buttonText}>STAND</Text>
+                                    <Text style={battleScreenStyles.buttonText}>STAND</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button}
+                                <TouchableOpacity style={battleScreenStyles.button}
                                     onPress={handleItemsButton}
                                     disabled={isTurn}
                                 >
-                                    <Text style={styles.buttonText}>ITEMS</Text>
+                                    <Text style={battleScreenStyles.buttonText}>ITEMS</Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.button}
+                                <TouchableOpacity style={battleScreenStyles.button}
                                     onPress={handleRetreatButton}
                                     disabled={isTurn}
                                 >
-                                    <Text style={styles.buttonText}>RETREAT</Text>
+                                    <Text style={battleScreenStyles.buttonText}>RETREAT</Text>
                                 </TouchableOpacity>
                             </View>}
 
@@ -454,7 +454,7 @@ export default function Battle_Screen() {
 
                         </View>
                         {isItemsActive ?
-                            <View style={styles.characterStatsContainer}>
+                            <View style={battleScreenStyles.characterStatsContainer}>
                                 {activeConsumbles.map((item) =>
                                     <View
                                         key={item.id}
@@ -476,41 +476,41 @@ export default function Battle_Screen() {
                                     </View>
                                 )}
                             </View> :
-                            <View style={styles.characterStatsContainer}>
-                                <Text style={styles.statsTitle}>Character stats:</Text>
-                                <View style={styles.statContainer}>
+                            <View style={battleScreenStyles.characterStatsContainer}>
+                                <Text style={battleScreenStyles.statsTitle}>Character stats:</Text>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Name:</Text>
                                     <Text>{characterStats.name}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Level:</Text>
                                     <Text>{characterStats.level}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>HP:</Text>
                                     <Text>{characterBattleStats.healPoints}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Attack:</Text>
                                     <Text>{characterBattleStats.attack}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Defense:</Text>
                                     <Text>{characterBattleStats.defense}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Accuracy:</Text>
                                     <Text>{characterBattleStats.accuracy}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Evasion:</Text>
                                     <Text>{characterBattleStats.evasion}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Critical:</Text>
                                     <Text>{characterBattleStats.criticalRate}</Text>
                                 </View>
-                                <View style={styles.statContainer}>
+                                <View style={battleScreenStyles.statContainer}>
                                     <Text>Atribute:</Text>
                                     <Text>{characterBattleStats.atribute}</Text>
                                 </View>
@@ -523,166 +523,6 @@ export default function Battle_Screen() {
         </SafeAreaView>
     )
 }
-const styles = StyleSheet.create({
-    buttonContainer: {
-        position: 'absolute',
-        left: 10,
-        justifyContent: 'space-between',
-        alignItems: 'stretch'
-
-    },
-    buttonView: {
-        gap: 4,
-        alignItems: 'stretch'
-    },
-    button: {
-        backgroundColor: 'green',
-        padding: 8,
-        borderRadius: 4,
-        width: 100,
-    },
-    buttonDisable: {
-        backgroundColor: 'grey',
-        padding: 8,
-        borderRadius: 4,
-        width: 100,
-    },
-    buttonActive: {
-        backgroundColor: 'aquamarine',
-    },
-    buttonText: {
-        textAlign: 'center',
-        color: 'white'
-    },
-    characterStatsContainer: {
-        position: 'absolute',
-        width: '70%',
-        height: '90%',
-        right: 10,
-        backgroundColor: 'grey',
-        marginLeft: 50
-    },
-    statContainer: {
-        flexDirection: 'row',
-        paddingRight: 10,
-        paddingLeft: 10,
-        justifyContent: 'space-between',
-    },
-    statsTitle: {
-        textAlign: 'center'
-    }
-})
-
-//alternative_view_reserved
-{/* 
-                <MotiView
-                    animate={{
-                        scale: scaleCharacter, // Используем shared value для анимации
-                    }}
-                    transition={{
-                        type: 'spring', // Тип анимации
-                        damping: 10,     // Затухание
-                        stiffness: 100,  // Жесткость
-                    }}
-                    style={{
-                        position: 'absolute',
-                        flex: 1,
-                        width: '100%',
-                        height: '100%',
-                        left: '20%',
-                        zIndex: currentElementOnFocus === FOCUS_ELEMENT.CHARACTER ? 3 : 1,
-                    }}
-                >
-
-                    <View
-                        style={{
-                            position: 'absolute',
-                            gap: 10,
-                            width: '30%',
-                            top: '40%',
-
-                            zIndex: 1
-                        }}
-                    >
-                        <Button
-                            title="attack"
-                            onPress={handleAttackButton}
-                        />
-                        <Button
-                            title="defence"
-                            onPress={handleDefenseButton}
-                        />
-                        <Button
-                            title="stand"
-                            onPress={handleStandButton}
-                        />
-                        <Button
-                            title="retreat"
-                            onPress={handleRetreatButton}
-                        />
-                    </View>
-
-                    <View style={{
-                        width: '100%',
-                        top: '10%',
-                        left: '-40%'
-                    }}>
-
-                        <Character />
-                    </View>
-
-                </MotiView>
-                <MotiView
-                    animate={{
-                        scale: scaleEnemy, // Используем shared value для анимации
-                    }}
-                    transition={{
-                        type: 'spring', // Тип анимации
-                        damping: 10,     // Затухание
-                        stiffness: 100,  // Жесткость
-                    }}
-
-                    style={{
-                        position: 'absolute',
-                        zIndex: currentElementOnFocus === FOCUS_ELEMENT.ENEMY ? 3 : 1,
-                        width: '100%',
-                        left: '-10%'
-                        // right: enemyPostion
-                    }}>
-                    <View style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        position: 'relative',
-                        zIndex: 4,
-                    }}>
-
-                        <MotiView
-                            from={{ opacity: 0, scale: 0.8 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            exit={{ opacity: 0, scale: 0.8 }}
-                            transition={{ type: "spring", duration: 500 }}
-                        >
-                            <Text style={{
-                                position: 'absolute',
-                                top: 200,
-                                fontSize: 20,
-                                backgroundColor: "black",
-                                color: "white",
-                                padding: 10,
-                                borderRadius: 10
-                            }}>
-                                {characterBattleStats.attack}
-                            </Text>
-                        </MotiView>
-
-                    </View>
-                    <Pressable
-                        style={{
-
-                        }}
-                        onPress={enemyTempButton}
-                    >
-                        <Enemy />
-                    </Pressable>
-                </MotiView> */}
+// const battleScreenStyles = StyleSheet.create({
+   
+// })

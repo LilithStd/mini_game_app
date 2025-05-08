@@ -199,7 +199,6 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 			currentEnemy: default_enemy,
 			getCurrentBoss: (stage) => {
 				const currentBoss = get().bossPull.find((item) => item.stage === stage);
-				console.log(currentBoss?.name);
 
 				return currentBoss ? currentBoss : default_boss;
 			},
