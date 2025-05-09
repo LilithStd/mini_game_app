@@ -377,6 +377,7 @@ export default function Battle_Screen() {
                 <View style={{
                     width: '100%',
                     height: '100%',
+                    backgroundColor: 'black'
 
                 }}>
                     {isItemsActive && <Character />}
@@ -404,8 +405,8 @@ export default function Battle_Screen() {
                         position: 'absolute', // Фиксируем внизу
                         bottom: 0, // Прижимаем к нижнему краю
                         width: '100%',
-                        height: '25%',
-                        backgroundColor: 'white',
+                        height: '28%',
+                        backgroundColor: 'black',
                         justifyContent: 'center', // Центрируем содержимое
                         alignItems: 'center', // Центрируем текст
                         borderTopLeftRadius: 10, // Закруглим углы для красоты
@@ -460,7 +461,7 @@ export default function Battle_Screen() {
                                     </ImageBackground>
                                 </TouchableOpacity >
                                 <TouchableOpacity
-                                    style={[battleScreenStyles.button, { marginLeft: 160 }]}
+                                    style={[battleScreenStyles.button, { marginLeft: 150 }]}
                                     disabled={isTurn}
                                     onPress={() => handleItemsCallBackButton(BUTTON_LIST.DEFENSE)}
                                 >
@@ -530,7 +531,7 @@ export default function Battle_Screen() {
                                     </ImageBackground>
                                 </TouchableOpacity >
                                 <TouchableOpacity
-                                    style={[battleScreenStyles.button, { marginLeft: 160 }]}
+                                    style={[battleScreenStyles.button, { marginLeft: 150 }]}
                                     disabled={isTurn}
                                 >
                                     <ImageBackground
@@ -543,20 +544,8 @@ export default function Battle_Screen() {
                                     </ImageBackground>
                                 </TouchableOpacity>
                                 <TouchableOpacity
-                                    style={[battleScreenStyles.button, { marginLeft: 120 }]}
-                                    onPress={handleItemsButton}
-                                    disabled={isTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={battleScreenStyles.buttonBackground}
-                                    >
-                                        <Text style={battleScreenStyles.buttonText}>ITEMS</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                                <TouchableOpacity
                                     style={[battleScreenStyles.button,
-                                    { marginLeft: 80 }]}
+                                    { marginLeft: 120 }]}
                                     onPress={handleRetreatButton}
                                     disabled={isTurn}
                                 >
@@ -567,6 +556,19 @@ export default function Battle_Screen() {
                                         <Text style={battleScreenStyles.buttonText}>RETREAT</Text>
                                     </ImageBackground>
                                 </TouchableOpacity>
+                                <TouchableOpacity
+                                    style={[battleScreenStyles.button, { marginLeft: 80 }]}
+                                    onPress={handleItemsButton}
+                                    disabled={isTurn}
+                                >
+                                    <ImageBackground
+                                        source={buttonOrange}
+                                        style={battleScreenStyles.buttonBackground}
+                                    >
+                                        <Text style={battleScreenStyles.buttonText}>ITEMS</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+
                             </View>}
                             {/* {isItemsActive ? <View style={battleScreenStyles.buttonView}>
 
