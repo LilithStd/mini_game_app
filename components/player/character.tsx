@@ -1,79 +1,119 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { useBattleStore } from "@/store/battle_store";
-import { Character_Default, Character_Type, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
+import { useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
-import { useRouter } from "expo-router";
 import { useEffect, useRef } from "react";
-import { Button, Image, Text, View } from "react-native";
+import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Character() {
-    const router = useRouter();
-    const globalRoute = useGlobalStore(state => state.currentState)
-    const characterStatsOnBattle = useBattleStore(state => state.character)
-    const characterStatsGLobal = useCharacterStore(state => state.characterStats)
-    const characterStats = globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN ? useBattleStore(state => state.character) : useCharacterStore(state => state.characterStats)
-    const default_state = useCharacterStore(state => state.default_state)
-
-
-    // const enemyStats = useBattleStore(state => state.enemy)
-
-
+    const globalRoute = useGlobalStore(state => state.currentState);
+    const characterStatsGlobal = useCharacterStore(state => state.characterStats);
+    const characterStats =
+        globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN
+            ? useBattleStore(state => state.character)
+            : characterStatsGlobal;
 
     const initialHP = useRef<number>(characterStats.healPoints ?? 1);
-    const hpPercentage = (characterStats.healPoints / initialHP.current) * 100;
+    const hpValue = Math.max(0, characterStats.healPoints);
+    const animatedHP = useRef(new Animated.Value(hpValue / initialHP.current)).current;
+
+    useEffect(() => {
+        Animated.timing(animatedHP, {
+            toValue: hpValue / initialHP.current,
+            duration: 500,
+            useNativeDriver: false,
+        }).start();
+    }, [hpValue]);
+
+    const widthInterpolated = animatedHP.interpolate({
+        inputRange: [0, 1],
+        outputRange: ['0%', '100%'],
+    });
+
+    const colorInterpolated = animatedHP.interpolate({
+        inputRange: [0, 0.5, 1],
+        outputRange: ['#ff3333', '#ffcc00', '#4caf50'],
+    });
 
     return (
-        <View style={{
-            width: '100%',
-            height: '70%',
-            bottom: -100,
-            zIndex: 2
+        <View style={styles.container}>
+            <Image source={characterStatsGlobal.model} style={styles.image} resizeMode="contain" />
 
-        }}>
-            <Text>Character component</Text>
-            <View
-                style={{
-                    backgroundColor: 'white',
-                    alignItems: 'center',
-                    width: '100%',
-                    top: -120
-                }}
-            >
-                <Text>{characterStatsGLobal.name}</Text>
-                <Text>Level:{characterStats.level}</Text>
+            <View style={styles.infoBlock}>
+                <Text style={styles.name}>{characterStatsGlobal.name}</Text>
+                <Text style={styles.level}>Level: {characterStats.level}</Text>
 
-                <View style={{
-                    borderWidth: 1,
-                    alignSelf: 'flex-start',
-                    width: '100%',
-                }}>
-                    <Text style={{
-                        textAlign: 'center',
-                        width: '100%',
-                        position: 'absolute',
-                        zIndex: 1
-
-                    }}>HP:{characterStats.healPoints}</Text>
-                    <View style={{
-                        backgroundColor: 'red',
-                        width: `${hpPercentage}%`,
-                        alignSelf: 'flex-start',
-                        height: 20
-                    }}>
+                <View style={styles.hpWrapper}>
+                    <Text style={styles.hpText}>
+                        HP: {hpValue} / {initialHP.current}
+                    </Text>
+                    <View style={styles.hpBackground}>
+                        <Animated.View
+                            style={[
+                                styles.hpBar,
+                                {
+                                    width: widthInterpolated,
+                                    backgroundColor: colorInterpolated,
+                                },
+                            ]}
+                        />
                     </View>
                 </View>
-
             </View>
-            <Image
-                style={{
-                    position: 'absolute',
-                    width: '100%', // Растянет изображение на всю ширину контейнера
-                    height: '100%', // Аналогично с высотой
-                    top: 0, // Чтобы не было смещения
-                    left: 0, // Чтобы не было смещения
-                }}
-                source={characterStatsGLobal.model}
-            />
         </View>
-    )
+    );
 }
+
+const styles = StyleSheet.create({
+    container: {
+        width: '100%',
+        height: '70%',
+        bottom: 0,
+        top: 120,
+        zIndex: 2,
+        position: 'relative',
+    },
+    infoBlock: {
+        backgroundColor: 'white',
+        alignItems: 'center',
+        width: '100%',
+        position: 'absolute',
+        top: -120,
+        paddingVertical: 8,
+    },
+    name: {
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+    level: {
+        marginBottom: 8,
+    },
+    hpWrapper: {
+        width: '90%',
+    },
+    hpText: {
+        position: 'absolute',
+        zIndex: 1,
+        width: '100%',
+        textAlign: 'center',
+        fontWeight: 'bold',
+        color: 'black',
+    },
+    hpBackground: {
+        height: 20,
+        backgroundColor: '#333',
+        borderRadius: 8,
+        overflow: 'hidden',
+    },
+    hpBar: {
+        height: '100%',
+        borderRadius: 8,
+    },
+    image: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        top: 0,
+        left: 0,
+    },
+});

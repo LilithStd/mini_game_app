@@ -121,6 +121,7 @@ export default function Battle_Screen() {
     //
 
 
+
     const FOCUS_ELEMENT = {
         CHARACTER: 'character',
         ENEMY: 'enemy',
@@ -362,6 +363,7 @@ export default function Battle_Screen() {
         if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
             setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
         }
+
     }, [])
 
     return (
