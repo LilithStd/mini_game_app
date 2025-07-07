@@ -216,13 +216,16 @@ const mainStyles = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
-        gap: 10
+        // gap: 10
     },
     languageButton: {
         fontFamily: 'Title App',
         fontSize: 18,
+        padding: 10,
+
     },
     activeLanguageButton: {
-        backgroundColor: 'grey',
+        borderRadius: 10,
+        backgroundColor: '#b35900',
     }
 })
