@@ -133,6 +133,8 @@ export default function Battle_Screen() {
         setIsModalOpen(false)
     }
 
+    console.log(enemyStats);
+
 
 
     const default_stats_character = {
@@ -308,13 +310,6 @@ export default function Battle_Screen() {
         }
     }
 
-
-    // useEffect(() => {
-    //     updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
-    //     updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
-    // }, [])
-
-
     useEffect(() => {
         updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
 
@@ -334,7 +329,10 @@ export default function Battle_Screen() {
                 setCurrentTypeBattle(BATTLE_TYPE.BOSS)
                 break;
             default:
-                setCurrentTypeBattle(BATTLE_TYPE.DEFAULT)
+                setCurrentTypeBattle(BATTLE_TYPE.DEFAULT),
+                    console.log('default');
+
+                updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
     }, [typeBattle])
 
@@ -572,93 +570,6 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
 
                             </View>}
-                            {/* {isItemsActive ? <View style={battleScreenStyles.buttonView}>
-
-                                {Object.entries(BUTTON_LIST).map(([key, value]) => (
-                                    <TouchableOpacity
-                                        key={key}
-                                        style={[
-                                            battleScreenStyles.button,
-                                            activeButton === value && battleScreenStyles.buttonActive // Подсветка активной кнопки
-                                        ]}
-                                        onPress={() => handleItemsCallBackButton(value)}
-                                    >
-                                        <Text style={battleScreenStyles.buttonText}>{key}</Text>
-                                    </TouchableOpacity>
-                                ))}
-                            </View> :
-                                <View style={battleScreenStyles.buttonView}>
-
-                                    <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
-                                        onPress={handleAttackButton}
-                                        disabled={isTurn}
-
-                                    >
-                                        <ImageBackground
-                                            source={buttonOrange}
-                                            style={[battleScreenStyles.buttonBackground, {
-                                                marginLeft: 80
-                                            }]}
-                                        >
-                                            <Text style={battleScreenStyles.buttonText}>ATTACK</Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-
-                                    <TouchableOpacity
-                                        style={[battleScreenStyles.button, {
-                                            marginLeft: 120
-                                        }]}
-                                        disabled={isTurn}
-                                    >
-                                        <ImageBackground
-                                            source={buttonOrange}
-                                            style={battleScreenStyles.buttonBackground}
-                                        >
-                                            <Text style={battleScreenStyles.buttonText}>DEFENSE</Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity >
-                                    <TouchableOpacity
-                                        style={[battleScreenStyles.button, { marginLeft: 160 }]}
-                                        disabled={isTurn}
-                                    >
-                                        <ImageBackground
-                                            source={buttonOrange}
-                                            style={battleScreenStyles.buttonBackground
-
-                                            }
-                                        >
-                                            <Text style={battleScreenStyles.buttonText}>STAND</Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={[battleScreenStyles.button, { marginLeft: 120 }]}
-                                        onPress={handleItemsButton}
-                                        disabled={isTurn}
-                                    >
-                                        <ImageBackground
-                                            source={buttonOrange}
-                                            style={battleScreenStyles.buttonBackground}
-                                        >
-                                            <Text style={battleScreenStyles.buttonText}>ITEMS</Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity
-                                        style={[battleScreenStyles.button,
-                                        { marginLeft: 80 }]}
-                                        onPress={handleRetreatButton}
-                                        disabled={isTurn}
-                                    >
-                                        <ImageBackground
-                                            source={buttonOrange}
-                                            style={battleScreenStyles.buttonBackground}
-                                        >
-                                            <Text style={battleScreenStyles.buttonText}>RETREAT</Text>
-                                        </ImageBackground>
-                                    </TouchableOpacity>
-                                </View>} */}
-
-
-
                         </View>
                         {isItemsActive ?
                             <View style={battleScreenStyles.characterStatsContainer}>
