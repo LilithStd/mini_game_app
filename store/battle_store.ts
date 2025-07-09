@@ -40,11 +40,20 @@ export enum INCOMING_STATUS {
 	// DEFAULT = 'default',
 }
 
+export enum STATUS_BATTLE_SCREEN {
+	DEFAULT = 'default',
+	BOSS_BATTLE = 'boss_battle',
+	MONSTER_BATTLE = 'monster_battle',
+	STORY_BATTLE = 'story_battle',
+}
+
 export interface BattleStoreInterface {
+	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
 	enemy: EnemyStats;
 	currentTargetToMove: CURRENT_TARGET_TO_MOVE;
 	totalDamage: number;
+	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setDefaultState: () => void;
 	initialParameters: {
 		character: CharacterStats;
@@ -116,6 +125,7 @@ const defaultValuesEnemy: EnemyStats = {
 export const useBattleStore = create<BattleStoreInterface>()(
 	persist(
 		(set, get) => ({
+			battleStatus: STATUS_BATTLE_SCREEN.DEFAULT,
 			totalDamage: 0,
 			currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
 			character: {...defaultValues},
@@ -123,6 +133,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			currentBuffAndDebuff: {
 				character: [],
 				enemy: [],
+			},
+			setBattleStatus: (status) => {
+				if (get().battleStatus !== status) {
+					set({battleStatus: status});
+				}
 			},
 			setCurrentBuffAndDebuff: (status) => {},
 			setDefaultState: () => {
