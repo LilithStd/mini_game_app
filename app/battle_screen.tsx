@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import { CURRENT_TARGET_TO_MOVE, INCOMING_STATUS, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
+import { CURRENT_TARGET_TO_MOVE, INCOMING_STATUS, STATUS_BATTLE_SCREEN, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
@@ -95,9 +95,12 @@ export default function Battle_Screen() {
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
+    //battle store
     const enemyBattleStats = useBattleStore(state => state.enemy)
     const defaultState = useBattleStore(state => state.setDefaultState)
     const currentTargetToMove = useBattleStore(state => state.currentTargetToMove)
+    const setBattleStatus = useBattleStore(state => state.setBattleStatus)
+    //
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
     const currentState = useGlobalStore(state => state.currentState)
@@ -132,9 +135,6 @@ export default function Battle_Screen() {
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
     }
-
-    console.log(enemyStats);
-
 
 
     const default_stats_character = {
@@ -330,9 +330,9 @@ export default function Battle_Screen() {
                 break;
             default:
                 setCurrentTypeBattle(BATTLE_TYPE.DEFAULT),
-                    console.log('default');
 
-                updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
+
+                    updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
     }, [typeBattle])
 
@@ -363,6 +363,19 @@ export default function Battle_Screen() {
         }
 
     }, [])
+
+    useEffect(() => {
+        switch (typeBattle) {
+            case BATTLE_TYPE_PROPS.BOSS:
+                setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
+                break;
+            case BATTLE_TYPE_PROPS.MONSTER:
+                setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
+                break;
+            default:
+                setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
+        }
+    }, [typeBattle])
 
     return (
         <SafeAreaView
