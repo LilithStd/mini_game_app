@@ -316,9 +316,12 @@ export default function Battle_Screen() {
         switch (typeBattle) {
             case BATTLE_TYPE_PROPS.MONSTER:
                 setCurrentTypeBattle(BATTLE_TYPE.MONSTER)
+                setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
+
                 updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
                 break;
             case BATTLE_TYPE_PROPS.BOSS:
+                setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
                 if (scenarioHook === SCENARIO_HOOKS.FIRST_BATTLE) {
                     const currentBoss = getCurrentBoss(BOSS_STAGE.FIRST)
                     setCurrentEnemy(currentBoss)
@@ -330,9 +333,9 @@ export default function Battle_Screen() {
                 break;
             default:
                 setCurrentTypeBattle(BATTLE_TYPE.DEFAULT),
+                    setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
 
-
-                    updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
+                updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
         }
     }, [typeBattle])
 
@@ -364,18 +367,18 @@ export default function Battle_Screen() {
 
     }, [])
 
-    useEffect(() => {
-        switch (typeBattle) {
-            case BATTLE_TYPE_PROPS.BOSS:
-                setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
-                break;
-            case BATTLE_TYPE_PROPS.MONSTER:
-                setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
-                break;
-            default:
-                setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
-        }
-    }, [typeBattle])
+    // useEffect(() => {
+    //     switch (typeBattle) {
+    //         case BATTLE_TYPE_PROPS.BOSS:
+    //             setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
+    //             break;
+    //         case BATTLE_TYPE_PROPS.MONSTER:
+    //             setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
+    //             break;
+    //         default:
+    //             setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
+    //     }
+    // }, [typeBattle])
 
     return (
         <SafeAreaView
