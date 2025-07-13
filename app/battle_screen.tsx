@@ -325,8 +325,6 @@ export default function Battle_Screen() {
                 if (scenarioHook === SCENARIO_HOOKS.FIRST_BATTLE) {
                     const currentBoss = getCurrentBoss(BOSS_STAGE.FIRST)
                     setCurrentEnemy(currentBoss)
-                    // console.log(currentBoss);
-
                     updateEnemy(UPDATE_STATS.ALL, currentBoss.stats ? currentBoss.stats : default_stats_enemy)
                 }
                 setCurrentTypeBattle(BATTLE_TYPE.BOSS)
@@ -367,18 +365,6 @@ export default function Battle_Screen() {
 
     }, [])
 
-    // useEffect(() => {
-    //     switch (typeBattle) {
-    //         case BATTLE_TYPE_PROPS.BOSS:
-    //             setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
-    //             break;
-    //         case BATTLE_TYPE_PROPS.MONSTER:
-    //             setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
-    //             break;
-    //         default:
-    //             setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
-    //     }
-    // }, [typeBattle])
 
     return (
         <SafeAreaView
