@@ -16,7 +16,7 @@ import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_str
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
-import { BATTLE_TYPE_PROPS } from "@/constants/battleScreen";
+import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, VARIANTS_ITEMS } from "@/constants/battleScreen";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 
 
@@ -29,60 +29,7 @@ export default function Battle_Screen() {
     const { scenarioHook, typeBattle } = useLocalSearchParams();
 
     const router = useRouter();
-    const BUTTON_LIST = {
-        HEALTH: 'health',
-        ATTACK: 'attack',
-        DEFENSE: 'defense',
-        EVASION: 'evasion',
-        CLOSE: 'close'
-    }
-    const ACTIONS_LIST = {
-        ATTACK: 'attack',
-        DEFENSE: 'defense',
-        STAND: 'stand',
-        ITEMS: 'items',
-        RETREAT: 'retreat'
-    }
-    type ActionsTypes = {
-        title: string,
-        description: string
-    }
 
-    const VARIANTS_ITEMS = {
-        HEALTH: 'active',
-        ATTACK: 'attack',
-        DEFENSE: 'defense',
-        EVASION: 'evasion',
-    }
-
-    const ACTIONS = {
-        ATTACK: {
-            title: 'attack',
-            description: 'enemy attack you'
-        },
-        DEFENSE: {
-            title: 'defense',
-            description: 'enemy takes a defensive stance'
-        },
-        STAND: {
-            title: 'stand',
-            description: 'enemy looks at you with caution'
-        },
-        RETREAT: {
-            title: 'retreat',
-            description: 'enemy retreats'
-        },
-        NOTHING: {
-            title: 'nothing',
-            description: 'nothing'
-        }
-    }
-
-    const enum BATTLE_TYPE {
-        MONSTER = 'MONSTER',
-        BOSS = 'BOSS',
-        DEFAULT = 'DEFAULT'
-    }
 
 
 
