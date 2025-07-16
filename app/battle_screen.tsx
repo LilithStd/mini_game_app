@@ -16,7 +16,7 @@ import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_str
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
-import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, VARIANTS_ITEMS } from "@/constants/battleScreen";
+import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, VARIANTS_ITEMS } from "@/constants/battleScreen";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 
 
