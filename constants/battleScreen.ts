@@ -58,3 +58,34 @@ export const enum BATTLE_TYPE {
 	BOSS = 'BOSS',
 	DEFAULT = 'DEFAULT',
 }
+
+export const default_stats_character = {
+	level: 1,
+	attack: 0,
+	defense: 0,
+	accuracy: 0,
+	criticalRate: 0,
+	criticalDamage: 0,
+	evasion: 0,
+	reduceCriticalDamage: 0,
+	atribute: 'none',
+	resistAtribute: '',
+	itemsSkills: [],
+	healPoints: 0,
+	death: false,
+};
+export const default_stats_enemy = {
+	level: 1,
+	attack: 0,
+	defense: 0,
+	accuracy: 0,
+	criticalRate: 0,
+	criticalDamage: 0,
+	evasion: 0,
+	reduceCriticalDamage: 0,
+	atribute: '',
+	resistAtribute: '',
+	expirience: 0,
+	healPoints: 0,
+	death: false,
+};
