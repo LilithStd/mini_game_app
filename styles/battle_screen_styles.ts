@@ -71,4 +71,21 @@ export const battleScreenStyles = StyleSheet.create({
 	statsTitle: {
 		textAlign: 'center',
 	},
+	absoluteContainer: {
+		position: 'absolute', // Фиксируем внизу
+		bottom: 0, // Прижимаем к нижнему краю
+		width: '100%',
+		height: '28%',
+		backgroundColor: 'black',
+		justifyContent: 'center', // Центрируем содержимое
+		alignItems: 'center', // Центрируем текст
+		borderTopLeftRadius: 10, // Закруглим углы для красоты
+		borderTopRightRadius: 10,
+		shadowColor: '#000',
+		zIndex: 3,
+		shadowOffset: {width: 0, height: -2},
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
+		elevation: 5, // Тень для Android
+	},
 });
