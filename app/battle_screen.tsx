@@ -16,7 +16,7 @@ import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_str
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
-import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, VARIANTS_ITEMS } from "@/constants/battleScreen";
+import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, SubTypeItems, VARIANTS_ITEMS } from "@/constants/battleScreen";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 
 
@@ -69,15 +69,6 @@ export default function Battle_Screen() {
     const [currentTypeBattle, setCurrentTypeBattle] = useState<BATTLE_TYPE>(BATTLE_TYPE.DEFAULT)
     const [isTurn, setIsTurn] = useState(false)
     //
-
-
-
-    const FOCUS_ELEMENT = {
-        CHARACTER: 'character',
-        ENEMY: 'enemy',
-        NOTHING: 'nothing'
-    }
-
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
@@ -188,12 +179,7 @@ export default function Battle_Screen() {
         callBack: handleRetreatConfirm
     }
 
-    type SubTypeItems =
-        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF
-        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS
-        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY
-        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL
-        | INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS;
+
 
     const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
         switch (variant) {
@@ -498,45 +484,6 @@ export default function Battle_Screen() {
                                     </View>
                                 )}
                             </View> : <View></View>
-                            // <View style={battleScreenStyles.characterStatsContainer}>
-                            //     <Text style={battleScreenStyles.statsTitle}>Character stats:</Text>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Name:</Text>
-                            //         <Text>{characterStats.name}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Level:</Text>
-                            //         <Text>{characterStats.level}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>HP:</Text>
-                            //         <Text>{characterBattleStats.healPoints}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Attack:</Text>
-                            //         <Text>{characterBattleStats.attack}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Defense:</Text>
-                            //         <Text>{characterBattleStats.defense}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Accuracy:</Text>
-                            //         <Text>{characterBattleStats.accuracy}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Evasion:</Text>
-                            //         <Text>{characterBattleStats.evasion}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Critical:</Text>
-                            //         <Text>{characterBattleStats.criticalRate}</Text>
-                            //     </View>
-                            //     <View style={battleScreenStyles.statContainer}>
-                            //         <Text>Atribute:</Text>
-                            //         <Text>{characterBattleStats.atribute}</Text>
-                            //     </View>
-                            // </View>
                         }
 
                     </View>
