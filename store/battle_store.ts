@@ -141,12 +141,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setCurrentBuffAndDebuff: (status) => {},
 			setDefaultState: () => {
-				set({
-					character: {...defaultValues},
-					enemy: {...defaultValuesEnemy},
-					currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
-					totalDamage: 0,
+				AsyncStorage.removeItem('battle-storage').then(() => {
+					console.log('battle store reset');
 				});
+				// set({
+				// 	character: {...defaultValues},
+				// 	enemy: {...defaultValuesEnemy},
+				// 	currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
+				// 	totalDamage: 0,
+				// });
 			},
 			initialParameters: {
 				character: defaultValues,

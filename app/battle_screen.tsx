@@ -215,7 +215,7 @@ export default function Battle_Screen() {
     }
 
     useEffect(() => {
-        updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
+        // updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
 
         switch (typeBattle) {
             case BATTLE_TYPE_PROPS.MONSTER:
@@ -266,7 +266,7 @@ export default function Battle_Screen() {
         if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
             setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
         }
-
+        defaultState()
     }, [])
 
 
