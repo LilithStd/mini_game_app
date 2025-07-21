@@ -210,6 +210,8 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 				set({
 					defaultState: true,
 					enemyPull: ENEMY_CONTENT,
+					currentEnemy: default_enemy,
+					bossPull: BOSS_CONTENT,
 				});
 			},
 			getRandomEnemyForBattle: (location) => {
