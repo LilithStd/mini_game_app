@@ -3,10 +3,15 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOCATIONS_GROUP} from './location_store';
 
-interface EnemyType {
+interface EnemyTypeOld {
 	name: string;
 	model: number;
 	preview: number;
+	stats: EnemyStats;
+}
+interface EnemyType {
+	name: string;
+	model: number;
 	stats: EnemyStats;
 }
 
@@ -27,7 +32,7 @@ export const enum BOSS_STAGE {
 	FINISH = 'FINISH',
 }
 
-interface EnemyContentType extends EnemyType {
+interface EnemyContentType extends EnemyTypeOld {
 	locations: string[];
 }
 
@@ -95,7 +100,7 @@ const bossStats = {
 	death: false,
 };
 
-const ENEMY_CONTENT = [
+const ENEMY_CONTENT_OLD = [
 	{
 		name: 'enemy_name_0',
 		model: require('../assets/enemy/enemy_0.png'),
@@ -154,6 +159,44 @@ const ENEMY_CONTENT = [
 	},
 ];
 
+const ENEMY_CONTENT = [
+	{
+		name: 'enemy_00',
+		model: require('../assets/enemy/monsters/monster_00.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_01',
+		model: require('../assets/enemy/monsters/monster_01.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_02',
+		model: require('../assets/enemy/monsters/monster_02.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_03',
+		model: require('../assets/enemy/monsters/monster_03.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_04',
+		model: require('../assets/enemy/monsters/monster_04.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_05',
+		model: require('../assets/enemy/monsters/monster_05.jpg'),
+		stats: defaultStats,
+	},
+	{
+		name: 'enemy_06',
+		model: require('../assets/enemy/monsters/monster_06.jpg'),
+		stats: defaultStats,
+	},
+];
+
 const BOSS_CONTENT = [
 	{
 		name: 'first boss',
@@ -165,14 +208,14 @@ const BOSS_CONTENT = [
 
 export interface EnemyStoreInterface {
 	defaultState: true;
-	enemyPull: EnemyContentType[];
+	enemyPull: EnemyType[];
 	bossPull: BossType[];
 	currentEnemy: EnemyType | BossType;
 	getCurrentBoss: (stage: BOSS_STAGE) => BossType;
 	setCurrentEnemy: (currentEnemy: EnemyType | BossType) => void;
 	setDefaultState: () => void;
 	getRandomEnemyForBattle: (location: string) => void;
-	getEnemyPullForLocations: (location: string) => EnemyType[];
+	// getEnemyPullForLocations: (location: string) => EnemyTypeOld[];
 }
 
 const default_enemy = {
@@ -194,7 +237,7 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 	persist(
 		(set, get) => ({
 			defaultState: true,
-			enemyPull: ENEMY_CONTENT,
+			enemyPull: ENEMY_CONTENT_OLD,
 			bossPull: BOSS_CONTENT,
 			currentEnemy: default_enemy,
 			getCurrentBoss: (stage) => {
@@ -209,13 +252,14 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 			setDefaultState: () => {
 				set({
 					defaultState: true,
-					enemyPull: ENEMY_CONTENT,
+					enemyPull: ENEMY_CONTENT_OLD,
 					currentEnemy: default_enemy,
 					bossPull: BOSS_CONTENT,
 				});
 			},
 			getRandomEnemyForBattle: (location) => {
-				const enemies = get().getEnemyPullForLocations(location);
+				// const enemies = get().getEnemyPullForLocations(location);
+				const enemies = get().enemyPull;
 				if (enemies.length === 0) {
 					return null; // Возвращаем null, если врагов нет
 				}
@@ -223,11 +267,11 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 					enemies[Math.floor(Math.random() * enemies.length)];
 				get().setCurrentEnemy(currentEnemey);
 			},
-			getEnemyPullForLocations: (location) => {
-				return get().enemyPull.filter((item) =>
-					item.locations.some((locations) => locations === location),
-				);
-			},
+			// getEnemyPullForLocations: (location) => {
+			// 	return get().enemyPull.filter((item) =>
+			// 		item.locations.some((locations) => locations === location),
+			// 	);
+			// },
 		}),
 		{
 			name: 'enemy-storage',
