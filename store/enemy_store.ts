@@ -100,7 +100,7 @@ const bossStats = {
 	death: false,
 };
 
-const ENEMY_CONTENT_OLD = [
+const ENEMY_CONTENT = [
 	{
 		name: 'enemy_name_0',
 		model: require('../assets/enemy/enemy_0.png'),
@@ -159,7 +159,7 @@ const ENEMY_CONTENT_OLD = [
 	},
 ];
 
-const ENEMY_CONTENT = [
+const ENEMY_CONTENT_OLD = [
 	{
 		name: 'enemy_00',
 		model: require('../assets/enemy/monsters/monster_00.jpg'),
@@ -237,7 +237,7 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 	persist(
 		(set, get) => ({
 			defaultState: true,
-			enemyPull: ENEMY_CONTENT_OLD,
+			enemyPull: ENEMY_CONTENT,
 			bossPull: BOSS_CONTENT,
 			currentEnemy: default_enemy,
 			getCurrentBoss: (stage) => {
@@ -252,7 +252,7 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 			setDefaultState: () => {
 				set({
 					defaultState: true,
-					enemyPull: ENEMY_CONTENT_OLD,
+					enemyPull: ENEMY_CONTENT,
 					currentEnemy: default_enemy,
 					bossPull: BOSS_CONTENT,
 				});
