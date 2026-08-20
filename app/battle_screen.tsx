@@ -27,13 +27,7 @@ const chestPreview = require('../assets/items/chest/chest_01.jpg')
 
 export default function Battle_Screen() {
     const { scenarioHook, typeBattle } = useLocalSearchParams();
-
     const router = useRouter();
-
-
-
-
-
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
     const updateCharacter = useBattleStore(state => state.updateCharacterStats)
@@ -113,29 +107,29 @@ export default function Battle_Screen() {
 
     const handleItemsCallBackButton = (variant: string) => {
 
-        switch (variant) {
-            case BUTTON_LIST.HEALTH:
-                setActiveButton(variant)
-                setActiveConsumbles(handleHealPotionsItems());
-                break;
-            case BUTTON_LIST.ATTACK:
-                setActiveButton(variant)
-                setActiveConsumbles(handleAttackPotionsItems())
-                break;
-            case BUTTON_LIST.DEFENSE:
-                setActiveButton(variant)
-                setActiveConsumbles(handleDefensePotionsItems())
-                break;
-            case BUTTON_LIST.EVASION:
-                setActiveButton(variant)
-                setActiveConsumbles(handleEvasionPotionsItems())
-                break;
-            case BUTTON_LIST.CLOSE:
-                setIsItemsActive(false)
-                setActiveButton(BUTTON_LIST.HEALTH)
-                setActiveConsumbles(handleHealPotionsItems());
-                break;
-        }
+        // switch (variant) {
+        //     case BUTTON_LIST.HEALTH:
+        //         setActiveButton(variant)
+        //         setActiveConsumbles(handleHealPotionsItems());
+        //         break;
+        //     case BUTTON_LIST.ATTACK:
+        //         setActiveButton(variant)
+        //         setActiveConsumbles(handleAttackPotionsItems())
+        //         break;
+        //     case BUTTON_LIST.DEFENSE:
+        //         setActiveButton(variant)
+        //         setActiveConsumbles(handleDefensePotionsItems())
+        //         break;
+        //     case BUTTON_LIST.EVASION:
+        //         setActiveButton(variant)
+        //         setActiveConsumbles(handleEvasionPotionsItems())
+        //         break;
+        //     case BUTTON_LIST.CLOSE:
+        //         setIsItemsActive(false)
+        //         setActiveButton(BUTTON_LIST.HEALTH)
+        //         setActiveConsumbles(handleHealPotionsItems());
+        //         break;
+        // }
     }
 
     const handleActionsCallBackButton = (variant: string) => {
@@ -145,7 +139,6 @@ export default function Battle_Screen() {
                 handleAttackButton()
                 break;
             case ACTIONS_LIST.DEFENSE:
-
                 break;
             case ACTIONS_LIST.STAND:
 
@@ -182,40 +175,39 @@ export default function Battle_Screen() {
 
 
     const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
-        switch (variant) {
-            case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE:
-                const restoreHP = {
-                    updateCurrentStats: UPDATE_STATS.HP,
-                    incomingStatus: INCOMING_STATUS.ITEM
-                }
-                updateCharacter(restoreHP, items.stats?.healPotion ?? 0)
-                break;
-            case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF:
-                const attackBuff = {
-                    updateCurrentStats: UPDATE_STATS.ATTACK,
-                    incomingStatus: INCOMING_STATUS.ITEM
-                }
-                updateCharacter(attackBuff, items.stats?.attack ?? 0)
-                break;
-            case VARIANTS_ITEMS.DEFENSE:
-                const defenseBuff = {
-                    updateCurrentStats: UPDATE_STATS.ATTACK,
-                    incomingStatus: INCOMING_STATUS.ITEM
-                }
-                updateCharacter(defenseBuff, items.stats?.defense ?? 0)
-                break;
-            case VARIANTS_ITEMS.EVASION:
-                const evasionBuff = {
-                    updateCurrentStats: UPDATE_STATS.ATTACK,
-                    incomingStatus: INCOMING_STATUS.ITEM
-                }
-                updateCharacter(evasionBuff, items.stats?.evasion ?? 0)
-                break;
-        }
+        // switch (variant) {
+        //     case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE:
+        //         const restoreHP = {
+        //             updateCurrentStats: UPDATE_STATS.HP,
+        //             incomingStatus: INCOMING_STATUS.ITEM
+        //         }
+        //         updateCharacter(restoreHP, items.stats?.healPotion ?? 0)
+        //         break;
+        //     case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF:
+        //         const attackBuff = {
+        //             updateCurrentStats: UPDATE_STATS.ATTACK,
+        //             incomingStatus: INCOMING_STATUS.ITEM
+        //         }
+        //         updateCharacter(attackBuff, items.stats?.attack ?? 0)
+        //         break;
+        //     case VARIANTS_ITEMS.DEFENSE:
+        //         const defenseBuff = {
+        //             updateCurrentStats: UPDATE_STATS.ATTACK,
+        //             incomingStatus: INCOMING_STATUS.ITEM
+        //         }
+        //         updateCharacter(defenseBuff, items.stats?.defense ?? 0)
+        //         break;
+        //     case VARIANTS_ITEMS.EVASION:
+        //         const evasionBuff = {
+        //             updateCurrentStats: UPDATE_STATS.ATTACK,
+        //             incomingStatus: INCOMING_STATUS.ITEM
+        //         }
+        //         updateCharacter(evasionBuff, items.stats?.evasion ?? 0)
+        //         break;
+        // }
     }
 
     useEffect(() => {
-        // updateCharacter({ updateCurrentStats: UPDATE_STATS.ALL, incomingStatus: INCOMING_STATUS.ATTACK }, characterStats ? characterStats : default_stats_character)
 
         switch (typeBattle) {
             case BATTLE_TYPE_PROPS.MONSTER:
@@ -322,7 +314,7 @@ export default function Battle_Screen() {
                             {isItemsActive ? <View style={battleScreenStyles.buttonView}>
 
                                 <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
-                                    onPress={() => handleItemsCallBackButton(BUTTON_LIST.HEALTH)}
+                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.HEALTH)}
                                     disabled={isTurn}
 
                                 >
@@ -340,7 +332,7 @@ export default function Battle_Screen() {
                                     style={[battleScreenStyles.button, {
                                         marginLeft: 120
                                     }]}
-                                    onPress={() => handleItemsCallBackButton(BUTTON_LIST.ATTACK)}
+                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.ATTACK)}
                                     disabled={isTurn}
                                 >
                                     <ImageBackground
@@ -380,7 +372,7 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button,
                                     { marginLeft: 80 }]}
-                                    onPress={() => handleItemsCallBackButton(BUTTON_LIST.CLOSE)}
+                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.CLOSE)}
                                     disabled={isTurn}
                                 >
                                     <ImageBackground
@@ -448,7 +440,7 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 80 }]}
-                                    onPress={handleItemsButton}
+                                    // onPress={handleItemsButton}
                                     disabled={isTurn}
                                 >
                                     <ImageBackground
@@ -472,7 +464,7 @@ export default function Battle_Screen() {
                                     >
                                         <TouchableOpacity
 
-                                            onPress={() => handleItemsUse(item.subType, item)}
+                                            // onPress={() => handleItemsUse(item.subType, item)}
                                             style={{
                                                 backgroundColor: 'yellow'
                                             }}
