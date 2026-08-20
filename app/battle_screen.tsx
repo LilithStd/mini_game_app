@@ -134,22 +134,22 @@ export default function Battle_Screen() {
 
     const handleActionsCallBackButton = (variant: string) => {
 
-        switch (variant) {
-            case ACTIONS_LIST.ATTACK:
-                handleAttackButton()
-                break;
-            case ACTIONS_LIST.DEFENSE:
-                break;
-            case ACTIONS_LIST.STAND:
+        // switch (variant) {
+        //     case ACTIONS_LIST.ATTACK:
+        //         handleAttackButton()
+        //         break;
+        //     case ACTIONS_LIST.DEFENSE:
+        //         break;
+        //     case ACTIONS_LIST.STAND:
 
-                break;
-            case ACTIONS_LIST.ITEMS:
-                handleItemsButton()
-                break;
-            case ACTIONS_LIST.RETREAT:
-                handleRetreatButton()
-                break;
-        }
+        //         break;
+        //     case ACTIONS_LIST.ITEMS:
+        //         handleItemsButton()
+        //         break;
+        //     case ACTIONS_LIST.RETREAT:
+        //         handleRetreatButton()
+        //         break;
+        // }
     }
 
     const handleItemsCloseButton = () => {
@@ -157,12 +157,12 @@ export default function Battle_Screen() {
     }
 
     const handleRetreatConfirm = () => {
-        setIsModalOpen(false)
-        const retreat = "retreat";
-        router.push({
-            pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-            params: { location, retreat }
-        });
+        // setIsModalOpen(false)
+        // const retreat = "retreat";
+        // router.push({
+        //     pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
+        //     params: { location, retreat }
+        // });
     }
 
 
@@ -207,58 +207,34 @@ export default function Battle_Screen() {
         // }
     }
 
-    useEffect(() => {
 
-        switch (typeBattle) {
-            case BATTLE_TYPE_PROPS.MONSTER:
-                setCurrentTypeBattle(BATTLE_TYPE.MONSTER)
-                setBattleStatus(STATUS_BATTLE_SCREEN.MONSTER_BATTLE)
-
-                updateEnemy(UPDATE_STATS.ALL, enemyStats.stats ? enemyStats.stats : default_stats_enemy)
-                break;
-            case BATTLE_TYPE_PROPS.BOSS:
-                setBattleStatus(STATUS_BATTLE_SCREEN.BOSS_BATTLE)
-                if (scenarioHook === SCENARIO_HOOKS.FIRST_BATTLE) {
-                    const currentBoss = getCurrentBoss(BOSS_STAGE.FIRST)
-                    setCurrentEnemy(currentBoss)
-                    updateEnemy(UPDATE_STATS.ALL, currentBoss.stats ? currentBoss.stats : default_stats_enemy)
-                }
-                setCurrentTypeBattle(BATTLE_TYPE.BOSS)
-                break;
-            default:
-                setCurrentTypeBattle(BATTLE_TYPE.DEFAULT),
-                    setBattleStatus(STATUS_BATTLE_SCREEN.DEFAULT)
-
-                updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
-        }
-    }, [typeBattle])
 
     useEffect(() => {
-        const targetToReward = REWARD_VARIANT.MONSTER
-        if (enemyBattleStats.death) {
-            const expirience = getRandomNumber(5, 200)
-            characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
-            router.push({
-                pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-                params: { location, expirience, targetToReward }
-            });
-            updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
-        }
+        // const targetToReward = REWARD_VARIANT.MONSTER
+        // if (enemyBattleStats.death) {
+        //     const expirience = getRandomNumber(5, 200)
+        //     characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
+        //     router.push({
+        //         pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
+        //         params: { location, expirience, targetToReward }
+        //     });
+        //     updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
+        // }
 
-        if (characterBattleStats.death) {
-            defaultState()
-            router.push({
-                pathname: GLOBAL_APP_PATH.LOSE_SCREEN
-            })
-        }
+        // if (characterBattleStats.death) {
+        //     defaultState()
+        //     router.push({
+        //         pathname: GLOBAL_APP_PATH.LOSE_SCREEN
+        //     })
+        // }
     }, [enemyBattleStats.death, characterBattleStats.death])
 
 
     useEffect(() => {
-        if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
-            setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
-        }
-        defaultState()
+        // if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
+        //     setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
+        // }
+        // defaultState()
     }, [])
 
 
@@ -385,7 +361,7 @@ export default function Battle_Screen() {
                             </View> : <View style={battleScreenStyles.buttonView}>
 
                                 <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
-                                    onPress={handleAttackButton}
+                                    // onPress={handleAttackButton}
                                     disabled={isTurn}
 
                                 >
