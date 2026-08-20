@@ -97,12 +97,12 @@ export default function Battle_Screen() {
     }
 
     const handleAttackButton = () => {
-        updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
-        setEnemyAction(ACTIONS.ATTACK);
-        updateCharacter({
-            updateCurrentStats: UPDATE_STATS.HP,
-            incomingStatus: INCOMING_STATUS.ATTACK
-        }, enemyStats.stats.attack);
+        // updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
+        // setEnemyAction(ACTIONS.ATTACK);
+        // updateCharacter({
+        //     updateCurrentStats: UPDATE_STATS.HP,
+        //     incomingStatus: INCOMING_STATUS.ATTACK
+        // }, enemyStats.stats.attack);
     };
 
     const handleItemsCallBackButton = (variant: string) => {
@@ -206,29 +206,6 @@ export default function Battle_Screen() {
         //         break;
         // }
     }
-
-
-
-    useEffect(() => {
-        // const targetToReward = REWARD_VARIANT.MONSTER
-        // if (enemyBattleStats.death) {
-        //     const expirience = getRandomNumber(5, 200)
-        //     characterUpdateStats(UPDATE_CHARACTER_STATS.EXPIRIENCE, expirience)
-        //     router.push({
-        //         pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-        //         params: { location, expirience, targetToReward }
-        //     });
-        //     updateEnemy(UPDATE_STATS.ALL, default_stats_enemy)
-        // }
-
-        // if (characterBattleStats.death) {
-        //     defaultState()
-        //     router.push({
-        //         pathname: GLOBAL_APP_PATH.LOSE_SCREEN
-        //     })
-        // }
-    }, [enemyBattleStats.death, characterBattleStats.death])
-
 
     useEffect(() => {
         // if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
