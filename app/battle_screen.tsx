@@ -79,20 +79,20 @@ export default function Battle_Screen() {
     }
 
     const handleItemsButton = () => {
-        setIsItemsActive(true)
-        setActiveConsumbles(handleHealPotionsItems())
+        // setIsItemsActive(true)
+        // setActiveConsumbles(handleHealPotionsItems())
 
     }
 
     const getPotionsByType = (subType: string) => {
-        return consumblesFullItems.filter((potion) =>
-            currentConsumblesOnCharacterInventory.some((item) => item.id === potion.id && potion.subType === subType)
-        );
+        // return consumblesFullItems.filter((potion) =>
+        //     currentConsumblesOnCharacterInventory.some((item) => item.id === potion.id && potion.subType === subType)
+        // );
     };
 
 
     const handleRetreatButton = () => {
-        setIsModalOpen(true)
+        // setIsModalOpen(true)
 
     }
 
@@ -153,7 +153,7 @@ export default function Battle_Screen() {
     }
 
     const handleItemsCloseButton = () => {
-        setIsItemsActive(false)
+        // setIsItemsActive(false)
     }
 
     const handleRetreatConfirm = () => {
