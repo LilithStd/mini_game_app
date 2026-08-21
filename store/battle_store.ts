@@ -156,128 +156,128 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				enemy: defaultValuesEnemy,
 			},
 			updateCharacterStats: (updateRequest, updateValue) => {
-				set((state) => {
-					const updatedCharacter = {...state.character};
-					let newState = {...state};
-					let shouldUpdateTurn = false;
+				// set((state) => {
+				// 	const updatedCharacter = {...state.character};
+				// 	let newState = {...state};
+				// 	let shouldUpdateTurn = false;
 
-					switch (updateRequest.updateCurrentStats) {
-						case UPDATE_STATS.ATTACK:
-							if (updateRequest.incomingStatus !== INCOMING_STATUS.ATTACK) {
-								updatedCharacter.attack += updateValue as number;
-								shouldUpdateTurn = true;
-							} else {
-								shouldUpdateTurn = true;
-							}
-							break;
+				// 	switch (updateRequest.updateCurrentStats) {
+				// 		case UPDATE_STATS.ATTACK:
+				// 			if (updateRequest.incomingStatus !== INCOMING_STATUS.ATTACK) {
+				// 				updatedCharacter.attack += updateValue as number;
+				// 				shouldUpdateTurn = true;
+				// 			} else {
+				// 				shouldUpdateTurn = true;
+				// 			}
+				// 			break;
 
-						case UPDATE_STATS.DEFENSE:
-							updatedCharacter.defense = updateValue as number;
-							break;
+				// 		case UPDATE_STATS.DEFENSE:
+				// 			updatedCharacter.defense = updateValue as number;
+				// 			break;
 
-						case UPDATE_STATS.HP:
-							const value = updateValue as number;
+				// 		case UPDATE_STATS.HP:
+				// 			const value = updateValue as number;
 
-							if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
-								updatedCharacter.healPoints = Math.max(
-									0,
-									updatedCharacter.healPoints - value,
-								);
-								shouldUpdateTurn = true;
+				// 			if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
+				// 				updatedCharacter.healPoints = Math.max(
+				// 					0,
+				// 					updatedCharacter.healPoints - value,
+				// 				);
+				// 				shouldUpdateTurn = true;
 
-								if (updatedCharacter.healPoints <= 0) {
-									updatedCharacter.death = true;
-									newState.currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
-								}
-							} else if (
-								updateRequest.incomingStatus === INCOMING_STATUS.ITEM
-							) {
-								const maxHp = state.initialParameters.character.healPoints;
-								updatedCharacter.healPoints = Math.min(
-									updatedCharacter.healPoints + value,
-									maxHp,
-								);
-								shouldUpdateTurn = true;
-							}
-							break;
+				// 				if (updatedCharacter.healPoints <= 0) {
+				// 					updatedCharacter.death = true;
+				// 					newState.currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
+				// 				}
+				// 			} else if (
+				// 				updateRequest.incomingStatus === INCOMING_STATUS.ITEM
+				// 			) {
+				// 				const maxHp = state.initialParameters.character.healPoints;
+				// 				updatedCharacter.healPoints = Math.min(
+				// 					updatedCharacter.healPoints + value,
+				// 					maxHp,
+				// 				);
+				// 				shouldUpdateTurn = true;
+				// 			}
+				// 			break;
 
-						case UPDATE_STATS.LEVEL:
-							updatedCharacter.level = updateValue as number;
-							break;
+				// 		case UPDATE_STATS.LEVEL:
+				// 			updatedCharacter.level = updateValue as number;
+				// 			break;
 
-						case UPDATE_STATS.ALL:
-							return {
-								...state,
-								character: updateValue as CharacterStats,
-								initialParameters: {
-									...state.initialParameters,
-									character: updateValue as CharacterStats,
-								},
-							};
+				// 		case UPDATE_STATS.ALL:
+				// 			return {
+				// 				...state,
+				// 				character: updateValue as CharacterStats,
+				// 				initialParameters: {
+				// 					...state.initialParameters,
+				// 					character: updateValue as CharacterStats,
+				// 				},
+				// 			};
 
-						default:
-							console.warn(
-								`Неподдерживаемый запрос обновления: ${updateRequest}`,
-							);
-							return state;
-					}
+				// 		default:
+				// 			console.warn(
+				// 				`Неподдерживаемый запрос обновления: ${updateRequest}`,
+				// 			);
+				// 			return state;
+				// 	}
 
-					newState.character = updatedCharacter;
+				// 	newState.character = updatedCharacter;
 
-					if (shouldUpdateTurn) {
-						newState.currentTargetToMove =
-							updateRequest.incomingStatus === INCOMING_STATUS.ATTACK
-								? CURRENT_TARGET_TO_MOVE.CHARACTER
-								: CURRENT_TARGET_TO_MOVE.ENEMY;
-					}
+				// 	if (shouldUpdateTurn) {
+				// 		newState.currentTargetToMove =
+				// 			updateRequest.incomingStatus === INCOMING_STATUS.ATTACK
+				// 				? CURRENT_TARGET_TO_MOVE.CHARACTER
+				// 				: CURRENT_TARGET_TO_MOVE.ENEMY;
+				// 	}
 
-					return newState;
-				});
+				// 	return newState;
+				// });
 			},
 
 			updateEnemyStats: (updateRequest, updateValue) => {
-				set((state) => {
-					const updatedEnemy = {...state.enemy};
+				// set((state) => {
+				// 	const updatedEnemy = {...state.enemy};
 
-					switch (updateRequest) {
-						case UPDATE_STATS.ATTACK:
-							updatedEnemy.attack = updateValue as number;
-							set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
-							break;
-						case UPDATE_STATS.DEFENSE:
-							updatedEnemy.defense = updateValue as number;
-							break;
-						case UPDATE_STATS.HP:
-							const value = updateValue as number;
-							if (value >= updatedEnemy.healPoints) {
-								updatedEnemy.healPoints = 0;
-								updatedEnemy.death = true;
-								get().setDefaultState();
-							} else {
-								updatedEnemy.healPoints -= value;
-								set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY});
-							}
+				// 	switch (updateRequest) {
+				// 		case UPDATE_STATS.ATTACK:
+				// 			updatedEnemy.attack = updateValue as number;
+				// 			set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
+				// 			break;
+				// 		case UPDATE_STATS.DEFENSE:
+				// 			updatedEnemy.defense = updateValue as number;
+				// 			break;
+				// 		case UPDATE_STATS.HP:
+				// 			const value = updateValue as number;
+				// 			if (value >= updatedEnemy.healPoints) {
+				// 				updatedEnemy.healPoints = 0;
+				// 				updatedEnemy.death = true;
+				// 				get().setDefaultState();
+				// 			} else {
+				// 				updatedEnemy.healPoints -= value;
+				// 				set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY});
+				// 			}
 
-							break;
-						case UPDATE_STATS.LEVEL:
-							updatedEnemy.level = updateValue as number;
-							break;
-						case UPDATE_STATS.ALL:
-							return {
-								enemy: updateValue as EnemyStats,
-								initialParameters: {
-									...state.initialParameters,
-									enemy: updateValue as EnemyStats,
-								},
-							};
-						default:
-							console.warn(
-								`Неподдерживаемый запрос обновления: ${updateRequest}`,
-							);
-					}
+				// 			break;
+				// 		case UPDATE_STATS.LEVEL:
+				// 			updatedEnemy.level = updateValue as number;
+				// 			break;
+				// 		case UPDATE_STATS.ALL:
+				// 			return {
+				// 				enemy: updateValue as EnemyStats,
+				// 				initialParameters: {
+				// 					...state.initialParameters,
+				// 					enemy: updateValue as EnemyStats,
+				// 				},
+				// 			};
+				// 		default:
+				// 			console.warn(
+				// 				`Неподдерживаемый запрос обновления: ${updateRequest}`,
+				// 			);
+				// 	}
 
-					return {enemy: updatedEnemy};
-				});
+				// 	return {enemy: updatedEnemy};
+				// });
 			},
 		}),
 		{
