@@ -207,13 +207,6 @@ export default function Battle_Screen() {
         // }
     }
 
-    useEffect(() => {
-        // if (currentState !== GLOBAL_APP_PATH.BATTLE_SCREEN) {
-        //     setCurrentState(GLOBAL_APP_PATH.BATTLE_SCREEN)
-        // }
-        // defaultState()
-    }, [])
-
 
     return (
         <SafeAreaView
