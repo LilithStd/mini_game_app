@@ -298,7 +298,7 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 150 }]}
                                     disabled={isTurn}
-                                    onPress={() => handleItemsCallBackButton(BUTTON_LIST.DEFENSE)}
+                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.DEFENSE)}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -311,7 +311,7 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 120 }]}
-                                    onPress={() => handleItemsCallBackButton(BUTTON_LIST.EVASION)}
+                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.EVASION)}
                                     disabled={isTurn}
 
                                 >
@@ -381,7 +381,7 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button,
                                     { marginLeft: 120 }]}
-                                    onPress={handleRetreatButton}
+                                    // onPress={handleRetreatButton}
                                     disabled={isTurn}
                                 >
                                     <ImageBackground
