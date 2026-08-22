@@ -30,8 +30,8 @@ export default function Battle_Screen() {
     const router = useRouter();
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
-    const updateCharacter = useBattleStore(state => state.updateCharacterStats)
-    const updateEnemy = useBattleStore(state => state.updateEnemyStats)
+    // const updateCharacter = useBattleStore(state => state.updateCharacterStats)
+    // const updateEnemy = useBattleStore(state => state.updateEnemyStats)
     const characterBattleStats = useBattleStore(state => state.character)
     const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
