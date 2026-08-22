@@ -55,6 +55,8 @@ export interface BattleStoreInterface {
 	totalDamage: number;
 	attack:() => void;
 	defense:() => void;
+	evasion:() => void;
+	escape:() => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setDefaultState: () => void;
 	initialParameters: {
@@ -138,6 +140,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			attack: () => {},
 			defense: () => {},
+			evasion: () => {},
+			escape: () => {},
 			setBattleStatus: (status) => {
 				if (get().battleStatus !== status) {
 					set({battleStatus: status});
