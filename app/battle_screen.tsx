@@ -8,7 +8,7 @@ import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
 import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
-import { CURRENT_TARGET_TO_MOVE, INCOMING_STATUS, STATUS_BATTLE_SCREEN, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
+import { PHASE_STATUS, INCOMING_STATUS, STATUS_BATTLE_SCREEN, UPDATE_STATS, useBattleStore } from "@/store/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
 import { getRandomNumber } from "@/constants/helpers";
@@ -30,8 +30,6 @@ export default function Battle_Screen() {
     const router = useRouter();
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
-    const characterBattleStats = useBattleStore(state => state.character)
-    const characterUpdateStats = useCharacterStore(state => state.updateCharacterStats)
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
     //battle store

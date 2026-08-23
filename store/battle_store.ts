@@ -51,8 +51,8 @@ export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
 	enemy: EnemyStats;
-	currentTargetToMove: CURRENT_TARGET_TO_MOVE;
 	totalDamage: number;
+	phaseBattle:PHASE_STATUS;
 	attack:() => void;
 	defense:() => void;
 	evasion:() => void;
@@ -89,7 +89,7 @@ export enum UPDATE_STATS {
 	ALL = 'all',
 }
 
-export enum CURRENT_TARGET_TO_MOVE {
+export enum PHASE_STATUS {
 	CHARACTER = 'character',
 	ENEMY = 'enemy',
 	DEFAULT = 'default',
@@ -131,7 +131,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 		(set, get) => ({
 			battleStatus: STATUS_BATTLE_SCREEN.DEFAULT,
 			totalDamage: 0,
-			currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
+			phaseBattle: PHASE_STATUS.DEFAULT,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			currentBuffAndDebuff: {
@@ -155,7 +155,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				// set({
 				// 	character: {...defaultValues},
 				// 	enemy: {...defaultValuesEnemy},
-				// 	currentTargetToMove: CURRENT_TARGET_TO_MOVE.DEFAULT,
+				// 	phaseBattle: PHASE_STATUS.DEFAULT,
 				// 	totalDamage: 0,
 				// });
 			},
