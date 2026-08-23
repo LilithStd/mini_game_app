@@ -37,10 +37,10 @@ export default function Battle_Screen() {
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
     //battle store
-    const enemyBattleStats = useBattleStore(state => state.enemy)
     const defaultState = useBattleStore(state => state.setDefaultState)
-    const currentTargetToMove = useBattleStore(state => state.currentTargetToMove)
     const setBattleStatus = useBattleStore(state => state.setBattleStatus)
+    const attack = useBattleStore(state => state.attack)
+    const defense = useBattleStore(state => state.defense)
     //
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
