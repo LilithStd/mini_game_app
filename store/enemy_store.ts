@@ -2,25 +2,15 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOCATIONS_GROUP} from './location_store';
+import { BossType, EnemyStats, EnemyType } from './enemy/enemy_store_types';
 
-interface EnemyTypeOld {
+type EnemyTypeOld = {
 	name: string;
 	model: number;
 	preview: number;
 	stats: EnemyStats;
 }
-interface EnemyType {
-	name: string;
-	model: number;
-	stats: EnemyStats;
-}
 
-interface BossType {
-	name: string;
-	model: number;
-	stage: BOSS_STAGE;
-	stats: BossStats;
-}
 
 export const enum BOSS_STAGE {
 	DEFAULT = 'DEFAULT',
@@ -36,37 +26,23 @@ interface EnemyContentType extends EnemyTypeOld {
 	locations: string[];
 }
 
-interface EnemyStats {
-	level: number;
-	attack: number;
-	defense: number;
-	accuracy: number;
-	criticalRate: number;
-	criticalDamage: number;
-	evasion: number;
-	reduceCriticalDamage: number;
-	atribute: string;
-	resistAtribute: string;
-	healPoints: number;
-	expirience: number;
-	death: boolean;
-}
+// interface EnemyStats {
+// 	level: number;
+// 	attack: number;
+// 	defense: number;
+// 	accuracy: number;
+// 	criticalRate: number;
+// 	criticalDamage: number;
+// 	evasion: number;
+// 	reduceCriticalDamage: number;
+// 	atribute: string;
+// 	resistAtribute: string;
+// 	healPoints: number;
+// 	expirience: number;
+// 	death: boolean;
+// }
 
-interface BossStats {
-	level: number;
-	attack: number;
-	defense: number;
-	accuracy: number;
-	criticalRate: number;
-	criticalDamage: number;
-	evasion: number;
-	reduceCriticalDamage: number;
-	atribute: string;
-	resistAtribute: string;
-	healPoints: number;
-	expirience: number;
-	death: boolean;
-}
+
 
 const defaultStats = {
 	level: 1,
@@ -159,44 +135,6 @@ const ENEMY_CONTENT = [
 	},
 ];
 
-const ENEMY_CONTENT_OLD = [
-	{
-		name: 'enemy_00',
-		model: require('../assets/enemy/monsters/monster_00.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_01',
-		model: require('../assets/enemy/monsters/monster_01.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_02',
-		model: require('../assets/enemy/monsters/monster_02.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_03',
-		model: require('../assets/enemy/monsters/monster_03.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_04',
-		model: require('../assets/enemy/monsters/monster_04.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_05',
-		model: require('../assets/enemy/monsters/monster_05.jpg'),
-		stats: defaultStats,
-	},
-	{
-		name: 'enemy_06',
-		model: require('../assets/enemy/monsters/monster_06.jpg'),
-		stats: defaultStats,
-	},
-];
-
 const BOSS_CONTENT = [
 	{
 		name: 'first boss',
@@ -207,7 +145,7 @@ const BOSS_CONTENT = [
 ];
 
 export interface EnemyStoreInterface {
-	defaultState: true;
+	defaultState: boolean;
 	enemyPull: EnemyType[];
 	bossPull: BossType[];
 	currentEnemy: EnemyType | BossType;

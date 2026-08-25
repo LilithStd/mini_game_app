@@ -1,6 +1,7 @@
 import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
 
 interface CharacterStats {
 	level: number;
@@ -18,21 +19,21 @@ interface CharacterStats {
 	death: boolean;
 }
 
-interface EnemyStats {
-	level: number;
-	attack: number;
-	defense: number;
-	accuracy: number;
-	criticalRate: number;
-	criticalDamage: number;
-	evasion: number;
-	reduceCriticalDamage: number;
-	atribute: string;
-	resistAtribute: string;
-	healPoints: number;
-	expirience: number;
-	death: boolean;
-}
+// interface EnemyStats {
+// 	level: number;
+// 	attack: number;
+// 	defense: number;
+// 	accuracy: number;
+// 	criticalRate: number;
+// 	criticalDamage: number;
+// 	evasion: number;
+// 	reduceCriticalDamage: number;
+// 	atribute: string;
+// 	resistAtribute: string;
+// 	healPoints: number;
+// 	expirience: number;
+// 	death: boolean;
+// }
 
 export enum INCOMING_STATUS {
 	ATTACK = 'attack',
@@ -51,7 +52,7 @@ export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
 	isActiveTurn: boolean;
-	enemy: EnemyStats;
+	enemy: EnemyType | BossType;
 	totalDamage: number;
 	phaseBattle:PHASE_STATUS;
 	attack:() => void;
@@ -59,12 +60,12 @@ export interface BattleStoreInterface {
 	evasion:() => void;
 	escape:() => void;
 	setCharacterStats: (stats: CharacterStats) => void;
-	setEnemyStats: (stats: EnemyStats) => void;
+	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setDefaultState: () => void;
 	initialParameters: {
 		character: CharacterStats;
-		enemy: EnemyStats;
+		enemy: EnemyType | BossType;
 	};
 	currentBuffAndDebuff: {
 		character: string[];
@@ -80,7 +81,7 @@ export interface BattleStoreInterface {
 	// ) => void;
 	// updateEnemyStats: (
 	// 	updateRequest: UPDATE_STATS,
-	// 	updateValue: number | EnemyStats,
+	// 	updateValue: number | EnemyType | BossType,
 	// ) => void;
 }
 
@@ -165,10 +166,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				// 	totalDamage: 0,
 				// });
 			},
-			initialParameters: {
-				character: defaultValues,
-				enemy: defaultValuesEnemy,
-			},
+			// initialParameters: {
+			// 	character: defaultValues,
+			// 	enemy: defaultValuesEnemy,
+			// },
 			// updateCharacterStats: (updateRequest, updateValue) => {
 			// 	// set((state) => {
 			// 	// 	const updatedCharacter = {...state.character};
