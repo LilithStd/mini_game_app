@@ -1,4 +1,4 @@
-import { useBattleStore } from "@/store/battle_store";
+import { useBattleStore } from "@/store/battle/battle_store";
 import { useEnemyStore } from "@/store/enemy_store";
 import { useLocationStore } from "@/store/location_store";
 import { useEffect, useRef } from "react";

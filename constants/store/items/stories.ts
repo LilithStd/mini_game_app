@@ -1,4 +1,4 @@
-import {CHAPTER_LIST} from '@/store/story/storyTypes';
+import {CHAPTER_LIST} from '@/store/story/story_store_types';
 
 const defaultTemplateImage = require('../../../assets/template/template_image.jpg');
 

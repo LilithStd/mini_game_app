@@ -4,7 +4,7 @@ import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import { useCharacterStore } from "@/store/character_store";
 import { LANGUAGE, useGlobalStore } from "@/store/global_store";
 import { StageType, useStoryStore } from "@/store/story/story_store";
-import { CHAPTER_LIST, STORY_STAGE } from "@/store/story/storyTypes";
+import { CHAPTER_LIST, STORY_STAGE } from "@/store/story/story_store_types";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";

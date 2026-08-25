@@ -3,7 +3,7 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LANGUAGE} from '../global_store';
 import {CHAPTER_CONTENT} from '@/constants/store/items/stories';
-import {CHAPTER_LIST} from './storyTypes';
+import {CHAPTER_LIST} from './story_store_types';
 
 // type VariantTextType = {
 // 	en: string;

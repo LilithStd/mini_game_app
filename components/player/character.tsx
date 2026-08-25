@@ -1,5 +1,5 @@
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
-import { useBattleStore } from "@/store/battle_store";
+import { useBattleStore } from "@/store/battle/battle_store";
 import { useCharacterStore } from "@/store/character_store";
 import { useGlobalStore } from "@/store/global_store";
 import { useEffect, useRef } from "react";

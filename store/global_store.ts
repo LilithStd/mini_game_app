@@ -7,7 +7,7 @@ import {useEnemyStore} from './enemy_store';
 import {useLocationStore} from './location_store';
 import {GLOBAL_APP_PATH} from '@/constants/global_path';
 import {Href} from 'expo-router';
-import {useBattleStore} from './battle_store';
+import {useBattleStore} from './battle/battle_store';
 export type AppPath = (typeof GLOBAL_APP_PATH)[keyof typeof GLOBAL_APP_PATH];
 
 export enum LANGUAGE {
