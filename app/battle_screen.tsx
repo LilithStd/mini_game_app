@@ -37,6 +37,7 @@ export default function Battle_Screen() {
     const setBattleStatus = useBattleStore(state => state.setBattleStatus)
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
+    const isActiveTurn = useBattleStore(state => state.isActiveTurn)
     //
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
@@ -57,8 +58,12 @@ export default function Battle_Screen() {
     const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     const [currentTypeBattle, setCurrentTypeBattle] = useState<BATTLE_TYPE>(BATTLE_TYPE.DEFAULT)
-    const [isTurn, setIsTurn] = useState(false)
     //
+    // initialization Battle screen
+    useEffect(() => {
+
+    }, [])
+    // 
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
@@ -221,7 +226,7 @@ export default function Battle_Screen() {
 
                 }}>
                     {isItemsActive && <Character />}
-                    {isTurn && <View style={{
+                    {isActiveTurn && <View style={{
                         backgroundColor: 'white',
                         width: '60%',
                         height: 60,
@@ -255,9 +260,9 @@ export default function Battle_Screen() {
                             />
                             {isItemsActive ? <View style={battleScreenStyles.buttonView}>
 
-                                <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
+                                <TouchableOpacity style={isActiveTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
                                     // onPress={() => handleItemsCallBackButton(BUTTON_LIST.HEALTH)}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
 
                                 >
                                     <ImageBackground
@@ -275,7 +280,7 @@ export default function Battle_Screen() {
                                         marginLeft: 120
                                     }]}
                                     // onPress={() => handleItemsCallBackButton(BUTTON_LIST.ATTACK)}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -286,7 +291,7 @@ export default function Battle_Screen() {
                                 </TouchableOpacity >
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 150 }]}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                     // onPress={() => handleItemsCallBackButton(BUTTON_LIST.DEFENSE)}
                                 >
                                     <ImageBackground
@@ -301,7 +306,7 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 120 }]}
                                     // onPress={() => handleItemsCallBackButton(BUTTON_LIST.EVASION)}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
 
                                 >
                                     <ImageBackground
@@ -315,7 +320,7 @@ export default function Battle_Screen() {
                                     style={[battleScreenStyles.button,
                                     { marginLeft: 80 }]}
                                     // onPress={() => handleItemsCallBackButton(BUTTON_LIST.CLOSE)}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -326,9 +331,9 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
                             </View> : <View style={battleScreenStyles.buttonView}>
 
-                                <TouchableOpacity style={isTurn ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
+                                <TouchableOpacity style={true ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
                                     // onPress={handleAttackButton}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
 
                                 >
                                     <ImageBackground
@@ -345,7 +350,7 @@ export default function Battle_Screen() {
                                     style={[battleScreenStyles.button, {
                                         marginLeft: 120
                                     }]}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -356,7 +361,7 @@ export default function Battle_Screen() {
                                 </TouchableOpacity >
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 150 }]}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -371,7 +376,8 @@ export default function Battle_Screen() {
                                     style={[battleScreenStyles.button,
                                     { marginLeft: 120 }]}
                                     // onPress={handleRetreatButton}
-                                    disabled={isTurn}
+                                    // onPress={handleRetreatButton}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -383,7 +389,7 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button, { marginLeft: 80 }]}
                                     // onPress={handleItemsButton}
-                                    disabled={isTurn}
+                                    disabled={isActiveTurn}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}

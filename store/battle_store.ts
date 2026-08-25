@@ -50,6 +50,7 @@ export enum STATUS_BATTLE_SCREEN {
 export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
+	isActiveTurn: boolean;
 	enemy: EnemyStats;
 	totalDamage: number;
 	phaseBattle:PHASE_STATUS;
@@ -132,6 +133,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			battleStatus: STATUS_BATTLE_SCREEN.DEFAULT,
 			totalDamage: 0,
 			phaseBattle: PHASE_STATUS.DEFAULT,
+			isActiveTurn: false,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			currentBuffAndDebuff: {
