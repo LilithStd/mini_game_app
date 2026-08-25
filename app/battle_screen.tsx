@@ -38,6 +38,8 @@ export default function Battle_Screen() {
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
     const isActiveTurn = useBattleStore(state => state.isActiveTurn)
+    const setCharacterStats = useBattleStore(state => state.setCharacterStats)
+    const setEnemyStats = useBattleStore(state => state.setEnemyStats)
     //
     const currentConsumblesOnCharacterInventory = useCharacterStore(state => state.characterInventory)
     const consumblesFullItems = useItemsStore(state => state.consumbles)
@@ -54,15 +56,15 @@ export default function Battle_Screen() {
     //state
     const [isModalOpen, setIsModalOpen] = useState(false)
     const [isItemsActive, setIsItemsActive] = useState(false)
-    const [activeButton, setActiveButton] = useState(BUTTON_LIST.HEALTH)
     const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     const [currentTypeBattle, setCurrentTypeBattle] = useState<BATTLE_TYPE>(BATTLE_TYPE.DEFAULT)
     //
     // initialization Battle screen
     useEffect(() => {
-
-    }, [])
+        setCharacterStats(characterStats)
+        setEnemyStats(enemyStats)
+    }, [isActiveTurn])
     // 
 
     const handleModalCloseStatus = () => {

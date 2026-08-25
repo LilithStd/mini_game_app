@@ -212,6 +212,7 @@ export interface EnemyStoreInterface {
 	bossPull: BossType[];
 	currentEnemy: EnemyType | BossType;
 	getCurrentBoss: (stage: BOSS_STAGE) => BossType;
+	getCurrentEnemy: () => EnemyType | BossType;
 	setCurrentEnemy: (currentEnemy: EnemyType | BossType) => void;
 	setDefaultState: () => void;
 	getRandomEnemyForBattle: (location: string) => void;
@@ -248,6 +249,9 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 
 			setCurrentEnemy: (currentEnemy) => {
 				set({currentEnemy: currentEnemy});
+			},
+			getCurrentEnemy: () => {
+				return get().currentEnemy;
 			},
 			setDefaultState: () => {
 				set({

@@ -58,6 +58,8 @@ export interface BattleStoreInterface {
 	defense:() => void;
 	evasion:() => void;
 	escape:() => void;
+	setCharacterStats: (stats: CharacterStats) => void;
+	setEnemyStats: (stats: EnemyStats) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setDefaultState: () => void;
 	initialParameters: {
@@ -136,6 +138,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			isActiveTurn: false,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			setCharacterStats: (stats) => set({character: stats}),
+			setEnemyStats: (stats) => set({enemy: stats}),
 			currentBuffAndDebuff: {
 				character: [],
 				enemy: [],
