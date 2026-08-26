@@ -63,10 +63,6 @@ export interface BattleStoreInterface {
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setDefaultState: () => void;
-	// initialParameters: {
-	// 	character: CharacterStats;
-	// 	enemy: EnemyType | BossType;
-	// };
 	currentBuffAndDebuff: {
 		character: string[];
 		enemy: string[];
@@ -149,7 +145,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				character: [],
 				enemy: [],
 			},
-			attack: () => {},
+			attack: () => {
+				get().enemy.stats.healPoints = Math.max(0, get().enemy.stats.healPoints - get().character.attack);
+				if (get().enemy.stats.healPoints <= 0) {
+					get().enemy.stats.death = true;
+				}
+			},
 			defense: () => {},
 			evasion: () => {},
 			escape: () => {},
