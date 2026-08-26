@@ -146,9 +146,25 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				enemy: [],
 			},
 			attack: () => {
-				get().enemy.stats.healPoints = Math.max(0, get().enemy.stats.healPoints - get().character.attack);
-				if (get().enemy.stats.healPoints <= 0) {
-					get().enemy.stats.death = true;
+				const { isActiveTurn, enemy, character } = get();
+				if (isActiveTurn) return;
+				const newHP = Math.max(
+					0,
+					enemy.stats.healPoints - character.attack
+				);
+				set({
+					isActiveTurn: true,
+					enemy: {
+						...enemy,
+						stats: {
+							...enemy.stats,
+							healPoints: newHP,
+							death: newHP <= 0,
+						}
+					}
+				});
+				if (newHP <= 0) {
+					set({ isActiveTurn: false });
 				}
 			},
 			defense: () => {},
