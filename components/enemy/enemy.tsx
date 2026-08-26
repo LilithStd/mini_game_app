@@ -10,8 +10,8 @@ export default function Enemy() {
     const enemyStats = useBattleStore(state => state.enemy);
     const currentLocation = useLocationStore(state => state.currentLocation);
 
-    const initialHP = useRef<number>(enemyStats.healPoints ?? 1);
-    const hpValue = Math.max(0, enemyStats.healPoints);
+    const initialHP = useRef<number>(enemyStats.stats.healPoints ?? 1);
+    const hpValue = Math.max(0, enemyStats.stats.healPoints);
     const animatedHP = useRef(new Animated.Value(hpValue / initialHP.current)).current;
 
     // Анимируем при изменении HP
@@ -39,7 +39,7 @@ export default function Enemy() {
         <View style={styles.container}>
             <View style={styles.infoBlock}>
                 <Text style={styles.name}>{currentEnemy.name}</Text>
-                <Text style={styles.level}>Level: {enemyStats.level}</Text>
+                <Text style={styles.level}>Level: {enemyStats.stats.level}</Text>
 
                 <View style={styles.hpWrapper}>
                     <Text style={styles.hpText}>
