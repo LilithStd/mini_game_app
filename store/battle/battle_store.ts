@@ -172,6 +172,30 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			defense: () => {},
 			evasion: () => {},
 			escape: () => {},
+			enemyAttack: () => {
+
+				const { phaseBattle, enemy, character } = get();
+
+				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+
+				// расчёт атаки моба
+
+				set({
+
+					enemy: {
+						...enemy,
+						stats: {
+							...enemy.stats,
+							healPoints: Math.max(0, enemy.stats.healPoints - character.attack),
+							death: Math.max(0, enemy.stats.healPoints - character.attack) <= 0,
+						}
+					},
+
+					phaseBattle: PHASE_STATUS.PLAYER_TURN
+
+				});
+
+			},
 			setBattleStatus: (status) => {
 				if (get().battleStatus !== status) {
 					set({battleStatus: status});
