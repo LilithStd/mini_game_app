@@ -41,6 +41,16 @@ export enum INCOMING_STATUS {
 	// DEFAULT = 'default',
 }
 
+export enum ENEMY_ACTION_TYPE {
+	ATTACK = 'attack',
+	DEFENSE = 'defense',
+	EVADE = 'evade',
+	ESCAPE = 'escape',
+	SKILL = 'skill',
+	// DEFAULT = 'default',
+}
+
+
 export enum STATUS_BATTLE_SCREEN {
 	DEFAULT = 'default',
 	BOSS_BATTLE = 'boss_battle',
@@ -173,15 +183,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			evasion: () => {},
 			escape: () => {},
 			enemyAttack: () => {
-
 				const { phaseBattle, enemy, character } = get();
-
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-
-				// расчёт атаки моба
-
 				set({
-
 					enemy: {
 						...enemy,
 						stats: {
@@ -190,11 +194,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							death: Math.max(0, enemy.stats.healPoints - character.attack) <= 0,
 						}
 					},
-
 					phaseBattle: PHASE_STATUS.PLAYER_TURN
-
 				});
-
 			},
 			setBattleStatus: (status) => {
 				if (get().battleStatus !== status) {
