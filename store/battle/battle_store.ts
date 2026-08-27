@@ -69,6 +69,7 @@ export interface BattleStoreInterface {
 	defense:() => void;
 	evasion:() => void;
 	escape:() => void;
+	enemyAttack: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
@@ -182,20 +183,30 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			defense: () => {},
 			evasion: () => {},
 			escape: () => {},
-			enemyAttack: () => {
-				const { phaseBattle, enemy, character } = get();
-				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-				set({
-					enemy: {
-						...enemy,
-						stats: {
-							...enemy.stats,
-							healPoints: Math.max(0, enemy.stats.healPoints - character.attack),
-							death: Math.max(0, enemy.stats.healPoints - character.attack) <= 0,
-						}
-					},
-					phaseBattle: PHASE_STATUS.PLAYER_TURN
-				});
+			enemyAttack: (type) => {
+				switch (type) {
+					case ENEMY_ACTION_TYPE.ATTACK:
+						const { phaseBattle, enemy, character } = get();
+
+						if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+
+						const newHP = Math.max(
+							0,
+							character.healPoints - enemy.stats.attack
+						);
+
+						set({
+							character: {
+								...character,
+								healPoints: newHP,
+								death: newHP <= 0,
+							},
+							phaseBattle: newHP <= 0
+								? PHASE_STATUS.DEFAULT
+								: PHASE_STATUS.PLAYER_TURN
+						});
+						break;
+				}
 			},
 			setBattleStatus: (status) => {
 				if (get().battleStatus !== status) {
