@@ -212,6 +212,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						case ENEMY_ACTION_TYPE.EVADE:
 							// Implement enemy evasion logic here
 						break;
+						case ENEMY_ACTION_TYPE.ESCAPE:
+							// Implement enemy escape logic here
+						break;
 				}
 			},
 			setBattleStatus: (status) => {
