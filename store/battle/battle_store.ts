@@ -206,6 +206,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								: PHASE_STATUS.PLAYER_TURN
 						});
 						break;
+						case ENEMY_ACTION_TYPE.DEFENSE:
+							// Implement enemy defense logic here
+							break;
 				}
 			},
 			setBattleStatus: (status) => {
