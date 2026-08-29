@@ -50,6 +50,8 @@ export enum ENEMY_ACTION_TYPE {
 	// DEFAULT = 'default',
 }
 
+const DEFENSE_MULTIPLIER = 1.5;
+
 
 export enum STATUS_BATTLE_SCREEN {
 	DEFAULT = 'default',
