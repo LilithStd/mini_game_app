@@ -182,7 +182,20 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						: PHASE_STATUS.ENEMY_TURN
 				});
 			},
-			defense: () => {},
+			defense: () => {
+				const { phaseBattle, character } = get();
+
+				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
+
+				const newDefense = character.defense * DEFENSE_MULTIPLIER;
+
+				set({
+					character: {
+						...character,
+						defense: newDefense,
+					}
+				});
+			},
 			evasion: () => {},
 			escape: () => {},
 			enemyAttack: (type) => {
