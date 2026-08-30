@@ -66,7 +66,10 @@ export interface BattleStoreInterface {
 	character: CharacterStats;
 	isActiveTurn: boolean;
 	enemy: EnemyType | BossType;
-	totalDamage: number;
+	totalDamage: {
+		character: number;
+		enemy: number;
+	};
 	phaseBattle:PHASE_STATUS;
 	attack:() => void;
 	defense:() => void;
@@ -147,7 +150,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 	persist(
 		(set, get) => ({
 			battleStatus: STATUS_BATTLE_SCREEN.DEFAULT,
-			totalDamage: 0,
+			totalDamage: {
+				character: 0,
+				enemy: 0,
+			},
 			phaseBattle: PHASE_STATUS.DEFAULT,
 			isActiveTurn: false,
 			character: {...defaultValues},
@@ -176,6 +182,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							healPoints: newHP,
 							death: newHP <= 0,
 						}
+					},
+					totalDamage: {
+						...get().totalDamage,
+						character: get().totalDamage.character + (character.attack - newHP > 0 ? character.attack - newHP : 0),
 					},
 					phaseBattle: newHP <= 0
 						? PHASE_STATUS.DEFAULT
