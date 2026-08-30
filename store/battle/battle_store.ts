@@ -2,6 +2,7 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
+import { getRandomEnumValue } from '@/constants/helpers';
 
 interface CharacterStats {
 	level: number;
@@ -197,7 +198,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			escape: () => {},
 			enemyAttack: (type) => {
-				switch (type) {
+				const { phaseBattle, enemy, character } = get();
+				const action = getRandomEnumValue(ENEMY_ACTION_TYPE);
+				const enemyActionType = type ?? action;
+				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+				switch (enemyActionType) {
 					case ENEMY_ACTION_TYPE.ATTACK:
 						const { phaseBattle, enemy, character } = get();
 
