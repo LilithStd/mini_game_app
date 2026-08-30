@@ -69,7 +69,6 @@ export interface BattleStoreInterface {
 	phaseBattle:PHASE_STATUS;
 	attack:() => void;
 	defense:() => void;
-	evasion:() => void;
 	escape:() => void;
 	enemyAttack: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
@@ -196,7 +195,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 			},
-			evasion: () => {},
 			escape: () => {},
 			enemyAttack: (type) => {
 				switch (type) {
