@@ -198,16 +198,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			escape: () => {},
 			enemyAttack: (type) => {
-				const { phaseBattle, enemy, character } = get();
+				const { phaseBattle } = get();
+				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				const action = getRandomEnumValue(ENEMY_ACTION_TYPE);
 				const enemyActionType = type ?? action;
-				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+				
 				switch (enemyActionType) {
 					case ENEMY_ACTION_TYPE.ATTACK:
-						const { phaseBattle, enemy, character } = get();
-
-						if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-
+						const { enemy, character } = get();
 						const newHP = Math.max(
 							0,
 							character.healPoints - enemy.stats.attack
