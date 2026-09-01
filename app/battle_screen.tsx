@@ -100,13 +100,17 @@ export default function Battle_Screen() {
     }
 
     const handleAttackButton = () => {
-        // updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
+
+        attack()
+
+
+    };
+            // updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
         // setEnemyAction(ACTIONS.ATTACK);
         // updateCharacter({
         //     updateCurrentStats: UPDATE_STATS.HP,
         //     incomingStatus: INCOMING_STATUS.ATTACK
         // }, enemyStats.stats.attack);
-    };
 
     const handleItemsCallBackButton = (variant: string) => {
 
@@ -334,7 +338,7 @@ export default function Battle_Screen() {
                             </View> : <View style={battleScreenStyles.buttonView}>
 
                                 <TouchableOpacity style={true ? battleScreenStyles.buttonDisable : battleScreenStyles.button}
-                                    // onPress={handleAttackButton}
+                                    onPress={handleAttackButton}
                                     disabled={isActiveTurn}
 
                                 >
@@ -427,7 +431,6 @@ export default function Battle_Screen() {
                                 )}
                             </View> : <View></View>
                         }
-
                     </View>
                 </View>
             </ImageBackground>
