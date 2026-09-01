@@ -231,6 +231,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								? PHASE_STATUS.DEFAULT
 								: PHASE_STATUS.PLAYER_TURN
 						});
+						set({
+							totalDamage: {
+								...get().totalDamage,
+								enemy: get().totalDamage.enemy + (enemy.stats.attack - newHP > 0 ? enemy.stats.attack - newHP : 0),
+							},
+						});
 						break;
 						case ENEMY_ACTION_TYPE.DEFENSE:
 							// Implement enemy defense logic here
