@@ -74,6 +74,7 @@ export interface BattleStoreInterface {
 	attack:() => void;
 	defense:() => void;
 	escape:() => void;
+	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
 	setPhaseBattle: (phase: PHASE_STATUS) => void;
 	enemyAttack: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
@@ -170,6 +171,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			isActiveTurn: false,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			startBattle: (character, enemy) => {
+				set({
+					character: character,
+					enemy: enemy,
+					phaseBattle: PHASE_STATUS.PLAYER_TURN,
+				});
+			},
 			setPhaseBattle: (phase) => set({phaseBattle: phase}),
 			setCharacterStats: (stats) => set({character: stats}),
 			setEnemyStats: (stats) => set({enemy: stats}),

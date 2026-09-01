@@ -35,6 +35,8 @@ export default function Battle_Screen() {
     //battle store
     const defaultState = useBattleStore(state => state.setDefaultState)
     const setBattleStatus = useBattleStore(state => state.setBattleStatus)
+    const setPhaseBattle = useBattleStore(state => state.setPhaseBattle)
+    const startBattle = useBattleStore(state => state.startBattle)
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
     const isActiveTurn = useBattleStore(state => state.isActiveTurn)
@@ -62,9 +64,8 @@ export default function Battle_Screen() {
     //
     // initialization Battle screen
     useEffect(() => {
-        setCharacterStats(characterStats)
-        setEnemyStats(enemyStats)
-    }, [isActiveTurn])
+        startBattle(characterStats, enemyStats)
+    }, [])
     // 
 
     const handleModalCloseStatus = () => {
