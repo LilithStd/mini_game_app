@@ -74,6 +74,7 @@ export interface BattleStoreInterface {
 	attack:() => void;
 	defense:() => void;
 	escape:() => void;
+	setPhaseBattle: (phase: PHASE_STATUS) => void;
 	enemyAttack: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
@@ -108,6 +109,8 @@ export enum UPDATE_STATS {
 export enum PHASE_STATUS {
 	PLAYER_TURN = 'player_turn',
 	ENEMY_TURN = 'enemy_turn',
+	PLAYER_ACTION = 'player_action',
+	ENEMY_ACTION = 'enemy_action',
 	DEFAULT = 'default',
 }
 
@@ -167,6 +170,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			isActiveTurn: false,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			setPhaseBattle: (phase) => set({phaseBattle: phase}),
 			setCharacterStats: (stats) => set({character: stats}),
 			setEnemyStats: (stats) => set({enemy: stats}),
 			currentBuffAndDebuff: {
@@ -175,9 +179,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			attack: () => {
 				const { phaseBattle, enemy, character } = get();
-				set({ phaseBattle: PHASE_STATUS.PLAYER_TURN });
+				
 				if (phaseBattle !== PHASE_STATUS .PLAYER_TURN) return;
 				
+				
+
 				const newHP = Math.max(
 					0,
 					enemy.stats.healPoints - character.attack
