@@ -87,7 +87,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             description: 'Monster Attack you!',
             monster: {
                 name: enemyCurrent.name,
-                preview: enemyCurrent.preview,
+                preview: enemyCurrent.model,
             },
         },
         treasureReward: {

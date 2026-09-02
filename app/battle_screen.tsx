@@ -63,27 +63,26 @@ export default function Battle_Screen() {
     const [enemyAction, setEnemyAction] = useState<ActionsTypes>(ACTIONS.NOTHING)
     const [activeConsumbles, setActiveConsumbles] = useState<ConsumableType[]>([])
     const [currentTypeBattle, setCurrentTypeBattle] = useState<BATTLE_TYPE>(BATTLE_TYPE.DEFAULT)
+    const [confirmRetreat, setConfirmRetreat] = useState(false)
+
     //
     // initialization Battle screen
     useEffect(() => {
         startBattle(characterStats, enemyStats)
     }, [])
     // check return to main screen
-useEffect(() => {
-
-    const unsubscribe = navigation.addListener("beforeRemove", (event) => {
-
-        event.preventDefault();
-
-        handleDefeat();
-
-        navigation.dispatch(event.data.action);
-
-    });
-
-    return unsubscribe;
-
-}, [navigation]);
+    useEffect(() => {
+        const unsubscribe = navigation.addListener("beforeRemove", (event) => {
+            event.preventDefault();
+            handleRetreatButton();
+            // handleDefeat();
+            if(confirmRetreat) {
+                navigation.dispatch(event.data.action);
+            }
+            
+        });
+        return unsubscribe;
+    }, [navigation]);
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
@@ -113,7 +112,7 @@ useEffect(() => {
 
 
     const handleRetreatButton = () => {
-        // setIsModalOpen(true)
+        setIsModalOpen(true)
 
     }
 
@@ -399,8 +398,7 @@ useEffect(() => {
                                 <TouchableOpacity
                                     style={[battleScreenStyles.button,
                                     { marginLeft: 120 }]}
-                                    // onPress={handleRetreatButton}
-                                    // onPress={handleRetreatButton}
+                                    onPress={handleRetreatButton}
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
