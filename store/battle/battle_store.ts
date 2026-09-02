@@ -126,7 +126,7 @@ export enum ACTIONS {
 
 const defaultValues: CharacterStats = {
 	level: 1,
-	attack: 0,
+	attack: 10,
 	defense: 0,
 	accuracy: 0,
 	criticalRate: 0,
@@ -140,7 +140,7 @@ const defaultValues: CharacterStats = {
 	death: false,
 };
 const defaultValuesEnemy: EnemyType = {
-	name: '',
+	name: 'default_enemy',
 	model: 0,
 	stats: {
 		level: 1,
@@ -154,7 +154,7 @@ const defaultValuesEnemy: EnemyType = {
 		atribute: '',
 		resistAtribute: '',
 		expirience: 0,
-		healPoints: 100,
+		healPoints: 0,
 		death: false,
 	},
 };
@@ -189,13 +189,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				const { phaseBattle, enemy, character } = get();
 				
 				if (phaseBattle !== PHASE_STATUS .PLAYER_TURN) return;
-				
+				console.log(`Character attacks with ${character.attack} damage`);
 				
 
 				const newHP = Math.max(
 					0,
 					enemy.stats.healPoints - character.attack
 				);
+				console.log(`Enemy HP before attack: ${enemy.stats.healPoints}`);
+				console.log(`Enemy HP after calculation: ${newHP}`);
 
 				set({
 					enemy: {
@@ -212,7 +214,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					},
 					phaseBattle: newHP <= 0
 						? PHASE_STATUS.DEFAULT
-						: PHASE_STATUS.ENEMY_TURN
+						: PHASE_STATUS.PLAYER_TURN
 				});
 
 				console.log(`Enemy HP after attack: ${newHP}`);

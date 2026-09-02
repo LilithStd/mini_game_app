@@ -280,10 +280,10 @@ export type CharacterEquip = {
 };
 
 const CharacterDefaultStats = {
-	name: '',
+	name: 'default_character',
 	model: Character_Default,
 	level: 0,
-	attack: 0,
+	attack: 10,
 	defense: 0,
 	accuracy: 0,
 	criticalRate: 0,
