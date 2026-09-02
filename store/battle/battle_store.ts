@@ -126,7 +126,7 @@ export enum ACTIONS {
 
 const defaultValues: CharacterStats = {
 	level: 1,
-	attack: 10,
+	attack: 0,
 	defense: 0,
 	accuracy: 0,
 	criticalRate: 0,
@@ -154,7 +154,7 @@ const defaultValuesEnemy: EnemyType = {
 		atribute: '',
 		resistAtribute: '',
 		expirience: 0,
-		healPoints: 0,
+		healPoints: 100,
 		death: false,
 	},
 };

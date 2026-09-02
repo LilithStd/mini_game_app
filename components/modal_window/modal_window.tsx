@@ -154,12 +154,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     const callBackModalWindow = () => {
         switch (currentTypeModal) {
             case VARIANTS_MODAL_WINDOW.RETREAT:
-
-                const retreat = "retreat";
-                router.push({
-                    pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-                    params: { location, retreat }
-                });
+                router.push(GLOBAL_APP_PATH.MAIN);
                 onClose()
                 break;
             case VARIANTS_MODAL_WINDOW.ATTACK:

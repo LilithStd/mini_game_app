@@ -35,9 +35,11 @@ export default function Battle_Screen() {
     const characterStats = useCharacterStore(state => state.characterStats)
     const enemyStats = useEnemyStore(state => state.currentEnemy)
     //battle store
-    const defaultState = useBattleStore(state => state.setDefaultState)
     const setBattleStatus = useBattleStore(state => state.setBattleStatus)
     const setPhaseBattle = useBattleStore(state => state.setPhaseBattle)
+    const setDefaultState = useBattleStore(state => state.setDefaultState)
+    const setDefaultCharacterStats = useCharacterStore(state => state.setDefaultState)
+    const setDefaultEnemyStats = useEnemyStore(state => state.setDefaultState)
     const startBattle = useBattleStore(state => state.startBattle)
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
@@ -75,9 +77,9 @@ export default function Battle_Screen() {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
             event.preventDefault();
             handleRetreatButton();
-            // handleDefeat();
             if(confirmRetreat) {
                 navigation.dispatch(event.data.action);
+                handleRetreatConfirm();
             }
             
         });
@@ -181,6 +183,10 @@ export default function Battle_Screen() {
     }
 
     const handleRetreatConfirm = () => {
+        setDefaultState();
+        setDefaultCharacterStats();
+        setDefaultEnemyStats();
+        setPhaseBattle(PHASE_STATUS.DEFAULT);
         // setIsModalOpen(false)
         // const retreat = "retreat";
         // router.push({
