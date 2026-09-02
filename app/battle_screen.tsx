@@ -1,6 +1,7 @@
 import { Animated, Button, ImageBackground, Pressable, SafeAreaView, Text, TouchableOpacity, TouchableWithoutFeedback, View, StyleSheet, Image } from "react-native";
 import Character from "../components/player/character";
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useLocalSearchParams,useNavigation, useRouter } from "expo-router";
+import { usePreventRemove } from "@react-navigation/native";
 import Enemy from "@/components/enemy/enemy";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { battleScreenStyles } from '../styles/battle_screen_styles'
@@ -28,6 +29,7 @@ const chestPreview = require('../assets/items/chest/chest_01.jpg')
 export default function Battle_Screen() {
     const { scenarioHook, typeBattle } = useLocalSearchParams();
     const router = useRouter();
+    const navigation = useNavigation();
     const locationToBattle = useLocationStore(state => state.locationToBattleScreen)
     const location = useLocationStore(state => state.currentLocation)
     const characterStats = useCharacterStore(state => state.characterStats)
@@ -66,7 +68,22 @@ export default function Battle_Screen() {
     useEffect(() => {
         startBattle(characterStats, enemyStats)
     }, [])
-    // 
+    // check return to main screen
+useEffect(() => {
+
+    const unsubscribe = navigation.addListener("beforeRemove", (event) => {
+
+        event.preventDefault();
+
+        handleDefeat();
+
+        navigation.dispatch(event.data.action);
+
+    });
+
+    return unsubscribe;
+
+}, [navigation]);
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
