@@ -6,18 +6,17 @@ import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Enemy() {
     const setCurrentEnemy = useEnemyStore(state => state.setCurrentEnemy);
-    const currentEnemy = useEnemyStore(state => state.currentEnemy);
     const enemyStats = useBattleStore(state => state.enemy);
     const currentLocation = useLocationStore(state => state.currentLocation);
 
-    const initialHP = useRef<number>(enemyStats.stats.healPoints ?? 1);
+    const initialHP = enemyStats.stats.healPoints; // сохраняем начальное значение HP
     const hpValue = Math.max(0, enemyStats.stats.healPoints);
-    const animatedHP = useRef(new Animated.Value(hpValue / initialHP.current)).current;
+    const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;
 
     // Анимируем при изменении HP
     useEffect(() => {
         Animated.timing(animatedHP, {
-            toValue: hpValue / initialHP.current,
+            toValue: hpValue / initialHP,
             duration: 500,
             useNativeDriver: false,
         }).start();
@@ -38,12 +37,12 @@ export default function Enemy() {
     return (
         <View style={styles.container}>
             <View style={styles.infoBlock}>
-                <Text style={styles.name}>{currentEnemy.name}</Text>
+                <Text style={styles.name}>{enemyStats.name}</Text>
                 <Text style={styles.level}>Level: {enemyStats.stats.level}</Text>
 
                 <View style={styles.hpWrapper}>
                     <Text style={styles.hpText}>
-                        HP: {hpValue} / {initialHP.current}
+                        HP: {hpValue} / {initialHP}
                     </Text>
                     <View style={styles.hpBackground}>
                         <Animated.View
@@ -59,7 +58,7 @@ export default function Enemy() {
                 </View>
             </View>
 
-            <Image source={currentEnemy.model} style={styles.image} resizeMode="contain" />
+            <Image source={enemyStats.model} style={styles.image} resizeMode="contain" />
         </View>
     );
 }
