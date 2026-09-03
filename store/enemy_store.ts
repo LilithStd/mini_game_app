@@ -181,7 +181,6 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 			currentEnemy: default_enemy,
 			getCurrentBoss: (stage) => {
 				const currentBoss = get().bossPull.find((item) => item.stage === stage);
-
 				return currentBoss ? currentBoss : default_boss;
 			},
 
@@ -192,6 +191,10 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 				return get().currentEnemy;
 			},
 			setDefaultState: () => {
+				console.log('Resetting enemy store to default state...');
+				AsyncStorage.removeItem('enemy-storage').then(() => {
+					console.log('enemy store reset');
+				});
 				set({
 					defaultState: true,
 					enemyPull: ENEMY_CONTENT,

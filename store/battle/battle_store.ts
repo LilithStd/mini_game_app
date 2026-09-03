@@ -65,6 +65,7 @@ export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
 	isActiveTurn: boolean;
+	isInitialized: boolean;
 	enemy: EnemyType | BossType;
 	totalDamage: {
 		character: number;
@@ -167,6 +168,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				character: 0,
 				enemy: 0,
 			},
+			isInitialized: false,
 			phaseBattle: PHASE_STATUS.DEFAULT,
 			isActiveTurn: false,
 			character: {...defaultValues},
@@ -176,6 +178,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					character: character,
 					enemy: enemy,
 					phaseBattle: PHASE_STATUS.PLAYER_TURN,
+					isInitialized: true,
 				});
 			},
 			setPhaseBattle: (phase) => set({phaseBattle: phase}),
@@ -187,17 +190,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			attack: () => {
 				const { phaseBattle, enemy, character } = get();
-				
 				if (phaseBattle !== PHASE_STATUS .PLAYER_TURN) return;
-				console.log(`Character attacks with ${character.attack} damage`);
-				
 
 				const newHP = Math.max(
 					0,
 					enemy.stats.healPoints - character.attack
 				);
-				console.log(`Enemy HP before attack: ${enemy.stats.healPoints}`);
-				console.log(`Enemy HP after calculation: ${newHP}`);
 
 				set({
 					enemy: {
@@ -286,141 +284,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				AsyncStorage.removeItem('battle-storage').then(() => {
 					console.log('battle store reset');
 				});
-				// set({
-				// 	character: {...defaultValues},
-				// 	enemy: {...defaultValuesEnemy},
-				// 	phaseBattle: PHASE_STATUS.DEFAULT,
-				// 	totalDamage: 0,
-				// });
+				set({
+					character: {...defaultValues},
+					enemy: {...defaultValuesEnemy},
+					phaseBattle: PHASE_STATUS.DEFAULT,
+					totalDamage: {
+						character: 0,
+						enemy: 0,
+					},
+				});
 			},
-			// initialParameters: {
-			// 	character: defaultValues,
-			// 	enemy: defaultValuesEnemy,
-			// },
-			// updateCharacterStats: (updateRequest, updateValue) => {
-			// 	// set((state) => {
-			// 	// 	const updatedCharacter = {...state.character};
-			// 	// 	let newState = {...state};
-			// 	// 	let shouldUpdateTurn = false;
-
-			// 	// 	switch (updateRequest.updateCurrentStats) {
-			// 	// 		case UPDATE_STATS.ATTACK:
-			// 	// 			if (updateRequest.incomingStatus !== INCOMING_STATUS.ATTACK) {
-			// 	// 				updatedCharacter.attack += updateValue as number;
-			// 	// 				shouldUpdateTurn = true;
-			// 	// 			} else {
-			// 	// 				shouldUpdateTurn = true;
-			// 	// 			}
-			// 	// 			break;
-
-			// 	// 		case UPDATE_STATS.DEFENSE:
-			// 	// 			updatedCharacter.defense = updateValue as number;
-			// 	// 			break;
-
-			// 	// 		case UPDATE_STATS.HP:
-			// 	// 			const value = updateValue as number;
-
-			// 	// 			if (updateRequest.incomingStatus === INCOMING_STATUS.ATTACK) {
-			// 	// 				updatedCharacter.healPoints = Math.max(
-			// 	// 					0,
-			// 	// 					updatedCharacter.healPoints - value,
-			// 	// 				);
-			// 	// 				shouldUpdateTurn = true;
-
-			// 	// 				if (updatedCharacter.healPoints <= 0) {
-			// 	// 					updatedCharacter.death = true;
-			// 	// 					newState.currentTargetToMove = CURRENT_TARGET_TO_MOVE.DEFAULT;
-			// 	// 				}
-			// 	// 			} else if (
-			// 	// 				updateRequest.incomingStatus === INCOMING_STATUS.ITEM
-			// 	// 			) {
-			// 	// 				const maxHp = state.initialParameters.character.healPoints;
-			// 	// 				updatedCharacter.healPoints = Math.min(
-			// 	// 					updatedCharacter.healPoints + value,
-			// 	// 					maxHp,
-			// 	// 				);
-			// 	// 				shouldUpdateTurn = true;
-			// 	// 			}
-			// 	// 			break;
-
-			// 	// 		case UPDATE_STATS.LEVEL:
-			// 	// 			updatedCharacter.level = updateValue as number;
-			// 	// 			break;
-
-			// 	// 		case UPDATE_STATS.ALL:
-			// 	// 			return {
-			// 	// 				...state,
-			// 	// 				character: updateValue as CharacterStats,
-			// 	// 				initialParameters: {
-			// 	// 					...state.initialParameters,
-			// 	// 					character: updateValue as CharacterStats,
-			// 	// 				},
-			// 	// 			};
-
-			// 	// 		default:
-			// 	// 			console.warn(
-			// 	// 				`Неподдерживаемый запрос обновления: ${updateRequest}`,
-			// 	// 			);
-			// 	// 			return state;
-			// 	// 	}
-
-			// 	// 	newState.character = updatedCharacter;
-
-			// 	// 	if (shouldUpdateTurn) {
-			// 	// 		newState.currentTargetToMove =
-			// 	// 			updateRequest.incomingStatus === INCOMING_STATUS.ATTACK
-			// 	// 				? CURRENT_TARGET_TO_MOVE.CHARACTER
-			// 	// 				: CURRENT_TARGET_TO_MOVE.ENEMY;
-			// 	// 	}
-
-			// 	// 	return newState;
-			// 	// });
-			// },
-
-			// updateEnemyStats: (updateRequest, updateValue) => {
-			// 	// set((state) => {
-			// 	// 	const updatedEnemy = {...state.enemy};
-
-			// 	// 	switch (updateRequest) {
-			// 	// 		case UPDATE_STATS.ATTACK:
-			// 	// 			updatedEnemy.attack = updateValue as number;
-			// 	// 			set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.CHARACTER});
-			// 	// 			break;
-			// 	// 		case UPDATE_STATS.DEFENSE:
-			// 	// 			updatedEnemy.defense = updateValue as number;
-			// 	// 			break;
-			// 	// 		case UPDATE_STATS.HP:
-			// 	// 			const value = updateValue as number;
-			// 	// 			if (value >= updatedEnemy.healPoints) {
-			// 	// 				updatedEnemy.healPoints = 0;
-			// 	// 				updatedEnemy.death = true;
-			// 	// 				get().setDefaultState();
-			// 	// 			} else {
-			// 	// 				updatedEnemy.healPoints -= value;
-			// 	// 				set({currentTargetToMove: CURRENT_TARGET_TO_MOVE.ENEMY});
-			// 	// 			}
-
-			// 	// 			break;
-			// 	// 		case UPDATE_STATS.LEVEL:
-			// 	// 			updatedEnemy.level = updateValue as number;
-			// 	// 			break;
-			// 	// 		case UPDATE_STATS.ALL:
-			// 	// 			return {
-			// 	// 				enemy: updateValue as EnemyStats,
-			// 	// 				initialParameters: {
-			// 	// 					...state.initialParameters,
-			// 	// 					enemy: updateValue as EnemyStats,
-			// 	// 				},
-			// 	// 			};
-			// 	// 		default:
-			// 	// 			console.warn(
-			// 	// 				`Неподдерживаемый запрос обновления: ${updateRequest}`,
-			// 	// 			);
-			// 	// 	}
-
-			// 	// 	return {enemy: updatedEnemy};
-			// 	// });
-			// },
 		}),
 		{
 			name: 'battle-storage',

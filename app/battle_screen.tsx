@@ -44,6 +44,7 @@ export default function Battle_Screen() {
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
     const isActiveTurn = useBattleStore(state => state.isActiveTurn)
+    const isInitialized = useBattleStore(state => state.isInitialized)
     const setCharacterStats = useBattleStore(state => state.setCharacterStats)
     const setEnemyStats = useBattleStore(state => state.setEnemyStats)
     //
@@ -68,10 +69,15 @@ export default function Battle_Screen() {
     const [confirmRetreat, setConfirmRetreat] = useState(false)
 
     //
+
     // initialization Battle screen
-    useEffect(() => {
-        startBattle(characterStats, enemyStats)
-    }, [])
+ useEffect(() => {
+        startBattle(characterStats, enemyStats);
+    }, []);
+
+    if (!isInitialized) {
+        return null;
+    }
     // check return to main screen
     useEffect(() => {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
@@ -79,9 +85,7 @@ export default function Battle_Screen() {
             handleRetreatButton();
             if(confirmRetreat) {
                 navigation.dispatch(event.data.action);
-                handleRetreatConfirm();
             }
-            
         });
         return unsubscribe;
     }, [navigation, confirmRetreat]);

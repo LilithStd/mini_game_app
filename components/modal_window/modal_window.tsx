@@ -29,7 +29,7 @@ type ModalWindowProps = {
             name: string,
             model: number
         }
-        // callBack?: () => void;
+        callBack?: () => void;
     }
     onClose: () => void;
 };
@@ -110,6 +110,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
 
     const [currentModalProps, setCurrentModalProps] = useState<ModalVariant>(MODAL_VARIANTS.default)
     const [currentTypeModal, setCurrentModalType] = useState(VARIANTS_MODAL_WINDOW.DEFAULT)
+
     const modalConfigure = (variant: VARIANTS_MODAL_WINDOW) => {
         switch (variant) {
             case VARIANTS_MODAL_WINDOW.RETREAT:
@@ -155,6 +156,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         switch (currentTypeModal) {
             case VARIANTS_MODAL_WINDOW.RETREAT:
                 router.push(GLOBAL_APP_PATH.MAIN);
+                objectSetting.callBack?.()
                 onClose()
                 break;
             case VARIANTS_MODAL_WINDOW.ATTACK:
