@@ -55,7 +55,7 @@ const defaultStats = {
 	reduceCriticalDamage: 0,
 	atribute: 'dark',
 	resistAtribute: 'dark',
-	healPoints: 260,
+	healPoints: { current: 260, max: 260 },
 	expirience: 140,
 	death: false,
 };
@@ -71,7 +71,7 @@ const bossStats = {
 	reduceCriticalDamage: 0,
 	atribute: 'dark',
 	resistAtribute: 'dark',
-	healPoints: 500,
+	healPoints: { current: 500, max: 500 },
 	expirience: 400,
 	death: false,
 };
@@ -168,7 +168,7 @@ const default_boss = {
 	name: '',
 	model: 0,
 	stage: BOSS_STAGE.DEFAULT,
-	stats: defaultStats,
+	stats: { ...defaultStats},
 };
 
 // Zustand-хранилище

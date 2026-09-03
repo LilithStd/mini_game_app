@@ -17,7 +17,10 @@ export type EnemyStats =  {
 	reduceCriticalDamage: number;
 	atribute: string;
 	resistAtribute: string;
-	healPoints: number;
+	healPoints: { 
+        current: number; 
+        max: number; 
+    };
 	expirience: number;
 	death: boolean;
 }
@@ -40,7 +43,10 @@ export type BossStats = {
 	reduceCriticalDamage: number;
 	atribute: string;
 	resistAtribute: string;
-	healPoints: number;
+	healPoints: { 
+        current: number; 
+        max: number; 
+    };
 	expirience: number;
 	death: boolean;
 }

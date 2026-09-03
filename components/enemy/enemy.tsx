@@ -9,8 +9,8 @@ export default function Enemy() {
     const enemyStats = useBattleStore(state => state.enemy);
     const currentLocation = useLocationStore(state => state.currentLocation);
 
-    const initialHP = enemyStats.stats.healPoints; // сохраняем начальное значение HP
-    const hpValue = Math.max(0, enemyStats.stats.healPoints);
+    const initialHP = enemyStats.stats.healPoints.max; // сохраняем начальное значение HP
+    const hpValue = Math.max(0, enemyStats.stats.healPoints.current);
     const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;
 
     // Анимируем при изменении HP

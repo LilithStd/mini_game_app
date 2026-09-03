@@ -16,7 +16,10 @@ interface CharacterStats {
 	atribute: string;
 	resistAtribute: string;
 	itemsSkills: string[];
-	healPoints: number;
+	healPoints: { 
+		current: number; 
+		max: number; 
+	};
 	death: boolean;
 }
 
@@ -137,7 +140,7 @@ const defaultValues: CharacterStats = {
 	atribute: '',
 	resistAtribute: '',
 	itemsSkills: [],
-	healPoints: 100,
+	healPoints: { current: 100, max: 100 },
 	death: false,
 };
 const defaultValuesEnemy: EnemyType = {
@@ -155,7 +158,7 @@ const defaultValuesEnemy: EnemyType = {
 		atribute: '',
 		resistAtribute: '',
 		expirience: 0,
-		healPoints: 100,
+		healPoints: { current: 100, max: 100 },
 		death: false,
 	},
 };
@@ -194,7 +197,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				const newHP = Math.max(
 					0,
-					enemy.stats.healPoints - character.attack
+					enemy.stats.healPoints.current - character.attack
 				);
 
 				set({
@@ -202,7 +205,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						...enemy,
 						stats: {
 							...enemy.stats,
-							healPoints: newHP,
+							healPoints: { current: newHP, max: enemy.stats.healPoints.max },
 							death: newHP <= 0,
 						}
 					},
@@ -243,13 +246,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						const { enemy, character } = get();
 						const newHP = Math.max(
 							0,
-							character.healPoints - enemy.stats.attack
+							character.healPoints.current - enemy.stats.attack
 						);
 
 						set({
 							character: {
 								...character,
-								healPoints: newHP,
+								healPoints: { current: newHP, max: character.healPoints.max },
 								death: newHP <= 0,
 							},
 							phaseBattle: newHP <= 0

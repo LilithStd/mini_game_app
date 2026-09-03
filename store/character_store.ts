@@ -45,7 +45,7 @@ const Character_Pull: CharacterStats[] = [
 		atribute: 'none',
 		resistAtribute: '',
 		itemsSkills: [],
-		healPoints: 100,
+		healPoints: { current: 100, max: 100 },
 		expirience: 0,
 		totalDamage: 0,
 		death: false,
@@ -64,7 +64,7 @@ const Character_Pull: CharacterStats[] = [
 		atribute: 'fire',
 		resistAtribute: '',
 		itemsSkills: [],
-		healPoints: 120,
+		healPoints: { current: 120, max: 120 },
 		expirience: 0,
 		totalDamage: 0,
 		death: false,
@@ -83,7 +83,7 @@ const Character_Pull: CharacterStats[] = [
 		atribute: 'ice',
 		resistAtribute: '',
 		itemsSkills: [],
-		healPoints: 80,
+		healPoints: { current: 80, max: 80 },
 		expirience: 0,
 		totalDamage: 0,
 		death: false,
@@ -181,7 +181,7 @@ export type CharacterStats = {
 	atribute: string;
 	resistAtribute: string;
 	itemsSkills: string[];
-	healPoints: number;
+	healPoints: { current: number; max: number; };
 	expirience: number;
 	totalDamage: number;
 	death: boolean;
@@ -293,7 +293,7 @@ const CharacterDefaultStats = {
 	atribute: 'none',
 	resistAtribute: '',
 	itemsSkills: [],
-	healPoints: 0,
+	healPoints: { current: 0, max: 0 },
 	expirience: 0,
 	totalDamage: 0,
 	death: false,
@@ -329,7 +329,7 @@ export type UpdateItemStats = {
 	evasion?: number;
 	reduceCriticalDamage?: number;
 	resistAtribute?: string;
-	healPoints?: number;
+	healPoints?: { current: number; max: number; };
 };
 
 export interface CharacterStoreInterface {
@@ -628,7 +628,10 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							break;
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
 							updatedCharacter.healPoints =
-								(updatedCharacter.healPoints || 0) + (updateValue as number);
+								{
+									current: (updatedCharacter.healPoints?.current || 0) + (updateValue as number),
+									max: updatedCharacter.healPoints?.max || 0,
+								};
 							break;
 						case UPDATE_CHARACTER_STATS.EXPIRIENCE:
 							// Ensure you're adding experience properly and leveling up
