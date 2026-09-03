@@ -84,7 +84,7 @@ export default function Battle_Screen() {
             
         });
         return unsubscribe;
-    }, [navigation]);
+    }, [navigation, confirmRetreat]);
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
@@ -187,12 +187,6 @@ export default function Battle_Screen() {
         setDefaultCharacterStats();
         setDefaultEnemyStats();
         setPhaseBattle(PHASE_STATUS.DEFAULT);
-        // setIsModalOpen(false)
-        // const retreat = "retreat";
-        // router.push({
-        //     pathname: GLOBAL_APP_PATH.VICTORY_SCREEN,
-        //     params: { location, retreat }
-        // });
     }
 
 
