@@ -215,8 +215,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					},
 					phaseBattle: newHP <= 0
 						? PHASE_STATUS.DEFAULT
-						: PHASE_STATUS.PLAYER_TURN
+						: PHASE_STATUS.ENEMY_TURN
 				});
+				if (newHP <= 0) return;
+
+				setTimeout(() => {
+				get().enemyAttack(ENEMY_ACTION_TYPE.ATTACK);
+
+			}, 700);
 
 				console.log(`Enemy HP after attack: ${newHP}`);
 			},
