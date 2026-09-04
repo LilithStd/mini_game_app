@@ -23,22 +23,6 @@ interface CharacterStats {
 	death: boolean;
 }
 
-// interface EnemyStats {
-// 	level: number;
-// 	attack: number;
-// 	defense: number;
-// 	accuracy: number;
-// 	criticalRate: number;
-// 	criticalDamage: number;
-// 	evasion: number;
-// 	reduceCriticalDamage: number;
-// 	atribute: string;
-// 	resistAtribute: string;
-// 	healPoints: number;
-// 	expirience: number;
-// 	death: boolean;
-// }
-
 export enum INCOMING_STATUS {
 	ATTACK = 'attack',
 	ITEM = 'item',
@@ -90,17 +74,6 @@ export interface BattleStoreInterface {
 		enemy: string[];
 	};
 	setCurrentBuffAndDebuff: (status: string) => void;
-	// updateCharacterStats: (
-	// 	updateRequest: {
-	// 		updateCurrentStats: UPDATE_STATS;
-	// 		incomingStatus: INCOMING_STATUS;
-	// 	},
-	// 	updateValue: number | CharacterStats,
-	// ) => void;
-	// updateEnemyStats: (
-	// 	updateRequest: UPDATE_STATS,
-	// 	updateValue: number | EnemyType | BossType,
-	// ) => void;
 }
 
 export enum UPDATE_STATS {
@@ -258,6 +231,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				switch (enemyActionType) {
 					case ENEMY_ACTION_TYPE.ATTACK:
 						const { enemy, character } = get();
+						console.log(`Current HP Player: ${character.healPoints.current}`);
 						const newHP = Math.max(
 							0,
 							character.healPoints.current - enemy.stats.attack
@@ -279,6 +253,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								enemy: get().totalDamage.enemy + (enemy.stats.attack - newHP > 0 ? enemy.stats.attack - newHP : 0),
 							},
 						});
+						console.log(`Enemy attacked! New HP Player: ${character.healPoints.current}`);
 						break;
 						case ENEMY_ACTION_TYPE.DEFENSE:
 							// Implement enemy defense logic here

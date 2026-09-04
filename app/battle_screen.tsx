@@ -44,6 +44,7 @@ export default function Battle_Screen() {
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
     const isActiveTurn = useBattleStore(state => state.isActiveTurn)
+    const currentPhaseBattle = useBattleStore(state => state.phaseBattle)
     const isInitialized = useBattleStore(state => state.isInitialized)
     const setCharacterStats = useBattleStore(state => state.setCharacterStats)
     const setEnemyStats = useBattleStore(state => state.setEnemyStats)
@@ -252,7 +253,8 @@ export default function Battle_Screen() {
                     backgroundColor: 'black'
 
                 }}>
-                    <Character />
+                    {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />}
+                    
                     {/* {isItemsActive && <Character />} */}
                     {/* {isActiveTurn && <View style={{
                         backgroundColor: 'white',
@@ -268,7 +270,7 @@ export default function Battle_Screen() {
                     }}>
                         <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.description : ''}</Text>
                     </View>} */}
-                    <Enemy />
+                    
 
                     {isModalOpen &&
                         <ModalWindow

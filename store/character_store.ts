@@ -282,7 +282,7 @@ export type CharacterEquip = {
 const CharacterDefaultStats = {
 	name: 'default_character',
 	model: Character_Default,
-	level: 0,
+	level: 1,
 	attack: 10,
 	defense: 0,
 	accuracy: 0,
@@ -293,7 +293,7 @@ const CharacterDefaultStats = {
 	atribute: 'none',
 	resistAtribute: '',
 	itemsSkills: [],
-	healPoints: { current: 0, max: 0 },
+	healPoints: { current: 100, max: 100 },
 	expirience: 0,
 	totalDamage: 0,
 	death: false,
