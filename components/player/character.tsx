@@ -13,7 +13,7 @@ export default function Character() {
     // const characterStats = globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN
     //         ? characterStatsBattle
     //         : characterStatsGlobal;
-    const characterStats = characterStatsGlobal;
+    const characterStats = characterStatsBattle;
 
     const initialHP = characterStats.healPoints.max; // сохраняем начальное значение HP
     const hpValue = Math.max(0, characterStats.healPoints.current);
