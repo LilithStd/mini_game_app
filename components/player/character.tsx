@@ -8,15 +8,18 @@ import { Animated, Image, StyleSheet, Text, View } from "react-native";
 export default function Character() {
     const globalRoute = useGlobalStore(state => state.currentState);
     const characterStatsGlobal = useCharacterStore(state => state.characterStats);
-    const characterStats =
-        globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN
-            ? useBattleStore(state => state.character)
-            : characterStatsGlobal;
+    const characterStatsBattle = useBattleStore(state => state.character);
+
+    // const characterStats = globalRoute === GLOBAL_APP_PATH.BATTLE_SCREEN
+    //         ? characterStatsBattle
+    //         : characterStatsGlobal;
+    const characterStats = characterStatsGlobal;
 
     const initialHP = characterStats.healPoints.max; // сохраняем начальное значение HP
-    const hpValue = Math.max(0, characterStats.healPoints.current ?? 0);
+    const hpValue = Math.max(0, characterStats.healPoints.current);
     const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;
 
+    // Анимируем при изменении HP
     useEffect(() => {
         Animated.timing(animatedHP, {
             toValue: hpValue / initialHP,

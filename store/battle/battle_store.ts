@@ -222,48 +222,42 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				});
 			},
 			escape: () => {},
-			enemyAttack: (type) => {
-				const { phaseBattle } = get();
-				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-				const action = getRandomEnumValue(ENEMY_ACTION_TYPE);
-				const enemyActionType = type ?? action;
-				
-				switch (enemyActionType) {
-					case ENEMY_ACTION_TYPE.ATTACK:
-						const { enemy, character } = get();
-						console.log(`Current HP Player: ${character.healPoints.current}`);
-						const newHP = Math.max(
-							0,
-							character.healPoints.current - enemy.stats.attack
-						);
+		enemyAttack: (type) => {
+				const { phaseBattle, enemy, character, totalDamage } = get();
 
-						set({
-							character: {
-								...character,
-								healPoints: { current: newHP, max: character.healPoints.max },
-								death: newHP <= 0,
+				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+
+				const enemyActionType =
+					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
+
+				if (enemyActionType === ENEMY_ACTION_TYPE.ATTACK) {
+					const newHP = Math.max(
+						0,
+						character.healPoints.current - enemy.stats.attack
+					);
+
+					const actualDamage =
+						character.healPoints.current - newHP;
+
+					set({
+						character: {
+							...character,
+							healPoints: {
+								...character.healPoints,
+								current: newHP,
 							},
-							phaseBattle: newHP <= 0
-								? PHASE_STATUS.DEFAULT
-								: PHASE_STATUS.PLAYER_TURN
-						});
-						set({
-							totalDamage: {
-								...get().totalDamage,
-								enemy: get().totalDamage.enemy + (enemy.stats.attack - newHP > 0 ? enemy.stats.attack - newHP : 0),
-							},
-						});
-						console.log(`Enemy attacked! New HP Player: ${character.healPoints.current}`);
-						break;
-						case ENEMY_ACTION_TYPE.DEFENSE:
-							// Implement enemy defense logic here
-						break;
-						case ENEMY_ACTION_TYPE.EVADE:
-							// Implement enemy evasion logic here
-						break;
-						case ENEMY_ACTION_TYPE.ESCAPE:
-							// Implement enemy escape logic here
-						break;
+							death: newHP <= 0,
+						},
+
+						totalDamage: {
+							...totalDamage,
+							enemy: totalDamage.enemy + actualDamage,
+						},
+
+						phaseBattle: newHP <= 0
+							? PHASE_STATUS.DEFAULT
+							: PHASE_STATUS.PLAYER_TURN,
+					});
 				}
 			},
 			setBattleStatus: (status) => {
