@@ -5,10 +5,7 @@ import { useEffect, useRef } from "react";
 import { Animated, Image, StyleSheet, Text, View } from "react-native";
 
 export default function Enemy() {
-    const setCurrentEnemy = useEnemyStore(state => state.setCurrentEnemy);
     const enemyStats = useBattleStore(state => state.enemy);
-    const currentLocation = useLocationStore(state => state.currentLocation);
-
     const initialHP = enemyStats.stats.healPoints.max; // сохраняем начальное значение HP
     const hpValue = Math.max(0, enemyStats.stats.healPoints.current);
     const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;

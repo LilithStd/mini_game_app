@@ -252,8 +252,9 @@ export default function Battle_Screen() {
                     backgroundColor: 'black'
 
                 }}>
-                    {isItemsActive && <Character />}
-                    {isActiveTurn && <View style={{
+                    <Character />
+                    {/* {isItemsActive && <Character />} */}
+                    {/* {isActiveTurn && <View style={{
                         backgroundColor: 'white',
                         width: '60%',
                         height: 60,
@@ -266,7 +267,7 @@ export default function Battle_Screen() {
                         zIndex: 3
                     }}>
                         <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.description : ''}</Text>
-                    </View>}
+                    </View>} */}
                     <Enemy />
 
                     {isModalOpen &&

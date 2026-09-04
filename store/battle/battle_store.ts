@@ -192,39 +192,47 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				enemy: [],
 			},
 			attack: () => {
-				const { phaseBattle, enemy, character } = get();
-				if (phaseBattle !== PHASE_STATUS .PLAYER_TURN) return;
+				const { phaseBattle, enemy, character, totalDamage } = get();
+
+				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
+
+				const currentHP = enemy.stats.healPoints.current;
 
 				const newHP = Math.max(
 					0,
-					enemy.stats.healPoints.current - character.attack
+					currentHP - character.attack
 				);
+
+				const actualDamage = currentHP - newHP;
 
 				set({
 					enemy: {
 						...enemy,
 						stats: {
 							...enemy.stats,
-							healPoints: { current: newHP, max: enemy.stats.healPoints.max },
+							healPoints: {
+								...enemy.stats.healPoints,
+								current: newHP,
+							},
 							death: newHP <= 0,
 						}
 					},
+
 					totalDamage: {
-						...get().totalDamage,
-						character: get().totalDamage.character + (character.attack - newHP > 0 ? character.attack - newHP : 0),
+						...totalDamage,
+						character: totalDamage.character + actualDamage,
 					},
+
 					phaseBattle: newHP <= 0
 						? PHASE_STATUS.DEFAULT
 						: PHASE_STATUS.ENEMY_TURN
 				});
+
 				if (newHP <= 0) return;
 
 				setTimeout(() => {
-				get().enemyAttack(ENEMY_ACTION_TYPE.ATTACK);
-
-			}, 700);
-
-				console.log(`Enemy HP after attack: ${newHP}`);
+					get().enemyAttack(ENEMY_ACTION_TYPE.ATTACK);
+				}, 700);
 			},
 			defense: () => {
 				const { phaseBattle, character } = get();

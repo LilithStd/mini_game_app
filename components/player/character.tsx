@@ -13,13 +13,13 @@ export default function Character() {
             ? useBattleStore(state => state.character)
             : characterStatsGlobal;
 
-    const initialHP = useRef<number>(characterStats.healPoints ?? 1);
-    const hpValue = Math.max(0, characterStats.healPoints);
-    const animatedHP = useRef(new Animated.Value(hpValue / initialHP.current)).current;
+    const initialHP = characterStats.healPoints.max; // сохраняем начальное значение HP
+    const hpValue = Math.max(0, characterStats.healPoints.current ?? 0);
+    const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;
 
     useEffect(() => {
         Animated.timing(animatedHP, {
-            toValue: hpValue / initialHP.current,
+            toValue: hpValue / initialHP,
             duration: 500,
             useNativeDriver: false,
         }).start();
@@ -45,7 +45,7 @@ export default function Character() {
 
                 <View style={styles.hpWrapper}>
                     <Text style={styles.hpText}>
-                        HP: {hpValue} / {initialHP.current}
+                        HP: {hpValue} / {initialHP}
                     </Text>
                     <View style={styles.hpBackground}>
                         <Animated.View
