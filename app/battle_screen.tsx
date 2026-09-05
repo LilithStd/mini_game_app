@@ -76,9 +76,7 @@ export default function Battle_Screen() {
         startBattle(characterStats, enemyStats);
     }, []);
 
-    if (!isInitialized) {
-        return null;
-    }
+
     // check return to main screen
     useEffect(() => {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
@@ -90,6 +88,11 @@ export default function Battle_Screen() {
         });
         return unsubscribe;
     }, [navigation, confirmRetreat]);
+
+
+        if (!isInitialized) {
+        return null;
+    }
 
     const handleModalCloseStatus = () => {
         setIsModalOpen(false)
