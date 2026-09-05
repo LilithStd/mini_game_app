@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 
 export default function CharacterBattle() {
   return (
@@ -8,3 +8,7 @@ export default function CharacterBattle() {
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+
+})
