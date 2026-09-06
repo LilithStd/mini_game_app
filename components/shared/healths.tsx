@@ -1,5 +1,12 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+
+interface HealthsProps {
+    values: {
+        current: number;
+        max: number;
+    }
+}
 
 export default function Healths() {
   return    (
@@ -8,3 +15,8 @@ export default function Healths() {
     </View>
   )
 }
+
+
+
+const styles = StyleSheet.create({
+});
