@@ -19,6 +19,8 @@ import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
 import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, SubTypeItems, VARIANTS_ITEMS } from "@/constants/battleScreen";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
+import CharacterBattle from "@/components/player/character_battle";
+import EnemyBattle from "@/components/enemy/enemy_battle";
 
 
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
@@ -256,7 +258,9 @@ export default function Battle_Screen() {
                     backgroundColor: 'black'
 
                 }}>
-                    {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />}
+                    {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
+                    <CharacterBattle />
+                    <EnemyBattle />
                     
                     {/* {isItemsActive && <Character />} */}
                     {/* {isActiveTurn && <View style={{
