@@ -8,10 +8,11 @@ interface HealthsProps {
     }
 }
 
-export default function Healths() {
+export default function Healths({ values }: HealthsProps) {
   return    (
     <View>
       <Text>healths</Text>
+      <Text>{values.current} / {values.max}</Text>
     </View>
   )
 }
