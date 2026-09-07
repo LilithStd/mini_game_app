@@ -78,7 +78,9 @@ export default function Battle_Screen() {
         startBattle(characterStats, enemyStats);
     }, []);
 
-
+    const handleRetreatButton = () => {
+        setIsModalOpen(true)
+    }
     // check return to main screen
     useEffect(() => {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
@@ -122,17 +124,13 @@ export default function Battle_Screen() {
         // );
     };
 
-
-    const handleRetreatButton = () => {
-        setIsModalOpen(true)
-
-    }
+    
+    // const handleRetreatButton = () => {
+    //     setIsModalOpen(true)
+    // }
 
     const handleAttackButton = () => {
-
         attack()
-
-
     };
             // updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
         // setEnemyAction(ACTIONS.ATTACK);
