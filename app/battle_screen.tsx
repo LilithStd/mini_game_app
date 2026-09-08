@@ -17,7 +17,7 @@ import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_str
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
 import { useGlobalStore } from "@/store/global_store";
-import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, SubTypeItems, VARIANTS_ITEMS } from "@/constants/battleScreen";
+import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BUTTON_LIST, default_stats_character, default_stats_enemy, SubTypeItems, VARIANTS_ITEMS } from "@/constants/battle_screen";
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import CharacterBattle from "@/components/player/character_battle";
 import EnemyBattle from "@/components/enemy/enemy_battle";
@@ -257,8 +257,11 @@ export default function Battle_Screen() {
 
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
-                    <CharacterBattle />
-                    <EnemyBattle />
+                    <View>
+                        <CharacterBattle />
+                        <EnemyBattle />
+                    </View>
+                    
                     
                     {/* {isItemsActive && <Character />} */}
                     {/* {isActiveTurn && <View style={{

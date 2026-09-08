@@ -10,7 +10,7 @@ import { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View, StyleSheet, Button } from "react-native";
 import Typewriter from 'react-native-typewriter';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { BATTLE_TYPE_PROPS } from "@/constants/battleScreen";
+import { BATTLE_TYPE_PROPS } from "@/constants/battle_screen";
 
 const defaultBackground = require('../assets/backgrounds/monsters/background_without_imp.jpg')
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
