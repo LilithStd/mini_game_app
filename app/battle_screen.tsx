@@ -175,7 +175,7 @@ export default function Battle_Screen() {
 
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
-                    <View>
+                    <View style={styles.visualContainer}>
                         <CharacterBattle />
                         <EnemyBattle />
                     </View>
@@ -439,6 +439,11 @@ const styles = StyleSheet.create({
 	statsTitle: {
 		textAlign: 'center',
 	},
+    visualContainer: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        
+    },
 	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу
 		bottom: 0, // Прижимаем к нижнему краю
