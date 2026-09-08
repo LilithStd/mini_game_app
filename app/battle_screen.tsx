@@ -124,66 +124,14 @@ export default function Battle_Screen() {
         // );
     };
 
-    
-    // const handleRetreatButton = () => {
-    //     setIsModalOpen(true)
-    // }
-
     const handleAttackButton = () => {
         attack()
     };
-            // updateEnemy(UPDATE_STATS.HP, characterBattleStats.attack)
-        // setEnemyAction(ACTIONS.ATTACK);
-        // updateCharacter({
-        //     updateCurrentStats: UPDATE_STATS.HP,
-        //     incomingStatus: INCOMING_STATUS.ATTACK
-        // }, enemyStats.stats.attack);
 
     const handleItemsCallBackButton = (variant: string) => {
-
-        // switch (variant) {
-        //     case BUTTON_LIST.HEALTH:
-        //         setActiveButton(variant)
-        //         setActiveConsumbles(handleHealPotionsItems());
-        //         break;
-        //     case BUTTON_LIST.ATTACK:
-        //         setActiveButton(variant)
-        //         setActiveConsumbles(handleAttackPotionsItems())
-        //         break;
-        //     case BUTTON_LIST.DEFENSE:
-        //         setActiveButton(variant)
-        //         setActiveConsumbles(handleDefensePotionsItems())
-        //         break;
-        //     case BUTTON_LIST.EVASION:
-        //         setActiveButton(variant)
-        //         setActiveConsumbles(handleEvasionPotionsItems())
-        //         break;
-        //     case BUTTON_LIST.CLOSE:
-        //         setIsItemsActive(false)
-        //         setActiveButton(BUTTON_LIST.HEALTH)
-        //         setActiveConsumbles(handleHealPotionsItems());
-        //         break;
-        // }
     }
 
     const handleActionsCallBackButton = (variant: string) => {
-
-        // switch (variant) {
-        //     case ACTIONS_LIST.ATTACK:
-        //         handleAttackButton()
-        //         break;
-        //     case ACTIONS_LIST.DEFENSE:
-        //         break;
-        //     case ACTIONS_LIST.STAND:
-
-        //         break;
-        //     case ACTIONS_LIST.ITEMS:
-        //         handleItemsButton()
-        //         break;
-        //     case ACTIONS_LIST.RETREAT:
-        //         handleRetreatButton()
-        //         break;
-        // }
     }
 
     const handleItemsCloseButton = () => {
@@ -207,36 +155,7 @@ export default function Battle_Screen() {
 
 
     const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
-        // switch (variant) {
-        //     case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS.HEAL_RESTORE:
-        //         const restoreHP = {
-        //             updateCurrentStats: UPDATE_STATS.HP,
-        //             incomingStatus: INCOMING_STATUS.ITEM
-        //         }
-        //         updateCharacter(restoreHP, items.stats?.healPotion ?? 0)
-        //         break;
-        //     case INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF.ATTACK_BUFF:
-        //         const attackBuff = {
-        //             updateCurrentStats: UPDATE_STATS.ATTACK,
-        //             incomingStatus: INCOMING_STATUS.ITEM
-        //         }
-        //         updateCharacter(attackBuff, items.stats?.attack ?? 0)
-        //         break;
-        //     case VARIANTS_ITEMS.DEFENSE:
-        //         const defenseBuff = {
-        //             updateCurrentStats: UPDATE_STATS.ATTACK,
-        //             incomingStatus: INCOMING_STATUS.ITEM
-        //         }
-        //         updateCharacter(defenseBuff, items.stats?.defense ?? 0)
-        //         break;
-        //     case VARIANTS_ITEMS.EVASION:
-        //         const evasionBuff = {
-        //             updateCurrentStats: UPDATE_STATS.ATTACK,
-        //             incomingStatus: INCOMING_STATUS.ITEM
-        //         }
-        //         updateCharacter(evasionBuff, items.stats?.evasion ?? 0)
-        //         break;
-        // }
+        
     }
 
 
@@ -262,24 +181,6 @@ export default function Battle_Screen() {
                         <EnemyBattle />
                     </View>
                     
-                    
-                    {/* {isItemsActive && <Character />} */}
-                    {/* {isActiveTurn && <View style={{
-                        backgroundColor: 'white',
-                        width: '60%',
-                        height: 60,
-                        borderRadius: 10,
-                        position: 'absolute',
-                        right: 70,
-                        top: 100,
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 3
-                    }}>
-                        <Text>{enemyAction.title !== ACTIONS.NOTHING.title ? enemyAction.description : ''}</Text>
-                    </View>} */}
-                    
-
                     {isModalOpen &&
                         <ModalWindow
                             onClose={handleModalCloseStatus}
@@ -469,3 +370,91 @@ export default function Battle_Screen() {
     )
 }
 
+const styles = StyleSheet.create({
+	switchFocusElement: {
+		zIndex: 3,
+	},
+	mainContainer: {
+		flex: 1,
+		justifyContent: 'center',
+		alignItems: 'center', // Центрирует по горизонтали
+		width: '100%',
+		height: '100%',
+		position: 'relative',
+	},
+	imageBackground: {
+		flex: 1,
+		width: '100%',
+		height: '100%',
+		position: 'absolute',
+	},
+	buttonContainer: {
+		position: 'absolute',
+		left: 10,
+		justifyContent: 'space-between',
+		alignItems: 'stretch',
+	},
+	buttonView: {
+		gap: 1,
+		// alignItems: 'stretch',
+	},
+	buttonBackground: {
+		width: 182,
+		height: 47,
+		justifyContent: 'center',
+		alignItems: 'center',
+		transform: [{scale: 0.8}],
+	},
+	button: {
+		// width: 120,
+	},
+	buttonDisable: {
+		// backgroundColor: 'grey',
+		padding: 8,
+		borderRadius: 4,
+		width: 100,
+	},
+	buttonActive: {
+		backgroundColor: 'aquamarine',
+	},
+	buttonText: {
+		textAlign: 'center',
+		fontSize: 20,
+		fontWeight: 900,
+		// color: 'white',
+	},
+	characterStatsContainer: {
+		position: 'absolute',
+		width: '70%',
+		height: '90%',
+		right: 10,
+		// backgroundColor: 'grey',
+		marginLeft: 50,
+	},
+	statContainer: {
+		flexDirection: 'row',
+		paddingRight: 10,
+		paddingLeft: 10,
+		justifyContent: 'space-between',
+	},
+	statsTitle: {
+		textAlign: 'center',
+	},
+	absoluteContainer: {
+		position: 'absolute', // Фиксируем внизу
+		bottom: 0, // Прижимаем к нижнему краю
+		width: '100%',
+		height: '28%',
+		backgroundColor: 'black',
+		justifyContent: 'center', // Центрируем содержимое
+		alignItems: 'center', // Центрируем текст
+		borderTopLeftRadius: 10, // Закруглим углы для красоты
+		borderTopRightRadius: 10,
+		shadowColor: '#000',
+		zIndex: 3,
+		shadowOffset: {width: 0, height: -2},
+		shadowOpacity: 0.2,
+		shadowRadius: 4,
+		elevation: 5, // Тень для Android
+	},
+});
