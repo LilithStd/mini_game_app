@@ -3,25 +3,26 @@ import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
 import { getRandomEnumValue } from '@/constants/helpers';
+import { CharacterStats } from '../character_store';
 
-interface CharacterStats {
-	level: number;
-	attack: number;
-	defense: number;
-	accuracy: number;
-	criticalRate: number;
-	criticalDamage: number;
-	evasion: number;
-	reduceCriticalDamage: number;
-	atribute: string;
-	resistAtribute: string;
-	itemsSkills: string[];
-	healPoints: { 
-		current: number; 
-		max: number; 
-	};
-	death: boolean;
-}
+// interface CharacterStats {
+// 	level: number;
+// 	attack: number;
+// 	defense: number;
+// 	accuracy: number;
+// 	criticalRate: number;
+// 	criticalDamage: number;
+// 	evasion: number;
+// 	reduceCriticalDamage: number;
+// 	atribute: string;
+// 	resistAtribute: string;
+// 	itemsSkills: string[];
+// 	healPoints: { 
+// 		current: number; 
+// 		max: number; 
+// 	};
+// 	death: boolean;
+// }
 
 export enum INCOMING_STATUS {
 	ATTACK = 'attack',
@@ -102,6 +103,8 @@ export enum ACTIONS {
 }
 
 const defaultValues: CharacterStats = {
+	name: 'default_character',
+	model: 0,
 	level: 1,
 	attack: 0,
 	defense: 0,
@@ -115,6 +118,8 @@ const defaultValues: CharacterStats = {
 	itemsSkills: [],
 	healPoints: { current: 100, max: 100 },
 	death: false,
+	expirience: 0,
+	totalDamage: 0
 };
 const defaultValuesEnemy: EnemyType = {
 	name: 'default_enemy',
