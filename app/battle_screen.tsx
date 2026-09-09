@@ -171,7 +171,7 @@ export default function Battle_Screen() {
                 <View style={{
                     width: '100%',
                     height: '100%',
-                    backgroundColor: 'black'
+                    // backgroundColor: 'black'
 
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
@@ -440,9 +440,9 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
     visualContainer: {
-        textAlign: 'center',
+        borderWidth: 1,
+        borderColor: 'black',
         justifyContent: 'center',
-        
     },
 	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу

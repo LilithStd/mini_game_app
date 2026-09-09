@@ -58,7 +58,7 @@ export default function Healths({ values }: HealthsProps) {
 
 const styles = StyleSheet.create({
     hpWrapper: {
-        width: '90%',
+        width: '100%',
     },
     hpText: {
         position: 'absolute',
