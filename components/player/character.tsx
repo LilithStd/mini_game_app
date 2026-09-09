@@ -15,8 +15,8 @@ export default function Character() {
     //         : characterStatsGlobal;
     const characterStats = characterStatsBattle;
 
-    const initialHP = characterStats.healPoints.max; // сохраняем начальное значение HP
-    const hpValue = Math.max(0, characterStats.healPoints.current);
+    const initialHP = characterStats.stats.healPoints.max; // сохраняем начальное значение HP
+    const hpValue = Math.max(0, characterStats.stats.healPoints.current);
     const animatedHP = useRef(new Animated.Value(hpValue / initialHP)).current;
 
     // Анимируем при изменении HP
@@ -44,7 +44,7 @@ export default function Character() {
 
             <View style={styles.infoBlock}>
                 <Text style={styles.name}>{characterStatsGlobal.name}</Text>
-                <Text style={styles.level}>Level: {characterStats.level}</Text>
+                <Text style={styles.level}>Level: {characterStats.stats.level}</Text>
 
                 <View style={styles.hpWrapper}>
                     <Text style={styles.hpText}>

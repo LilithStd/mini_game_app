@@ -8,7 +8,7 @@ export default function CharacterBattle() {
   return (
     <View>
         <Text>Character battle</Text>
-        <Healths values={{ current: characterStats.healPoints.current, max: characterStats.healPoints.max }} />
+        <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
         <Image source={characterStats.model} style={styles.image} resizeMode="contain" />
     </View>
   )
