@@ -105,21 +105,23 @@ export enum ACTIONS {
 const defaultValues: CharacterStats = {
 	name: 'default_character',
 	model: 0,
-	level: 1,
-	attack: 0,
-	defense: 0,
-	accuracy: 0,
-	criticalRate: 0,
-	criticalDamage: 0,
-	evasion: 0,
-	reduceCriticalDamage: 0,
-	atribute: '',
-	resistAtribute: '',
-	itemsSkills: [],
-	healPoints: { current: 100, max: 100 },
-	death: false,
-	expirience: 0,
-	totalDamage: 0
+	stats: {
+		level: 1,
+		attack: 0,
+		defense: 0,
+		accuracy: 0,
+		criticalRate: 0,
+		criticalDamage: 0,
+		evasion: 0,
+		reduceCriticalDamage: 0,
+		atribute: '',
+		resistAtribute: '',
+		itemsSkills: [],
+		healPoints: { current: 100, max: 100 },
+		death: false,
+		expirience: 0,
+		totalDamage: 0
+	}
 };
 const defaultValuesEnemy: EnemyType = {
 	name: 'default_enemy',
@@ -178,7 +180,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				const newHP = Math.max(
 					0,
-					currentHP - character.attack
+					currentHP - character.stats.attack
 				);
 
 				const actualDamage = currentHP - newHP;
@@ -217,12 +219,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
 
-				const newDefense = character.defense * DEFENSE_MULTIPLIER;
+				const newDefense = character.stats.defense * DEFENSE_MULTIPLIER;
 
 				set({
 					character: {
 						...character,
-						defense: newDefense,
+						stats: {
+							...character.stats,
+							defense: newDefense,
+						},
 					}
 				});
 			},
@@ -238,20 +243,23 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				if (enemyActionType === ENEMY_ACTION_TYPE.ATTACK) {
 					const newHP = Math.max(
 						0,
-						character.healPoints.current - enemy.stats.attack
+						character.stats.healPoints.current - enemy.stats.attack
 					);
 
 					const actualDamage =
-						character.healPoints.current - newHP;
+						character.stats.healPoints.current - newHP;
 
 					set({
 						character: {
 							...character,
-							healPoints: {
-								...character.healPoints,
-								current: newHP,
+							stats: {
+								...character.stats,
+								healPoints: {
+									...character.stats.healPoints,
+									current: newHP,
+								},
+								death: newHP <= 0,
 							},
-							death: newHP <= 0,
 						},
 
 						totalDamage: {
