@@ -1,6 +1,6 @@
 import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, Image } from 'react-native'
 import Healths from '../shared/healths';
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
@@ -8,10 +8,14 @@ export default function EnemyBattle() {
     <View>
         <Text>Enemy battle</Text>
         <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+        <Image source={enemyStats.model} style={styles.image} resizeMode="contain" />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-
+    image: {
+        width: 100,
+        height: 100,
+    },
 })

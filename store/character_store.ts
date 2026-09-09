@@ -34,59 +34,66 @@ const Character_Pull: CharacterStats[] = [
 	{
 		name: 'character_name_0 - Knight',
 		model: require('../assets/character/character_00.jpg'),
-		level: 1,
-		attack: 8,
-		defense: 10,
-		accuracy: 2,
-		criticalRate: 5,
-		criticalDamage: 10,
-		evasion: 0,
-		reduceCriticalDamage: 20,
-		atribute: 'none',
-		resistAtribute: '',
-		itemsSkills: [],
-		healPoints: { current: 100, max: 100 },
-		expirience: 0,
-		totalDamage: 0,
-		death: false,
+		stats:{
+			level: 1,
+			attack: 8,
+			defense: 10,
+			accuracy: 2,
+			criticalRate: 5,
+			criticalDamage: 10,
+			evasion: 0,
+			reduceCriticalDamage: 20,
+			atribute: 'none',
+			resistAtribute: '',
+			itemsSkills: [],
+			healPoints: { current: 100, max: 100 },
+			expirience: 0,
+			totalDamage: 0,
+			death: false,
+		}
+		
 	},
 	{
 		name: 'character_name_1 - Warrior',
 		model: require('../assets/character/character_01.jpg'),
-		level: 1,
-		attack: 10,
-		defense: 8,
-		accuracy: 4,
-		criticalRate: 5,
-		criticalDamage: 10,
-		evasion: 4,
-		reduceCriticalDamage: 40,
-		atribute: 'fire',
-		resistAtribute: '',
-		itemsSkills: [],
-		healPoints: { current: 120, max: 120 },
-		expirience: 0,
-		totalDamage: 0,
-		death: false,
+		stats:{
+			level: 1,
+			attack: 10,
+			defense: 8,
+			accuracy: 4,
+			criticalRate: 5,
+			criticalDamage: 10,
+			evasion: 4,
+			reduceCriticalDamage: 40,
+			atribute: 'fire',
+			resistAtribute: '',
+			itemsSkills: [],
+			healPoints: { current: 120, max: 120 },
+			expirience: 0,
+			totalDamage: 0,
+			death: false,
+		}
 	},
 	{
 		name: 'character_name_2 - Mage',
 		model: require('../assets/character/character_02.jpg'),
-		level: 1,
-		attack: 12,
-		defense: 6,
-		accuracy: 3,
-		criticalRate: 10,
-		criticalDamage: 10,
-		evasion: 0,
-		reduceCriticalDamage: 40,
-		atribute: 'ice',
-		resistAtribute: '',
-		itemsSkills: [],
-		healPoints: { current: 80, max: 80 },
-		expirience: 0,
-		totalDamage: 0,
-		death: false,
+		stats:{
+			level: 1,
+			attack: 12,
+			defense: 6,
+			accuracy: 3,
+			criticalRate: 10,
+			criticalDamage: 10,
+			evasion: 0,
+			reduceCriticalDamage: 40,
+			atribute: 'ice',
+			resistAtribute: '',
+			itemsSkills: [],
+			healPoints: { current: 80, max: 80 },
+			expirience: 0,
+			totalDamage: 0,
+			death: false,
+		}
 	},
 ];
 
@@ -170,21 +177,23 @@ export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL {
 export type CharacterStats = {
 	name: string;
 	model: number;
-	level: number;
-	attack: number;
-	defense: number;
-	accuracy: number;
-	criticalRate: number;
-	criticalDamage: number;
-	evasion: number;
-	reduceCriticalDamage: number;
-	atribute: string;
-	resistAtribute: string;
-	itemsSkills: string[];
-	healPoints: { current: number; max: number; };
-	expirience: number;
-	totalDamage: number;
-	death: boolean;
+	stats:{
+		level: number;
+		attack: number;
+		defense: number;
+		accuracy: number;
+		criticalRate: number;
+		criticalDamage: number;
+		evasion: number;
+		itemsSkills: string[];
+		reduceCriticalDamage: number;
+		atribute: string;
+		resistAtribute: string;
+		expirience: number;
+		healPoints: { current: number; max: number; };
+		totalDamage: number;	
+		death: boolean;
+	}
 };
 
 const CharacterEquipDefault = {
@@ -282,21 +291,23 @@ export type CharacterEquip = {
 const CharacterDefaultStats = {
 	name: 'default_character',
 	model: Character_Default,
-	level: 1,
-	attack: 10,
-	defense: 0,
-	accuracy: 0,
-	criticalRate: 0,
-	criticalDamage: 0,
-	evasion: 0,
-	reduceCriticalDamage: 0,
-	atribute: 'none',
-	resistAtribute: '',
-	itemsSkills: [],
-	healPoints: { current: 100, max: 100 },
-	expirience: 0,
-	totalDamage: 0,
-	death: false,
+	stats: {
+		level: 1,
+		attack: 10,
+		defense: 0,
+		accuracy: 0,
+		criticalRate: 0,
+		criticalDamage: 0,
+		evasion: 0,
+		reduceCriticalDamage: 0,
+		atribute: 'none',
+		resistAtribute: '',
+		itemsSkills: [],
+		healPoints: { current: 100, max: 100 },
+		expirience: 0,
+		totalDamage: 0,
+		death: false,
+	},
 };
 
 export enum UPDATE_CHARACTER_STATS {
@@ -579,65 +590,65 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 							updatedCharacter.model = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.LEVEL:
-							updatedCharacter.level = updateValue as number;
+							updatedCharacter.stats.level = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.ATTACK:
-							updatedCharacter.attack =
-								(updatedCharacter.attack || 0) + (updateValue as number);
+							updatedCharacter.stats.attack =
+								(updatedCharacter.stats.attack || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.DEFENSE:
-							updatedCharacter.defense =
-								(updatedCharacter.defense || 0) + (updateValue as number);
+							updatedCharacter.stats.defense =
+								(updatedCharacter.stats.defense || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.ACCURACY:
-							updatedCharacter.accuracy =
-								(updatedCharacter.accuracy || 0) + (updateValue as number);
+							updatedCharacter.stats.accuracy =
+								(updatedCharacter.stats.accuracy || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.CRITICAL_RATE:
-							updatedCharacter.criticalRate =
-								(updatedCharacter.criticalRate || 0) + (updateValue as number);
+							updatedCharacter.stats.criticalRate =
+								(updatedCharacter.stats.criticalRate || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.CRITICAL_DAMAGE:
-							updatedCharacter.criticalDamage =
-								(updatedCharacter.criticalDamage || 0) +
+							updatedCharacter.stats.criticalDamage =
+								(updatedCharacter.stats.criticalDamage || 0) +
 								(updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.EVASION:
-							updatedCharacter.evasion =
-								(updatedCharacter.evasion || 0) + (updateValue as number);
+							updatedCharacter.stats.evasion =
+								(updatedCharacter.stats.evasion || 0) + (updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.REDUCE_CRITICAL_DAMAGE:
-							updatedCharacter.reduceCriticalDamage =
-								(updatedCharacter.reduceCriticalDamage || 0) +
+							updatedCharacter.stats.reduceCriticalDamage =
+								(updatedCharacter.stats.reduceCriticalDamage || 0) +
 								(updateValue as number);
 							break;
 						case UPDATE_CHARACTER_STATS.ITEM_SKILL:
 							const element = updateValue as string;
-							updatedCharacter.itemsSkills =
-								updatedCharacter.itemsSkills.includes(element)
-									? updatedCharacter.itemsSkills.filter(
+							updatedCharacter.stats.itemsSkills =
+								updatedCharacter.stats.itemsSkills.includes(element)
+									? updatedCharacter.stats.itemsSkills.filter(
 											(skill) => skill !== element,
 									  ) // Remove item skill if already present
-									: [...updatedCharacter.itemsSkills, element]; // Add item skill if not present
+									: [...updatedCharacter.stats.itemsSkills, element]; // Add item skill if not present
 							break;
 						case UPDATE_CHARACTER_STATS.ATRIBUTE:
-							updatedCharacter.atribute = updateValue as string;
+							updatedCharacter.stats.atribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.RESIST_ATRIBUTE:
-							updatedCharacter.resistAtribute = updateValue as string;
+							updatedCharacter.stats.resistAtribute = updateValue as string;
 							break;
 						case UPDATE_CHARACTER_STATS.HEAL_POINTS:
-							updatedCharacter.healPoints =
+							updatedCharacter.stats.healPoints =
 								{
-									current: (updatedCharacter.healPoints?.current || 0) + (updateValue as number),
-									max: updatedCharacter.healPoints?.max || 0,
+									current: (updatedCharacter.stats.healPoints?.current || 0) + (updateValue as number),
+									max: updatedCharacter.stats.healPoints?.max || 0,
 								};
 							break;
 						case UPDATE_CHARACTER_STATS.EXPIRIENCE:
 							// Ensure you're adding experience properly and leveling up
 							let incomeExp = updateValue as number;
-							let currentLevel = updatedCharacter.level;
-							let currentExp = updatedCharacter.expirience;
+							let currentLevel = updatedCharacter.stats.level;
+							let currentExp = updatedCharacter.stats.expirience;
 
 							const maxLevel = Math.max(...LEVELS.map((lvl) => lvl.level));
 							while (incomeExp > 0 && currentLevel < maxLevel) {
@@ -664,17 +675,17 @@ export const useCharacterStore = create<CharacterStoreInterface>()(
 								currentExp = Math.min(currentExp + incomeExp, maxExp);
 							}
 
-							updatedCharacter.level = currentLevel;
-							updatedCharacter.expirience = currentExp;
+							updatedCharacter.stats.level = currentLevel;
+							updatedCharacter.stats.expirience = currentExp;
 							break;
 						case UPDATE_CHARACTER_STATS.TOTAL_DAMAGE:
-							updatedCharacter.totalDamage = updateValue as number;
+							updatedCharacter.stats.totalDamage = updateValue as number;
 							break;
 						case UPDATE_CHARACTER_STATS.DEATH:
-							updatedCharacter.death = updateValue as boolean;
+							updatedCharacter.stats.death = updateValue as boolean;
 							break;
 						case UPDATE_CHARACTER_STATS.ALL:
-							return {characterStats: updateValue as CharacterStats};
+							return {characterStats: { ...updateValue as CharacterStats, stats: { ...updateValue as CharacterStats }.stats }};
 						default:
 							console.warn(`Unsupported update request: ${updateRequest}`);
 					}
