@@ -4,6 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {LOCATIONS_GROUP} from './location_store';
 import { BossType, EnemyStats, EnemyType } from './enemy/enemy_store_types';
 
+const ENEMY_DEFAULT_MODEL = require('../assets/enemy/monsters/monster_00.jpg');
+
 type EnemyTypeOld = {
 	name: string;
 	model: number;
@@ -25,24 +27,6 @@ export const enum BOSS_STAGE {
 interface EnemyContentType extends EnemyTypeOld {
 	locations: string[];
 }
-
-// interface EnemyStats {
-// 	level: number;
-// 	attack: number;
-// 	defense: number;
-// 	accuracy: number;
-// 	criticalRate: number;
-// 	criticalDamage: number;
-// 	evasion: number;
-// 	reduceCriticalDamage: number;
-// 	atribute: string;
-// 	resistAtribute: string;
-// 	healPoints: number;
-// 	expirience: number;
-// 	death: boolean;
-// }
-
-
 
 const defaultStats = {
 	level: 1,
@@ -159,14 +143,14 @@ export interface EnemyStoreInterface {
 
 const default_enemy = {
 	name: '',
-	model: 0,
-	preview: 0,
+	model: ENEMY_DEFAULT_MODEL,
+	preview: ENEMY_DEFAULT_MODEL,
 	stats: defaultStats,
 };
 
 const default_boss = {
 	name: '',
-	model: 0,
+	model: ENEMY_DEFAULT_MODEL,
 	stage: BOSS_STAGE.DEFAULT,
 	stats: { ...defaultStats},
 };
