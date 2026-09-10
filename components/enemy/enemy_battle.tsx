@@ -5,7 +5,7 @@ import Healths from '../shared/healths';
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
   return (
-    <View>
+    <View style={styles.mainContainer}>
         <Text>Enemy battle</Text>
         <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
         <Image source={enemyStats.model} style={styles.image} resizeMode="contain" />
@@ -14,8 +14,13 @@ export default function EnemyBattle() {
 }
 
 const styles = StyleSheet.create({
-    image: {
-        width: 100,
-        height: 100,
-    },
+  mainContainer: {
+    position: "absolute",
+    // width: "100%",
+    // height: "100%",
+  },
+  image: {
+    width: "100%",
+    height: "100%",
+  },
 })

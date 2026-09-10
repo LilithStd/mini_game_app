@@ -177,14 +177,14 @@ export default function Battle_Screen() {
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
                         <CharacterBattle />
-                        <EnemyBattle />
+                        {/* <EnemyBattle /> */}
                     </View>
                     
                     {isModalOpen &&
                         <ModalWindow
                             onClose={handleModalCloseStatus}
                             objectSetting={objectModalSettings} />}
-                    <View style={styles.absoluteContainer}>
+                    {/* <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
                             <Image
                                 source={isItemsActive ? chestPreview : playerPreview}
@@ -199,7 +199,6 @@ export default function Battle_Screen() {
                             {isItemsActive ? <View style={styles.buttonView}>
 
                                 <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
-                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.HEALTH)}
                                     disabled={isActiveTurn}
 
                                 >
@@ -217,7 +216,6 @@ export default function Battle_Screen() {
                                     style={[styles.button, {
                                         marginLeft: 120
                                     }]}
-                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.ATTACK)}
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
@@ -230,7 +228,6 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[styles.button, { marginLeft: 150 }]}
                                     disabled={isActiveTurn}
-                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.DEFENSE)}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
@@ -243,7 +240,6 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.button, { marginLeft: 120 }]}
-                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.EVASION)}
                                     disabled={isActiveTurn}
 
                                 >
@@ -257,7 +253,6 @@ export default function Battle_Screen() {
                                 <TouchableOpacity
                                     style={[styles.button,
                                     { marginLeft: 80 }]}
-                                    // onPress={() => handleItemsCallBackButton(BUTTON_LIST.CLOSE)}
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
@@ -326,7 +321,6 @@ export default function Battle_Screen() {
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     style={[styles.button, { marginLeft: 80 }]}
-                                    // onPress={handleItemsButton}
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
@@ -349,8 +343,6 @@ export default function Battle_Screen() {
                                         }}
                                     >
                                         <TouchableOpacity
-
-                                            // onPress={() => handleItemsUse(item.subType, item)}
                                             style={{
                                                 backgroundColor: 'yellow'
                                             }}
@@ -363,7 +355,7 @@ export default function Battle_Screen() {
                                 )}
                             </View> : <View></View>
                         }
-                    </View>
+                    </View> */}
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -441,6 +433,8 @@ const styles = StyleSheet.create({
 	},
     visualContainer: {
         borderWidth: 1,
+        width: '100%',
+        height: '100%',
         borderColor: 'black',
         justifyContent: 'center',
     },
