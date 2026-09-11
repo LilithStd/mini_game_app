@@ -176,8 +176,8 @@ export default function Battle_Screen() {
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
-                        <CharacterBattle />
-                        {/* <EnemyBattle /> */}
+                        {/* <CharacterBattle /> */}
+                        <EnemyBattle />
                     </View>
                     
                     {isModalOpen &&
