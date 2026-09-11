@@ -9,22 +9,19 @@ export default function CharacterBattle() {
     <View style={styles.mainContainer}>
         <Text>Character battle</Text>
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
-        <Image source={characterStats.model} style={styles.image} resizeMode="contain" />
+        <Image source={characterStats.model} style={styles.image}  resizeMode="contain"/>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-      flex: 1,
-      borderWidth: 1,
-      margin: 10,
-      borderColor: 'black',
+      
     },
 
     image: {
-      flex: 1,
+      
       width: '100%',
-      // top:-100,
+      top:-450,
     },
 });
