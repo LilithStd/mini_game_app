@@ -15,12 +15,16 @@ export default function CharacterBattle() {
 }
 
 const styles = StyleSheet.create({
-  mainContainer: {
-    width: "100%",
-    height: "100%",
-  },
-    image: {
-        width: "100%",
-        height: "100%",
+    mainContainer: {
+      flex: 1,
+      borderWidth: 1,
+      margin: 10,
+      borderColor: 'black',
     },
-})
+
+    image: {
+      flex: 1,
+      width: '100%',
+      // top:-100,
+    },
+});
