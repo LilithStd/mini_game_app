@@ -2,7 +2,8 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export const Character_Default = require('../assets/character/character_00.jpg');
+const Character_Default = require('../assets/character/character_00.jpg');
+const Character_Default_Preview = require('../assets/character/character_00_preview.jpg');
 
 const Character = {
 	CHARACTER_1: require('../assets/character/character_00.jpg'),
@@ -34,6 +35,7 @@ const Character_Pull: CharacterStats[] = [
 	{
 		name: 'character_name_0 - Knight',
 		model: require('../assets/character/character_00.jpg'),
+		preview: require('../assets/character/character_00_preview.jpg'),
 		stats:{
 			level: 1,
 			attack: 8,
@@ -56,6 +58,7 @@ const Character_Pull: CharacterStats[] = [
 	{
 		name: 'character_name_1 - Warrior',
 		model: require('../assets/character/character_01.jpg'),
+		preview: require('../assets/character/character_01_preview.jpg'),
 		stats:{
 			level: 1,
 			attack: 10,
@@ -77,6 +80,7 @@ const Character_Pull: CharacterStats[] = [
 	{
 		name: 'character_name_2 - Mage',
 		model: require('../assets/character/character_02.jpg'),
+		preview: require('../assets/character/character_02_preview.jpg'),
 		stats:{
 			level: 1,
 			attack: 12,
@@ -177,6 +181,7 @@ export enum INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL {
 export type CharacterStats = {
 	name: string;
 	model: number;
+	preview: number;
 	stats:{
 		level: number;
 		attack: number;
@@ -291,6 +296,7 @@ export type CharacterEquip = {
 const CharacterDefaultStats = {
 	name: 'default_character',
 	model: Character_Default,
+	preview: Character_Default_Preview,
 	stats: {
 		level: 1,
 		attack: 10,
