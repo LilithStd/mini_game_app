@@ -176,8 +176,8 @@ export default function Battle_Screen() {
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
-                        <CharacterBattle />
-                        <EnemyBattle />
+                        <CharacterBattle isItemsActive={isItemsActive} />
+                        {/* <EnemyBattle /> */}
                     </View>
                     
                     {isModalOpen &&
@@ -186,7 +186,7 @@ export default function Battle_Screen() {
                             objectSetting={objectModalSettings} />}
                     <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
-                            <Image
+                            {/* <Image
                                 source={isItemsActive ? chestPreview : playerPreview}
                                 style={{
                                     position: 'absolute',
@@ -195,7 +195,7 @@ export default function Battle_Screen() {
                                     borderRadius: 1000,
                                     transform: [{ scale: 0.4 }]
                                 }}
-                            />
+                            /> */}
                             {isItemsActive ? <View style={styles.buttonView}>
 
                                 <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
@@ -432,9 +432,9 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
     visualContainer: {
-        borderWidth: 1,
-        width: '100%',
-        height: '100%',
+        // borderWidth: 1,
+        // width: '100%',
+        // height: '100%',
         borderColor: 'black',
     },
 	absoluteContainer: {
@@ -447,11 +447,11 @@ const styles = StyleSheet.create({
 		alignItems: 'center', // Центрируем текст
 		borderTopLeftRadius: 10, // Закруглим углы для красоты
 		borderTopRightRadius: 10,
-		shadowColor: '#000',
+		// shadowColor: '#000',
 		zIndex: 3,
-		shadowOffset: {width: 0, height: -2},
-		shadowOpacity: 0.2,
-		shadowRadius: 4,
-		elevation: 5, // Тень для Android
+		// shadowOffset: {width: 0, height: -2},
+		// shadowOpacity: 0.2,
+		// shadowRadius: 4,
+		// elevation: 5, // Тень для Android
 	},
 });

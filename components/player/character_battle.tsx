@@ -2,8 +2,14 @@ import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import Healths from '../shared/healths';
+const playerPreview = require('../../assets/character/player_preview.jpg')
+const chestPreview = require('../../assets/items/chest/chest_01.jpg')
 
-export default function CharacterBattle() {
+interface CharacterBattleProps {
+  isItemsActive: boolean;
+}
+
+export default function CharacterBattle({ isItemsActive }: CharacterBattleProps) {
   const characterStats = useBattleStore((state) => state.character);
 
   const fullCharacterComponent = <View style={styles.mainContainer}>
@@ -16,14 +22,24 @@ export default function CharacterBattle() {
     <View style={styles.mainContainer}>
         <Text>Character battle</Text>
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
-        <Image source={characterStats.model} style={styles.image}  resizeMode="contain"/>
+        <Image
+          source={isItemsActive ? chestPreview : playerPreview}
+          style={{
+            position: 'absolute',
+            left: -160,
+            top:-60,
+            borderRadius: 1000,
+            transform: [{ scale: 0.4 }]
+          }}
+        />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
     mainContainer: {
-      
+      top: 550,
+      position: 'relative',
     },
 
     image: {
