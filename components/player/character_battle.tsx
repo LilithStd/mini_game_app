@@ -23,7 +23,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
         <Text>Character battle</Text>
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
         <Image
-          source={isItemsActive ? chestPreview : playerPreview}
+          source={isItemsActive ? chestPreview : characterStats.preview}
           style={{
             position: 'absolute',
             left: -160,

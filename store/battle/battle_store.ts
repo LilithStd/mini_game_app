@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
 import { getRandomEnumValue } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
-const Character_Default_Preview = require('../assets/character/character_00_preview.jpg');
+const Character_Default_Preview = require('../../assets/character/character_00_preview.jpg');
 
 // interface CharacterStats {
 // 	level: number;
