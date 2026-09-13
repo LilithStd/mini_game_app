@@ -176,7 +176,7 @@ export default function Battle_Screen() {
                 }}>
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
-                        {/* <CharacterBattle /> */}
+                        <CharacterBattle />
                         <EnemyBattle />
                     </View>
                     
@@ -184,7 +184,7 @@ export default function Battle_Screen() {
                         <ModalWindow
                             onClose={handleModalCloseStatus}
                             objectSetting={objectModalSettings} />}
-                    {/* <View style={styles.absoluteContainer}>
+                    <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
                             <Image
                                 source={isItemsActive ? chestPreview : playerPreview}
@@ -355,7 +355,7 @@ export default function Battle_Screen() {
                                 )}
                             </View> : <View></View>
                         }
-                    </View> */}
+                    </View>
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -442,7 +442,7 @@ const styles = StyleSheet.create({
 		bottom: 0, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
-		backgroundColor: 'black',
+		// backgroundColor: 'black',
 		justifyContent: 'center', // Центрируем содержимое
 		alignItems: 'center', // Центрируем текст
 		borderTopLeftRadius: 10, // Закруглим углы для красоты

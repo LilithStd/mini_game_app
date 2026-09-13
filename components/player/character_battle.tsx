@@ -5,6 +5,13 @@ import Healths from '../shared/healths';
 
 export default function CharacterBattle() {
   const characterStats = useBattleStore((state) => state.character);
+
+  const fullCharacterComponent = <View style={styles.mainContainer}>
+        <Text>Character battle</Text>
+        <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
+        <Image source={characterStats.model} style={styles.image}  resizeMode="contain"/>
+    </View>
+
   return (
     <View style={styles.mainContainer}>
         <Text>Character battle</Text>
