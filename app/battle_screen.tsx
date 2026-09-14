@@ -352,6 +352,7 @@ export default function Battle_Screen() {
                     <View style={styles.visualContainer}>
                         <CharacterBattle isItemsActive={isItemsActive} />
                         {/* <EnemyBattle /> */}
+                        {buttonsBlock}
                     </View>
                     
                     {isModalOpen &&
@@ -439,6 +440,7 @@ const styles = StyleSheet.create({
         // width: '100%',
         // height: '100%',
         // margin: 10,
+        position: 'relative',
         borderColor: 'black',
     },
 	absoluteContainer: {
