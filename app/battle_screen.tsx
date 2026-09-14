@@ -373,10 +373,9 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center', // Центрирует по горизонтали
+		alignItems: 'center', 
 		width: '100%',
 		height: '100%',
-		position: 'relative',
 	},
 	imageBackground: {
 		flex: 1,
@@ -445,7 +444,7 @@ const styles = StyleSheet.create({
     },
 	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу
-		bottom: 0, // Прижимаем к нижнему краю
+		top: 740, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
         
