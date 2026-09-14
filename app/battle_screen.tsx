@@ -157,34 +157,8 @@ export default function Battle_Screen() {
         
     }
 
-
-    return (
-        <SafeAreaView
-            style={styles.mainContainer}
-        >
-            <ImageBackground
-                source={locationToBattle.model}
-                resizeMode='cover'
-                style={styles.imageBackground}
-
-            >
-                <View style={{
-                    width: '100%',
-                    height: '100%',
-                    // backgroundColor: 'black'
-
-                }}>
-                    {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
-                    <View style={styles.visualContainer}>
-                        <CharacterBattle isItemsActive={isItemsActive} />
-                        {/* <EnemyBattle /> */}
-                    </View>
-                    
-                    {isModalOpen &&
-                        <ModalWindow
-                            onClose={handleModalCloseStatus}
-                            objectSetting={objectModalSettings} />}
-                    <View style={styles.absoluteContainer}>
+    // components
+    const buttonsBlock =  <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
                             {/* <Image
                                 source={isItemsActive ? chestPreview : playerPreview}
@@ -356,6 +330,35 @@ export default function Battle_Screen() {
                             </View> : <View></View>
                         }
                     </View>
+
+
+    return (
+        <SafeAreaView
+            style={styles.mainContainer}
+        >
+            <ImageBackground
+                source={locationToBattle.model}
+                resizeMode='cover'
+                style={styles.imageBackground}
+
+            >
+                <View style={{
+                    width: '100%',
+                    height: '100%',
+                    // backgroundColor: 'black'
+
+                }}>
+                    {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
+                    <View style={styles.visualContainer}>
+                        <CharacterBattle isItemsActive={isItemsActive} />
+                        {/* <EnemyBattle /> */}
+                    </View>
+                    
+                    {isModalOpen &&
+                        <ModalWindow
+                            onClose={handleModalCloseStatus}
+                            objectSetting={objectModalSettings} />}
+                   
                 </View>
             </ImageBackground>
         </SafeAreaView>
@@ -443,6 +446,7 @@ const styles = StyleSheet.create({
 		bottom: 0, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
+        
 		// backgroundColor: 'black',
 		justifyContent: 'center', // Центрируем содержимое
 		alignItems: 'center', // Центрируем текст
