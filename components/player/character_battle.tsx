@@ -25,9 +25,9 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
         <Image
           source={isItemsActive ? chestPreview : characterStats.preview}
           style={{
-            position: 'absolute',
+            // position: 'absolute',
             left: -150,
-            top:-75,
+            top:-120,
             borderRadius: 1000,
             transform: [{ scale: 0.4 }]
           }}
@@ -38,7 +38,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
 
 const styles = StyleSheet.create({
     mainContainer: {
-      top: 550,
+      top: 530,
       // position: 'relative',
       margin: 10,
     },
