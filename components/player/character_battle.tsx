@@ -26,7 +26,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
           source={isItemsActive ? chestPreview : characterStats.preview}
           style={{
             position: 'absolute',
-            left: -160,
+            left: -150,
             top:-75,
             borderRadius: 1000,
             transform: [{ scale: 0.4 }]
