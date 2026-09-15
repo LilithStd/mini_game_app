@@ -27,7 +27,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
           style={{
             position: 'absolute',
             left: -160,
-            top:-60,
+            top:-75,
             borderRadius: 1000,
             transform: [{ scale: 0.4 }]
           }}
