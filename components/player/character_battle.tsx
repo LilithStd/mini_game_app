@@ -38,7 +38,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
 
 const styles = StyleSheet.create({
     mainContainer: {
-      top: 530,
+      top: 555,
       // position: 'relative',
       margin: 10,
     },

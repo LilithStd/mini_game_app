@@ -444,7 +444,7 @@ const styles = StyleSheet.create({
     },
 	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу
-		top: 625, // Прижимаем к нижнему краю
+		top: 650, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
         
