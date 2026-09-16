@@ -351,8 +351,8 @@ export default function Battle_Screen() {
                     {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
                         <CharacterBattle isItemsActive={isItemsActive} />
-                        {/* <EnemyBattle /> */}
-                        {buttonsBlock}
+                        <EnemyBattle />
+                        {/* {buttonsBlock} */}
                     </View>
                     
                     {isModalOpen &&

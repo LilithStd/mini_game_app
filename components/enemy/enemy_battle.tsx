@@ -15,12 +15,16 @@ export default function EnemyBattle() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-
-    // width: "100%",
-    // height: "100%",
+    bottom:550,
+    margin: 10,
   },
   image: {
     width: '100%',
-    top:-450,
+    height: '100%',
+  // position: 'absolute',
+    // left: -150,
+    bottom: 440,
+    // borderRadius: 500,
+    // transform: [{ scale: 0.4 }]
   },
 })
