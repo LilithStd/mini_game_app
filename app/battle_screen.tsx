@@ -352,7 +352,7 @@ export default function Battle_Screen() {
                     <View style={styles.visualContainer}>
                         <CharacterBattle isItemsActive={isItemsActive} />
                         <EnemyBattle />
-                        {/* {buttonsBlock} */}
+                        {buttonsBlock}
                     </View>
                     
                     {isModalOpen &&
@@ -439,12 +439,12 @@ const styles = StyleSheet.create({
         // width: '100%',
         // height: '100%',
         // margin: 10,
-        position: 'relative',
-        borderColor: 'black',
+        // position: 'relative',
+        // borderColor: 'black',
     },
 	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу
-		top: 650, // Прижимаем к нижнему краю
+		top: 525, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
         

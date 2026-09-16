@@ -40,6 +40,8 @@ const styles = StyleSheet.create({
     mainContainer: {
       top: 555,
       margin: 10,
+      backgroundColor: 'white',
+      zIndex: 2,
     },
 
     image: {
