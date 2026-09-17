@@ -20,6 +20,7 @@ import { ACTIONS, ACTIONS_LIST, ActionsTypes, BATTLE_TYPE, BATTLE_TYPE_PROPS, BU
 import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import CharacterBattle from "@/components/player/character_battle";
 import EnemyBattle from "@/components/enemy/enemy_battle";
+import ButtonBlock from "@/components/battle_screen/button_block";
 
 
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
@@ -158,179 +159,186 @@ export default function Battle_Screen() {
     }
 
     // components
-    const buttonsBlock =  <View style={styles.absoluteContainer}>
-                        <View style={styles.buttonContainer}>
-                            {/* <Image
-                                source={isItemsActive ? chestPreview : playerPreview}
-                                style={{
-                                    position: 'absolute',
-                                    left: -160,
-                                    bottom: -140,
-                                    borderRadius: 1000,
-                                    transform: [{ scale: 0.4 }]
-                                }}
-                            /> */}
-                            {isItemsActive ? <View style={styles.buttonView}>
+    // const buttonsBlock =  <View style={styles.absoluteContainer}>
+    //                     <View style={styles.buttonContainer}>
+    //                         {/* <Image
+    //                             source={isItemsActive ? chestPreview : playerPreview}
+    //                             style={{
+    //                                 position: 'absolute',
+    //                                 left: -160,
+    //                                 bottom: -140,
+    //                                 borderRadius: 1000,
+    //                                 transform: [{ scale: 0.4 }]
+    //                             }}
+    //                         /> */}
+    //                         {isItemsActive ? <View style={styles.buttonView}>
 
-                                <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
-                                    disabled={isActiveTurn}
+    //                             <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
+    //                                 disabled={isActiveTurn}
 
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={[styles.buttonBackground, {
-                                            marginLeft: 80
-                                        }]}
-                                    >
-                                        <Text style={styles.buttonText}>HEALTH</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={[styles.buttonBackground, {
+    //                                         marginLeft: 80
+    //                                     }]}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>HEALTH</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
 
-                                <TouchableOpacity
-                                    style={[styles.button, {
-                                        marginLeft: 120
-                                    }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>ATTACK</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity >
-                                <TouchableOpacity
-                                    style={[styles.button, { marginLeft: 150 }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, {
+    //                                     marginLeft: 120
+    //                                 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>ATTACK</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity >
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, { marginLeft: 150 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground
 
-                                        }
-                                    >
-                                        <Text style={styles.buttonText}>DEFENSE</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.button, { marginLeft: 120 }]}
-                                    disabled={isActiveTurn}
+    //                                     }
+    //                                 >
+    //                                     <Text style={styles.buttonText}>DEFENSE</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, { marginLeft: 120 }]}
+    //                                 disabled={isActiveTurn}
 
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>EVASION</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.button,
-                                    { marginLeft: 80 }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>CLOSE</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                            </View> : <View style={styles.buttonView}>
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>EVASION</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
+    //                             <TouchableOpacity
+    //                                 style={[styles.button,
+    //                                 { marginLeft: 80 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>CLOSE</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
+    //                         </View> : <View style={styles.buttonView}>
 
-                                <TouchableOpacity style={true ? styles.buttonDisable : styles.button}
-                                    onPress={handleAttackButton}
-                                    disabled={isActiveTurn}
+    //                             <TouchableOpacity style={true ? styles.buttonDisable : styles.button}
+    //                                 onPress={handleAttackButton}
+    //                                 disabled={isActiveTurn}
 
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={[styles.buttonBackground, {
-                                            marginLeft: 80
-                                        }]}
-                                    >
-                                        <Text style={styles.buttonText}>ATTACK</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={[styles.buttonBackground, {
+    //                                         marginLeft: 80
+    //                                     }]}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>ATTACK</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
 
-                                <TouchableOpacity
-                                    style={[styles.button, {
-                                        marginLeft: 120
-                                    }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>DEFENSE</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity >
-                                <TouchableOpacity
-                                    style={[styles.button, { marginLeft: 150 }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, {
+    //                                     marginLeft: 120
+    //                                 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>DEFENSE</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity >
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, { marginLeft: 150 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground
 
-                                        }
-                                    >
-                                        <Text style={styles.buttonText}>STAND</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.button,
-                                    { marginLeft: 120 }]}
-                                    onPress={handleRetreatButton}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
+    //                                     }
+    //                                 >
+    //                                     <Text style={styles.buttonText}>STAND</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
+    //                             <TouchableOpacity
+    //                                 style={[styles.button,
+    //                                 { marginLeft: 120 }]}
+    //                                 onPress={handleRetreatButton}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
                                     
-                                    >
-                                        <Text style={styles.buttonText}>RETREAT</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
-                                <TouchableOpacity
-                                    style={[styles.button, { marginLeft: 80 }]}
-                                    disabled={isActiveTurn}
-                                >
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>ITEMS</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+    //                                 >
+    //                                     <Text style={styles.buttonText}>RETREAT</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
+    //                             <TouchableOpacity
+    //                                 style={[styles.button, { marginLeft: 80 }]}
+    //                                 disabled={isActiveTurn}
+    //                             >
+    //                                 <ImageBackground
+    //                                     source={buttonOrange}
+    //                                     style={styles.buttonBackground}
+    //                                 >
+    //                                     <Text style={styles.buttonText}>ITEMS</Text>
+    //                                 </ImageBackground>
+    //                             </TouchableOpacity>
 
-                            </View>}
-                        </View>
-                        {isItemsActive ?
-                            <View style={styles.characterStatsContainer}>
-                                {activeConsumbles.map((item) =>
-                                    <View
-                                        key={item.id}
-                                        style={{
-                                            margin: 4
-                                        }}
-                                    >
-                                        <TouchableOpacity
-                                            style={{
-                                                backgroundColor: 'yellow'
-                                            }}
-                                        >
-                                            <Text >
-                                                {item.name}
-                                            </Text>
-                                        </TouchableOpacity>
-                                    </View>
-                                )}
-                            </View> : <View></View>
-                        }
-                    </View>
-
+    //                         </View>}
+    //                     </View>
+    //                     {isItemsActive ?
+    //                         <View style={styles.characterStatsContainer}>
+    //                             {activeConsumbles.map((item) =>
+    //                                 <View
+    //                                     key={item.id}
+    //                                     style={{
+    //                                         margin: 4
+    //                                     }}
+    //                                 >
+    //                                     <TouchableOpacity
+    //                                         style={{
+    //                                             backgroundColor: 'yellow'
+    //                                         }}
+    //                                     >
+    //                                         <Text >
+    //                                             {item.name}
+    //                                         </Text>
+    //                                     </TouchableOpacity>
+    //                                 </View>
+    //                             )}
+    //                         </View> : <View></View>
+    //                     }
+    //                 </View>
+    const callbacks = {
+        handleAttackPress: () => {},
+        handleDefensePress: () => {},
+        handleEvasionPress: () => {},
+        handleHealthPress: () => {},
+        handleRetreatPress: () => {},
+        handleItemsPress: () => {},
+    };
 
     return (
         <SafeAreaView
@@ -352,7 +360,12 @@ export default function Battle_Screen() {
                     <View style={styles.visualContainer}>
                         <CharacterBattle isItemsActive={isItemsActive} />
                         <EnemyBattle />
-                        {buttonsBlock}
+                        <ButtonBlock
+                            isItemsActive={isItemsActive}
+                            isActiveTurn={isActiveTurn}
+                            activeConsumbles={activeConsumbles}
+                            callbacks={callbacks}
+                        />
                     </View>
                     
                     {isModalOpen &&
