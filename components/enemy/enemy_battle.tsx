@@ -8,7 +8,10 @@ export default function EnemyBattle() {
     <View style={styles.mainContainer}>
         <Text>Enemy battle</Text>
         <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-        <Image source={enemyStats.model} style={styles.image} resizeMode="contain" />
+        <View style={styles.imageContainer}>
+          <Image source={enemyStats.model} style={styles.image} resizeMode="contain" />
+        </View>
+        
     </View>
   )
 }
@@ -18,13 +21,17 @@ const styles = StyleSheet.create({
     bottom:550,
     margin: 10,
   },
+  imageContainer: {
+    width: '100%',
+    borderRadius: 10,
+  },
   image: {
     width: '100%',
-    height: '100%',
+
   // position: 'absolute',
     // left: -150,
     bottom: 440,
-    // borderRadius: 500,
+    borderRadius: 10,
     // transform: [{ scale: 0.4 }]
   },
 })
