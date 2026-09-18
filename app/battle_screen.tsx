@@ -332,8 +332,12 @@ export default function Battle_Screen() {
     //                     }
     //                 </View>
     const callbacks = {
-        handleAttackPress: () => {},
-        handleDefensePress: () => {},
+        handleAttackPress: () => {
+            attack();
+        },
+        handleDefensePress: () => {
+            defense();
+        },
         handleEvasionPress: () => {},
         handleHealthPress: () => {},
         handleRetreatPress: () => {},
