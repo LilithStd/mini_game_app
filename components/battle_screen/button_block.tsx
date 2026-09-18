@@ -1,11 +1,10 @@
 import { ConsumableType } from '@/store/items_strore';
-import React from 'react'
+import React, { useState } from 'react'
 import { View, TouchableOpacity, ImageBackground, Text, StyleSheet } from 'react-native'
 const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
 
 interface ButtonBlockProps {
-    isItemsActive: boolean;
     isActiveTurn: boolean;
     activeConsumbles: ConsumableType[];
     callbacks: {
@@ -18,9 +17,10 @@ interface ButtonBlockProps {
     };
 }
 
-export default function ButtonBlock({ isItemsActive, isActiveTurn, activeConsumbles, callbacks }: ButtonBlockProps) {
-  return (
-    <View style={styles.absoluteContainer}>
+export default function ButtonBlock({ isActiveTurn, activeConsumbles, callbacks }: ButtonBlockProps) {
+    const [isItemsActive, setIsItemsActive] = useState(false)
+    return (
+        <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
                             {isItemsActive ? <View style={styles.buttonView}>
 
@@ -158,6 +158,9 @@ export default function ButtonBlock({ isItemsActive, isActiveTurn, activeConsumb
                                     <ImageBackground
                                         source={buttonOrange}
                                         style={styles.buttonBackground}
+                                        onProgress={() => {
+                                            setIsItemsActive(true)
+                                        }}
                                     >
                                         <Text style={styles.buttonText}>ITEMS</Text>
                                     </ImageBackground>

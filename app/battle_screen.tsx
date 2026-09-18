@@ -365,7 +365,6 @@ export default function Battle_Screen() {
                         <CharacterBattle isItemsActive={isItemsActive} />
                         <EnemyBattle />
                         <ButtonBlock
-                            isItemsActive={isItemsActive}
                             isActiveTurn={isActiveTurn}
                             activeConsumbles={activeConsumbles}
                             callbacks={callbacks}
