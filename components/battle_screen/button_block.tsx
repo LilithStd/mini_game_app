@@ -22,16 +22,6 @@ export default function ButtonBlock({ isItemsActive, isActiveTurn, activeConsumb
   return (
     <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
-                            {/* <Image
-                                source={isItemsActive ? chestPreview : playerPreview}
-                                style={{
-                                    position: 'absolute',
-                                    left: -160,
-                                    bottom: -140,
-                                    borderRadius: 1000,
-                                    transform: [{ scale: 0.4 }]
-                                }}
-                            /> */}
                             {isItemsActive ? <View style={styles.buttonView}>
 
                                 <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
@@ -238,7 +228,7 @@ const styles = StyleSheet.create({
 	},
     	absoluteContainer: {
 		position: 'absolute', // Фиксируем внизу
-		top: 525, // Прижимаем к нижнему краю
+		top: 430, // Прижимаем к нижнему краю
 		width: '100%',
 		height: '28%',
         
