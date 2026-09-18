@@ -216,7 +216,7 @@ const styles = StyleSheet.create({
 	},
 	buttonDisable: {
 		// backgroundColor: 'grey',
-		padding: 8,
+		// padding: 8,
 		borderRadius: 4,
 		width: 100,
 	},
