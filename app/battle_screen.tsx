@@ -159,178 +159,7 @@ export default function Battle_Screen() {
     }
 
     // components
-    // const buttonsBlock =  <View style={styles.absoluteContainer}>
-    //                     <View style={styles.buttonContainer}>
-    //                         {/* <Image
-    //                             source={isItemsActive ? chestPreview : playerPreview}
-    //                             style={{
-    //                                 position: 'absolute',
-    //                                 left: -160,
-    //                                 bottom: -140,
-    //                                 borderRadius: 1000,
-    //                                 transform: [{ scale: 0.4 }]
-    //                             }}
-    //                         /> */}
-    //                         {isItemsActive ? <View style={styles.buttonView}>
 
-    //                             <TouchableOpacity style={isActiveTurn ? styles.buttonDisable : styles.button}
-    //                                 disabled={isActiveTurn}
-
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={[styles.buttonBackground, {
-    //                                         marginLeft: 80
-    //                                     }]}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>HEALTH</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, {
-    //                                     marginLeft: 120
-    //                                 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>ATTACK</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity >
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, { marginLeft: 150 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground
-
-    //                                     }
-    //                                 >
-    //                                     <Text style={styles.buttonText}>DEFENSE</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, { marginLeft: 120 }]}
-    //                                 disabled={isActiveTurn}
-
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>EVASION</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-    //                             <TouchableOpacity
-    //                                 style={[styles.button,
-    //                                 { marginLeft: 80 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>CLOSE</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-    //                         </View> : <View style={styles.buttonView}>
-
-    //                             <TouchableOpacity style={true ? styles.buttonDisable : styles.button}
-    //                                 onPress={handleAttackButton}
-    //                                 disabled={isActiveTurn}
-
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={[styles.buttonBackground, {
-    //                                         marginLeft: 80
-    //                                     }]}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>ATTACK</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, {
-    //                                     marginLeft: 120
-    //                                 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>DEFENSE</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity >
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, { marginLeft: 150 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground
-
-    //                                     }
-    //                                 >
-    //                                     <Text style={styles.buttonText}>STAND</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-    //                             <TouchableOpacity
-    //                                 style={[styles.button,
-    //                                 { marginLeft: 120 }]}
-    //                                 onPress={handleRetreatButton}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-                                    
-    //                                 >
-    //                                     <Text style={styles.buttonText}>RETREAT</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-    //                             <TouchableOpacity
-    //                                 style={[styles.button, { marginLeft: 80 }]}
-    //                                 disabled={isActiveTurn}
-    //                             >
-    //                                 <ImageBackground
-    //                                     source={buttonOrange}
-    //                                     style={styles.buttonBackground}
-    //                                 >
-    //                                     <Text style={styles.buttonText}>ITEMS</Text>
-    //                                 </ImageBackground>
-    //                             </TouchableOpacity>
-
-    //                         </View>}
-    //                     </View>
-    //                     {isItemsActive ?
-    //                         <View style={styles.characterStatsContainer}>
-    //                             {activeConsumbles.map((item) =>
-    //                                 <View
-    //                                     key={item.id}
-    //                                     style={{
-    //                                         margin: 4
-    //                                     }}
-    //                                 >
-    //                                     <TouchableOpacity
-    //                                         style={{
-    //                                             backgroundColor: 'yellow'
-    //                                         }}
-    //                                     >
-    //                                         <Text >
-    //                                             {item.name}
-    //                                         </Text>
-    //                                     </TouchableOpacity>
-    //                                 </View>
-    //                             )}
-    //                         </View> : <View></View>
-    //                     }
-    //                 </View>
     const callbacks = {
         handleAttackPress: () => {
             attack();
@@ -355,20 +184,16 @@ export default function Battle_Screen() {
 
             >
                 <View style={{
-                    width: '100%',
-                    height: '100%',
-                    // backgroundColor: 'black'
-
+                    flex: 1,
                 }}>
-                    {/* {currentPhaseBattle === PHASE_STATUS.PLAYER_TURN ? <Enemy /> : <Character />} */}
                     <View style={styles.visualContainer}>
-                        <CharacterBattle isItemsActive={isItemsActive} />
+                        {/* <CharacterBattle isItemsActive={isItemsActive} /> */}
                         <EnemyBattle />
-                        <ButtonBlock
+                        {/* <ButtonBlock
                             isActiveTurn={isActiveTurn}
                             activeConsumbles={activeConsumbles}
                             callbacks={callbacks}
-                        />
+                        /> */}
                     </View>
                     
                     {isModalOpen &&
@@ -390,24 +215,20 @@ const styles = StyleSheet.create({
 		flex: 1,
 		justifyContent: 'center',
 		alignItems: 'center', 
-		width: '100%',
-		height: '100%',
 	},
 	imageBackground: {
 		flex: 1,
 		width: '100%',
 		height: '100%',
-		position: 'absolute',
 	},
 	buttonContainer: {
-		position: 'absolute',
 		left: 10,
 		justifyContent: 'space-between',
 		alignItems: 'stretch',
 	},
 	buttonView: {
 		gap: 1,
-		// alignItems: 'stretch',
+
 	},
 	characterStatsContainer: {
 		flexDirection: 'row',
@@ -451,29 +272,6 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 	},
     visualContainer: {
-        // borderWidth: 1,
-        // width: '100%',
-        // height: '100%',
-        // margin: 10,
-        // position: 'relative',
-        // borderColor: 'black',
+        flex: 1,
     },
-	absoluteContainer: {
-		position: 'absolute', // Фиксируем внизу
-		top: 525, // Прижимаем к нижнему краю
-		width: '100%',
-		height: '28%',
-        
-		// backgroundColor: 'black',
-		justifyContent: 'center', // Центрируем содержимое
-		alignItems: 'center', // Центрируем текст
-		borderTopLeftRadius: 10, // Закруглим углы для красоты
-		borderTopRightRadius: 10,
-		// shadowColor: '#000',
-		zIndex: 3,
-		// shadowOffset: {width: 0, height: -2},
-		// shadowOpacity: 0.2,
-		// shadowRadius: 4,
-		// elevation: 5, // Тень для Android
-	},
 });
