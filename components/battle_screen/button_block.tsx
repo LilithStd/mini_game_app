@@ -195,7 +195,7 @@ export default function ButtonBlock({ isActiveTurn, activeConsumbles, callbacks 
 }
 const styles = StyleSheet.create({
     buttonContainer: {
-		position: 'absolute',
+
 		left: 10,
 		justifyContent: 'space-between',
 		alignItems: 'stretch',

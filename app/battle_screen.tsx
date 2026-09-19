@@ -187,8 +187,12 @@ export default function Battle_Screen() {
                     flex: 1,
                 }}>
                     <View style={styles.visualContainer}>
-                        {/* <CharacterBattle isItemsActive={isItemsActive} /> */}
-                        <EnemyBattle />
+                        <View style={styles.characterComponentContainer}>
+                            <CharacterBattle isItemsActive={isItemsActive} />
+                        </View>
+                        <View style={styles.enemyComponentContainer}>
+                            <EnemyBattle />
+                        </View>
                         {/* <ButtonBlock
                             isActiveTurn={isActiveTurn}
                             activeConsumbles={activeConsumbles}
@@ -273,5 +277,15 @@ const styles = StyleSheet.create({
 	},
     visualContainer: {
         flex: 1,
+        position: 'relative',
     },
+    enemyComponentContainer:{
+        position:'absolute',
+    },
+    characterComponentContainer:{
+        position:'absolute',
+    },
+    buttonBlockContainer: {
+        position:'absolute',
+    }
 });

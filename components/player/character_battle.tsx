@@ -22,7 +22,14 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
     <View style={styles.mainContainer}>
         <Text>Character battle</Text>
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
-        <Image
+        <View style={styles.imageContainer}>
+          <Image
+            source={isItemsActive ? chestPreview : characterStats.preview}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
+        {/* <Image
           source={isItemsActive ? chestPreview : characterStats.preview}
           style={{
             // position: 'absolute',
@@ -31,19 +38,23 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
             borderRadius: 1000,
             transform: [{ scale: 0.4 }]
           }}
-        />
+        /> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-    mainContainer: {
-      top: 555,
-      margin: 10,
-      backgroundColor: 'white',
-      zIndex: 2,
-    },
-
-    image: {
-    },
-});
+  mainContainer: {
+    // bottom:550,
+    // margin: 10,
+  },
+  imageContainer: {
+    width: '100%',
+    overflow: 'hidden',
+    borderRadius: 10,
+  },
+  image: {
+    width: '100%',
+    height: '100%',
+  },
+})
