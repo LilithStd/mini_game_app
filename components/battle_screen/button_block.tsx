@@ -194,15 +194,15 @@ export default function ButtonBlock({ isActiveTurn, activeConsumbles, callbacks 
   )
 }
 const styles = StyleSheet.create({
+    absoluteContainer: {
+        width: '100%',    
+		zIndex: 2,
+	},
     buttonContainer: {
 
-		left: 10,
-		justifyContent: 'space-between',
-		alignItems: 'stretch',
 	},
 	buttonView: {
 		gap: 1,
-		// alignItems: 'stretch',
 	},
     buttonBackground: {
 		width: 182,
@@ -212,11 +212,10 @@ const styles = StyleSheet.create({
 		transform: [{scale: 0.8}],
 	},
 	button: {
-		// width: 120,
+
 	},
 	buttonDisable: {
-		// backgroundColor: 'grey',
-		// padding: 8,
+
 		borderRadius: 4,
 		width: 100,
 	},
@@ -227,31 +226,12 @@ const styles = StyleSheet.create({
 		textAlign: 'center',
 		fontSize: 20,
 		fontWeight: 900,
-		// color: 'white',
 	},
-    	absoluteContainer: {
-		position: 'absolute', // Фиксируем внизу
-		top: 430, // Прижимаем к нижнему краю
-		width: '100%',
-		height: '28%',
-        
-		// backgroundColor: 'black',
-		justifyContent: 'center', // Центрируем содержимое
-		alignItems: 'center', // Центрируем текст
-		borderTopLeftRadius: 10, // Закруглим углы для красоты
-		borderTopRightRadius: 10,
-		// shadowColor: '#000',
-		zIndex: 3,
-		// shadowOffset: {width: 0, height: -2},
-		// shadowOpacity: 0.2,
-		// shadowRadius: 4,
-		// elevation: 5, // Тень для Android
-	},
-    	characterStatsContainer: {
-		flexDirection: 'row',
-		flexWrap: 'wrap',
-		justifyContent: 'center',
-		alignItems: 'center',
-		marginTop: 10,
+    characterStatsContainer: {
+		// flexDirection: 'row',
+		// flexWrap: 'wrap',
+		// justifyContent: 'center',
+		// alignItems: 'center',
+		// marginTop: 10,
 	},
 })
