@@ -278,14 +278,21 @@ const styles = StyleSheet.create({
     visualContainer: {
         flex: 1,
         position: 'relative',
+        width: '100%',
+        height: '100%',
     },
     enemyComponentContainer:{
         position:'absolute',
     },
     characterComponentContainer:{
         position:'absolute',
+        width: '100%',
+        bottom: 0,
+        // height: '100%',
     },
     buttonBlockContainer: {
         position:'absolute',
+        width: '100%',
+        bottom: 0,
     }
 });

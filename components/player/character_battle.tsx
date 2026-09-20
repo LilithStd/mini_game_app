@@ -29,32 +29,28 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
             resizeMode="contain"
           />
         </View>
-        {/* <Image
-          source={isItemsActive ? chestPreview : characterStats.preview}
-          style={{
-            // position: 'absolute',
-            left: -150,
-            top:-120,
-            borderRadius: 1000,
-            transform: [{ scale: 0.4 }]
-          }}
-        /> */}
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // bottom:550,
+    width: '100%',
+    height: '100%',
     // margin: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'black',
   },
   imageContainer: {
-    width: '100%',
+    marginTop: 10,
+    width: 200,
+    aspectRatio: 500/500,
     overflow: 'hidden',
-    borderRadius: 10,
+    borderRadius: 200,
   },
   image: {
     width: '100%',
-    height: '100%',
+    flex: 1,
   },
 })
