@@ -193,11 +193,13 @@ export default function Battle_Screen() {
                         <View style={styles.enemyComponentContainer}>
                             <EnemyBattle />
                         </View>
-                        <ButtonBlock
-                            isActiveTurn={isActiveTurn}
-                            activeConsumbles={activeConsumbles}
-                            callbacks={callbacks}
-                        />
+                        <View style={styles.buttonBlockContainer}>
+                            <ButtonBlock
+                                isActiveTurn={isActiveTurn}
+                                activeConsumbles={activeConsumbles}
+                                callbacks={callbacks}
+                            />
+                        </View>
                     </View>
                     
                     {isModalOpen &&
@@ -292,7 +294,7 @@ const styles = StyleSheet.create({
     },
     buttonBlockContainer: {
         position:'absolute',
-        bottom: 0,
+        bottom: 10,
         width: '100%',
         
     }
