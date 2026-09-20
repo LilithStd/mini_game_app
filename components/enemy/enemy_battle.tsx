@@ -18,16 +18,24 @@ export default function EnemyBattle() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    // bottom:550,
-    // margin: 10,
+    width: '100%',
+    height: '100%',
+    padding: 10,
+
   },
   imageContainer: {
     width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 'auto',
+    marginLeft: 'auto',
+    aspectRatio: 1024/1536,
     overflow: 'hidden',
+    paddingTop: 10,
     borderRadius: 10,
   },
   image: {
     width: '100%',
-    height: '100%',
+    flex: 1,
   },
 })

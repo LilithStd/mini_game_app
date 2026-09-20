@@ -285,17 +285,22 @@ const styles = StyleSheet.create({
     },
     enemyComponentContainer:{
         position:'absolute',
+        width: '100%',
+        top: 0,
+        zIndex: 1,
     },
     characterComponentContainer:{
         position:'absolute',
         width: '100%',
         bottom: 0,
+        zIndex: 2,
         // height: '100%',
     },
     buttonBlockContainer: {
         position:'absolute',
         bottom: 10,
         width: '100%',
+        zIndex: 2,
         
     }
 });

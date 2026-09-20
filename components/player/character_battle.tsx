@@ -37,15 +37,13 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
     height: '100%',
-    // margin: 10,
     padding: 10,
     paddingBottom: 30,
-    // borderWidth: 1,
-    // borderColor: 'black',
+    backgroundColor: 'white',
   },
   imageContainer: {
     marginTop: 30,
-    width: 200,
+    width: "50%",
     aspectRatio: 500/500,
     overflow: 'hidden',
     borderRadius: 200,
