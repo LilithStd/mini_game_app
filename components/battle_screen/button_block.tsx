@@ -197,8 +197,8 @@ const styles = StyleSheet.create({
     absoluteContainer: {
         width: '100%',    
 		zIndex: 2,
-        borderWidth: 1,
-        borderColor: 'black',
+        // borderWidth: 1,
+        // borderColor: 'black',
 	},
     buttonContainer: {
 
