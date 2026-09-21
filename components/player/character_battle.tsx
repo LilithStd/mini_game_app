@@ -2,7 +2,7 @@ import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image } from 'react-native'
 import Healths from '../shared/healths';
-const playerPreview = require('../../assets/character/player_preview.jpg')
+
 const chestPreview = require('../../assets/items/chest/chest_01.jpg')
 
 interface CharacterBattleProps {
