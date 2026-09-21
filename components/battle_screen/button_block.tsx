@@ -83,7 +83,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     style={[styles.button,
                                     { marginLeft: 80 }]}
                                     disabled={isActiveTurn}
-                                    onPress={callbacks.handleHealthPress}
+                                    onPress={callbacks.handleItemsPress}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}

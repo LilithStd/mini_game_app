@@ -171,7 +171,7 @@ export default function Battle_Screen() {
         handleHealthPress: () => {},
         handleRetreatPress: () => {},
         handleItemsPress: () => {
-            setIsItemsActive(true);
+            setIsItemsActive(!isItemsActive);
         },
     };
 
