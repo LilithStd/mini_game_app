@@ -6,6 +6,7 @@ const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disa
 
 interface ButtonBlockProps {
     isActiveTurn: boolean;
+    isItemsActive: boolean;
     activeConsumbles: ConsumableType[];
     callbacks: {
         handleAttackPress: () => void;
@@ -17,8 +18,8 @@ interface ButtonBlockProps {
     };
 }
 
-export default function ButtonBlock({ isActiveTurn, activeConsumbles, callbacks }: ButtonBlockProps) {
-    const [isItemsActive, setIsItemsActive] = useState(false)
+export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumbles, callbacks }: ButtonBlockProps) {
+
     return (
         <View style={styles.absoluteContainer}>
                         <View style={styles.buttonContainer}>
@@ -159,7 +160,7 @@ export default function ButtonBlock({ isActiveTurn, activeConsumbles, callbacks 
                                         source={buttonOrange}
                                         style={styles.buttonBackground}
                                         onProgress={() => {
-                                            setIsItemsActive(true)
+                                            callbacks.handleItemsPress()
                                         }}
                                     >
                                         <Text style={styles.buttonText}>ITEMS</Text>

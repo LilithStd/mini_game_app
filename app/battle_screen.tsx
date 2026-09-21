@@ -198,6 +198,7 @@ export default function Battle_Screen() {
                         <View style={styles.buttonBlockContainer}>
                             <ButtonBlock
                                 isActiveTurn={isActiveTurn}
+                                isItemsActive={isItemsActive}
                                 activeConsumbles={activeConsumbles}
                                 callbacks={callbacks}
                             />
