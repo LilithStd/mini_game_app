@@ -17,6 +17,13 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
         <Image source={characterStats.model} style={styles.image}  resizeMode="contain"/>
     </View>
+  const characterStatsPreview = <View style={styles.imageContainer}>
+          <Image
+            source={characterStats.preview}
+            style={styles.image}
+            resizeMode="contain"
+          />
+        </View>
 
   return (
     <View style={styles.mainContainer}>
