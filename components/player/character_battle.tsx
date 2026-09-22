@@ -24,6 +24,13 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
             style={styles.image}
             resizeMode="contain"
           />
+          <View style={styles.statsContainer}>
+            <Text>{characterStats.name}</Text>
+            <Text>HP: {characterStats.stats.healPoints.current}/{characterStats.stats.healPoints.max}</Text>  
+            <Text>Attack: {characterStats.stats.attack}</Text>
+            <Text>Defense: {characterStats.stats.defense}</Text>
+            <Text>Evasion: {characterStats.stats.evasion}</Text>
+          </View>
         </View>
 
   return (
@@ -64,6 +71,13 @@ const styles = StyleSheet.create({
     aspectRatio: 1024/1536,
     overflow: 'hidden',
     borderRadius: 20,
+  },
+  statsContainer:{
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 10,
   },
   image: {
     width: '100%',
