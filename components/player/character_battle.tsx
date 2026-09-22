@@ -74,10 +74,13 @@ const styles = StyleSheet.create({
   },
   statsContainer:{
     position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 20,
     bottom: 0,
     left: 0,
     right: 0,
     padding: 10,
+    margin: 10,
   },
   image: {
     width: '100%',
