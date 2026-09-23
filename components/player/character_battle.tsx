@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
     borderRadius: 200,
   },
   imageFullContainer: {
-    // marginTop: 30,
     width: "100%",
     top: 50,
+    marginBottom: 30,
     aspectRatio: 1024/1536,
     overflow: 'hidden',
     borderRadius: 20,
@@ -99,4 +99,8 @@ const styles = StyleSheet.create({
     width: '100%',
     flex: 1,
   },
+  imageFull:{
+    width: '100%',
+    aspectRatio: 1024/1536,
+  }
 })
