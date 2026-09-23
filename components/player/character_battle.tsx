@@ -39,7 +39,9 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
   return (
     <View style={styles.mainContainer}>
         {isItemsActive && characterStatsPreview}
-        <Text>Character battle</Text>
+        <View style={styles.nameContainer}>
+          <Text>{characterStats.name}</Text>
+        </View>
         <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
         <View style={styles.imageContainer}>
           <Image
@@ -70,7 +72,7 @@ const styles = StyleSheet.create({
   imageFullContainer: {
     // marginTop: 30,
     width: "100%",
-    top: 20,
+    top: 50,
     aspectRatio: 1024/1536,
     overflow: 'hidden',
     borderRadius: 20,
@@ -84,6 +86,14 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 10,
     margin: 10,
+  },
+  nameContainer: {
+    marginTop: 24,
+    marginBottom: 4,
+    borderRadius: 8,
+    backgroundColor: 'grey',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   image: {
     width: '100%',
