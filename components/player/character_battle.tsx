@@ -25,11 +25,14 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
             resizeMode="contain"
           />
           <View style={styles.statsContainer}>
-            <Text>{characterStats.name}</Text>
             <Text>HP: {characterStats.stats.healPoints.current}/{characterStats.stats.healPoints.max}</Text>  
             <Text>Attack: {characterStats.stats.attack}</Text>
             <Text>Defense: {characterStats.stats.defense}</Text>
             <Text>Evasion: {characterStats.stats.evasion}</Text>
+            <Text>Accuracy: {characterStats.stats.accuracy}</Text>
+            <Text>Critical Rate: {characterStats.stats.criticalRate}</Text>
+            <Text>Critical Damage: {characterStats.stats.criticalDamage}</Text>
+            
           </View>
         </View>
 
