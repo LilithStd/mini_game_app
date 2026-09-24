@@ -20,14 +20,14 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
     padding: 10,
-
+    paddingBottom: 30,
+    backgroundColor: 'white',
   },
   imageContainer: {
     width: '100%',
-    height: 565,
     aspectRatio: 1024/1536,
+    backgroundColor: 'grey',
     overflow: 'hidden',
-    paddingTop: 40,
     borderRadius: 20,
   },
   image: {
