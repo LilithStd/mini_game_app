@@ -21,8 +21,8 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
         <View style={styles.imageFullContainer}>
           <Image
             source={characterStats.model}
-            style={styles.image}
-            resizeMode="contain"
+            style={styles.imageFull}
+            resizeMode="cover"
           />
           <View style={styles.statsContainer}>
             <Text>HP: {characterStats.stats.healPoints.current}/{characterStats.stats.healPoints.max}</Text>  
@@ -57,7 +57,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
 const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
-    height: '100%',
+    // height: '100%',
     padding: 10,
     paddingBottom: 30,
     backgroundColor: 'white',
@@ -71,9 +71,8 @@ const styles = StyleSheet.create({
   },
   imageFullContainer: {
     width: "100%",
-    top: 50,
-    marginBottom: 30,
-    aspectRatio: 1024/1536,
+    backgroundColor: 'grey',
+    height: 535,
     overflow: 'hidden',
     borderRadius: 20,
   },
@@ -101,6 +100,7 @@ const styles = StyleSheet.create({
   },
   imageFull:{
     width: '100%',
-    aspectRatio: 1024/1536,
+    flex: 1,
+    // aspectRatio: 1024/1536,
   }
 })
