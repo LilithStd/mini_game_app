@@ -1,6 +1,6 @@
 import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native'
 import Healths from '../shared/healths';
 
 const chestPreview = require('../../assets/items/chest/chest_01.jpg')
@@ -11,6 +11,8 @@ interface CharacterBattleProps {
 
 export default function CharacterBattle({ isItemsActive }: CharacterBattleProps) {
   const characterStats = useBattleStore((state) => state.character);
+  const { height } = useWindowDimensions();
+  const previewHeight = height * 0.55;
 
   const fullCharacterComponent = <View style={styles.mainContainer}>
         <Text>Character battle</Text>
@@ -18,7 +20,7 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
         <Image source={characterStats.model} style={styles.image}  resizeMode="contain"/>
     </View>
   const characterStatsPreview = 
-        <View style={styles.imageFullContainer}>
+        <View style={[styles.imageFullContainer, { height: previewHeight }]}>
           <Image
             source={characterStats.model}
             style={styles.imageFull}
@@ -72,7 +74,6 @@ const styles = StyleSheet.create({
   imageFullContainer: {
     width: "100%",
     backgroundColor: 'grey',
-    height: 535,
     overflow: 'hidden',
     borderRadius: 20,
   },
