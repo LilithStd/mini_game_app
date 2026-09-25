@@ -12,7 +12,7 @@ interface CharacterBattleProps {
 export default function CharacterBattle({ isItemsActive }: CharacterBattleProps) {
   const characterStats = useBattleStore((state) => state.character);
   const { height } = useWindowDimensions();
-  const previewHeight = height * 0.55;
+  const previewHeight = height * 0.60;
 
   const fullCharacterComponent = <View style={styles.mainContainer}>
         <Text>Character battle</Text>
@@ -34,7 +34,6 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
             <Text>Accuracy: {characterStats.stats.accuracy}</Text>
             <Text>Critical Rate: {characterStats.stats.criticalRate}</Text>
             <Text>Critical Damage: {characterStats.stats.criticalDamage}</Text>
-            
           </View>
         </View>
 
@@ -88,7 +87,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   nameContainer: {
-    marginTop: 24,
+    marginTop: 10,
     marginBottom: 4,
     borderRadius: 8,
     backgroundColor: 'grey',
