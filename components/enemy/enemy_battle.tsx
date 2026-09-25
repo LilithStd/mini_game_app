@@ -6,7 +6,7 @@ import Healths from '../shared/healths';
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
   const { height } = useWindowDimensions();
-  const previewHeight = height * 0.54;
+  const previewHeight = height * 0.56;
 
   return (
     <View style={styles.mainContainer}>
