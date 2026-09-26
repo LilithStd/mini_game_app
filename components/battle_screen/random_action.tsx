@@ -1,7 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { MultilanguageType } from '@/constants/global_types';
 
-export default function RandomAction() {
+interface RandomActionProps {
+    randomActionsArray: MultilanguageType[]
+}
+
+export default function RandomAction({ randomActionsArray }: RandomActionProps) {
   return (
     <View style={styles.container}>
       <Text>Random Action</Text>
