@@ -13,6 +13,23 @@ type EnemyTypeOld = {
 	stats: EnemyStats;
 }
 
+const Random_Actions_Enemy =[
+	{
+		en:{
+			title:'Attack',
+			content:'After a short delay, the enemy decided to attack.',
+		},
+		lv:{
+			title:'Attack',
+			content:'Pēc īsas aizkavēšanās ienaidnieks nolēma uzbrukt.',
+		},
+		ru:{
+			title:'Атака',
+			content:'После небольшой задержки противник решил атаковать.',
+		},
+	}
+]
+
 
 export const enum BOSS_STAGE {
 	DEFAULT = 'DEFAULT',
