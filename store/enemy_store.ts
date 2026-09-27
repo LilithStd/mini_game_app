@@ -204,7 +204,6 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 				});
 			},
 			getRandomEnemyForBattle: (location) => {
-				// const enemies = get().getEnemyPullForLocations(location);
 				const enemies = get().enemyPull;
 				if (enemies.length === 0) {
 					return null; // Возвращаем null, если врагов нет
@@ -213,11 +212,6 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 					enemies[Math.floor(Math.random() * enemies.length)];
 				get().setCurrentEnemy(currentEnemey);
 			},
-			// getEnemyPullForLocations: (location) => {
-			// 	return get().enemyPull.filter((item) =>
-			// 		item.locations.some((locations) => locations === location),
-			// 	);
-			// },
 		}),
 		{
 			name: 'enemy-storage',
