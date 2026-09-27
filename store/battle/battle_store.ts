@@ -6,25 +6,6 @@ import { getRandomEnumValue } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
 const Character_Default_Preview = require('../../assets/character/character_00_preview.jpg');
 
-// interface CharacterStats {
-// 	level: number;
-// 	attack: number;
-// 	defense: number;
-// 	accuracy: number;
-// 	criticalRate: number;
-// 	criticalDamage: number;
-// 	evasion: number;
-// 	reduceCriticalDamage: number;
-// 	atribute: string;
-// 	resistAtribute: string;
-// 	itemsSkills: string[];
-// 	healPoints: { 
-// 		current: number; 
-// 		max: number; 
-// 	};
-// 	death: boolean;
-// }
-
 export enum INCOMING_STATUS {
 	ATTACK = 'attack',
 	ITEM = 'item',
@@ -66,7 +47,7 @@ export interface BattleStoreInterface {
 	escape:() => void;
 	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
 	setPhaseBattle: (phase: PHASE_STATUS) => void;
-	enemyAttack: (type: ENEMY_ACTION_TYPE) => void;
+	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
@@ -213,7 +194,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				if (newHP <= 0) return;
 
 				setTimeout(() => {
-					get().enemyAttack(ENEMY_ACTION_TYPE.ATTACK);
+					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
 				}, 700);
 			},
 			defense: () => {
@@ -234,7 +215,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				});
 			},
 			escape: () => {},
-		enemyAttack: (type) => {
+		enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
