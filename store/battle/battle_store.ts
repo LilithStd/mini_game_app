@@ -47,7 +47,7 @@ export interface BattleStoreInterface {
 	escape:() => void;
 	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
 	setPhaseBattle: (phase: PHASE_STATUS) => void;
-	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
+	enemyTurnActions: () => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
@@ -149,6 +149,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setPhaseBattle: (phase) => set({phaseBattle: phase}),
 			setCharacterStats: (stats) => set({character: stats}),
+			enemyTurnActions: () => {},
 			setEnemyStats: (stats) => set({enemy: stats}),
 			currentBuffAndDebuff: {
 				character: [],
@@ -222,8 +223,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
-
-				if (enemyActionType === ENEMY_ACTION_TYPE.ATTACK) {
+				switch (enemyActionType) {
+					case ENEMY_ACTION_TYPE.ATTACK: {
 					const newHP = Math.max(
 						0,
 						character.stats.healPoints.current - enemy.stats.attack
@@ -254,6 +255,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							? PHASE_STATUS.DEFAULT
 							: PHASE_STATUS.PLAYER_TURN,
 					});
+					break;
+				}
 				}
 			},
 			setBattleStatus: (status) => {
