@@ -272,6 +272,21 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							},
 						});
 					}
+					break;
+					case ENEMY_ACTION_TYPE.ESCAPE:{
+						set({
+							phaseBattle: PHASE_STATUS.DEFAULT,
+						});
+					}
+					break;
+					case ENEMY_ACTION_TYPE.EVADE:{
+
+					}
+					break;
+					case ENEMY_ACTION_TYPE.SKILL:{
+
+					}
+					break;
 
 				}
 			},
