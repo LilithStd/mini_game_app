@@ -48,6 +48,7 @@ export interface BattleStoreInterface {
 	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
 	setPhaseBattle: (phase: PHASE_STATUS) => void;
 	enemyTurnActions: () => void;
+	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
@@ -256,7 +257,22 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							: PHASE_STATUS.PLAYER_TURN,
 					});
 					break;
+					
+				
 				}
+					case ENEMY_ACTION_TYPE.DEFENSE: {
+						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
+						set({
+							enemy: {
+								...enemy,
+								stats: {
+									...enemy.stats,
+									defense: newDefense,
+								},
+							},
+						});
+					}
+
 				}
 			},
 			setBattleStatus: (status) => {
