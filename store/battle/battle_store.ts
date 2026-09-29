@@ -4,6 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
 import { getRandomEnumValue } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
+import { MultilanguageType } from '@/constants/global_types';
 const Character_Default_Preview = require('../../assets/character/character_00_preview.jpg');
 
 export enum INCOMING_STATUS {
@@ -47,7 +48,7 @@ export interface BattleStoreInterface {
 	escape:() => void;
 	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
 	setPhaseBattle: (phase: PHASE_STATUS) => void;
-	enemyTurnActions: () => void;
+	enemyTurnActions: MultilanguageType | null;
 	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
@@ -150,7 +151,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setPhaseBattle: (phase) => set({phaseBattle: phase}),
 			setCharacterStats: (stats) => set({character: stats}),
-			enemyTurnActions: () => {},
+			enemyTurnActions: null,
 			setEnemyStats: (stats) => set({enemy: stats}),
 			currentBuffAndDebuff: {
 				character: [],
@@ -160,7 +161,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				const { phaseBattle, enemy, character, totalDamage } = get();
 
 				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
-
+				
 				const currentHP = enemy.stats.healPoints.current;
 
 				const newHP = Math.max(
@@ -221,7 +222,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				const { phaseBattle, enemy, character, totalDamage } = get();
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-
+				set({
+					
+				});
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
 				switch (enemyActionType) {
