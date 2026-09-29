@@ -22,6 +22,21 @@ export enum ENEMY_ACTION_TYPE {
 	// DEFAULT = 'default',
 }
 
+const ENEMY_ACTIONS = {
+	en:{
+		title: ENEMY_ACTION_TYPE.ATTACK,
+		content:'Enemy after small thinking decides to attack'
+	},
+	lv:{
+		title: ENEMY_ACTION_TYPE.ATTACK,
+		content:'Pēc īsas pārdomu brīža ienaidnieks nolemj uzbrukt.'
+	},
+	ru:{
+		title: ENEMY_ACTION_TYPE.ATTACK,
+		content:'Враг, после недолгих раздумий, решает атаковать.'
+	},
+}
+
 const DEFENSE_MULTIPLIER = 1.5;
 
 
