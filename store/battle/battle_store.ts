@@ -22,20 +22,32 @@ export enum ENEMY_ACTION_TYPE {
 	// DEFAULT = 'default',
 }
 
-const ENEMY_ACTIONS = {
-	en:{
-		title: ENEMY_ACTION_TYPE.ATTACK,
-		content:'Enemy after small thinking decides to attack'
-	},
-	lv:{
-		title: ENEMY_ACTION_TYPE.ATTACK,
-		content:'Pēc īsas pārdomu brīža ienaidnieks nolemj uzbrukt.'
-	},
-	ru:{
-		title: ENEMY_ACTION_TYPE.ATTACK,
-		content:'Враг, после недолгих раздумий, решает атаковать.'
-	},
+type EnemyActionsMultilanguage = {
+	en: string;
+	lv: string;
+	ru: string;
 }
+
+const ENEMY_ACTIONS = {
+	[ENEMY_ACTION_TYPE.ATTACK]: {
+		title: ENEMY_ACTION_TYPE.ATTACK,
+		content:{
+			en: 'Enemy after small thinking decides to attack',
+			lv: 'Pēc īsas pārdomu brīža ienaidnieks nolemj uzbrukt.',
+			ru: 'Враг, после недолгих раздумий, решает атаковать.'
+		}
+	},
+	[ENEMY_ACTION_TYPE.DEFENSE]: {
+		title: ENEMY_ACTION_TYPE.DEFENSE,
+		content: {
+			en: 'Enemy decides to defend',
+			lv: 'Ienaidnieks nolemj aizstāvēt.',
+			ru: 'Враг решает защищаться.'
+		}
+	},
+
+}
+
 
 const DEFENSE_MULTIPLIER = 1.5;
 
@@ -238,7 +250,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				set({
-					
+					enemyTurnActions: ENEMY_ACTIONS,
 				});
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
