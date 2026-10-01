@@ -50,6 +50,8 @@ const ENEMY_ACTIONS = {
 
 
 const DEFENSE_MULTIPLIER = 1.5;
+const ESCAPE_MULTIPLIER = 0.5;
+const EVADE_MULTIPLIER = 0.7;
 
 
 export enum STATUS_BATTLE_SCREEN {
@@ -310,7 +312,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
-
+						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
+						set({
+							enemy: {
+								...enemy,
+								stats: {
+									...enemy.stats,
+									evasion: newEvade,
+								},
+							},
+						});
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
