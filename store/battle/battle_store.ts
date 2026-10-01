@@ -250,7 +250,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				set({
-					enemyTurnActions: ENEMY_ACTIONS,
+					
 				});
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
