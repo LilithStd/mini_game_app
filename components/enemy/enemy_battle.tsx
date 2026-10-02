@@ -8,6 +8,18 @@ export default function EnemyBattle() {
   const { height } = useWindowDimensions();
   const previewHeight = height * 0.56;
 
+  // state
+  const [isOpenStats, setIsOpenStats] = React.useState(false);
+
+  // components
+  const statsComponent = (
+    <View style={styles.statsContainer}>
+      <Text>Attack: {enemyStats.stats.attack}</Text>
+      <Text>Defense: {enemyStats.stats.defense}</Text>
+      <Text>Evasion: {enemyStats.stats.evasion}</Text>
+    </View>
+  );
+
   return (
     <View style={styles.mainContainer}>
      
@@ -15,11 +27,7 @@ export default function EnemyBattle() {
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
-        <View style={styles.statsContainer}>
-          <Text>Attack: {enemyStats.stats.attack}</Text>
-          <Text>Defense: {enemyStats.stats.defense}</Text>
-          <Text>Evasion: {enemyStats.stats.evasion}</Text>
-        </View>
+        {isOpenStats && statsComponent}
            <Text>Enemy battle</Text>
         <View style={styles.healthContainer}>
           <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
