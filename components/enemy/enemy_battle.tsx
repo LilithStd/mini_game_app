@@ -1,7 +1,9 @@
 import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
-import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native'
+import { View, Text, StyleSheet, Image, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native'
 import Healths from '../shared/healths';
+const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
+const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
 
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
@@ -20,6 +22,13 @@ export default function EnemyBattle() {
     </View>
   );
 
+  // functions
+  const toggleStats = () => {
+    setIsOpenStats(!isOpenStats);
+  };
+
+
+
   return (
     <View style={styles.mainContainer}>
      
@@ -29,9 +38,21 @@ export default function EnemyBattle() {
         </View>
         {isOpenStats && statsComponent}
            <Text>Enemy battle</Text>
-        <View style={styles.healthContainer}>
-          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-        </View>
+           <TouchableOpacity
+                                    style={styles.buttonBackground}
+                                
+                                    onPress={toggleStats}
+                                >
+                                    <ImageBackground
+                                        source={buttonOrange}
+                                        style={styles.buttonBackground}
+                                    >
+                                        <Text style={styles.buttonText}>STATS</Text>
+                                    </ImageBackground>
+                                </TouchableOpacity>
+          <View style={styles.healthContainer}>
+            <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+          </View>
     </View>
   )
 }
@@ -43,6 +64,18 @@ const styles = StyleSheet.create({
     // paddingBottom: 30,
     backgroundColor: 'white',
   },
+      buttonBackground: {
+		width: 182,
+		height: 47,
+		justifyContent: 'center',
+		alignItems: 'center',
+		transform: [{scale: 0.8}],
+	},
+      buttonText: {
+		color: 'white',
+		fontWeight: 'bold',
+		fontSize: 16,
+	},
   imageContainer: {
     width: '100%',
     // aspectRatio: 1024/1536,
