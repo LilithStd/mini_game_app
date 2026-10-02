@@ -10,15 +10,20 @@ export default function EnemyBattle() {
 
   return (
     <View style={styles.mainContainer}>
-        <Text>Enemy battle</Text>
-        <View style={styles.healthContainer}>
-          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-        </View>
+     
         
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
-        
+        <View style={styles.statsContainer}>
+          <Text>Attack: {enemyStats.stats.attack}</Text>
+          <Text>Defense: {enemyStats.stats.defense}</Text>
+          <Text>Evasion: {enemyStats.stats.evasion}</Text>
+        </View>
+           <Text>Enemy battle</Text>
+        <View style={styles.healthContainer}>
+          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+        </View>
     </View>
   )
 }
@@ -39,6 +44,16 @@ const styles = StyleSheet.create({
   },
   healthContainer: {
     marginBottom: 10,
+  },
+    statsContainer:{
+    position: 'absolute',
+    backgroundColor: 'white',
+    borderRadius: 20,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    padding: 10,
+    margin: 10,
   },
   image: {
     width: '100%',
