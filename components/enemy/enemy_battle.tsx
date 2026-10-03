@@ -21,6 +21,13 @@ export default function EnemyBattle() {
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
     </View>
   );
+  const defaultStatsComponent = (
+    <View style={styles.statsContainer}>
+      <Text>Attack: {enemyStats.stats.attack}</Text>
+      <Text>Defense: {enemyStats.stats.defense}</Text>
+      <Text>Evasion: {enemyStats.stats.evasion}</Text>
+    </View>
+  );
 
   // functions
   const toggleStats = () => {
@@ -36,13 +43,14 @@ export default function EnemyBattle() {
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
-        {isOpenStats && statsComponent}
-           <Text>Enemy battle</Text>
+        {isOpenStats ? statsComponent : defaultStatsComponent}
+           {/* <Text>Enemy battle</Text>
            <TouchableOpacity
                                     style={styles.buttonBackground}
                                 
                                     onPress={toggleStats}
                                 >
+                                    
                                     <ImageBackground
                                         source={buttonOrange}
                                         style={styles.buttonBackground}
@@ -52,7 +60,7 @@ export default function EnemyBattle() {
                                 </TouchableOpacity>
           <View style={styles.healthContainer}>
             <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-          </View>
+          </View> */}
     </View>
   )
 }
