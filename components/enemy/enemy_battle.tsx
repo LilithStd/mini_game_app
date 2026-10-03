@@ -12,7 +12,10 @@ export default function EnemyBattle() {
 
   // state
   const [isOpenStats, setIsOpenStats] = React.useState(false);
-
+    // functions
+  const toggleStats = () => {
+    setIsOpenStats(!isOpenStats);
+  };
   // components
   const statsComponent = (
     <View style={styles.statsContainer}>
@@ -29,10 +32,22 @@ export default function EnemyBattle() {
     </View>
   );
 
-  // functions
-  const toggleStats = () => {
-    setIsOpenStats(!isOpenStats);
-  };
+  const changeStatsViewButton = (
+      <TouchableOpacity
+        style={styles.buttonBackground}                        
+        onPress={toggleStats}
+      >                            
+        <ImageBackground
+          source={buttonOrange}
+          style={styles.buttonBackground}
+        >
+          <Text style={styles.buttonText}>STATS</Text>
+        </ImageBackground>
+      </TouchableOpacity>
+  )
+
+
+
 
 
 
@@ -45,19 +60,7 @@ export default function EnemyBattle() {
         </View>
         {isOpenStats ? statsComponent : defaultStatsComponent}
            {/* <Text>Enemy battle</Text>
-           <TouchableOpacity
-                                    style={styles.buttonBackground}
-                                
-                                    onPress={toggleStats}
-                                >
-                                    
-                                    <ImageBackground
-                                        source={buttonOrange}
-                                        style={styles.buttonBackground}
-                                    >
-                                        <Text style={styles.buttonText}>STATS</Text>
-                                    </ImageBackground>
-                                </TouchableOpacity>
+           
           <View style={styles.healthContainer}>
             <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
           </View> */}
