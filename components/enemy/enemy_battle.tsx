@@ -17,21 +17,6 @@ export default function EnemyBattle() {
     setIsOpenStats(!isOpenStats);
   };
   // components
-  const statsComponent = (
-    <View style={styles.statsContainer}>
-      <Text>Attack: {enemyStats.stats.attack}</Text>
-      <Text>Defense: {enemyStats.stats.defense}</Text>
-      <Text>Evasion: {enemyStats.stats.evasion}</Text>
-    </View>
-  );
-  const defaultStatsComponent = (
-    <View style={styles.statsContainer}>
-      <Text>Attack: {enemyStats.stats.attack}</Text>
-      <Text>Defense: {enemyStats.stats.defense}</Text>
-      <Text>Evasion: {enemyStats.stats.evasion}</Text>
-    </View>
-  );
-
   const changeStatsViewButton = (
       <TouchableOpacity
         style={styles.buttonBackground}                        
@@ -45,6 +30,23 @@ export default function EnemyBattle() {
         </ImageBackground>
       </TouchableOpacity>
   )
+  const statsComponent = (
+    <View style={styles.statsContainer}>
+      <Text>Attack: {enemyStats.stats.attack}</Text>
+      <Text>Defense: {enemyStats.stats.defense}</Text>
+      <Text>Evasion: {enemyStats.stats.evasion}</Text>
+    </View>
+  );
+  const defaultStatsComponent = (
+    <View style={styles.statsContainer}>
+      <Text>Attack: {enemyStats.stats.attack}</Text>
+      <Text>Defense: {enemyStats.stats.defense}</Text>
+      <Text>Evasion: {enemyStats.stats.evasion}</Text>
+      {changeStatsViewButton}
+    </View>
+  );
+
+  
 
 
 
