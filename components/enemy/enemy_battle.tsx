@@ -63,9 +63,9 @@ export default function EnemyBattle() {
         {isOpenStats ? statsComponent : defaultStatsComponent}
 
            
-          <View style={styles.healthContainer}>
+          {/* <View style={styles.healthContainer}>
             <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-          </View>
+          </View> */}
     </View>
   )
 }
@@ -102,8 +102,8 @@ const styles = StyleSheet.create({
   statsContainer:{
     position: 'absolute',
     backgroundColor: 'white',
-    borderRadius: 20,
-    bottom: 30,
+    borderRadius: 18,
+    bottom: 0,
     left: 0,
     right: 0,
     padding: 10,

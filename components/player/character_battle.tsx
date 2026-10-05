@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
   statsContainer:{
     position: 'absolute',
     backgroundColor: 'white',
-    borderRadius: 20,
+    borderRadius: 18,
     bottom: 0,
     left: 0,
     right: 0,
