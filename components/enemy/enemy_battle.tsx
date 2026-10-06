@@ -35,13 +35,16 @@ export default function EnemyBattle() {
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
+      <Text>Accuracy: {enemyStats.stats.accuracy}</Text>
+      <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
+      <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
     </View>
   );
   const defaultStatsComponent = (
     <View style={styles.statsSubContainer}>
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
-      <Text>Evasion: {enemyStats.stats.evasion}</Text>
+      
       
     </View>
   );
