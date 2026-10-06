@@ -31,14 +31,14 @@ export default function EnemyBattle() {
       </TouchableOpacity>
   )
   const statsComponent = (
-    <View style={styles.statsContainer}>
+    <View style={styles.statsSubContainer}>
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
     </View>
   );
   const defaultStatsComponent = (
-    <View style={styles.statsContainer}>
+    <View style={styles.statsSubContainer}>
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
@@ -48,6 +48,7 @@ export default function EnemyBattle() {
   const enemyStatsComponent = (
     <View style={styles.statsContainer}>
       <View style={styles.buttonContainer}>
+        {isOpenStats ? statsComponent : defaultStatsComponent}
         {changeStatsViewButton}
       </View>
     </View>
@@ -115,6 +116,9 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 10,
     margin: 20,
+  },
+  statsSubContainer:{
+
   },
   buttonContainer: {
     justifyContent: 'flex-end',
