@@ -46,8 +46,10 @@ export default function EnemyBattle() {
     </View>
   );
   const enemyStatsComponent = (
-    <View>
-      {changeStatsViewButton}
+    <View style={styles.statsContainer}>
+      <View style={styles.buttonContainer}>
+        {changeStatsViewButton}
+      </View>
     </View>
   )
 
@@ -113,6 +115,9 @@ const styles = StyleSheet.create({
     right: 0,
     padding: 10,
     margin: 20,
+  },
+  buttonContainer: {
+    justifyContent: 'flex-end',
   },
   image: {
     width: '100%',
