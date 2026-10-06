@@ -42,9 +42,14 @@ export default function EnemyBattle() {
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
-      {changeStatsViewButton}
+      
     </View>
   );
+  const enemyStatsComponent = (
+    <View>
+      {changeStatsViewButton}
+    </View>
+  )
 
   
 
@@ -60,8 +65,8 @@ export default function EnemyBattle() {
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
-        {isOpenStats ? statsComponent : defaultStatsComponent}
-
+        {enemyStatsComponent}
+        
            
           {/* <View style={styles.healthContainer}>
             <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
