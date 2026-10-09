@@ -66,17 +66,13 @@ export default function EnemyBattle() {
 
   return (
     <View style={styles.mainContainer}>
-     
-        
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
         {enemyStatsComponent}
-        
-           
-          {/* <View style={styles.healthContainer}>
-            <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-          </View> */}
+        <View style={styles.healthContainer}>
+          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+        </View>
     </View>
   )
 }
@@ -108,13 +104,18 @@ const styles = StyleSheet.create({
     borderRadius: 20,
   },
   healthContainer: {
-    marginBottom: 10,
+    position: 'absolute',
+    bottom: 10,
+    left: 0,
+    right: 0,
+    margin:10,
+    padding: 10,
   },
   statsContainer:{
     position: 'absolute',
     backgroundColor: 'white',
     borderRadius: 18,
-    bottom: 0,
+    bottom: 40,
     left: 0,
     right: 0,
     padding: 10,
