@@ -26,7 +26,7 @@ export default function EnemyBattle() {
           source={buttonOrange}
           style={styles.buttonBackground}
         >
-          <Text style={styles.buttonText}>STATS</Text>
+          {isOpenStats ? <Text style={styles.buttonText}>CLOSE</Text> : <Text style={styles.buttonText}>STATS</Text>}
         </ImageBackground>
       </TouchableOpacity>
   )
