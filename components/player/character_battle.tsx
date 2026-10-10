@@ -59,13 +59,16 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
     // height: '100%',
-    // padding: 10,
+    padding: 10,
+    paddingBottom: 28,
     margin:10,
+    borderRadius: 20,
     // paddingBottom: 30,
     backgroundColor: 'grey',
   },
   imageContainer: {
-    marginTop: 30,
+    position: 'relative',
+    marginTop: 50,
     width: "50%",
     aspectRatio: 500/500,
     overflow: 'hidden',
@@ -88,7 +91,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   nameContainer: {
-    marginTop: 10,
+    marginTop: 5,
     marginBottom: 4,
     borderRadius: 8,
     backgroundColor: 'grey',

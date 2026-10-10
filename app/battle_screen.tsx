@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     },
     characterComponentContainer:{
         position:'absolute',
-        width: '90%',
+        width: '95%',
         bottom: 0,
         zIndex: 2,
         // height: '100%',
