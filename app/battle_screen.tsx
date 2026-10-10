@@ -283,8 +283,8 @@ const styles = StyleSheet.create({
     visualContainer: {
         flex: 1,
         position: 'relative',
-        width: '100%',
-        height: '100%',
+        // width: '100%',
+        // height: '100%',
     },
     enemyComponentContainer:{
         position:'absolute',
@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     },
     characterComponentContainer:{
         position:'absolute',
-        width: '100%',
+        width: '90%',
         bottom: 0,
         zIndex: 2,
         // height: '100%',
