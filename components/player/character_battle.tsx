@@ -60,8 +60,9 @@ const styles = StyleSheet.create({
     width: '100%',
     // height: '100%',
     padding: 10,
-    paddingBottom: 30,
-    // backgroundColor: 'white',
+    margin:10,
+    // paddingBottom: 30,
+    backgroundColor: 'grey',
   },
   imageContainer: {
     marginTop: 30,
