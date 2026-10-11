@@ -12,7 +12,7 @@ interface CharacterBattleProps {
 export default function CharacterBattle({ isItemsActive }: CharacterBattleProps) {
   const characterStats = useBattleStore((state) => state.character);
   const { height } = useWindowDimensions();
-  const previewHeight = height * 0.62;
+  const previewHeight = height * 0.59;
 
   const fullCharacterComponent = <View style={styles.mainContainer}>
         <Text>Character battle</Text>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
   mainContainer: {
     width: '100%',
     // height: '100%',
-    padding: 10,
+    // padding: 10,
     paddingBottom: 28,
     margin:10,
     borderRadius: 20,
@@ -76,7 +76,9 @@ const styles = StyleSheet.create({
   },
   imageFullContainer: {
     width: "100%",
-    backgroundColor: 'grey',
+    // backgroundColor: 'grey',
+    // borderWidth: 1,
+    // borderColor: 'white',
     overflow: 'hidden',
     borderRadius: 20,
   },
@@ -84,7 +86,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     borderRadius: 18,
-    bottom: 0,
+    bottom: 30,
     left: 0,
     right: 0,
     padding: 10,
