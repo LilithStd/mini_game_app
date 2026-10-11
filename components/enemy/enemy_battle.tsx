@@ -8,7 +8,7 @@ const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disa
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
   const { height } = useWindowDimensions();
-  const previewHeight = height * 0.62;
+  const previewHeight = height * 0.59;
 
   // state
   const [isOpenStats, setIsOpenStats] = React.useState(false);
@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   healthContainer: {
     position: 'absolute',
-    bottom: 22,
+    bottom: 2,
     left: 0,
     right: 0,
     margin:10,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     borderRadius: 18,
-    bottom: 50,
+    bottom: 30,
     left: 0,
     right: 0,
     padding: 10,
