@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     margin:10,
     borderRadius: 20,
     // paddingBottom: 30,
-    backgroundColor: 'grey',
+    // backgroundColor: 'grey',
   },
   imageContainer: {
     position: 'relative',

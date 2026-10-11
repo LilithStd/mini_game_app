@@ -105,7 +105,7 @@ const styles = StyleSheet.create({
   },
   healthContainer: {
     position: 'absolute',
-    bottom: 2,
+    bottom: 22,
     left: 0,
     right: 0,
     margin:10,
@@ -115,7 +115,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     borderRadius: 18,
-    bottom: 30,
+    bottom: 50,
     left: 0,
     right: 0,
     padding: 10,
