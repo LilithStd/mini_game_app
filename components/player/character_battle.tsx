@@ -40,10 +40,13 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
   return (
     <View style={styles.mainContainer}>
         {isItemsActive && characterStatsPreview}
-        <View style={styles.nameContainer}>
-          <Text>{characterStats.name}</Text>
+        <View style={styles.infoContainer}>
+          <View style={styles.nameContainer}>
+            <Text>{characterStats.name}</Text>
+          </View>
+          <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
         </View>
-        <Healths values={{ current: characterStats.stats.healPoints.current, max: characterStats.stats.healPoints.max }} />
+        
         <View style={styles.imageContainer}>
           <Image
             source={isItemsActive ? chestPreview : characterStats.preview}
@@ -64,7 +67,7 @@ const styles = StyleSheet.create({
     margin:10,
     borderRadius: 20,
     // paddingBottom: 30,
-    // backgroundColor: 'grey',
+    backgroundColor: 'grey',
   },
   imageContainer: {
     position: 'relative',
@@ -92,11 +95,17 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 10,
   },
+  infoContainer: {
+    padding: 10,
+    margin: 10,
+    backgroundColor: 'lightgrey',
+    borderRadius: 10,
+  },
   nameContainer: {
-    marginTop: 5,
+    // marginTop: 5,
     marginBottom: 4,
     borderRadius: 8,
-    backgroundColor: 'grey',
+    backgroundColor: 'aquamarine',
     justifyContent: 'center',
     alignItems: 'center',
   },
