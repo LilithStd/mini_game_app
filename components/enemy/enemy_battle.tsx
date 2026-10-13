@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 10,
     // paddingBottom: 30,
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
   },
   buttonBackground: {
 		width: 182,
@@ -108,6 +108,8 @@ const styles = StyleSheet.create({
     // aspectRatio: 1024/1536,
     backgroundColor: 'grey',
     overflow: 'hidden',
+    borderWidth: 2,
+    borderColor: '#dc6431',
     borderRadius: 20,
   },
   healthContainer: {

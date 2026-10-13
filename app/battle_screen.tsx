@@ -223,12 +223,14 @@ const styles = StyleSheet.create({
 	mainContainer: {
 		flex: 1,
 		justifyContent: 'center',
-		alignItems: 'center', 
+		alignItems: 'center',
+        backgroundColor: 'black',
 	},
 	imageBackground: {
 		flex: 1,
 		width: '100%',
 		height: '100%',
+        
 	},
 	buttonContainer: {
 		left: 10,

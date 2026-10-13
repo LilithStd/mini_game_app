@@ -66,6 +66,8 @@ const styles = StyleSheet.create({
     paddingBottom: 36,
     margin:10,
     borderRadius: 20,
+       borderWidth: 2,
+    borderColor: '#dc6431',
     // paddingBottom: 30,
     backgroundColor: 'grey',
   },
@@ -76,6 +78,8 @@ const styles = StyleSheet.create({
     aspectRatio: 500/500,
     overflow: 'hidden',
     borderRadius: 200,
+       borderWidth: 2,
+    borderColor: '#dc6431',
   },
   imageFullContainer: {
     width: "100%",
