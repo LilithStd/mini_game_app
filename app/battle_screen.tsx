@@ -189,9 +189,9 @@ export default function Battle_Screen() {
                     flex: 1,
                 }}>
                     <View style={styles.visualContainer}>
-                        <View style={styles.characterComponentContainer}>
+                        {/* <View style={styles.characterComponentContainer}>
                             <CharacterBattle isItemsActive={isItemsActive} />
-                        </View>
+                        </View> */}
                         <View style={styles.enemyComponentContainer}>
                             <EnemyBattle />
                         </View>

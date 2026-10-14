@@ -159,14 +159,14 @@ export interface EnemyStoreInterface {
 }
 
 const default_enemy = {
-	name: '',
+	name: 'default_name_enemy',
 	model: ENEMY_DEFAULT_MODEL,
 	preview: ENEMY_DEFAULT_MODEL,
 	stats: defaultStats,
 };
 
 const default_boss = {
-	name: '',
+	name: 'default_name_boss',
 	model: ENEMY_DEFAULT_MODEL,
 	stage: BOSS_STAGE.DEFAULT,
 	stats: { ...defaultStats},
