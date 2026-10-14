@@ -44,7 +44,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                         marginLeft: 120
                                     }]}
                                     disabled={isActiveTurn}
-                                    onPress={callbacks.handleAttackPress}
+                                    // onPress={callbacks.handleAttackPress}
                                 >
                                     <ImageBackground
                                         source={buttonOrange}
