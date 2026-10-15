@@ -34,6 +34,13 @@ export default function EnemyBattle() {
 
   const informationComponent = (
     <View style={styles.infoContainer}>
+      <BlurView 
+        intensity={10} 
+        tint="light" 
+        experimentalBlurMethod="dimezisBlurView"
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.glassOverlay} />
       <View style={styles.healthContainer}>
         <View style={styles.enemyNameContainer}>
           <Text>{enemyStats.name}</Text>
@@ -93,6 +100,7 @@ export default function EnemyBattle() {
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
         {enemyStatsComponent}
+        {informationComponent}
         {/* <View style={styles.infoContainer}>
           <View style={styles.healthContainer}>
             <View style={styles.enemyNameContainer}>
@@ -177,8 +185,10 @@ const styles = StyleSheet.create({
     margin: 20,
     bottom: 0,
     borderWidth: 1,
+    overflow: 'hidden',
     borderColor: 'rgba(255,255,255,0.25)',
-    backgroundColor: 'lightgrey',
+    // borderColor: 'rgba(255,255,255,0.25)',
+    // backgroundColor: 'lightgrey',
     borderRadius: 16,
   },
   enemyNameContainer: {
