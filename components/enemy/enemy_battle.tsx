@@ -31,6 +31,20 @@ export default function EnemyBattle() {
         </ImageBackground>
       </TouchableOpacity>
   )
+
+  const informationComponent = (
+    <View style={styles.infoContainer}>
+      <View style={styles.healthContainer}>
+        <View style={styles.enemyNameContainer}>
+          <Text>{enemyStats.name}</Text>
+        </View>
+        <View style={styles.healthBarContainer}>
+          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+        </View>
+      </View>
+    </View>
+  );
+
   const statsComponent = (
     <View style={styles.statsSubContainer}>
       
@@ -79,7 +93,7 @@ export default function EnemyBattle() {
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
         {enemyStatsComponent}
-        <View style={styles.infoContainer}>
+        {/* <View style={styles.infoContainer}>
           <View style={styles.healthContainer}>
             <View style={styles.enemyNameContainer}>
               <Text>{enemyStats.name}</Text>
@@ -91,7 +105,7 @@ export default function EnemyBattle() {
           </View>
          
           
-        </View>
+        </View> */}
        
     </View>
   )
