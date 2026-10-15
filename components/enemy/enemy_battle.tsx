@@ -176,6 +176,26 @@ const styles = StyleSheet.create({
   buttonContainer: {
     justifyContent: 'flex-end',
   },
+  glassEffectWithoutPlugins: {
+    backgroundColor: 'rgba(35, 45, 65, 0.45)',
+
+    borderRadius: 20,
+
+    borderWidth: 1,
+    borderColor: 'rgba(255, 255, 255, 0.25)',
+
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 6,
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 12,
+
+    elevation: 6,
+
+    padding: 16,
+  },
   image: {
     width: '100%',
     flex: 1,
