@@ -1,6 +1,7 @@
 import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native'
+import { BlurView } from 'expo-blur';
 import Healths from '../shared/healths';
 const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
@@ -32,6 +33,7 @@ export default function EnemyBattle() {
   )
   const statsComponent = (
     <View style={styles.statsSubContainer}>
+      
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
       <Text>Evasion: {enemyStats.stats.evasion}</Text>
@@ -50,6 +52,13 @@ export default function EnemyBattle() {
   );
   const enemyStatsComponent = (
     <View style={styles.statsContainer}>
+      <BlurView 
+        intensity={10} 
+        tint="light" 
+        experimentalBlurMethod="dimezisBlurView"
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.glassOverlay} />
       <View style={styles.buttonContainer}>
         {isOpenStats ? statsComponent : defaultStatsComponent}
         {changeStatsViewButton}
@@ -126,8 +135,12 @@ const styles = StyleSheet.create({
   },
   statsContainer:{
     position: 'absolute',
-    backgroundColor: 'white',
+    // backgroundColor: 'white',
+    borderColor: 'rgba(255,255,255,0.55)',
+    backgroundColor: 'rgba(20,20,30,0.15)',
     borderRadius: 18,
+    borderWidth: 1,
+    overflow: 'hidden',
     bottom: 90,
     left: 0,
     right: 0,
@@ -137,6 +150,11 @@ const styles = StyleSheet.create({
   statsSubContainer:{
 
   },
+  glassOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(255,255,255,0.06)',
+    borderRadius: 18,
+  },
   infoContainer: {
     position: 'absolute',
     left: 0,
@@ -144,6 +162,8 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     bottom: 0,
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.25)',
     backgroundColor: 'lightgrey',
     borderRadius: 16,
   },
