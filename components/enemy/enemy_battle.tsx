@@ -76,11 +76,13 @@ export default function EnemyBattle() {
     <View style={styles.statsContainer}>
 
       <BlurView
-        intensity={35}
-        tint="dark"
-        experimentalBlurMethod={
-          Platform.OS === 'android' ? 'dimezisBlurView' : 'none'
-        }
+        intensity={65}
+        tint="light"
+        pointerEvents="none"
+        // experimentalBlurMethod={
+        //   Platform.OS === 'android' ? 'dimezisBlurView' : 'none'
+        // }
+        experimentalBlurMethod="none"
         style={StyleSheet.absoluteFillObject}
       />
 
@@ -174,7 +176,7 @@ const styles = StyleSheet.create({
 
     borderRadius: 18,
     borderWidth: 1,
-    borderColor: 'rgba(255,255,255,0.35)',
+    borderColor: 'rgba(255,255,255,0.85)',
 
     overflow: 'hidden',
     backgroundColor: 'rgba(20,20,30,0.12)',
