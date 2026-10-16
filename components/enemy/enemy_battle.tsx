@@ -2,6 +2,7 @@ import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native'
 import { BlurView } from 'expo-blur';
+import { Platform } from 'react-native';
 import Healths from '../shared/healths';
 const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
@@ -34,13 +35,13 @@ export default function EnemyBattle() {
 
   const informationComponent = (
     <View style={styles.infoContainer}>
-      <BlurView 
+      {/* <BlurView 
         intensity={10} 
         tint="light" 
         experimentalBlurMethod="dimezisBlurView"
         style={StyleSheet.absoluteFill}
-      />
-      <View style={styles.glassOverlay} />
+      /> */}
+      {/* <View style={styles.glassOverlay} /> */}
       <View style={styles.healthContainer}>
         <View style={styles.enemyNameContainer}>
           <Text>{enemyStats.name}</Text>
@@ -73,19 +74,28 @@ export default function EnemyBattle() {
   );
   const enemyStatsComponent = (
     <View style={styles.statsContainer}>
-      <BlurView 
-        intensity={10} 
-        tint="light" 
-        experimentalBlurMethod="dimezisBlurView"
-        style={StyleSheet.absoluteFill}
+
+      <BlurView
+        intensity={35}
+        tint="dark"
+        experimentalBlurMethod={
+          Platform.OS === 'android' ? 'dimezisBlurView' : 'none'
+        }
+        style={StyleSheet.absoluteFillObject}
       />
-      <View style={styles.glassOverlay} />
+
+      <View
+        pointerEvents="none"
+        style={styles.glassOverlay}
+      />
+
       <View style={styles.buttonContainer}>
         {isOpenStats ? statsComponent : defaultStatsComponent}
         {changeStatsViewButton}
       </View>
+
     </View>
-  )
+  );
 
   
 
@@ -155,27 +165,28 @@ const styles = StyleSheet.create({
     // margin:10,
     padding: 10,
   },
-  statsContainer:{
+  statsContainer: {
     position: 'absolute',
-    // backgroundColor: 'white',
-    borderColor: 'rgba(255,255,255,0.55)',
-    backgroundColor: 'rgba(20,20,30,0.15)',
+
+    bottom: 90,
+    left: 20,
+    right: 20,
+
     borderRadius: 18,
     borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.35)',
+
     overflow: 'hidden',
-    bottom: 90,
-    left: 0,
-    right: 0,
-    padding: 10,
-    margin: 20,
+    backgroundColor: 'rgba(20,20,30,0.12)',
+
+    padding: 15,
   },
   statsSubContainer:{
 
   },
   glassOverlay: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: 'rgba(255,255,255,0.06)',
-    borderRadius: 18,
+    backgroundColor: 'rgba(15,20,25,0.20)',
   },
   infoContainer: {
     position: 'absolute',
@@ -201,24 +212,15 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   glassEffectWithoutPlugins: {
-    backgroundColor: 'rgba(35, 45, 65, 0.45)',
-
-    borderRadius: 20,
-
-    borderWidth: 1,
+    backgroundColor: 'rgba(58, 58, 58, 0.66)',
     borderColor: 'rgba(255, 255, 255, 0.25)',
-
-    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 6,
     },
     shadowOpacity: 0.2,
     shadowRadius: 12,
-
     elevation: 6,
-
-    padding: 16,
   },
   image: {
     width: '100%',
