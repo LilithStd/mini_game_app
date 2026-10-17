@@ -146,7 +146,7 @@ const styles = StyleSheet.create({
 		transform: [{scale: 0.8}],
 	},
   buttonText: {
-		color: 'white',
+		color: 'black',
 		fontWeight: 'bold',
 		fontSize: 16,
 	},
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
   statsContainer: {
     position: 'absolute',
 
-    bottom: 90,
+    bottom: 110,
     left: 20,
     right: 20,
 
