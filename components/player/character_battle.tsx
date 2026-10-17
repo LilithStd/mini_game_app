@@ -22,7 +22,14 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
     </View>
   const characterStatsPreview = 
         <View style={[styles.imageFullContainer, { height: previewHeight }]}>
-                <BlurView
+
+          <Image
+            source={characterStats.model}
+            style={styles.imageFull}
+            resizeMode="cover"
+          />
+          <View style={styles.statsContainer}>
+                            <BlurView
                   intensity={65}
                   tint="light"
                   pointerEvents="none"
@@ -37,12 +44,6 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
                   pointerEvents="none"
                   style={styles.glassOverlay}
                 />
-          <Image
-            source={characterStats.model}
-            style={styles.imageFull}
-            resizeMode="cover"
-          />
-          <View style={styles.statsContainer}>
             <Text>HP: {characterStats.stats.healPoints.current}/{characterStats.stats.healPoints.max}</Text>  
             <Text>Attack: {characterStats.stats.attack}</Text>
             <Text>Defense: {characterStats.stats.defense}</Text>
@@ -113,6 +114,7 @@ const styles = StyleSheet.create({
     borderRadius: 18,
     bottom: 10,
     left: 0,
+    overflow: 'hidden',
     right: 0,
     padding: 10,
     margin: 10,
