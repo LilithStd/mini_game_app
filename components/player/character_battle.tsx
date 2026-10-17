@@ -1,6 +1,7 @@
 import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image, useWindowDimensions } from 'react-native'
+import { BlurView } from 'expo-blur';
 import Healths from '../shared/healths';
 
 const chestPreview = require('../../assets/items/chest/chest_01.jpg')
@@ -21,6 +22,21 @@ export default function CharacterBattle({ isItemsActive }: CharacterBattleProps)
     </View>
   const characterStatsPreview = 
         <View style={[styles.imageFullContainer, { height: previewHeight }]}>
+                <BlurView
+                  intensity={65}
+                  tint="light"
+                  pointerEvents="none"
+                  // experimentalBlurMethod={
+                  //   Platform.OS === 'android' ? 'dimezisBlurView' : 'none'
+                  // }
+                  experimentalBlurMethod="none"
+                  style={StyleSheet.absoluteFillObject}
+                />
+          
+                <View
+                  pointerEvents="none"
+                  style={styles.glassOverlay}
+                />
           <Image
             source={characterStats.model}
             style={styles.imageFull}
@@ -91,7 +107,9 @@ const styles = StyleSheet.create({
   },
   statsContainer:{
     position: 'absolute',
-    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'rgba(255,255,255,0.85)',
+    backgroundColor: 'rgba(20,20,30,0.12)',
     borderRadius: 18,
     bottom: 10,
     left: 0,
@@ -112,6 +130,10 @@ const styles = StyleSheet.create({
     backgroundColor: 'aquamarine',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+    glassOverlay: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(15,20,25,0.20)',
   },
   image: {
     width: '100%',
