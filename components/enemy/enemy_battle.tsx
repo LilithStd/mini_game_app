@@ -33,26 +33,6 @@ export default function EnemyBattle() {
       </TouchableOpacity>
   )
 
-  const informationComponent = (
-    <View style={styles.infoContainer}>
-      <BlurView 
-        intensity={65} 
-        tint="light" 
-        experimentalBlurMethod="none"
-        style={StyleSheet.absoluteFill}
-      />
-      <View style={styles.glassOverlay} />
-      <View style={styles.healthContainer}>
-        <View style={styles.enemyNameContainer}>
-          <Text>{enemyStats.name}</Text>
-        </View>
-        <View style={styles.healthBarContainer}>
-          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
-        </View>
-      </View>
-    </View>
-  );
-
   const statsComponent = (
     <View style={styles.statsSubContainer}>
       
@@ -96,6 +76,28 @@ export default function EnemyBattle() {
         {changeStatsViewButton}
       </View>
 
+    </View>
+  );
+
+
+  const informationComponent = (
+    <View style={styles.infoContainer}>
+      <BlurView 
+        intensity={65} 
+        tint="light" 
+        experimentalBlurMethod="none"
+        style={StyleSheet.absoluteFill}
+      />
+      <View style={styles.glassOverlay} />
+   
+      <View style={styles.healthContainer}>
+        <View style={styles.enemyNameContainer}>
+          <Text>{enemyStats.name}</Text>
+        </View>
+        <View style={styles.healthBarContainer}>
+          <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
+        </View>
+      </View>
     </View>
   );
 
@@ -204,7 +206,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   enemyNameContainer: {
-    // marginBottom: 10,
+    marginBottom: 4,
   },
   healthBarContainer: {
     // marginBottom: 10,
