@@ -5,8 +5,9 @@ import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Modal, Text, View, TouchableOpacity, Image, ImageBackground } from "react-native";
-
+import { Modal, Text, View, TouchableOpacity, Image, ImageBackground, StyleSheet } from "react-native";
+const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
+const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
 
 
 export enum VARIANTS_MODAL_WINDOW {
@@ -268,7 +269,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                                 padding: 6,
                                 borderRadius: 6
                             }}>
-                            <Text style={{ color: "white" }}>Continue</Text>
+                            <Text style={styles.buttonText}>Continue</Text>
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={onClose}
@@ -280,7 +281,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                             }}
 
                         >
-                            <Text style={{ color: "white" }}>Close</Text>
+                            <Text style={styles.buttonText}>Close</Text>
                         </TouchableOpacity>
                     </View>
 
@@ -289,3 +290,18 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         </Modal>
     );
 }
+
+const styles = StyleSheet.create({
+    buttonBackground: {
+        width: 182,
+        height: 47,
+        justifyContent: 'center',
+        alignItems: 'center',
+        transform: [{ scale: 0.8 }],
+    },
+    buttonText: {
+        color: 'black',
+        fontWeight: 'bold',
+        fontSize: 16,
+    },
+});
