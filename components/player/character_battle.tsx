@@ -91,6 +91,7 @@ const styles = StyleSheet.create({
   imageContainer: {
     position: 'relative',
     // marginTop: 6,
+    top: 18,
     width: "50%",
     aspectRatio: 500/500,
     overflow: 'hidden',

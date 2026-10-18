@@ -10,7 +10,7 @@ const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disa
 export default function EnemyBattle() {
   const enemyStats = useBattleStore((state) => state.enemy);
   const { height } = useWindowDimensions();
-  const previewHeight = height * 0.59;
+  const previewHeight = height * 0.58;
 
   // state
   const [isOpenStats, setIsOpenStats] = React.useState(false);
