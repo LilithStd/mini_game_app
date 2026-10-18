@@ -258,30 +258,31 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         </View>}
                     <View style={{
                         flexDirection: 'row',
-                        gap: 10
+                        
                     }}>
 
                         <TouchableOpacity
                             onPress={callBackModalWindow}
-                            style={{
-                                marginTop: 20,
-                                backgroundColor: 'green',
-                                padding: 6,
-                                borderRadius: 6
-                            }}>
-                            <Text style={styles.buttonText}>Continue</Text>
+                            style={styles.buttonBackground}>
+                            <ImageBackground
+                                source={buttonOrange}
+                                style={styles.buttonBackground}
+                            >
+                                <Text style={styles.buttonText}>Continue</Text>
+                            </ImageBackground>
+                            
                         </TouchableOpacity>
                         <TouchableOpacity
                             onPress={onClose}
-                            style={{
-                                marginTop: 20,
-                                backgroundColor: 'green',
-                                padding: 6,
-                                borderRadius: 6
-                            }}
+                            style={styles.buttonBackground}
 
                         >
-                            <Text style={styles.buttonText}>Close</Text>
+                        <ImageBackground
+                            source={buttonOrange}
+                            style={styles.buttonBackground}
+                            >
+                                <Text style={styles.buttonText}>Close</Text>
+                            </ImageBackground>
                         </TouchableOpacity>
                     </View>
 
