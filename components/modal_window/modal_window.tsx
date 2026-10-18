@@ -256,10 +256,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                                     {item.name} x {item.count}
                                 </Text>)}
                         </View>}
-                    <View style={{
-                        flexDirection: 'row',
-                        
-                    }}>
+                    <View style={styles.buttonContainer}>
 
                         <TouchableOpacity
                             onPress={callBackModalWindow}
@@ -293,6 +290,11 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
 }
 
 const styles = StyleSheet.create({
+    mainContainer:{    
+        overflow: 'hidden',
+        borderColor: 'rgba(255,255,255,0.85)',
+        backgroundColor: 'rgba(20,20,30,0.12)',    
+    },
     buttonBackground: {
         width: 182,
         height: 47,
@@ -305,4 +307,10 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'center',
+        width: '100%',
+    },
+    
 });
