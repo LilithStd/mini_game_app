@@ -157,9 +157,9 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     const callBackModalWindow = () => {
         switch (currentTypeModal) {
             case VARIANTS_MODAL_WINDOW.RETREAT:
+                objectSetting.callBack?.(); // сброс состояния боя
                 router.push(GLOBAL_APP_PATH.MAIN);
-                objectSetting.callBack?.()
-                onClose()
+                onClose();                  // закрытие модального окна
                 break;
             case VARIANTS_MODAL_WINDOW.ATTACK:
                 router.push(GLOBAL_APP_PATH.BATTLE_SCREEN);

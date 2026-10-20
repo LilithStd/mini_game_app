@@ -1,4 +1,6 @@
 import {GLOBAL_APP_PATH} from './global_path';
+import { useNavigation } from 'expo-router';
+import { CommonActions } from '@react-navigation/native';
 
 export const getRandomNumber = (min: number, max: number): number => {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -24,3 +26,16 @@ export const getValidPath = (
 	const foundPath = validPaths.find((key) => GLOBAL_APP_PATH[key] === path);
 	return foundPath || null;
 };
+
+export function useGoToMain() {
+    const navigation = useNavigation('/');
+
+    return () => {
+        navigation.dispatch(
+            CommonActions.reset({
+                index: 0,
+                routes: [{ name: 'index' }],
+            })
+        );
+    };
+}
