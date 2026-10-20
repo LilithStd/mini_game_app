@@ -11,7 +11,7 @@ import { useAnimatedStyle, useSharedValue } from "react-native-reanimated";
 import { PHASE_STATUS, INCOMING_STATUS, STATUS_BATTLE_SCREEN, UPDATE_STATS, useBattleStore } from "@/store/battle/battle_store";
 import { GLOBAL_APP_PATH } from "@/constants/global_path";
 import { INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CRYSTAL, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_CURRENCY, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_KEYS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS, INVENTORY_ITEM_CONSUMBLES_SUBTYPE_POTIONS_BUFF, UPDATE_CHARACTER_STATS, useCharacterStore } from "@/store/character_store";
-import { getRandomNumber } from "@/constants/helpers";
+import { getRandomNumber, useGoToMain } from "@/constants/helpers";
 import { ConsumableType, REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import ModalWindow, { VARIANTS_MODAL_WINDOW } from "@/components/modal_window/modal_window";
 import { BOSS_STAGE, useEnemyStore } from "@/store/enemy_store";
@@ -72,9 +72,20 @@ export default function Battle_Screen() {
     const [confirmRetreat, setConfirmRetreat] = useState(false)
 
     //
+    const goToMain = useGoToMain();
+    const allowExitRef = useRef(false);
 
+    // const handleRetreatConfirm2 = () => {
+    //     allowExitRef.current = true;
+
+    //     setDefaultState();
+    //     setDefaultCharacterStats();
+    //     setDefaultEnemyStats();
+
+    //     goToMain();
+    // };
     // initialization Battle screen
- useEffect(() => {
+    useEffect(() => {
         startBattle(characterStats, enemyStats);
     }, []);
 
@@ -84,6 +95,7 @@ export default function Battle_Screen() {
     // check return to main screen
     useEffect(() => {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
+            if (allowExitRef.current) return;
             event.preventDefault();
             handleRetreatButton();
             if(confirmRetreat) {
@@ -143,6 +155,8 @@ export default function Battle_Screen() {
         setDefaultCharacterStats();
         setDefaultEnemyStats();
         setPhaseBattle(PHASE_STATUS.DEFAULT);
+        allowExitRef.current = true;
+        goToMain();
     }
 
 
