@@ -5,6 +5,7 @@ import { REWARD_VARIANT, useItemsStore } from "@/store/items_strore";
 import { useLocationStore } from "@/store/location_store";
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
+import {BlurView} from 'expo-blur';
 import { Modal, Text, View, TouchableOpacity, Image, ImageBackground, StyleSheet } from "react-native";
 const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
@@ -194,6 +195,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             visible
             onRequestClose={onClose}
         >
+     
             <View
                 style={{
                     flex: 1,
@@ -204,15 +206,29 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             >
                 <View
                     style={{
-                        width: 300,
-                        height: 300,
+                        // width: 300,
+                        // height: 300,
+                        width: '80%',
+                        // height: '20%',
                         backgroundColor: "white",
                         justifyContent: "center",
                         alignItems: "center",
-                        borderRadius: 10,
+                        overflow: 'hidden', // Добавлено для корректного отображения размытия
+                        borderRadius: 20,
                         padding: 20,
                     }}
                 >
+                    <BlurView
+                        intensity={65}
+                        tint="light"
+                        pointerEvents="none"
+                        experimentalBlurMethod="none"
+                        style={StyleSheet.absoluteFillObject}
+                    />
+                    <View
+                        pointerEvents="none"
+                        style={styles.glassOverlay}
+                    />
                     <Text>{currentModalProps.name}</Text>
                     <Text>{currentModalProps.description}</Text>
                     {currentTypeModal === VARIANTS_MODAL_WINDOW.ATTACK &&
@@ -292,6 +308,10 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         borderColor: 'rgba(255,255,255,0.85)',
         backgroundColor: 'rgba(20,20,30,0.12)',    
+    },
+    glassOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(15,20,25,0.20)',
     },
     buttonBackground: {
         width: 182,
