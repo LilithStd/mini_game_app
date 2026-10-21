@@ -3,6 +3,7 @@ import { BOSS_STAGE } from '../enemy_store';
 export type EnemyType = {
 	name: string;
 	model: number;
+	icon: number;
 	stats: EnemyStats;
 }
 

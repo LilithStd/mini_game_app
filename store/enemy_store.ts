@@ -5,6 +5,8 @@ import {LOCATIONS_GROUP} from './location_store';
 import { BossType, EnemyStats, EnemyType } from './enemy/enemy_store_types';
 
 const ENEMY_DEFAULT_MODEL = require('../assets/enemy/monsters/monster_00.jpg');
+const ENEMY_DEFAULT_ICON = require('../assets/enemy/icons/type_enemy_icon.png');
+const BOSS_DEFAULT_ICON = require('../assets/enemy/icons/type_boss_icon.png');
 
 type EnemyTypeOld = {
 	name: string;
@@ -83,6 +85,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_0.png'),
 		preview: require('../assets/enemy/preview/enemy_0_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
@@ -90,6 +93,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_1.png'),
 		preview: require('../assets/enemy/preview/enemy_1_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
@@ -97,6 +101,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_2.png'),
 		preview: require('../assets/enemy/preview/enemy_2_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.SWAMP],
 	},
 	{
@@ -104,11 +109,13 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_3.png'),
 		preview: require('../assets/enemy/preview/enemy_3_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 	{
 		name: 'enemy_name_4',
 		model: require('../assets/enemy/enemy_4.png'),
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST, LOCATIONS_GROUP.SWAMP],
 		stats: defaultStats,
 		preview: require('../assets/enemy/preview/enemy_4_preview.png'),
@@ -118,6 +125,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_5.png'),
 		preview: require('../assets/enemy/preview/enemy_5_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.SWAMP],
 	},
 	{
@@ -125,6 +133,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_6.png'),
 		preview: require('../assets/enemy/preview/enemy_6_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST, LOCATIONS_GROUP.SWAMP],
 	},
 	{
@@ -132,6 +141,7 @@ const ENEMY_CONTENT = [
 		model: require('../assets/enemy/enemy_7.png'),
 		preview: require('../assets/enemy/preview/enemy_7_preview.png'),
 		stats: defaultStats,
+		icon: ENEMY_DEFAULT_ICON,
 		locations: [LOCATIONS_GROUP.FOREST],
 	},
 ];
@@ -141,6 +151,7 @@ const BOSS_CONTENT = [
 		name: 'first boss',
 		model: require('../assets/enemy/boss/boss_00.jpg'),
 		stats: bossStats,
+		icon: BOSS_DEFAULT_ICON,
 		stage: BOSS_STAGE.FIRST,
 	},
 ];
@@ -162,6 +173,7 @@ const default_enemy = {
 	name: 'default_name_enemy',
 	model: ENEMY_DEFAULT_MODEL,
 	preview: ENEMY_DEFAULT_MODEL,
+	icon: ENEMY_DEFAULT_ICON,
 	stats: defaultStats,
 };
 
@@ -169,6 +181,7 @@ const default_boss = {
 	name: 'default_name_boss',
 	model: ENEMY_DEFAULT_MODEL,
 	stage: BOSS_STAGE.DEFAULT,
+	icon: BOSS_DEFAULT_ICON,
 	stats: { ...defaultStats},
 };
 
