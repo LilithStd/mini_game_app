@@ -97,6 +97,10 @@ export default function EnemyBattle() {
         <View style={styles.healthBarContainer}>
           <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
         </View>
+       <View style={styles.buttonContainer}>
+        {isOpenStats ? statsComponent : defaultStatsComponent}
+        {changeStatsViewButton}
+      </View>
       </View>
     </View>
   );
@@ -113,7 +117,7 @@ export default function EnemyBattle() {
         <View style={[styles.imageContainer, { height: previewHeight }]}>
           <Image source={enemyStats.model} style={styles.image} resizeMode="cover" />
         </View>
-        {enemyStatsComponent}
+        {/* {enemyStatsComponent} */}
         {informationComponent}
         {/* <View style={styles.infoContainer}>
           <View style={styles.healthContainer}>
