@@ -30,6 +30,7 @@ export type BossType = {
 	name: string;
 	model: number;
 	stage: BOSS_STAGE;
+	icon: number;
 	stats: BossStats;
 }
 

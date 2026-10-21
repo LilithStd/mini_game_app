@@ -6,6 +6,8 @@ import { getRandomEnumValue } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
 import { MultilanguageType } from '@/constants/global_types';
 const Character_Default_Preview = require('../../assets/character/character_00_preview.jpg');
+const ENEMY_DEFAULT_ICON = require('../../assets/enemy/icons/type_enemy_icon.png');
+const BOSS_DEFAULT_ICON = require('../../assets/enemy/icons/type_boss_icon.png');
 
 export enum INCOMING_STATUS {
 	ATTACK = 'attack',
@@ -140,6 +142,7 @@ const defaultValues: CharacterStats = {
 const defaultValuesEnemy: EnemyType = {
 	name: 'default_enemy',
 	model: 0,
+	icon: ENEMY_DEFAULT_ICON,
 	stats: {
 		level: 1,
 		attack: 0,

@@ -2,7 +2,6 @@ import { useBattleStore } from '@/store/battle/battle_store';
 import React from 'react'
 import { View, Text, StyleSheet, Image, useWindowDimensions, ImageBackground, TouchableOpacity } from 'react-native'
 import { BlurView } from 'expo-blur';
-import { Platform } from 'react-native';
 import Healths from '../shared/healths';
 const buttonOrange = require('../../assets/buttons/orange_button_01(small).png')
 const buttonDisabled = require('../../assets/buttons/orange_button_01(small_disabled).png')
@@ -35,13 +34,15 @@ export default function EnemyBattle() {
 
   const statsComponent = (
     <View style={styles.statsSubContainer}>
-      
-      <Text>Attack: {enemyStats.stats.attack}</Text>
-      <Text>Defense: {enemyStats.stats.defense}</Text>
-      <Text>Evasion: {enemyStats.stats.evasion}</Text>
-      <Text>Accuracy: {enemyStats.stats.accuracy}</Text>
-      <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
-      <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
+      <View>
+        <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+      </View>
+        <Text>Attack: {enemyStats.stats.attack}</Text>
+        <Text>Defense: {enemyStats.stats.defense}</Text>
+        <Text>Evasion: {enemyStats.stats.evasion}</Text>
+        <Text>Accuracy: {enemyStats.stats.accuracy}</Text>
+        <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
+        <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
     </View>
   );
   const defaultStatsComponent = (
@@ -192,6 +193,11 @@ const styles = StyleSheet.create({
     
 
     padding: 15,
+  },
+  enemyIcon: {
+    width: 50,
+    height: 50,
+    marginBottom: 10,
   },
   statsSubContainer:{
 
