@@ -91,16 +91,20 @@ export default function EnemyBattle() {
       <View style={styles.glassOverlay} />
    
       <View style={styles.healthContainer}>
-        <View style={styles.enemyNameContainer}>
-          <Text>{enemyStats.name}</Text>
+        <View style={styles.informationSubContainer}>
+          <View style={styles.enemyNameContainer}>
+            <Text>{enemyStats.name}</Text>
+          </View>
+          <View style={styles.buttonContainer}>
+            {isOpenStats && statsComponent }
+            {changeStatsViewButton}
+          </View>
         </View>
+        
         <View style={styles.healthBarContainer}>
           <Healths values={{ current: enemyStats.stats.healPoints.current, max: enemyStats.stats.healPoints.max }} />
         </View>
-       <View style={styles.buttonContainer}>
-        {isOpenStats ? statsComponent : defaultStatsComponent}
-        {changeStatsViewButton}
-      </View>
+       
       </View>
     </View>
   );
@@ -214,6 +218,11 @@ const styles = StyleSheet.create({
   },
   healthBarContainer: {
     // marginBottom: 10,
+  },
+  informationSubContainer:{
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   buttonContainer: {
     justifyContent: 'flex-end',
