@@ -34,7 +34,6 @@ export default function EnemyBattle() {
 
   const statsComponent = (
     <View style={styles.statsSubContainer}>
-        
         <View style={styles.enemyStatsContainer}>
           <Text>Attack: {enemyStats.stats.attack}</Text>
           <Text>Defense: {enemyStats.stats.defense}</Text>
@@ -200,16 +199,17 @@ const styles = StyleSheet.create({
     padding: 15,
   },
   enemyIcon: {
-    width: 50,
-    height: 50,
-    marginBottom: 10,
+    width: 120,
+    height: 120,
+    margin: 10,
   },
   enemyIconContainer:{
     // alignItems: 'center',
     // marginBottom: 10,
   },
   statsSubContainer:{
-    
+    margin: 20,
+    padding: 10,
   },
   enemyStatsContainer: {
     
