@@ -34,10 +34,7 @@ export default function EnemyBattle() {
 
   const statsComponent = (
     <View style={styles.statsSubContainer}>
-      <View style={styles.enemyStatsContainer}>
-        <View style={styles.enemyIconContainer}>
-          <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
-        </View>
+        
         <View style={styles.enemyStatsContainer}>
           <Text>Attack: {enemyStats.stats.attack}</Text>
           <Text>Defense: {enemyStats.stats.defense}</Text>
@@ -46,7 +43,6 @@ export default function EnemyBattle() {
           <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
           <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
         </View>
-      </View>
     </View>
   );
   const defaultStatsComponent = (
@@ -99,6 +95,11 @@ export default function EnemyBattle() {
         <View style={styles.informationSubContainer}>
           <View style={styles.enemyNameContainer}>
             <Text>{enemyStats.name}</Text>
+            {isOpenStats && (
+              <View style={styles.enemyIconContainer}>
+                <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+              </View>
+            )}
           </View>
           <View style={styles.buttonContainer}>
             {isOpenStats && statsComponent }
@@ -211,7 +212,7 @@ const styles = StyleSheet.create({
     
   },
   enemyStatsContainer: {
-
+    
   },
   glassOverlay: {
     ...StyleSheet.absoluteFillObject,
