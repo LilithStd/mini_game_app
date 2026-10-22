@@ -34,15 +34,19 @@ export default function EnemyBattle() {
 
   const statsComponent = (
     <View style={styles.statsSubContainer}>
-      <View>
-        <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+      <View style={styles.enemyStatsContainer}>
+        <View style={styles.enemyIconContainer}>
+          <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+        </View>
+        <View style={styles.enemyStatsContainer}>
+          <Text>Attack: {enemyStats.stats.attack}</Text>
+          <Text>Defense: {enemyStats.stats.defense}</Text>
+          <Text>Evasion: {enemyStats.stats.evasion}</Text>
+          <Text>Accuracy: {enemyStats.stats.accuracy}</Text>
+          <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
+          <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
+        </View>
       </View>
-        <Text>Attack: {enemyStats.stats.attack}</Text>
-        <Text>Defense: {enemyStats.stats.defense}</Text>
-        <Text>Evasion: {enemyStats.stats.evasion}</Text>
-        <Text>Accuracy: {enemyStats.stats.accuracy}</Text>
-        <Text>Critical Rate: {enemyStats.stats.criticalRate}</Text>
-        <Text>Critical Damage: {enemyStats.stats.criticalDamage}</Text>
     </View>
   );
   const defaultStatsComponent = (
@@ -199,7 +203,14 @@ const styles = StyleSheet.create({
     height: 50,
     marginBottom: 10,
   },
+  enemyIconContainer:{
+    // alignItems: 'center',
+    // marginBottom: 10,
+  },
   statsSubContainer:{
+    
+  },
+  enemyStatsContainer: {
 
   },
   glassOverlay: {
