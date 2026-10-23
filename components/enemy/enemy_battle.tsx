@@ -232,7 +232,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
   },
   enemyNameContainer: {
-    marginBottom: 4,
+    margin: 10,
   },
   healthBarContainer: {
     // marginBottom: 10,
