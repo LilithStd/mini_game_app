@@ -180,7 +180,7 @@ const styles = StyleSheet.create({
     left: 0,
     right: 0,
     // margin:10,
-    padding: 10,
+    // padding: 10,
   },
   statsContainer: {
     position: 'absolute',
@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    borderWidth: 1,
   },
   buttonContainer: {
     justifyContent: 'flex-end',
