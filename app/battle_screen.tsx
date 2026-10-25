@@ -92,11 +92,26 @@ export default function Battle_Screen() {
     const handleRetreatButton = () => {
         setIsModalOpen(true)
     }
+
+    // if (currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
+    //     handleRetreatButton();
+    // }
+    useEffect(() => {
+        if (currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
+            handleRetreatButton();
+        }
+    }, [currentPhaseBattle]);
     // check return to main screen
     useEffect(() => {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
             if (allowExitRef.current) return;
             event.preventDefault();
+            // if(currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
+            //      handleRetreatButton();
+            //     if(confirmRetreat) {
+            //         navigation.dispatch(event.data.action);
+            //     }
+            // }
             handleRetreatButton();
             if(confirmRetreat) {
                 navigation.dispatch(event.data.action);
