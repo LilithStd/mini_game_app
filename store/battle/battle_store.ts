@@ -252,13 +252,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				});
 			},
 			escape: () => {},
-		enemyActions: (type) => {
+			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-				set({
-					
-				});
+				if(character.stats.healPoints.current <= 0) {
+					set({
+						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
+					});
+					return;
+				};
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
 				switch (enemyActionType) {
@@ -290,7 +293,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						},
 
 						phaseBattle: newHP <= 0
-							? PHASE_STATUS.DEFAULT
+							? PHASE_STATUS.PLAYER_WIN
 							: PHASE_STATUS.PLAYER_TURN,
 					});
 					break;
