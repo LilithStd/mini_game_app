@@ -48,8 +48,6 @@ export default function EnemyBattle() {
     <View style={styles.statsSubContainer}>
       <Text>Attack: {enemyStats.stats.attack}</Text>
       <Text>Defense: {enemyStats.stats.defense}</Text>
-      
-      
     </View>
   );
   const enemyStatsComponent = (
@@ -212,7 +210,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   enemyStatsContainer: {
-    
+    // borderWidth: 1,
   },
   glassOverlay: {
     ...StyleSheet.absoluteFillObject,
@@ -225,7 +223,7 @@ const styles = StyleSheet.create({
     padding: 10,
     margin: 20,
     bottom: 0,
-    borderWidth: 1,
+
     overflow: 'hidden',
     borderColor: 'rgba(255,255,255,0.85)',
     backgroundColor: 'rgba(20,20,30,0.12)',
@@ -233,6 +231,7 @@ const styles = StyleSheet.create({
   },
   enemyNameContainer: {
     margin: 10,
+
   },
   healthBarContainer: {
     // marginBottom: 10,
@@ -241,10 +240,11 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderWidth: 1,
+
   },
   buttonContainer: {
     justifyContent: 'flex-end',
+
   },
   glassEffectWithoutPlugins: {
     backgroundColor: 'rgba(58, 58, 58, 0.66)',

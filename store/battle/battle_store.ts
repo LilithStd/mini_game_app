@@ -106,6 +106,8 @@ export enum PHASE_STATUS {
 	PLAYER_ACTION = 'player_action',
 	ENEMY_ACTION = 'enemy_action',
 	DEFAULT = 'default',
+	PLAYER_LOSE = 'lose',
+	PLAYER_WIN = 'win'
 }
 
 export enum ACTIONS {
