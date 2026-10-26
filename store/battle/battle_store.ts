@@ -33,6 +33,11 @@ enum ACTOR_ACTIONS {
 	STAND = 'stand'
 }
 
+enum ACTOR {
+	PLAYER = 'player',
+	ENEMY = 'enemy'
+}
+
 type EnemyActionsMultilanguage = {
 	en: string;
 	lv: string;
