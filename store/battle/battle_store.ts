@@ -77,39 +77,6 @@ export enum STATUS_BATTLE_SCREEN {
 	STORY_BATTLE = 'story_battle',
 }
 
-export interface BattleStoreInterface {
-	battleStatus: STATUS_BATTLE_SCREEN;
-	character: CharacterStats;
-	battleMesssages: {
-		actor: string;
-		type: INCOMING_STATUS;
-	}
-	isActiveTurn: boolean;
-	isInitialized: boolean;
-	enemy: EnemyType | BossType;
-	totalDamage: {
-		character: number;
-		enemy: number;
-	};
-	phaseBattle:PHASE_STATUS;
-	attack:() => void;
-	defense:() => void;
-	escape:() => void;
-	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
-	setPhaseBattle: (phase: PHASE_STATUS) => void;
-	enemyTurnActions: MultilanguageType | null;
-	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
-	setCharacterStats: (stats: CharacterStats) => void;
-	setEnemyStats: (stats: EnemyType | BossType) => void;
-	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
-	setDefaultState: () => void;
-	currentBuffAndDebuff: {
-		character: string[];
-		enemy: string[];
-	};
-	setCurrentBuffAndDebuff: (status: string) => void;
-}
-
 export enum UPDATE_STATS {
 	ATTACK = 'attack',
 	DEFENSE = 'defense',
@@ -136,6 +103,43 @@ export enum ACTIONS {
 	RETREAT = 'retreat',
 	// DEFAULT = 'default',
 }
+
+type BattleActions = {
+	actor: ACTOR;
+	type: ACTOR_ACTIONS;
+};
+
+export interface BattleStoreInterface {
+	battleStatus: STATUS_BATTLE_SCREEN;
+	character: CharacterStats;
+	battleMessages: BattleActions | null;
+	isActiveTurn: boolean;
+	isInitialized: boolean;
+	enemy: EnemyType | BossType;
+	totalDamage: {
+		character: number;
+		enemy: number;
+	};
+	phaseBattle:PHASE_STATUS;
+	attack:() => void;
+	defense:() => void;
+	escape:() => void;
+	startBattle: (character: CharacterStats, enemy: EnemyType | BossType) => void;
+	setPhaseBattle: (phase: PHASE_STATUS) => void;
+	enemyTurnActions: MultilanguageType | null;
+	enemyActions: (type: ENEMY_ACTION_TYPE) => void;
+	setCharacterStats: (stats: CharacterStats) => void;
+	setEnemyStats: (stats: EnemyType | BossType) => void;
+	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
+	setDefaultState: () => void;
+	currentBuffAndDebuff: {
+		character: string[];
+		enemy: string[];
+	};
+	setCurrentBuffAndDebuff: (status: string) => void;
+}
+
+
 
 const defaultValues: CharacterStats = {
 	name: 'default_character',
@@ -193,6 +197,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			isActiveTurn: false,
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
+			battleMessages: null,
 			startBattle: (character, enemy) => {
 				set({
 					character: character,
