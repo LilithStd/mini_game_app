@@ -24,6 +24,15 @@ export enum ENEMY_ACTION_TYPE {
 	// DEFAULT = 'default',
 }
 
+enum ACTOR_ACTIONS {
+	ATTACK = 'attack',
+	DEFENSE = 'defense',
+	ESCAPE = 'escape',
+	SKILL = 'skill',
+	ITEM = 'item',
+	STAND = 'stand'
+}
+
 type EnemyActionsMultilanguage = {
 	en: string;
 	lv: string;
@@ -66,6 +75,10 @@ export enum STATUS_BATTLE_SCREEN {
 export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
+	battleMesssages: {
+		actor: string;
+		type: INCOMING_STATUS;
+	}
 	isActiveTurn: boolean;
 	isInitialized: boolean;
 	enemy: EnemyType | BossType;
