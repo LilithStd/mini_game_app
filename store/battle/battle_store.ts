@@ -219,6 +219,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
 				
+				set({
+					battleMessages: {
+						actor: ACTOR.PLAYER,
+						type: ACTOR_ACTIONS.ATTACK,
+					}
+				});
+
 				const currentHP = enemy.stats.healPoints.current;
 
 				const newHP = Math.max(
