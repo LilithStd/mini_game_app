@@ -42,6 +42,7 @@ export default function Battle_Screen() {
     const setDefaultState = useBattleStore(state => state.setDefaultState)
     const setDefaultCharacterStats = useCharacterStore(state => state.setDefaultState)
     const setDefaultEnemyStats = useEnemyStore(state => state.setDefaultState)
+    const battleMessages = useBattleStore(state => state.battleMessages)
     const startBattle = useBattleStore(state => state.startBattle)
     const attack = useBattleStore(state => state.attack)
     const defense = useBattleStore(state => state.defense)
@@ -74,16 +75,6 @@ export default function Battle_Screen() {
     //
     const goToMain = useGoToMain();
     const allowExitRef = useRef(false);
-
-    // const handleRetreatConfirm2 = () => {
-    //     allowExitRef.current = true;
-
-    //     setDefaultState();
-    //     setDefaultCharacterStats();
-    //     setDefaultEnemyStats();
-
-    //     goToMain();
-    // };
     // initialization Battle screen
     useEffect(() => {
         startBattle(characterStats, enemyStats);
@@ -93,9 +84,6 @@ export default function Battle_Screen() {
         setIsModalOpen(true)
     }
 
-    // if (currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
-    //     handleRetreatButton();
-    // }
     useEffect(() => {
         if (currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
             handleRetreatButton();
@@ -106,12 +94,6 @@ export default function Battle_Screen() {
         const unsubscribe = navigation.addListener("beforeRemove", (event) => {
             if (allowExitRef.current) return;
             event.preventDefault();
-            // if(currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
-            //      handleRetreatButton();
-            //     if(confirmRetreat) {
-            //         navigation.dispatch(event.data.action);
-            //     }
-            // }
             handleRetreatButton();
             if(confirmRetreat) {
                 navigation.dispatch(event.data.action);
@@ -203,6 +185,16 @@ export default function Battle_Screen() {
             setIsItemsActive(!isItemsActive);
         },
     };
+
+    // components
+    const BattleMessage = () => {
+        if (!battleMessages) return null;
+        return (
+            <View>
+                <Text>{battleMessages.actor} - {battleMessages.type}</Text>
+            </View>
+        );
+    }
 
     return (
         <SafeAreaView
