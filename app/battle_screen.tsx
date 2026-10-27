@@ -188,11 +188,10 @@ export default function Battle_Screen() {
 
     // components
     const BattleMessage = () => {
-        // if (!battleMessages) return null;
+        if (!battleMessages) return null;
         return (
             <View style={styles.battleMessageContainer}>
-                {/* <Text>{battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text> */}
-                <Text>{ 'Unknown title message'} - {'Unknown content message'}</Text>
+                <Text style={styles.battleMessageText}>{ battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
             </View>
         );
     }
@@ -314,8 +313,15 @@ const styles = StyleSheet.create({
         height: 100,
         padding: 10, 
         backgroundColor: 'white', 
-        margin: 10, 
-        zIndex: 3
+        margin: 20, 
+        zIndex: 3,
+        borderRadius: 20,
+    },
+    battleMessageText: {
+        fontSize: 16,
+        textAlign: 'center',
+        alignItems: 'center',
+        justifyContent: 'center',
     },
     visualContainer: {
         flex: 1,
