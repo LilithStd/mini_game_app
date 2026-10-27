@@ -190,7 +190,7 @@ export default function Battle_Screen() {
     const BattleMessage = () => {
         if (!battleMessages) return null;
         return (
-            <View style={styles.battleMessageContainer}>
+            <View style={[styles.battleMessageContainer, styles.backgroundColorStyle]}>
                 <Text style={styles.battleMessageText}>{ battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
             </View>
         );
@@ -277,6 +277,13 @@ const styles = StyleSheet.create({
 		alignItems: 'center',
 		transform: [{scale: 0.8}],
 	},
+    backgroundColorStyle: {
+        overflow: 'hidden',
+        borderWidth: 1,
+        borderColor: 'rgba(255,255,255,0.85)',
+        // backgroundColor: 'rgba(20,20,30,0.12)',
+        borderRadius: 16,
+    },
 	button: {
 		// width: 120,
 	},
