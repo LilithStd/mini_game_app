@@ -262,6 +262,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				setTimeout(() => {
 					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
+					set({
+						battleMessages: null
+					});
 				}, 700);
 			},
 			defense: () => {
@@ -387,6 +390,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						character: 0,
 						enemy: 0,
 					},
+					battleMessages: null,
 				});
 			},
 		}),
