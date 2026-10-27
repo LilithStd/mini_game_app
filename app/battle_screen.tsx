@@ -188,10 +188,11 @@ export default function Battle_Screen() {
 
     // components
     const BattleMessage = () => {
-        if (!battleMessages) return null;
+        // if (!battleMessages) return null;
         return (
-            <View>
-                <Text>{battleMessages.actor} - {battleMessages.type}</Text>
+            <View style={styles.battleMessageContainer}>
+                {/* <Text>{battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text> */}
+                <Text>{ 'Unknown title message'} - {'Unknown content message'}</Text>
             </View>
         );
     }
@@ -216,6 +217,7 @@ export default function Battle_Screen() {
                         <View style={styles.enemyComponentContainer}>
                             <EnemyBattle />
                         </View>
+                        {BattleMessage()}
                         <View style={styles.buttonBlockContainer}>
                             <ButtonBlock
                                 isActiveTurn={isActiveTurn}
@@ -303,6 +305,18 @@ const styles = StyleSheet.create({
 	statsTitle: {
 		textAlign: 'center',
 	},
+    battleMessageContainer:{
+        position: 'absolute', 
+        bottom: 50, 
+        left: 0, 
+        right: 0,
+        top:100,
+        height: 100,
+        padding: 10, 
+        backgroundColor: 'white', 
+        margin: 10, 
+        zIndex: 3
+    },
     visualContainer: {
         flex: 1,
         position: 'relative',
