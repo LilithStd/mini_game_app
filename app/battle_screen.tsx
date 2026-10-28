@@ -21,6 +21,7 @@ import { SCENARIO_HOOKS } from "@/constants/store/items/scenario";
 import CharacterBattle from "@/components/player/character_battle";
 import EnemyBattle from "@/components/enemy/enemy_battle";
 import ButtonBlock from "@/components/battle_screen/button_block";
+import BattleMessage from "@/components/battle_screen/battle_message";
 
 
 const buttonOrange = require('../assets/buttons/orange_button_01(small).png')
@@ -187,14 +188,14 @@ export default function Battle_Screen() {
     };
 
     // components
-    const BattleMessage = () => {
-        if (!battleMessages) return null;
-        return (
-            <View style={[styles.battleMessageContainer, styles.backgroundColorStyle]}>
-                <Text style={styles.battleMessageText}>{ battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
-            </View>
-        );
-    }
+    // const BattleMessage = () => {
+    //     if (!battleMessages) return null;
+    //     return (
+    //         <View style={[styles.battleMessageContainer, styles.backgroundColorStyle]}>
+    //             <Text style={styles.battleMessageText}>{ battleMessages.actor ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
+    //         </View>
+    //     );
+    // }
 
     return (
         <SafeAreaView
@@ -216,7 +217,9 @@ export default function Battle_Screen() {
                         <View style={styles.enemyComponentContainer}>
                             <EnemyBattle />
                         </View>
-                        {BattleMessage()}
+                        <View style={styles.battleMessageContainer}>
+                            <BattleMessage />
+                        </View>
                         <View style={styles.buttonBlockContainer}>
                             <ButtonBlock
                                 isActiveTurn={isActiveTurn}
