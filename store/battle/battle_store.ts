@@ -83,7 +83,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.ATTACK]: {
 		title: ACTOR_ACTIONS.ATTACK,
 		content: {
-			en: `${actor} decides to attack`,
+			en: `${ACTOR_NAME.en[actor]} decides to attack`,
 			lv: 'Spēlētājs nolemj uzbrukt.',
 			ru: 'Игрок решает атаковать.'
 		}
@@ -91,7 +91,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.DEFENSE]: {
 		title: ACTOR_ACTIONS.DEFENSE,
 		content: {
-			en: `${actor} decides to defend`,
+			en: `${ACTOR_NAME.en[actor]} decides to defend`,
 			lv: 'Spēlētājs nolemj aizstāvēt.',
 			ru: 'Игрок решает защищаться.'
 		}
@@ -99,7 +99,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.ESCAPE]: {
 		title: ACTOR_ACTIONS.ESCAPE,
 		content: {
-			en: `${actor} attempts to escape`,
+			en: `${ACTOR_NAME.en[actor]} attempts to escape`,
 			lv: 'Spēlētājs mēģina bēgt.',
 			ru: 'Игрок пытается сбежать.'
 		}
@@ -107,7 +107,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.SKILL]: {
 		title: ACTOR_ACTIONS.SKILL,
 		content: {
-			en: `${actor} uses a skill`,
+			en: `${ACTOR_NAME.en[actor]} uses a skill`,
 			lv: 'Spēlētājs izmanto prasmi.',
 			ru: 'Игрок использует навык.'
 		}
@@ -115,7 +115,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.ITEM]: {
 		title: ACTOR_ACTIONS.ITEM,
 		content: {
-			en: `${actor} uses an item`,
+			en: `${ACTOR_NAME.en[actor]} uses an item`,
 			lv: 'Spēlētājs izmanto priekšmetu.',
 			ru: 'Игрок использует предмет.'
 		}
@@ -123,7 +123,7 @@ const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.STAND]: {
 		title: ACTOR_ACTIONS.STAND,
 		content: {
-			en: `${actor} stands still`,
+			en: `${ACTOR_NAME.en[actor]} stands still`,
 			lv: 'Spēlētājs stāv uz vietas.',
 			ru: 'Игрок стоит на месте.'
 		}
