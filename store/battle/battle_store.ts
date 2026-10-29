@@ -64,6 +64,57 @@ const ENEMY_ACTIONS = {
 
 }
 
+const ACTOR_ACTIONS_TEMPLATE = {
+	[ACTOR_ACTIONS.ATTACK]: {
+		title: ACTOR_ACTIONS.ATTACK,
+		content: {
+			en: 'Player decides to attack',
+			lv: 'Spēlētājs nolemj uzbrukt.',
+			ru: 'Игрок решает атаковать.'
+		}
+	},
+	[ACTOR_ACTIONS.DEFENSE]: {
+		title: ACTOR_ACTIONS.DEFENSE,
+		content: {
+			en: 'Player decides to defend',
+			lv: 'Spēlētājs nolemj aizstāvēt.',
+			ru: 'Игрок решает защищаться.'
+		}
+	},
+	[ACTOR_ACTIONS.ESCAPE]: {
+		title: ACTOR_ACTIONS.ESCAPE,
+		content: {
+			en: 'Player attempts to escape',
+			lv: 'Spēlētājs mēģina bēgt.',
+			ru: 'Игрок пытается сбежать.'
+		}
+	},
+	[ACTOR_ACTIONS.SKILL]: {
+		title: ACTOR_ACTIONS.SKILL,
+		content: {
+			en: 'Player uses a skill',
+			lv: 'Spēlētājs izmanto prasmi.',
+			ru: 'Игрок использует навык.'
+		}
+	},
+	[ACTOR_ACTIONS.ITEM]: {
+		title: ACTOR_ACTIONS.ITEM,
+		content: {
+			en: 'Player uses an item',
+			lv: 'Spēlētājs izmanto priekšmetu.',
+			ru: 'Игрок использует предмет.'
+		}
+	},
+	[ACTOR_ACTIONS.STAND]: {
+		title: ACTOR_ACTIONS.STAND,
+		content: {
+			en: 'Player stands still',
+			lv: 'Spēlētājs stāv uz vietas.',
+			ru: 'Игрок стоит на месте.'
+		}
+	}
+}
+
 
 const DEFENSE_MULTIPLIER = 1.5;
 const ESCAPE_MULTIPLIER = 0.5;
