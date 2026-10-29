@@ -38,6 +38,21 @@ enum ACTOR {
 	ENEMY = 'enemy'
 }
 
+const ACTOR_NAME = {
+	en: {
+		[ACTOR.PLAYER]: 'Player',
+		[ACTOR.ENEMY]: 'Enemy'
+	},
+	lv: {
+		[ACTOR.PLAYER]: 'Spēlētājs',
+		[ACTOR.ENEMY]: 'Ienaidnieks'
+	},
+	ru: {
+		[ACTOR.PLAYER]: 'Игрок',
+		[ACTOR.ENEMY]: 'Враг'
+	}
+}
+
 type EnemyActionsMultilanguage = {
 	en: string;
 	lv: string;
