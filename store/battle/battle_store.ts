@@ -64,11 +64,11 @@ const ENEMY_ACTIONS = {
 
 }
 
-const ACTOR_ACTIONS_TEMPLATE = {
+const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
 	[ACTOR_ACTIONS.ATTACK]: {
 		title: ACTOR_ACTIONS.ATTACK,
 		content: {
-			en: 'Player decides to attack',
+			en: `${actor} decides to attack`,
 			lv: 'Spēlētājs nolemj uzbrukt.',
 			ru: 'Игрок решает атаковать.'
 		}
@@ -76,7 +76,7 @@ const ACTOR_ACTIONS_TEMPLATE = {
 	[ACTOR_ACTIONS.DEFENSE]: {
 		title: ACTOR_ACTIONS.DEFENSE,
 		content: {
-			en: 'Player decides to defend',
+			en: `${actor} decides to defend`,
 			lv: 'Spēlētājs nolemj aizstāvēt.',
 			ru: 'Игрок решает защищаться.'
 		}
@@ -84,7 +84,7 @@ const ACTOR_ACTIONS_TEMPLATE = {
 	[ACTOR_ACTIONS.ESCAPE]: {
 		title: ACTOR_ACTIONS.ESCAPE,
 		content: {
-			en: 'Player attempts to escape',
+			en: `${actor} attempts to escape`,
 			lv: 'Spēlētājs mēģina bēgt.',
 			ru: 'Игрок пытается сбежать.'
 		}
@@ -92,7 +92,7 @@ const ACTOR_ACTIONS_TEMPLATE = {
 	[ACTOR_ACTIONS.SKILL]: {
 		title: ACTOR_ACTIONS.SKILL,
 		content: {
-			en: 'Player uses a skill',
+			en: `${actor} uses a skill`,
 			lv: 'Spēlētājs izmanto prasmi.',
 			ru: 'Игрок использует навык.'
 		}
@@ -100,7 +100,7 @@ const ACTOR_ACTIONS_TEMPLATE = {
 	[ACTOR_ACTIONS.ITEM]: {
 		title: ACTOR_ACTIONS.ITEM,
 		content: {
-			en: 'Player uses an item',
+			en: `${actor} uses an item`,
 			lv: 'Spēlētājs izmanto priekšmetu.',
 			ru: 'Игрок использует предмет.'
 		}
@@ -108,12 +108,12 @@ const ACTOR_ACTIONS_TEMPLATE = {
 	[ACTOR_ACTIONS.STAND]: {
 		title: ACTOR_ACTIONS.STAND,
 		content: {
-			en: 'Player stands still',
+			en: `${actor} stands still`,
 			lv: 'Spēlētājs stāv uz vietas.',
 			ru: 'Игрок стоит на месте.'
 		}
 	}
-}
+});
 
 
 const DEFENSE_MULTIPLIER = 1.5;
