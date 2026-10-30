@@ -102,6 +102,14 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             description: 'You win in battle! And get reward:',
             reward: getReward(REWARD_VARIANT.MONSTER)
         },
+        victory: {
+            name: 'Victory Window',
+            description: 'You have won!',
+        },
+        lose: {
+            name: 'Lose Window',
+            description: 'You have lost! Try again.',
+        },
         default: {
             name: 'default',
             description: 'default'
@@ -132,14 +140,21 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                 setCurrentModalProps(MODAL_VARIANTS.monsterReward)
                 break
             case VARIANTS_MODAL_WINDOW.BOSS_REWARD:
+                setCurrentModalType(variant)
+                setCurrentModalProps(MODAL_VARIANTS.victory)
                 break
             case VARIANTS_MODAL_WINDOW.DUNGEON_REWARD:
                 break
             case VARIANTS_MODAL_WINDOW.VICTORY:
+                setCurrentModalType(variant)
+                setCurrentModalProps(MODAL_VARIANTS.victory)
                 break
             case VARIANTS_MODAL_WINDOW.LOSE:
+                setCurrentModalType(variant)
+                setCurrentModalProps(MODAL_VARIANTS.lose)
                 break
             case VARIANTS_MODAL_WINDOW.DEFAULT:
+                setCurrentModalType(variant)
                 setCurrentModalProps(MODAL_VARIANTS.default)
                 break
             default:
