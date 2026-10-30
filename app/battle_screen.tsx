@@ -148,6 +148,15 @@ export default function Battle_Screen() {
         // setIsItemsActive(false)
     }
 
+    const handleDefaultBattle = () => {
+        setDefaultState();
+        setDefaultCharacterStats();
+        setDefaultEnemyStats();
+        setPhaseBattle(PHASE_STATUS.DEFAULT);
+        allowExitRef.current = true;
+        goToMain();
+    }
+
     const handleRetreatConfirm = () => {
         setDefaultState();
         setDefaultCharacterStats();
@@ -163,6 +172,17 @@ export default function Battle_Screen() {
         variant: VARIANTS_MODAL_WINDOW.RETREAT,
         callBack: handleRetreatConfirm
     }
+
+    const objectVictoryModalSettings = {
+        variant: VARIANTS_MODAL_WINDOW.VICTORY,
+        callBack: () => {}
+    }
+
+    const objectLoseModalSettings = {
+        variant: VARIANTS_MODAL_WINDOW.LOSE,
+        callBack: handleDefaultBattle
+    }
+
 
 
 
