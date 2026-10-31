@@ -392,7 +392,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						},
 
 						phaseBattle: newHP <= 0
-							? PHASE_STATUS.PLAYER_WIN
+							? PHASE_STATUS.PLAYER_LOSE
 							: PHASE_STATUS.PLAYER_TURN,
 					});
 					break;

@@ -3,7 +3,7 @@ import Character from "../components/player/character";
 import { useLocalSearchParams,useNavigation, useRouter } from "expo-router";
 import { usePreventRemove } from "@react-navigation/native";
 import Enemy from "@/components/enemy/enemy";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { BlurView } from 'expo-blur';
 import { useLocationStore } from "@/store/location_store";
 import { MotiView } from "moti";
@@ -84,6 +84,10 @@ export default function Battle_Screen() {
     const handleRetreatButton = () => {
         setIsModalOpen(true)
     }
+
+    useEffect(() => {
+        setCurrentPhaseBattle(battlePhaseBattle);
+    }, [battlePhaseBattle]);
 
     useEffect(() => {
         if (currentPhaseBattle === PHASE_STATUS.PLAYER_LOSE || currentPhaseBattle === PHASE_STATUS.PLAYER_WIN) {
@@ -183,9 +187,20 @@ export default function Battle_Screen() {
         callBack: handleDefaultBattle
     }
 
+    // const currentObjectModalSettings = useMemo(() => {
+    //     switch (battlePhaseBattle) {
+    //         case PHASE_STATUS.PLAYER_WIN:
+    //             return objectVictoryModalSettings;
+    //         case PHASE_STATUS.PLAYER_LOSE:
+    //             return objectLoseModalSettings;
+    //         default:
+    //             return objectModalSettings;
+    //     }
+    // }, [battlePhaseBattle]);
 
 
 
+    // console.log(currentObjectModalSettings);
     const handleItemsUse = (variant: SubTypeItems, items: ConsumableType) => {
         
     }
@@ -253,7 +268,7 @@ export default function Battle_Screen() {
                     {isModalOpen &&
                         <ModalWindow
                             onClose={handleModalCloseStatus}
-                            objectSetting={objectModalSettings} />}
+                            objectSetting={battlePhaseBattle === PHASE_STATUS.PLAYER_WIN ? objectVictoryModalSettings : battlePhaseBattle === PHASE_STATUS.PLAYER_LOSE ? objectLoseModalSettings : objectModalSettings} />}
                    
                 </View>
             </ImageBackground>
