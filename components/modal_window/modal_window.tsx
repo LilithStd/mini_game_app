@@ -195,7 +195,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             case VARIANTS_MODAL_WINDOW.VICTORY:
                 break;
             case VARIANTS_MODAL_WINDOW.LOSE:
-                router.push(GLOBAL_APP_PATH.MAIN);
+                objectSetting.callBack?.();
                 onClose();
                 break;
             case VARIANTS_MODAL_WINDOW.DEFAULT:
