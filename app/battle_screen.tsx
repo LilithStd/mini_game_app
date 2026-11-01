@@ -179,7 +179,7 @@ export default function Battle_Screen() {
 
     const objectVictoryModalSettings = {
         variant: VARIANTS_MODAL_WINDOW.VICTORY,
-        callBack: () => {}
+        callBack: handleDefaultBattle
     }
 
     const objectLoseModalSettings = {
