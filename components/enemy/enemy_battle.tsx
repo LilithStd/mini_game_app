@@ -182,11 +182,9 @@ const styles = StyleSheet.create({
   },
   statsContainer: {
     position: 'absolute',
-
     bottom: 110,
     left: 20,
     right: 20,
-
     borderRadius: 18,
     borderWidth: 1,
     borderColor: 'rgba(255,255,255,0.85)',
@@ -231,6 +229,11 @@ const styles = StyleSheet.create({
   },
   enemyNameContainer: {
     margin: 10,
+    padding: 10,
+    borderWidth: 1,
+    borderColor: 'rgba(147, 73, 13, 0.85)',
+    borderRadius: 16,
+    backgroundColor: 'rgba(20,20,30,0.12)',
 
   },
   healthBarContainer: {
