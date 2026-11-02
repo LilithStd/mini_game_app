@@ -90,7 +90,7 @@ export default function EnemyBattle() {
    
       <View style={styles.healthContainer}>
         <View style={styles.informationSubContainer}>
-          <View style={styles.enemyNameContainer}>
+          <View style={[styles.enemyNameContainer, isOpenStats && styles.activeOpenStats]}>
             <Text>{enemyStats.name}</Text>
             {isOpenStats && (
               <View style={styles.openStatsContainer}>
@@ -240,8 +240,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'rgba(147, 73, 13, 0.85)',
     borderRadius: 16,
-    backgroundColor: 'rgba(20,20,30,0.12)',
+    backgroundColor:  'rgba(20,20,30,0.12)',
 
+  },
+  activeOpenStats:{
+    backgroundColor: 'rgba(211, 123, 22, 0.32)',
   },
   healthBarContainer: {
     // marginBottom: 10,
