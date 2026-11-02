@@ -93,7 +93,7 @@ export default function EnemyBattle() {
           <View style={styles.enemyNameContainer}>
             <Text>{enemyStats.name}</Text>
             {isOpenStats && (
-              <View>
+              <View style={styles.openStatsContainer}>
                 <View style={styles.enemyIconContainer}>
                   <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
                 </View>
@@ -211,8 +211,8 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
   statsSubContainer:{
-    margin: 20,
-    padding: 10,
+    // margin: 20,
+    // padding: 10,
   },
   enemyStatsContainer: {
     // borderWidth: 1,
@@ -247,14 +247,19 @@ const styles = StyleSheet.create({
     // marginBottom: 10,
   },
   informationSubContainer:{
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
+    // flexDirection: 'row',
+    justifyContent: 'center',
+    // alignItems: 'center',
 
   },
   buttonContainer: {
-    justifyContent: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
 
+  },
+  openStatsContainer:{
+    flex: 1,
+    flexDirection: 'row',
   },
   glassEffectWithoutPlugins: {
     backgroundColor: 'rgba(58, 58, 58, 0.66)',
