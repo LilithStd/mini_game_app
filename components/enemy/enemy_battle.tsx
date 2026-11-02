@@ -93,13 +93,20 @@ export default function EnemyBattle() {
           <View style={styles.enemyNameContainer}>
             <Text>{enemyStats.name}</Text>
             {isOpenStats && (
-              <View style={styles.enemyIconContainer}>
-                <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+              <View>
+                <View style={styles.enemyIconContainer}>
+                  <Image source={enemyStats.icon} style={styles.enemyIcon} resizeMode="contain" />
+                </View>
+                <View>
+                  {statsComponent}
+                </View>
               </View>
+              
+              
             )}
           </View>
           <View style={styles.buttonContainer}>
-            {isOpenStats && statsComponent }
+            {/* {isOpenStats && statsComponent } */}
             {changeStatsViewButton}
           </View>
         </View>
