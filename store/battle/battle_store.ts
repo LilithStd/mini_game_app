@@ -353,7 +353,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			escape: () => {},
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
-
+				console.log('enemyActions called:', phaseBattle);
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(character.stats.healPoints.current <= 0) {
 					set({
@@ -369,49 +369,51 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.ATTACK,
-						}
-					});
-					const newHP = Math.max(
-						0,
-						character.stats.healPoints.current - enemy.stats.attack
-					);
-			
-
-					const actualDamage =
-						character.stats.healPoints.current - newHP;
-
-					set({
-						character: {
-							...character,
-							stats: {
-								...character.stats,
-								healPoints: {
-									...character.stats.healPoints,
-									current: newHP,
-								},
-								death: newHP <= 0,
 							},
-						},
-
-						totalDamage: {
-							...totalDamage,
-							enemy: totalDamage.enemy + actualDamage,
-						},
-
-						phaseBattle: newHP <= 0
-							? PHASE_STATUS.PLAYER_LOSE
-							: PHASE_STATUS.PLAYER_TURN,
-					});
-					setTimeout(() => {
-						get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
-						set({
-							battleMessages: null
 						});
-					}, 700);
-					break;
-					
-				
-				}
+
+						setTimeout(() => {
+							// Проверяем, что всё ещё ход врага
+							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+
+							const { character, enemy, totalDamage } = get();
+
+							const newHP = Math.max(
+								0,
+								character.stats.healPoints.current - enemy.stats.attack
+							);
+
+							const actualDamage =
+								character.stats.healPoints.current - newHP;
+
+							set({
+								character: {
+									...character,
+									stats: {
+										...character.stats,
+										healPoints: {
+											...character.stats.healPoints,
+											current: newHP,
+										},
+										death: newHP <= 0,
+									},
+								},
+
+								totalDamage: {
+									...totalDamage,
+									enemy: totalDamage.enemy + actualDamage,
+								},
+
+								battleMessages: null,
+
+								phaseBattle: newHP <= 0
+									? PHASE_STATUS.PLAYER_LOSE
+									: PHASE_STATUS.PLAYER_TURN,
+							});
+						}, 700);
+						console.log('Enemy message in store:', get().battleMessages);
+						break;
+					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
 						set({

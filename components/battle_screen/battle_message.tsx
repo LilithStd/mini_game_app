@@ -5,6 +5,7 @@ import { BlurView } from "expo-blur";
 export default function BattleMessage() {
     const battleMessages = useBattleStore(state => state.battleMessages)
     if (!battleMessages) return null;
+    console.log('battleMessages on client', battleMessages);
     return (
         <View style={[styles.battleMessageContainer, styles.backgroundColorStyle]}>
             <BlurView 
