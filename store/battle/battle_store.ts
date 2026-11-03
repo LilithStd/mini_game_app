@@ -365,10 +365,17 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
 				switch (enemyActionType) {
 					case ENEMY_ACTION_TYPE.ATTACK: {
+						set({
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.ATTACK,
+						}
+					});
 					const newHP = Math.max(
 						0,
 						character.stats.healPoints.current - enemy.stats.attack
 					);
+			
 
 					const actualDamage =
 						character.stats.healPoints.current - newHP;
@@ -395,6 +402,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							? PHASE_STATUS.PLAYER_LOSE
 							: PHASE_STATUS.PLAYER_TURN,
 					});
+					setTimeout(() => {
+						get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
+						set({
+							battleMessages: null
+						});
+					}, 700);
 					break;
 					
 				
