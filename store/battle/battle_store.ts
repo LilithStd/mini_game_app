@@ -5,6 +5,7 @@ import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types
 import { getRandomEnumValue } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
 import { MultilanguageType } from '@/constants/global_types';
+import { LANGUAGE } from '../global_store';
 const Character_Default_Preview = require('../../assets/character/character_00_preview.jpg');
 const ENEMY_DEFAULT_ICON = require('../../assets/enemy/icons/type_enemy_icon.png');
 const BOSS_DEFAULT_ICON = require('../../assets/enemy/icons/type_boss_icon.png');
@@ -59,7 +60,7 @@ type EnemyActionsMultilanguage = {
 	ru: string;
 }
 
-const ENEMY_ACTIONS = {
+export const ENEMY_ACTIONS = {
 	[ENEMY_ACTION_TYPE.ATTACK]: {
 		title: ENEMY_ACTION_TYPE.ATTACK,
 		content:{
@@ -79,53 +80,53 @@ const ENEMY_ACTIONS = {
 
 }
 
-const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR) => ({
+export const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR, currentLanguage: LANGUAGE) => ({
 	[ACTOR_ACTIONS.ATTACK]: {
 		title: ACTOR_ACTIONS.ATTACK,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} decides to attack`,
-			lv: 'Spēlētājs nolemj uzbrukt.',
-			ru: 'Игрок решает атаковать.'
+			lv: `${ACTOR_NAME.lv[actor]} nolemj uzbrukt.`,
+			ru: `${ACTOR_NAME.ru[actor]} решает атаковать.`
 		}
 	},
 	[ACTOR_ACTIONS.DEFENSE]: {
 		title: ACTOR_ACTIONS.DEFENSE,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} decides to defend`,
-			lv: 'Spēlētājs nolemj aizstāvēt.',
-			ru: 'Игрок решает защищаться.'
+			lv: `${ACTOR_NAME.lv[actor]} nolemj aizstāvēt.`,
+			ru: `${ACTOR_NAME.ru[actor]} решает защищаться.`
 		}
 	},
 	[ACTOR_ACTIONS.ESCAPE]: {
 		title: ACTOR_ACTIONS.ESCAPE,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} attempts to escape`,
-			lv: 'Spēlētājs mēģina bēgt.',
-			ru: 'Игрок пытается сбежать.'
+			lv: `${ACTOR_NAME.lv[actor]} mēģina bēgt.`,
+			ru: `${ACTOR_NAME.ru[actor]} пытается сбежать.`
 		}
 	},
 	[ACTOR_ACTIONS.SKILL]: {
 		title: ACTOR_ACTIONS.SKILL,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} uses a skill`,
-			lv: 'Spēlētājs izmanto prasmi.',
-			ru: 'Игрок использует навык.'
+			lv: `${ACTOR_NAME.lv[actor]} izmanto prasmi.`,
+			ru: `${ACTOR_NAME.ru[actor]} использует навык.`
 		}
 	},
 	[ACTOR_ACTIONS.ITEM]: {
 		title: ACTOR_ACTIONS.ITEM,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} uses an item`,
-			lv: 'Spēlētājs izmanto priekšmetu.',
-			ru: 'Игрок использует предмет.'
+			lv: `${ACTOR_NAME.lv[actor]} izmanto priekšmetu.`,
+			ru: `${ACTOR_NAME.ru[actor]} использует предмет.`
 		}
 	},
 	[ACTOR_ACTIONS.STAND]: {
 		title: ACTOR_ACTIONS.STAND,
 		content: {
 			en: `${ACTOR_NAME.en[actor]} stands still`,
-			lv: 'Spēlētājs stāv uz vietas.',
-			ru: 'Игрок стоит на месте.'
+			lv: `${ACTOR_NAME.lv[actor]} stāv uz vietas.`,
+			ru: `${ACTOR_NAME.ru[actor]} стоит на месте.`
 		}
 	}
 });
@@ -328,9 +329,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				setTimeout(() => {
 					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
-					// set({
-					// 	battleMessages: null
-					// });
 				}, 700);
 			},
 			defense: () => {
