@@ -1,8 +1,7 @@
 import { View, Text, StyleSheet } from "react-native";
-import { useBattleStore } from "../../store/battle/battle_store";
+import { ACTOR_ACTIONS_TEMPLATE, useBattleStore } from "../../store/battle/battle_store";
 import { BlurView } from "expo-blur";
 import { useGlobalStore } from "@/store/global_store";
-import { ACTOR_NAME } from "../../store/battle/battle_store";
 
 export default function BattleMessage() {
     const battleMessages = useBattleStore(state => state.battleMessages)
@@ -19,7 +18,7 @@ export default function BattleMessage() {
                     style={StyleSheet.absoluteFill}
                   />
                   <View style={styles.glassOverlay} />
-            <Text style={styles.battleMessageText}>{ACTOR_NAME[currentLanguage][battleMessages.actor] ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
+            <Text style={styles.battleMessageText}>{ACTOR_ACTIONS_TEMPLATE(battleMessages.actor, currentLanguage)?.[battleMessages.type]?.content?.[currentLanguage] ?? 'Unknown title message'} - {battleMessages.type ?? 'Unknown content message'}</Text>
         </View>
     );
 }
