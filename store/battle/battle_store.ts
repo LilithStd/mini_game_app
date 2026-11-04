@@ -84,49 +84,49 @@ export const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR, currentLanguage: LANGUAGE) 
 	[ACTOR_ACTIONS.ATTACK]: {
 		title: ACTOR_ACTIONS.ATTACK,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} decides to attack`,
-			lv: `${ACTOR_NAME.lv[actor]} nolemj uzbrukt.`,
-			ru: `${ACTOR_NAME.ru[actor]} решает атаковать.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} decides to attack`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} nolemj uzbrukt.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} решает атаковать.`
 		}
 	},
 	[ACTOR_ACTIONS.DEFENSE]: {
 		title: ACTOR_ACTIONS.DEFENSE,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} decides to defend`,
-			lv: `${ACTOR_NAME.lv[actor]} nolemj aizstāvēt.`,
-			ru: `${ACTOR_NAME.ru[actor]} решает защищаться.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} decides to defend`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} nolemj aizstāvēt.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} решает защищаться.`
 		}
 	},
 	[ACTOR_ACTIONS.ESCAPE]: {
 		title: ACTOR_ACTIONS.ESCAPE,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} attempts to escape`,
-			lv: `${ACTOR_NAME.lv[actor]} mēģina bēgt.`,
-			ru: `${ACTOR_NAME.ru[actor]} пытается сбежать.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} attempts to escape`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} mēģina bēgt.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} пытается сбежать.`
 		}
 	},
 	[ACTOR_ACTIONS.SKILL]: {
 		title: ACTOR_ACTIONS.SKILL,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} uses a skill`,
-			lv: `${ACTOR_NAME.lv[actor]} izmanto prasmi.`,
-			ru: `${ACTOR_NAME.ru[actor]} использует навык.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} uses a skill`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} izmanto prasmi.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} использует навык.`
 		}
 	},
 	[ACTOR_ACTIONS.ITEM]: {
 		title: ACTOR_ACTIONS.ITEM,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} uses an item`,
-			lv: `${ACTOR_NAME.lv[actor]} izmanto priekšmetu.`,
-			ru: `${ACTOR_NAME.ru[actor]} использует предмет.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} uses an item`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} izmanto priekšmetu.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} использует предмет.`
 		}
 	},
 	[ACTOR_ACTIONS.STAND]: {
 		title: ACTOR_ACTIONS.STAND,
 		content: {
-			en: `${ACTOR_NAME.en[actor]} stands still`,
-			lv: `${ACTOR_NAME.lv[actor]} stāv uz vietas.`,
-			ru: `${ACTOR_NAME.ru[actor]} стоит на месте.`
+			en: `${ACTOR_NAME[currentLanguage][actor]} stands still`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} stāv uz vietas.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} стоит на месте.`
 		}
 	}
 });
