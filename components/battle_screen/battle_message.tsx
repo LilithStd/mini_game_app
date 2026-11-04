@@ -1,9 +1,11 @@
 import { View, Text, StyleSheet } from "react-native";
 import { useBattleStore } from "../../store/battle/battle_store";
 import { BlurView } from "expo-blur";
+import { useGlobalStore } from "@/store/global_store";
 
 export default function BattleMessage() {
     const battleMessages = useBattleStore(state => state.battleMessages)
+    const currentLanguage = useGlobalStore(state => state.currentLanguage)
     if (!battleMessages) return null;
     console.log('battleMessages on client', battleMessages);
     return (
