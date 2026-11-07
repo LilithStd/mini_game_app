@@ -219,6 +219,34 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             </View>
         )
     }
+    const ButtonModalWindow = () => {
+        return (
+            <View style={styles.buttonContainer}>
+                        <TouchableOpacity
+                            onPress={callBackModalWindow}
+                            style={styles.buttonBackground}>
+                            <ImageBackground
+                                source={buttonOrange}
+                                style={[styles.buttonBackground,{marginLeft: 50}]}
+                            >
+                                <Text style={styles.buttonText}>Continue</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                            onPress={onClose}
+                            style={styles.buttonBackground}
+
+                        >
+                        <ImageBackground
+                            source={buttonOrange}
+                            style={[styles.buttonBackground,{marginRight: 50}]}
+                            >
+                                <Text style={styles.buttonText}>Close</Text>
+                            </ImageBackground>
+                        </TouchableOpacity>
+                    </View>
+        )
+    }
     const LoseModalWindow = () => {
         return (
             <View>
