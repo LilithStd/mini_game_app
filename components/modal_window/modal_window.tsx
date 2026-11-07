@@ -251,6 +251,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         return (
             <View>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
+                <ButtonModalWindow />
             </View>
         )
     }
@@ -258,6 +259,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         return (
             <View>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
+                <ButtonModalWindow />
             </View>
         )
     }
@@ -265,6 +267,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         return (
             <View>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
+                <ButtonModalWindow />
             </View>
         )
     }
