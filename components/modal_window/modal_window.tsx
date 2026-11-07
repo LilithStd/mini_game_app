@@ -169,6 +169,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
 
     }
 
+
     const callBackModalWindow = () => {
         switch (currentTypeModal) {
             case VARIANTS_MODAL_WINDOW.RETREAT:
@@ -208,6 +209,17 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     useEffect(() => {
         modalConfigure(objectSetting.variant)
     }, [objectSetting.variant])
+
+    // components
+    const LoseModalWindow = () => {
+        return (
+            <View>
+                <Text>{currentModalProps.name}</Text>
+                <Text>{currentModalProps.description}</Text>
+            </View>
+        )
+    }
+    // 
 
     return (
         <Modal
