@@ -219,6 +219,22 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             </View>
         )
     }
+    const VictoryModalWindow = () => {
+        return (
+            <View>
+                <Text>{currentModalProps.name}</Text>
+                <Text>{currentModalProps.description}</Text>
+            </View>
+        )
+    }
+    const RetreatModalWindow = () => {
+        return (
+            <View>
+                <Text>{currentModalProps.name}</Text>
+                <Text>{currentModalProps.description}</Text>
+            </View>
+        )
+    }
     // 
 
     return (
