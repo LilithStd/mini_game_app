@@ -211,27 +211,32 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }, [objectSetting.variant])
 
     // components
+    const TextContentModalWindow = ({ name, description }: ModalVariant) => {
+        return (
+            <View>
+                <Text>{name}</Text>
+                <Text>{description}</Text>
+            </View>
+        )
+    }
     const LoseModalWindow = () => {
         return (
             <View>
-                <Text>{currentModalProps.name}</Text>
-                <Text>{currentModalProps.description}</Text>
+                <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
             </View>
         )
     }
     const VictoryModalWindow = () => {
         return (
             <View>
-                <Text>{currentModalProps.name}</Text>
-                <Text>{currentModalProps.description}</Text>
+                <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
             </View>
         )
     }
     const RetreatModalWindow = () => {
         return (
             <View>
-                <Text>{currentModalProps.name}</Text>
-                <Text>{currentModalProps.description}</Text>
+                <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
             </View>
         )
     }
