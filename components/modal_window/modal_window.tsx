@@ -426,13 +426,15 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        justifyContent: 'center',
+        // justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
     },
     modalWindowContent: {
         padding: 20,
-        backgroundColor: 'rgba(255,255,255,0.1)',
+        justifyContent: 'center',
+        alignItems: 'center',
+        // backgroundColor: 'rgba(255,255,255,0.1)',
         borderRadius: 10,
     }
     
