@@ -271,6 +271,19 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             </View>
         )
     }
+
+    const ModalWindowContent = () => {
+        switch (objectSetting.variant) {
+            case VARIANTS_MODAL_WINDOW.LOSE:
+                return <LoseModalWindow />;
+            case VARIANTS_MODAL_WINDOW.VICTORY:
+                return <VictoryModalWindow />;
+            case VARIANTS_MODAL_WINDOW.RETREAT:
+                return <RetreatModalWindow />;
+            default:
+                return null;
+        }
+    }
     // 
 
     return (
