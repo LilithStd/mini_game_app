@@ -249,7 +249,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }
     const LoseModalWindow = () => {
         return (
-            <View>
+            <View style={styles.modalWindowContent}>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
                 <ButtonModalWindow />
             </View>
@@ -257,7 +257,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }
     const VictoryModalWindow = () => {
         return (
-            <View>
+            <View style={styles.modalWindowContent}>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
                 <ButtonModalWindow />
             </View>
@@ -265,7 +265,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }
     const RetreatModalWindow = () => {
         return (
-            <View>
+            <View style={styles.modalWindowContent}>
                 <TextContentModalWindow name={currentModalProps.name} description={currentModalProps.description} />
                 <ButtonModalWindow />
             </View>
@@ -327,50 +327,51 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         pointerEvents="none"
                         style={styles.glassOverlay}
                     />
-                    <Text>{currentModalProps.name}</Text>
-                    <Text>{currentModalProps.description}</Text>
-                    {currentTypeModal === VARIANTS_MODAL_WINDOW.ATTACK &&
-                        <View style={{
-                            width: '100%',
-                            height: '60%'
-
-                        }}>
-                            <Text style={{
-                                textAlign: 'center'
-                            }}>{MODAL_VARIANTS.attack.monster.name}</Text>
+                        <ModalWindowContent />
+                        {/* <Text>{currentModalProps.name}</Text>
+                        <Text>{currentModalProps.description}</Text>
+                        {currentTypeModal === VARIANTS_MODAL_WINDOW.ATTACK &&
                             <View style={{
-                                position: 'absolute',
-                                borderWidth: 2,
-                                bottom: 20,
-                                left: 0,
                                 width: '100%',
-                                height: 100,
-                                overflow: 'hidden', // Обрезает выходящие части
-                                borderRadius: 10 // Если нужна рамка
+                                height: '60%'
+
                             }}>
-                                <Image
-                                    source={MODAL_VARIANTS.attack.monster.preview}
-                                    resizeMode="cover" // Заполняет контейнер
-                                    style={{
-                                        width: '100%',
-                                        height: 160,
-                                        // transform: [{ translateY: 0 }, { translateX: -20 }] // Сдвигаем вверх
-                                    }}
-                                />
+                                <Text style={{
+                                    textAlign: 'center'
+                                }}>{MODAL_VARIANTS.attack.monster.name}</Text>
+                                <View style={{
+                                    position: 'absolute',
+                                    borderWidth: 2,
+                                    bottom: 20,
+                                    left: 0,
+                                    width: '100%',
+                                    height: 100,
+                                    overflow: 'hidden', // Обрезает выходящие части
+                                    borderRadius: 10 // Если нужна рамка
+                                }}>
+                                    <Image
+                                        source={MODAL_VARIANTS.attack.monster.preview}
+                                        resizeMode="cover" // Заполняет контейнер
+                                        style={{
+                                            width: '100%',
+                                            height: 160,
+                                            // transform: [{ translateY: 0 }, { translateX: -20 }] // Сдвигаем вверх
+                                        }}
+                                    />
+                                </View>
+
+
                             </View>
 
-
-                        </View>
-
-                    }
-                    {currentTypeModal === VARIANTS_MODAL_WINDOW.TREASURE_REWARD &&
-                        <View>
-                            {MODAL_VARIANTS.treasureReward.reward.map((item) =>
-                                <Text key={item.id}>
-                                    {item.name} x {item.count}
-                                </Text>)}
-                        </View>}
-                    <View style={styles.buttonContainer}>
+                        }
+                        {currentTypeModal === VARIANTS_MODAL_WINDOW.TREASURE_REWARD &&
+                            <View>
+                                {MODAL_VARIANTS.treasureReward.reward.map((item) =>
+                                    <Text key={item.id}>
+                                        {item.name} x {item.count}
+                                    </Text>)}
+                            </View>}
+                        <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             onPress={callBackModalWindow}
                             style={styles.buttonBackground}>
@@ -393,7 +394,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                                 <Text style={styles.buttonText}>Close</Text>
                             </ImageBackground>
                         </TouchableOpacity>
-                    </View>
+                        </View> */}
 
                 </View>
             </View>
@@ -429,5 +430,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         width: '100%',
     },
+    modalWindowContent: {
+        padding: 20,
+        backgroundColor: 'rgba(255,255,255,0.1)',
+        borderRadius: 10,
+    }
     
 });
