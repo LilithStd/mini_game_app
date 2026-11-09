@@ -232,11 +232,13 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                                 <Text style={styles.buttonText}>Continue</Text>
                             </ImageBackground>
                         </TouchableOpacity>
-                        <TouchableOpacity
+                        {currentTypeModal !== VARIANTS_MODAL_WINDOW.LOSE && 
+                             <TouchableOpacity
                             onPress={onClose}
                             style={styles.buttonBackground}
 
                         >
+                        
                         <ImageBackground
                             source={buttonOrange}
                             style={[styles.buttonBackground,{marginRight: 50}]}
@@ -244,6 +246,8 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                                 <Text style={styles.buttonText}>Close</Text>
                             </ImageBackground>
                         </TouchableOpacity>
+                        }
+                       
                     </View>
         )
     }
