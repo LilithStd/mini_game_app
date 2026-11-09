@@ -213,7 +213,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     // components
     const TextContentModalWindow = ({ name, description }: ModalVariant) => {
         return (
-            <View>
+            <View style={styles.textContainer}>
                 <Text>{name}</Text>
                 <Text>{description}</Text>
             </View>
@@ -428,6 +428,11 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         fontSize: 16,
     },
+    textContainer: {
+        textAlign: 'center',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     buttonContainer: {
         flexDirection: 'row',
         // justifyContent: 'center',
@@ -438,6 +443,7 @@ const styles = StyleSheet.create({
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
+        textAlign: 'center',
         // backgroundColor: 'rgba(255,255,255,0.1)',
         borderRadius: 10,
     }
