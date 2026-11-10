@@ -49,7 +49,7 @@ interface EnemyContentType extends EnemyTypeOld {
 
 const defaultStats = {
 	level: 1,
-	attack: 21,
+	attack: 61,
 	defense: 36,
 	accuracy: 5,
 	criticalRate: 3,
