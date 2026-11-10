@@ -224,7 +224,8 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             <View style={styles.buttonContainer}>
                         <TouchableOpacity
                             onPress={callBackModalWindow}
-                            style={styles.buttonBackground}>
+                            style={{marginLeft: currentTypeModal !== VARIANTS_MODAL_WINDOW.LOSE ? 30 : 0}}
+                            >
                             <ImageBackground
                                 source={buttonOrange}
                                 style={[styles.buttonBackground]}
@@ -235,10 +236,10 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         {currentTypeModal !== VARIANTS_MODAL_WINDOW.LOSE && 
                         <TouchableOpacity
                             onPress={onClose}
-                            style={styles.buttonBackground}
+                            style={{marginRight: 30}}
 
                         >
-                        {/* ,{marginRight: 50} */}
+                
                         <ImageBackground
                             source={buttonOrange}
                             style={[styles.buttonBackground]}
@@ -367,11 +368,7 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        borderWidth: 1,
-
-        // justifyContent: 'center',
-        // alignItems: 'center',
-        // width: '100%',
+        
     },
     modalWindowContent: {
         padding: 20,
