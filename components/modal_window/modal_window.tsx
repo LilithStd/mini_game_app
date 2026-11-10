@@ -221,10 +221,19 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
     }
     const ButtonModalWindow = () => {
         return (
-            <View style={styles.buttonContainer}>
+            <View 
+                style={[
+                styles.buttonContainer,
+                {
+                    justifyContent: currentTypeModal === VARIANTS_MODAL_WINDOW.LOSE
+                        ? 'center'
+                        : 'space-between',
+                },
+            ]}
+                >
                         <TouchableOpacity
                             onPress={callBackModalWindow}
-                            style={{marginLeft: currentTypeModal !== VARIANTS_MODAL_WINDOW.LOSE ? 30 : 0}}
+                            
                             >
                             <ImageBackground
                                 source={buttonOrange}
@@ -236,7 +245,7 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         {currentTypeModal !== VARIANTS_MODAL_WINDOW.LOSE && 
                         <TouchableOpacity
                             onPress={onClose}
-                            style={{marginRight: 30}}
+                            
 
                         >
                 
