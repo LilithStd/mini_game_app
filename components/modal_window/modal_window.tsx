@@ -378,6 +378,8 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
+        gap: 10,
+        marginTop: 10,
     },
     modalWindowContent: {
         padding: 20,
