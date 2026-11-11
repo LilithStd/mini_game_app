@@ -359,11 +359,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(15,20,25,0.20)',
     },
     buttonBackground: {
-        width: 182,
-        height: 47,
+        width: 146,
+        height: 38,
         justifyContent: 'center',
         alignItems: 'center',
-        transform: [{ scale: 0.8 }],
+        // borderWidth: 1,
+        // transform: [{ scale: 0.8 }],
     },
     buttonText: {
         color: 'black',
@@ -377,14 +378,12 @@ const styles = StyleSheet.create({
     },
     buttonContainer: {
         flexDirection: 'row',
-        
     },
     modalWindowContent: {
         padding: 20,
         justifyContent: 'center',
         alignItems: 'center',
         textAlign: 'center',
-        // backgroundColor: 'rgba(255,255,255,0.1)',
         borderRadius: 10,
     }
     
