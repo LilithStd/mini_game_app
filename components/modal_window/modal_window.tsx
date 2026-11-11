@@ -359,8 +359,8 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(15,20,25,0.20)',
     },
     buttonBackground: {
-        width: 146,
-        height: 38,
+        width: 132,
+        height: 34,
         justifyContent: 'center',
         alignItems: 'center',
         // borderWidth: 1,
@@ -369,7 +369,7 @@ const styles = StyleSheet.create({
     buttonText: {
         color: 'black',
         fontWeight: 'bold',
-        fontSize: 16,
+        fontSize: 14,
     },
     textContainer: {
         textAlign: 'center',
