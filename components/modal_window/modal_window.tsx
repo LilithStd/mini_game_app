@@ -326,6 +326,8 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
                         justifyContent: "center",
                         alignItems: "center",
                         overflow: 'hidden', // Добавлено для корректного отображения размытия
+                        borderWidth: 2,
+                        borderColor: 'rgba(255,255,255,0.85)',
                         borderRadius: 20,
                         padding: 20,
                     }}
