@@ -329,6 +329,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				setTimeout(() => {
 					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
+					set({battleMessages: null})
 				}, 700);
 			},
 			defense: () => {
@@ -351,7 +352,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			escape: () => {},
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
-				// console.log('enemyActions called:', phaseBattle);
+				console.log('enemyActions called:', phaseBattle);
+				return;
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(character.stats.healPoints.current <= 0) {
 					set({
