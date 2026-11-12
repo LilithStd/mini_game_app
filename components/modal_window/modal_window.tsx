@@ -309,28 +309,10 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
         >
      
             <View
-                style={{
-                    flex: 1,
-                    justifyContent: "center",
-                    alignItems: "center",
-                    backgroundColor: "rgba(0, 0, 0, 0.5)",
-                }}
+                style={styles.mainContainer}
             >
                 <View
-                    style={{
-                        // width: 300,
-                        // height: 300,
-                        width: '80%',
-                        // height: '20%',
-                        backgroundColor: "white",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        overflow: 'hidden', // Добавлено для корректного отображения размытия
-                        borderWidth: 2,
-                        borderColor: 'rgba(255,255,255,0.85)',
-                        borderRadius: 20,
-                        padding: 20,
-                    }}
+                    style={styles.modalContentContainer}
                 >
                     <BlurView
                         intensity={65}
@@ -352,13 +334,28 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
 
 const styles = StyleSheet.create({
     mainContainer:{    
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
         overflow: 'hidden',
         borderColor: 'rgba(255,255,255,0.85)',
-        backgroundColor: 'rgba(20,20,30,0.12)',    
+   
     },
     glassOverlay: {
         ...StyleSheet.absoluteFillObject,
         backgroundColor: 'rgba(15,20,25,0.20)',
+    },
+    modalContentContainer: {
+        width: '80%',
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+        overflow: 'hidden', // Добавлено для корректного отображения размытия
+        borderWidth: 2,
+        borderColor: 'rgba(255,255,255,0.35)',
+        borderRadius: 20,
+        padding: 20,
     },
     buttonBackground: {
         width: 132,
