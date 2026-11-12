@@ -31,7 +31,8 @@ enum ACTOR_ACTIONS {
 	ESCAPE = 'escape',
 	SKILL = 'skill',
 	ITEM = 'item',
-	STAND = 'stand'
+	STAND = 'stand',
+	WAIT = 'wait'
 }
 
 enum ACTOR {
@@ -127,6 +128,14 @@ export const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR, currentLanguage: LANGUAGE) 
 			en: `${ACTOR_NAME[currentLanguage][actor]} stands still`,
 			lv: `${ACTOR_NAME[currentLanguage][actor]} stāv uz vietas.`,
 			ru: `${ACTOR_NAME[currentLanguage][actor]} стоит на месте.`
+		}
+	},
+	[ACTOR_ACTIONS.WAIT]: {
+		title: ACTOR_ACTIONS.WAIT,
+		content: {
+			en: `${ACTOR_NAME[currentLanguage][actor]} waits`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} gaida.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} ждёт.`
 		}
 	}
 });
@@ -353,6 +362,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
+				set({battleMessages: null});
 				return;
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(character.stats.healPoints.current <= 0) {
