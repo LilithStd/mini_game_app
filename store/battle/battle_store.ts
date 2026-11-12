@@ -168,7 +168,8 @@ export enum PHASE_STATUS {
 	ENEMY_ACTION = 'enemy_action',
 	DEFAULT = 'default',
 	PLAYER_LOSE = 'lose',
-	PLAYER_WIN = 'win'
+	PLAYER_WIN = 'win',
+	WAITING = 'waiting'
 }
 
 export enum ACTIONS {
@@ -362,7 +363,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
-				set({battleMessages: null});
+				setTimeout(() => {
+					set({
+					battleMessages: {
+						actor: ACTOR.ENEMY,
+						type: ACTOR_ACTIONS.WAIT,
+					}
+				});
+				}, 700);
+				
 				return;
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(character.stats.healPoints.current <= 0) {
