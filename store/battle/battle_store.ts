@@ -186,6 +186,8 @@ type BattleActions = {
 	type: ACTOR_ACTIONS;
 };
 
+const timers = new Set<ReturnType<typeof setTimeout>>();
+
 export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
@@ -194,6 +196,7 @@ export interface BattleStoreInterface {
 	isInitialized: boolean;
 	enemy: EnemyType | BossType;
 	timeOut: (callback: () => void, delay: number) => void;
+	clearTimeout: () => void;
 	totalDamage: {
 		character: number;
 		enemy: number;
@@ -276,7 +279,18 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			battleMessages: null,
-			timeOut: (callback, delay) => setTimeout(callback, delay),
+			timeOut: (callback, delay) => {
+				const timer = setTimeout(() => {
+					timers.delete(timer);
+					callback();
+				}, delay);
+
+				timers.add(timer);
+			},
+			clearTimeout: () => {
+				timers.forEach(clearTimeout);
+				timers.clear();
+			},
 			startBattle: (character, enemy) => {
 				set({
 					character: character,
