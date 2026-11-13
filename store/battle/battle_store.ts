@@ -193,6 +193,7 @@ export interface BattleStoreInterface {
 	isActiveTurn: boolean;
 	isInitialized: boolean;
 	enemy: EnemyType | BossType;
+	timeOut: (callback: () => void, delay: number) => void;
 	totalDamage: {
 		character: number;
 		enemy: number;
