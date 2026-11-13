@@ -276,6 +276,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			battleMessages: null,
+			timeOut: (callback, delay) => setTimeout(callback, delay),
 			startBattle: (character, enemy) => {
 				set({
 					character: character,
