@@ -2,7 +2,7 @@ import {create} from 'zustand';
 import {persist, createJSONStorage} from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { EnemyStats, EnemyType, BossType } from '../enemy/enemy_store_types';
-import { getRandomEnumValue } from '@/constants/helpers';
+import { getRandomEnumValue, getRandomNumber } from '@/constants/helpers';
 import { CharacterStats } from '../character_store';
 import { MultilanguageType } from '@/constants/global_types';
 import { LANGUAGE } from '../global_store';
@@ -400,7 +400,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 				}, 700);
-				
+				const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
+				getRandomNumber(0,10)
 				return;
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(character.stats.healPoints.current <= 0) {
