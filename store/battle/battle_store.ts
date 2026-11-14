@@ -382,7 +382,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
-				get().clearTimeout();
+				if(timers.size > 0) get().clearTimeout();
+				
 				get().timeOut(() => {
 					set({
 					battleMessages: {
