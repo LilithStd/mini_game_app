@@ -352,11 +352,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				});
 
 				if (newHP <= 0) return;
-
-				setTimeout(() => {
+				get().timeOut(() => {
 					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
-					set({battleMessages: null})
+					set({battleMessages: null});
 				}, 700);
+				// setTimeout(() => {
+				// 	get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
+				// 	set({battleMessages: null})
+				// }, 700);
 			},
 			defense: () => {
 				const { phaseBattle, character } = get();
@@ -379,7 +382,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
-				setTimeout(() => {
+				get().clearTimeout();
+				get().timeOut(() => {
 					set({
 					battleMessages: {
 						actor: ACTOR.ENEMY,
