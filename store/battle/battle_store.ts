@@ -390,6 +390,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
+				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				if(timers.size > 0) get().clearTimeout();
 				
 				get().timeOut(() => {
@@ -399,10 +400,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						type: ACTOR_ACTIONS.WAIT,
 					}
 				});
-				}, 700);
+				}, 300);
 				
 				get().timeOut(() => {
 					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
+					get().clearTimeout();
 					set({
 						battleMessages: {
 							actor: ACTOR.ENEMY,
@@ -412,7 +414,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				}, 700);
 				getRandomNumber(0,10)
 				return;
-				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+				
 				if(character.stats.healPoints.current <= 0) {
 					set({
 						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
