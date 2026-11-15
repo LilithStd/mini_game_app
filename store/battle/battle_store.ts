@@ -401,10 +401,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 				}, 300);
-				
+				if(timers.size > 0) get().clearTimeout();
 				get().timeOut(() => {
 					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
-					get().clearTimeout();
+					// get().clearTimeout();
 					set({
 						battleMessages: {
 							actor: ACTOR.ENEMY,
