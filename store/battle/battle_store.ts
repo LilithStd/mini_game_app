@@ -400,7 +400,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 				}, 700);
-				const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
+				
+				get().timeOut(() => {
+					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
+					set({
+						battleMessages: {
+							actor: ACTOR.ENEMY,
+							type: enemyActionTypeOnCurrentIteration,
+						}
+					});
+				}, 700);
 				getRandomNumber(0,10)
 				return;
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
