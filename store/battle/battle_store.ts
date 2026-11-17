@@ -486,13 +486,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									defense: newDefense,
 								},
 							},
-						});
-						set({
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.DEFENSE,
-							}
+							},
+							phaseBattle: PHASE_STATUS.PLAYER_ACTION,
 						});
+						
 					}
 					break;
 					case ENEMY_ACTION_TYPE.ESCAPE:{
