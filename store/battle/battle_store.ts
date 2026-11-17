@@ -31,6 +31,7 @@ enum ACTOR_ACTIONS {
 	ESCAPE = 'escape',
 	SKILL = 'skill',
 	ITEM = 'item',
+	EVADE = 'evade',
 	STAND = 'stand',
 	WAIT = 'wait'
 }
@@ -405,7 +406,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				if(timers.size > 0) get().clearTimeout();
 				get().timeOut(() => {
 					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
-					// get().clearTimeout();
 					set({
 						battleMessages: {
 							actor: ACTOR.ENEMY,
@@ -487,11 +487,21 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								},
 							},
 						});
+						set({
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.DEFENSE,
+							}
+						});
 					}
 					break;
 					case ENEMY_ACTION_TYPE.ESCAPE:{
 						set({
 							phaseBattle: PHASE_STATUS.DEFAULT,
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.ESCAPE,
+							}
 						});
 					}
 					break;
@@ -505,6 +515,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									evasion: newEvade,
 								},
 							},
+						});
+						set({
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.EVADE,
+							}
 						});
 					}
 					break;
