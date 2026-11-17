@@ -361,7 +361,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				if (newHP <= 0) return;
 				get().timeOut(() => {
-					get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
+					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
+					get().enemyActions(enemyActionTypeOnCurrentIteration);
 					set({battleMessages: null});
 				}, 700);
 				// setTimeout(() => {
@@ -413,7 +414,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					});
 				}, 700);
 				getRandomNumber(0,10)
-				return;
+				
 				
 				if(character.stats.healPoints.current <= 0) {
 					set({
@@ -423,6 +424,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				};
 				const enemyActionType =
 					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
+				// return;
 				switch (enemyActionType) {
 					case ENEMY_ACTION_TYPE.ATTACK: {
 						set({
