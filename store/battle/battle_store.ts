@@ -139,6 +139,14 @@ export const ACTOR_ACTIONS_TEMPLATE = (actor: ACTOR, currentLanguage: LANGUAGE) 
 			ru: `${ACTOR_NAME[currentLanguage][actor]} стоит на месте.`
 		}
 	},
+	[ACTOR_ACTIONS.EVADE]: {
+		title: ACTOR_ACTIONS.EVADE,
+		content: {
+			en: `${ACTOR_NAME[currentLanguage][actor]} attempts to evade`,
+			lv: `${ACTOR_NAME[currentLanguage][actor]} mēģina izvairīties.`,
+			ru: `${ACTOR_NAME[currentLanguage][actor]} пытается увернуться.`
+		}
+	},
 	[ACTOR_ACTIONS.WAIT]: {
 		title: ACTOR_ACTIONS.WAIT,
 		content: {
@@ -433,7 +441,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.ATTACK,
 							},
 						});
-
+						console.log('Enemy attack initiated');
 						setTimeout(() => {
 							// Проверяем, что всё ещё ход врага
 							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
