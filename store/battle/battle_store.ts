@@ -330,6 +330,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				if (phaseBattle !== PHASE_STATUS.PLAYER_TURN) return;
 				
 				set({
+					isActiveTurn: true,
 					battleMessages: {
 						actor: ACTOR.PLAYER,
 						type: ACTOR_ACTIONS.ATTACK,
@@ -372,7 +373,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				get().timeOut(() => {
 					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
 					get().enemyActions(enemyActionTypeOnCurrentIteration);
-					set({battleMessages: null});
+					set({battleMessages: null, isActiveTurn: false});
+					
 				}, 700);
 				// setTimeout(() => {
 				// 	get().enemyActions(ENEMY_ACTION_TYPE.ATTACK);
@@ -442,7 +444,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							},
 						});
 						console.log('Enemy attack initiated');
-						setTimeout(() => {
+						get().timeOut(() => {
 							// Проверяем, что всё ещё ход врага
 							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 
@@ -479,8 +481,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								phaseBattle: newHP <= 0
 									? PHASE_STATUS.PLAYER_LOSE
 									: PHASE_STATUS.PLAYER_TURN,
+								isActiveTurn: newHP <= 0 ? false : true,
 							});
 						}, 700);
+						set({isActiveTurn: true});
 						// console.log('Enemy message in store:', get().battleMessages);
 						break;
 					}
@@ -564,6 +568,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					character: {...defaultValues},
 					enemy: {...defaultValuesEnemy},
 					phaseBattle: PHASE_STATUS.DEFAULT,
+					isActiveTurn: false,
 					totalDamage: {
 						character: 0,
 						enemy: 0,

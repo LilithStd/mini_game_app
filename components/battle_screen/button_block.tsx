@@ -30,7 +30,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleHealthPress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={[styles.buttonBackground, {
                                             marginLeft: 80
                                         }]}
@@ -47,7 +47,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     // onPress={callbacks.handleAttackPress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                     >
                                         <Text style={styles.buttonText}>ATTACK</Text>
@@ -59,7 +59,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleDefensePress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground
 
                                         }
@@ -73,7 +73,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleEvasionPress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                     >
                                         <Text style={styles.buttonText}>EVASION</Text>
@@ -86,7 +86,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleItemsPress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                     >
                                         <Text style={styles.buttonText}>CLOSE</Text>
@@ -100,7 +100,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
 
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={[styles.buttonBackground, {
                                             marginLeft: 80
                                         }]}
@@ -117,7 +117,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleDefensePress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                     >
                                         <Text style={styles.buttonText}>DEFENSE</Text>
@@ -129,7 +129,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     onPress={callbacks.handleEvasionPress}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground
 
                                         }
@@ -144,7 +144,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                     
                                     >
@@ -157,7 +157,7 @@ export default function ButtonBlock({ isActiveTurn, isItemsActive, activeConsumb
                                     disabled={isActiveTurn}
                                 >
                                     <ImageBackground
-                                        source={buttonOrange}
+                                        source={isActiveTurn ? buttonDisabled : buttonOrange}
                                         style={styles.buttonBackground}
                                         onProgress={() => {
                                             callbacks.handleItemsPress()
