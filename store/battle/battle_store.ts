@@ -401,7 +401,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				const { phaseBattle, enemy, character, totalDamage } = get();
 				console.log('enemyActions called:', phaseBattle);
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-				if(timers.size > 0) get().clearTimeout();
+				// if(timers.size > 0) get().clearTimeout();
 				
 				get().timeOut(() => {
 					set({
@@ -411,7 +411,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 				}, 300);
-				if(timers.size > 0) get().clearTimeout();
+				// if(timers.size > 0) get().clearTimeout();
 				get().timeOut(() => {
 					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
 					set({
@@ -523,19 +523,30 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									evasion: newEvade,
 								},
 							},
-						});
-						set({
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.EVADE,
 							}
 						});
+						get().timeOut(() => {
+							set({
+								battleMessages: null,
+								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+							});
+						}, 700)
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
-
+						set({
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.SKILL,
+							}
+						});
 					}
 					break;
+				
+
 
 				}
 			},
