@@ -80,7 +80,7 @@ export default function Battle_Screen() {
     useEffect(() => {
         startBattle(characterStats, enemyStats);
     }, []);
-
+    console.log(isActiveTurn);
     const handleRetreatButton = () => {
         setIsModalOpen(true)
     }

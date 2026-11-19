@@ -205,9 +205,9 @@ export const useEnemyStore = create<EnemyStoreInterface>()(
 				return get().currentEnemy;
 			},
 			setDefaultState: () => {
-				console.log('Resetting enemy store to default state...');
+				// console.log('Resetting enemy store to default state...');
 				AsyncStorage.removeItem('enemy-storage').then(() => {
-					console.log('enemy store reset');
+					// console.log('enemy store reset');
 				});
 				set({
 					defaultState: true,

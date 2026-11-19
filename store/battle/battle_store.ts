@@ -36,6 +36,13 @@ enum ACTOR_ACTIONS {
 	WAIT = 'wait'
 }
 
+enum TESTING_ENUM {
+	ATTACK = 'attack',
+	DEFENSE = 'defense',
+	ESCAPE = 'escape',
+	EVADE = 'evade',
+}
+
 enum ACTOR {
 	PLAYER = 'player',
 	ENEMY = 'enemy'
@@ -401,7 +408,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			escape: () => {},
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
-				console.log('enemyActions called:', phaseBattle);
+				// console.log('enemyActions called:', phaseBattle);
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 				// if(timers.size > 0) get().clearTimeout();
 				
@@ -484,8 +491,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								isActiveTurn: newHP <= 0 ? false : true,
 							});
 						}, 700);
-						
-						// console.log('Enemy message in store:', get().battleMessages);
+					
 						break;
 					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
@@ -503,7 +509,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.DEFENSE,
 							},
 							phaseBattle: PHASE_STATUS.PLAYER_ACTION,
-							isActiveTurn: false,
+							isActiveTurn: true,
 						});
 						
 					}
@@ -515,7 +521,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.ESCAPE,
 							},
-							isActiveTurn: false,
+							isActiveTurn: true,
 						});
 					}
 					break;
@@ -565,7 +571,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			setCurrentBuffAndDebuff: (status) => {},
 			setDefaultState: () => {
 				AsyncStorage.removeItem('battle-storage').then(() => {
-					console.log('battle store reset');
+					// console.log('battle store reset');
 				});
 				set({
 					character: {...defaultValues},
