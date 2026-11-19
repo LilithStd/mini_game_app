@@ -207,7 +207,7 @@ export enum ACTIONS {
 
 type BattleActions = {
 	actor: ACTOR;
-	type: ACTOR_ACTIONS;
+	type: ACTOR_ACTIONS|ENEMY_ACTION_TYPE;
 };
 
 const timers = new Set<ReturnType<typeof setTimeout>>();
@@ -422,7 +422,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				}, 300);
 				// if(timers.size > 0) get().clearTimeout();
 				get().timeOut(() => {
-					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ACTOR_ACTIONS);
+					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
 					set({
 						battleMessages: {
 							actor: ACTOR.ENEMY,
