@@ -484,7 +484,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								isActiveTurn: newHP <= 0 ? false : true,
 							});
 						}, 700);
-						set({isActiveTurn: true});
+						
 						// console.log('Enemy message in store:', get().battleMessages);
 						break;
 					}
@@ -503,6 +503,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.DEFENSE,
 							},
 							phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+							isActiveTurn: false,
 						});
 						
 					}
@@ -513,7 +514,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.ESCAPE,
-							}
+							},
+							isActiveTurn: false,
 						});
 					}
 					break;
@@ -536,6 +538,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							set({
 								battleMessages: null,
 								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+								isActiveTurn: true,
 							});
 						}, 700)
 					}

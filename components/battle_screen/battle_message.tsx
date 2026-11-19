@@ -8,7 +8,7 @@ export default function BattleMessage() {
     const currentLanguage = useGlobalStore(state => state.currentLanguage)
 
     if (!battleMessages) return null;
-    console.log('battleMessages on client', battleMessages);
+    // console.log('battleMessages on client', battleMessages);
     return (
         <View style={[styles.battleMessageContainer, styles.backgroundColorStyle]}>
             <BlurView 
