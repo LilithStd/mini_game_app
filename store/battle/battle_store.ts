@@ -416,21 +416,20 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					set({
 					battleMessages: {
 						actor: ACTOR.ENEMY,
-						type: ACTOR_ACTIONS.WAIT,
+						type: type,
 					}
 				});
 				}, 300);
 				// if(timers.size > 0) get().clearTimeout();
-				get().timeOut(() => {
-					const enemyActionTypeOnCurrentIteration = getRandomEnumValue(ENEMY_ACTION_TYPE);
-					set({
-						battleMessages: {
-							actor: ACTOR.ENEMY,
-							type: enemyActionTypeOnCurrentIteration,
-						}
-					});
-				}, 700);
-				getRandomNumber(0,10)
+				// get().timeOut(() => {
+				// 	const enemyActionTypeOnCurrentIteration = type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
+				// 	set({
+				// 		battleMessages: {
+				// 			actor: ACTOR.ENEMY,
+				// 			type: enemyActionTypeOnCurrentIteration,
+				// 		}
+				// 	});
+				// }, 700);
 				
 				
 				if(character.stats.healPoints.current <= 0) {
@@ -439,10 +438,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					});
 					return;
 				};
-				const enemyActionType =
-					type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
+						// const enemyActionType =
+						// 	type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
 				// return;
-				switch (enemyActionType) {
+				switch (type) {
 					case ENEMY_ACTION_TYPE.ATTACK: {
 						set({
 							battleMessages: {
