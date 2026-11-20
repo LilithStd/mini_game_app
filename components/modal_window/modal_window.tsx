@@ -194,6 +194,8 @@ export default function ModalWindow({ objectSetting, onClose }: ModalWindowProps
             case VARIANTS_MODAL_WINDOW.DUNGEON_REWARD:
                 break;
             case VARIANTS_MODAL_WINDOW.VICTORY:
+                objectSetting.callBack?.();
+                onClose();
                 break;
             case VARIANTS_MODAL_WINDOW.LOSE:
                 objectSetting.callBack?.();

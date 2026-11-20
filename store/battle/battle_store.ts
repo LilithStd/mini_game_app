@@ -514,7 +514,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						get().timeOut(() => {
 							set({
 								battleMessages: null,
-								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+								phaseBattle: PHASE_STATUS.PLAYER_TURN,
 								isActiveTurn: false,
 							});
 						}, 700);
@@ -532,8 +532,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						get().timeOut(() => {
 							set({
 								battleMessages: null,
-								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
-								isActiveTurn: true,
+								isActiveTurn: false,
 							});
 						}, 700);
 					}
@@ -563,12 +562,13 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
-						// set({
-						// 	battleMessages: {
-						// 		actor: ACTOR.ENEMY,
-						// 		type: ACTOR_ACTIONS.SKILL,
-						// 	}
-						// });
+						get().timeOut(() => {
+							set({
+								battleMessages: null,
+								phaseBattle: PHASE_STATUS.PLAYER_TURN,
+								isActiveTurn: false,
+							});
+						}, 700);
 					}
 					break;
 				
