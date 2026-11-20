@@ -524,29 +524,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					break;
 					case ENEMY_ACTION_TYPE.ESCAPE:{
 						set({
-							phaseBattle: PHASE_STATUS.DEFAULT,
+							phaseBattle: PHASE_STATUS.PLAYER_WIN,
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.ESCAPE,
 							},
-							isActiveTurn: true,
-						});
-					}
-					break;
-					case ENEMY_ACTION_TYPE.EVADE:{
-						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
-						set({
-							enemy: {
-								...enemy,
-								stats: {
-									...enemy.stats,
-									evasion: newEvade,
-								},
-							},
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.EVADE,
-							}
 						});
 						get().timeOut(() => {
 							set({
@@ -554,16 +536,40 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
 								isActiveTurn: true,
 							});
-						}, 700)
+						}, 700);
+					}
+					break;
+					case ENEMY_ACTION_TYPE.EVADE:{
+						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
+						// set({
+						// 	enemy: {
+						// 		...enemy,
+						// 		stats: {
+						// 			...enemy.stats,
+						// 			evasion: newEvade,
+						// 		},
+						// 	},
+						// 	battleMessages: {
+						// 		actor: ACTOR.ENEMY,
+						// 		type: ACTOR_ACTIONS.EVADE,
+						// 	}
+						// });
+						// get().timeOut(() => {
+						// 	set({
+						// 		battleMessages: null,
+						// 		phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+						// 		isActiveTurn: true,
+						// 	});
+						// }, 700)
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
-						set({
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.SKILL,
-							}
-						});
+						// set({
+						// 	battleMessages: {
+						// 		actor: ACTOR.ENEMY,
+						// 		type: ACTOR_ACTIONS.SKILL,
+						// 	}
+						// });
 					}
 					break;
 				
