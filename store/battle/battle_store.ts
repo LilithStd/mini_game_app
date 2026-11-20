@@ -496,21 +496,29 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
-						set({
-							enemy: {
-								...enemy,
-								stats: {
-									...enemy.stats,
-									defense: newDefense,
+						get().timeOut(() => {
+							set({
+								enemy: {
+									...enemy,
+									stats: {
+										...enemy.stats,
+										defense: newDefense,
+									},
 								},
-							},
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.DEFENSE,
-							},
-							phaseBattle: PHASE_STATUS.PLAYER_ACTION,
-							isActiveTurn: true,
-						});
+								battleMessages: {
+									actor: ACTOR.ENEMY,
+									type: ACTOR_ACTIONS.DEFENSE,
+								},
+								isActiveTurn: true,
+							});
+						}, 700);
+						get().timeOut(() => {
+							set({
+								battleMessages: null,
+								phaseBattle: PHASE_STATUS.PLAYER_ACTION,
+								isActiveTurn: false,
+							});
+						}, 700);
 						
 					}
 					break;
