@@ -539,19 +539,19 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
 						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
-						// set({
-						// 	enemy: {
-						// 		...enemy,
-						// 		stats: {
-						// 			...enemy.stats,
-						// 			evasion: newEvade,
-						// 		},
-						// 	},
-						// 	battleMessages: {
-						// 		actor: ACTOR.ENEMY,
-						// 		type: ACTOR_ACTIONS.EVADE,
-						// 	}
-						// });
+						set({
+							enemy: {
+								...enemy,
+								stats: {
+									...enemy.stats,
+									evasion: newEvade,
+								},
+							},
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.EVADE,
+							}
+						});
 						// get().timeOut(() => {
 						// 	set({
 						// 		battleMessages: null,
