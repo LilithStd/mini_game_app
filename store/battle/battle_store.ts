@@ -549,6 +549,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
 						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
+						if(timers.size > 0) get().clearTimeout();
 						set({
 							enemy: {
 								...enemy,
@@ -560,15 +561,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.EVADE,
-							}
+							},
+							isActiveTurn: true,
 						});
-						// get().timeOut(() => {
-						// 	set({
-						// 		battleMessages: null,
-						// 		phaseBattle: PHASE_STATUS.PLAYER_ACTION,
-						// 		isActiveTurn: true,
-						// 	});
-						// }, 700)
+						get().timeOut(() => {
+							set({
+								battleMessages: null,
+								phaseBattle: PHASE_STATUS.PLAYER_TURN,
+								isActiveTurn: false,
+							});
+						}, 700)
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
