@@ -487,13 +487,20 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								phaseBattle: newHP <= 0
 									? PHASE_STATUS.PLAYER_LOSE
 									: PHASE_STATUS.PLAYER_TURN,
-								isActiveTurn: newHP <= 0 ? false : true,
+								
 							});
 						}, 700);
+						get().timeOut(() => {
+							set({
+								battleMessages: null,
+								isActiveTurn: false,
+							});
+						}, 300);
 					
 						break;
 					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
+						if(timers.size > 0) get().clearTimeout();
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
 						get().timeOut(() => {
 							set({
@@ -511,13 +518,16 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								isActiveTurn: true,
 							});
 						}, 700);
-						get().timeOut(() => {
-							set({
-								battleMessages: null,
-								phaseBattle: PHASE_STATUS.PLAYER_TURN,
-								isActiveTurn: false,
-							});
-						}, 700);
+						if(timers.size > 0) {
+							get().timeOut(() => {
+								set({
+									battleMessages: null,
+									phaseBattle: PHASE_STATUS.PLAYER_TURN,
+									isActiveTurn: false,
+								});
+							}, 1000);
+						}
+						
 						
 					}
 					break;
