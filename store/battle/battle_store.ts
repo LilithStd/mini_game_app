@@ -528,6 +528,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 										defense: previousDefense,
 									},
 								},
+								phaseBattle: PHASE_STATUS.PLAYER_TURN,
 								battleMessages: null,
 								isActiveTurn: false,
 							});
@@ -581,7 +582,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
-						if(timers.size > 0) get().clearTimeout();
+						// if(timers.size > 0) get().clearTimeout();
 						set({
 							battleMessages: {
 								actor: ACTOR.ENEMY,
