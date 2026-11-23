@@ -544,12 +544,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.ESCAPE,
 							},
 						});
-						// get().timeOut(() => {
-						// 	set({
-						// 		battleMessages: null,
-						// 		isActiveTurn: false,
-						// 	});
-						// }, 700);
+						get().timeOut(() => {
+							get().clearTimeout();
+							get().setDefaultState()
+							// set({
+							// 	battleMessages: null,
+							// 	isActiveTurn: false,
+							// });
+						}, 100);
 					}
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
