@@ -519,6 +519,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							});
 						}, 700);
 						if(timers.size > 0) {
+							get().clearTimeout();
 							get().timeOut(() => {
 								set({
 									battleMessages: null,
