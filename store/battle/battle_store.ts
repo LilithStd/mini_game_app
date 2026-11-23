@@ -441,7 +441,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						// const enemyActionType =
 						// 	type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
 				// return;
+				console.log('Enemy action type:', type);
 				switch (type) {
+					
 					case ENEMY_ACTION_TYPE.ATTACK: {
 						set({
 							battleMessages: {
@@ -449,7 +451,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.ATTACK,
 							},
 						});
-						console.log('Enemy attack initiated');
+
 						get().timeOut(() => {
 							// Проверяем, что всё ещё ход врага
 							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
@@ -490,44 +492,44 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								
 							});
 						}, 700);
-						get().timeOut(() => {
-							set({
-								battleMessages: null,
-								isActiveTurn: false,
-							});
-						}, 300);
+						// get().timeOut(() => {
+						// 	set({
+						// 		battleMessages: null,
+						// 		isActiveTurn: false,
+						// 	});
+						// }, 300);
 					
 						break;
 					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
-						if(timers.size > 0) get().clearTimeout();
+						// if(timers.size > 0) get().clearTimeout();
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
-						get().timeOut(() => {
-							set({
-								enemy: {
+						set({
+									enemy: {
 									...enemy,
 									stats: {
 										...enemy.stats,
 										defense: newDefense,
 									},
 								},
-								battleMessages: {
-									actor: ACTOR.ENEMY,
-									type: ACTOR_ACTIONS.DEFENSE,
-								},
-								isActiveTurn: true,
-							});
-						}, 700);
-						if(timers.size > 0) {
-							get().clearTimeout();
-							get().timeOut(() => {
-								set({
-									battleMessages: null,
-									phaseBattle: PHASE_STATUS.PLAYER_TURN,
-									isActiveTurn: false,
-								});
-							}, 1000);
-						}
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.DEFENSE,
+							},
+							isActiveTurn: true,
+						});
+						// get().timeOut(() => {
+						// 	set({
+						// 		enemy: {
+						// 			...enemy,
+						// 			stats: {
+						// 				...enemy.stats,
+						// 				defense: newDefense,
+						// 			},
+						// 		},
+								
+						// 	});
+						// }, 700);
 						
 						
 					}
@@ -540,17 +542,17 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								type: ACTOR_ACTIONS.ESCAPE,
 							},
 						});
-						get().timeOut(() => {
-							set({
-								battleMessages: null,
-								isActiveTurn: false,
-							});
-						}, 700);
+						// get().timeOut(() => {
+						// 	set({
+						// 		battleMessages: null,
+						// 		isActiveTurn: false,
+						// 	});
+						// }, 700);
 					}
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
 						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
-						if(timers.size > 0) get().clearTimeout();
+						// if(timers.size > 0) get().clearTimeout();
 						set({
 							enemy: {
 								...enemy,
@@ -575,6 +577,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
+						if(timers.size > 0) get().clearTimeout();
+						set({
+							battleMessages: {
+								actor: ACTOR.ENEMY,
+								type: ACTOR_ACTIONS.SKILL,
+							},
+							isActiveTurn: true,
+						});
 						get().timeOut(() => {
 							set({
 								battleMessages: null,
