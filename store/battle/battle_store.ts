@@ -216,6 +216,7 @@ enum TYPE_BATTLE_EFFECT {
 	DEBUFF = 'debuff'
 }
 
+
 type BattleActions = {
 	actor: ACTOR;
 	type: ACTOR_ACTIONS|ENEMY_ACTION_TYPE;
