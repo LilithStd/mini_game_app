@@ -408,10 +408,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			escape: () => {},
 			enemyActions: (type) => {
 				const { phaseBattle, enemy, character, totalDamage } = get();
-				// console.log('enemyActions called:', phaseBattle);
+
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
-				// if(timers.size > 0) get().clearTimeout();
-				
+
 				get().timeOut(() => {
 					set({
 					battleMessages: {
@@ -420,28 +419,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 				});
 				}, 300);
-				// if(timers.size > 0) get().clearTimeout();
-				// get().timeOut(() => {
-				// 	const enemyActionTypeOnCurrentIteration = type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
-				// 	set({
-				// 		battleMessages: {
-				// 			actor: ACTOR.ENEMY,
-				// 			type: enemyActionTypeOnCurrentIteration,
-				// 		}
-				// 	});
-				// }, 700);
-				
-				
+								
 				if(character.stats.healPoints.current <= 0) {
 					set({
 						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
 					});
 					return;
 				};
-						// const enemyActionType =
-						// 	type ?? getRandomEnumValue(ENEMY_ACTION_TYPE);
-				// return;
-				console.log('Enemy action type:', type);
+
 				switch (type) {
 					
 					case ENEMY_ACTION_TYPE.ATTACK: {
@@ -492,17 +477,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								
 							});
 						}, 700);
-						// get().timeOut(() => {
-						// 	set({
-						// 		battleMessages: null,
-						// 		isActiveTurn: false,
-						// 	});
-						// }, 300);
-					
 						break;
 					}
 					case ENEMY_ACTION_TYPE.DEFENSE: {
-						// if(timers.size > 0) get().clearTimeout();
 						const previousDefense = enemy.stats.defense;
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
 						set({
@@ -548,16 +525,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						get().timeOut(() => {
 							get().clearTimeout();
 							get().setDefaultState()
-							// set({
-							// 	battleMessages: null,
-							// 	isActiveTurn: false,
-							// });
 						}, 100);
 					}
 					break;
 					case ENEMY_ACTION_TYPE.EVADE:{
 						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
-						// if(timers.size > 0) get().clearTimeout();
 						set({
 							enemy: {
 								...enemy,
@@ -582,7 +554,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 					break;
 					case ENEMY_ACTION_TYPE.SKILL:{
-						// if(timers.size > 0) get().clearTimeout();
 						set({
 							battleMessages: {
 								actor: ACTOR.ENEMY,
@@ -612,7 +583,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			setCurrentBuffAndDebuff: (status) => {},
 			setDefaultState: () => {
 				AsyncStorage.removeItem('battle-storage').then(() => {
-					// console.log('battle store reset');
 				});
 				set({
 					character: {...defaultValues},
