@@ -235,6 +235,7 @@ export interface BattleStoreInterface {
 	battleStatus: STATUS_BATTLE_SCREEN;
 	character: CharacterStats;
 	battleMessages: BattleActions | null;
+	activeBattleEffects: ActiveBattleEffect[];
 	isActiveTurn: boolean;
 	isInitialized: boolean;
 	enemy: EnemyType | BossType;
@@ -255,6 +256,7 @@ export interface BattleStoreInterface {
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
+	setActiveBattleEffects: (effects: ActiveBattleEffect[]) => void;
 	setDefaultState: () => void;
 	currentBuffAndDebuff: {
 		character: string[];
@@ -322,6 +324,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			character: {...defaultValues},
 			enemy: {...defaultValuesEnemy},
 			battleMessages: null,
+			activeBattleEffects: [],
 			timeOut: (callback, delay) => {
 				const timer = setTimeout(() => {
 					timers.delete(timer);
@@ -599,6 +602,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				}
 			},
 			setCurrentBuffAndDebuff: (status) => {},
+			setActiveBattleEffects: (effects) => {
+				set({activeBattleEffects: effects});
+			},
 			setDefaultState: () => {
 				AsyncStorage.removeItem('battle-storage').then(() => {
 				});
