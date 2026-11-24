@@ -221,6 +221,13 @@ type BattleActions = {
 	type: ACTOR_ACTIONS|ENEMY_ACTION_TYPE;
 };
 
+type ActiveBattleEffect = {
+	id: string;
+	actor: ACTOR;
+	type: BATTLE_EFFECT;
+	remainingTurns: number;
+};
+
 const timers = new Set<ReturnType<typeof setTimeout>>();
 
 export interface BattleStoreInterface {
