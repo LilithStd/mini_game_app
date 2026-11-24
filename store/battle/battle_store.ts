@@ -205,6 +205,17 @@ export enum ACTIONS {
 	// DEFAULT = 'default',
 }
 
+enum BATTLE_EFFECT {
+	ATTACK = 'attack',
+	DEFENSE = 'defense',
+	EVASION = 'evasion'
+}
+
+enum TYPE_BATTLE_EFFECT {
+	BUFF = 'buff',
+	DEBUFF = 'debuff'
+}
+
 type BattleActions = {
 	actor: ACTOR;
 	type: ACTOR_ACTIONS|ENEMY_ACTION_TYPE;
@@ -438,7 +449,6 @@ export const useBattleStore = create<BattleStoreInterface>()(
 						});
 
 						get().timeOut(() => {
-							// Проверяем, что всё ещё ход врага
 							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
 
 							const { character, enemy, totalDamage } = get();
