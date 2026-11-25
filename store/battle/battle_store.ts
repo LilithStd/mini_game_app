@@ -503,7 +503,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					case ENEMY_ACTION_TYPE.DEFENSE: {
 						const previousDefense = enemy.stats.defense;
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
-
+						
 						set({
 							enemy: {
 								...enemy,
@@ -512,7 +512,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									defense: newDefense,
 								},
 							},
-							
+							activeBattleEffects: [
+								...get().activeBattleEffects,
+								{
+									id: Date.now().toString(),
+									actor: ACTOR.ENEMY,
+									type: BATTLE_EFFECT.DEFENSE,
+									remainingTurns: 1,
+								}
+							],
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.DEFENSE,
@@ -605,7 +613,8 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setCurrentBuffAndDebuff: (status) => {},
 			setActiveBattleEffects: (effects) => {
-				if(effects.id) {
+				const existingEffects = get().activeBattleEffects;
+				if(effects.id && !existingEffects.some(effect => effect.id === effects.id)) {
 					set({
 						activeBattleEffects: [...get().activeBattleEffects, effects]
 					});
