@@ -256,7 +256,7 @@ export interface BattleStoreInterface {
 	setCharacterStats: (stats: CharacterStats) => void;
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
-	setActiveBattleEffects: (effects: ActiveBattleEffect[]) => void;
+	setActiveBattleEffects: (effects: ActiveBattleEffect) => void;
 	setDefaultState: () => void;
 	currentBuffAndDebuff: {
 		character: string[];
@@ -503,6 +503,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					case ENEMY_ACTION_TYPE.DEFENSE: {
 						const previousDefense = enemy.stats.defense;
 						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
+
 						set({
 							enemy: {
 								...enemy,
@@ -511,6 +512,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									defense: newDefense,
 								},
 							},
+							
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.DEFENSE,
@@ -603,7 +605,11 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setCurrentBuffAndDebuff: (status) => {},
 			setActiveBattleEffects: (effects) => {
-				set({activeBattleEffects: effects});
+				if(effects.id) {
+					set({
+						activeBattleEffects: [...get().activeBattleEffects, effects]
+					});
+				}
 			},
 			setDefaultState: () => {
 				AsyncStorage.removeItem('battle-storage').then(() => {
