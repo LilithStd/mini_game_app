@@ -257,6 +257,7 @@ export interface BattleStoreInterface {
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setActiveBattleEffects: (effects: ActiveBattleEffect) => void;
+	checkActiveBattleEffect: (id: string) => boolean;
 	setDefaultState: () => void;
 	currentBuffAndDebuff: {
 		character: string[];
@@ -612,6 +613,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				}
 			},
 			setCurrentBuffAndDebuff: (status) => {},
+			checkActiveBattleEffect: (id: string) => {
+				return get().activeBattleEffects.some(effect => effect.id === id);
+			},
 			setActiveBattleEffects: (effects) => {
 				const existingEffects = get().activeBattleEffects;
 				if(effects.id && !existingEffects.some(effect => effect.id === effects.id)) {
