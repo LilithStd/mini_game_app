@@ -257,7 +257,7 @@ export interface BattleStoreInterface {
 	setEnemyStats: (stats: EnemyType | BossType) => void;
 	setBattleStatus: (status: STATUS_BATTLE_SCREEN) => void;
 	setActiveBattleEffects: (effects: ActiveBattleEffect) => void;
-	checkActiveBattleEffect: (actor: ACTOR, type: BATTLE_EFFECT) => boolean;
+	checkActiveBattleEffect: (actor: ACTOR, type: BATTLE_EFFECT) => ActiveBattleEffect | undefined;
 	setDefaultState: () => void;
 	currentBuffAndDebuff: {
 		character: string[];
@@ -387,6 +387,7 @@ export const useBattleStore = create<BattleStoreInterface>()(
 								...enemy.stats.healPoints,
 								current: newHP,
 							},
+							activeEffects: enemy.stats.activeEffects,
 							death: newHP <= 0,
 						}
 					},
@@ -616,13 +617,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			setCurrentBuffAndDebuff: (status) => {},
 			checkActiveBattleEffect: (actor, type) => {
-				const { character, enemy } = get();
+				const { activeBattleEffects } = get();
 
-				const target = actor === ACTOR.PLAYER
-					? character
-					: enemy;
-				return target.stats.activeEffects.find(
-					effect => effect.type === type
+				return activeBattleEffects.find(
+					effect => effect.actor === actor && effect.type === type
 				);
 			},
 			setActiveBattleEffects: (effects) => {
