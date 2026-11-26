@@ -50,6 +50,11 @@ export type BossStats = {
 	reduceCriticalDamage: number;
 	atribute: string;
 	resistAtribute: string;
+	activeEffects: {
+		id: string;
+		type: string;
+		remainingTurns: number;
+	}[];
 	healPoints: { 
         current: number; 
         max: number; 

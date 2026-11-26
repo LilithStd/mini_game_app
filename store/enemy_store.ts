@@ -75,6 +75,7 @@ const bossStats = {
 	reduceCriticalDamage: 0,
 	atribute: 'dark',
 	resistAtribute: 'dark',
+	activeEffects: [],
 	healPoints: { current: 500, max: 500 },
 	expirience: 400,
 	death: false,

@@ -284,6 +284,7 @@ const defaultValues: CharacterStats = {
 		atribute: '',
 		resistAtribute: '',
 		itemsSkills: [],
+		activeEffects: [],
 		healPoints: { current: 100, max: 100 },
 		death: false,
 		expirience: 0,
@@ -305,6 +306,7 @@ const defaultValuesEnemy: EnemyType = {
 		reduceCriticalDamage: 0,
 		atribute: '',
 		resistAtribute: '',
+		activeEffects: [],
 		expirience: 0,
 		healPoints: { current: 100, max: 100 },
 		death: false,
@@ -619,8 +621,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 				const target = actor === ACTOR.PLAYER
 					? character
 					: enemy;
-
-				
+				return target.stats.activeEffects.find(
+					effect => effect.type === type
+				);
 			},
 			setActiveBattleEffects: (effects) => {
 				const existingEffects = get().activeBattleEffects;
