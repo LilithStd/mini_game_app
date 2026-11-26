@@ -58,6 +58,7 @@ const defaultStats = {
 	reduceCriticalDamage: 0,
 	atribute: 'dark',
 	resistAtribute: 'dark',
+	activeEffects: [],
 	healPoints: { current: 260, max: 260 },
 	expirience: 140,
 	death: false,
