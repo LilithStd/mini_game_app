@@ -47,6 +47,7 @@ const Character_Pull: CharacterStats[] = [
 			reduceCriticalDamage: 20,
 			atribute: 'none',
 			resistAtribute: '',
+			activeEffects: [],
 			itemsSkills: [],
 			healPoints: { current: 100, max: 100 },
 			expirience: 0,
@@ -71,6 +72,7 @@ const Character_Pull: CharacterStats[] = [
 			atribute: 'fire',
 			resistAtribute: '',
 			itemsSkills: [],
+			activeEffects: [],
 			healPoints: { current: 120, max: 120 },
 			expirience: 0,
 			totalDamage: 0,
@@ -93,6 +95,7 @@ const Character_Pull: CharacterStats[] = [
 			atribute: 'ice',
 			resistAtribute: '',
 			itemsSkills: [],
+			activeEffects: [],
 			healPoints: { current: 80, max: 80 },
 			expirience: 0,
 			totalDamage: 0,
@@ -197,6 +200,11 @@ export type CharacterStats = {
 		expirience: number;
 		healPoints: { current: number; max: number; };
 		totalDamage: number;	
+		activeEffects: {
+			id: string;
+			type: string;
+			remainingTurns: number;
+		}[];
 		death: boolean;
 	}
 };
@@ -309,6 +317,7 @@ const CharacterDefaultStats = {
 		atribute: 'none',
 		resistAtribute: '',
 		itemsSkills: [],
+		activeEffects: [],
 		healPoints: { current: 100, max: 100 },
 		expirience: 0,
 		totalDamage: 0,
