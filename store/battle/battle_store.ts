@@ -573,6 +573,15 @@ export const useBattleStore = create<BattleStoreInterface>()(
 									evasion: newEvade,
 								},
 							},
+							activeBattleEffects: [
+								...get().activeBattleEffects,
+								{
+									id: Date.now().toString(),
+									actor: ACTOR.ENEMY,
+									type: BATTLE_EFFECT.EVASION,
+									remainingTurns: 1,
+								}
+							],
 							battleMessages: {
 								actor: ACTOR.ENEMY,
 								type: ACTOR_ACTIONS.EVADE,
