@@ -448,7 +448,42 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 				const executeAttack = () => {
 					// Расчёт урона
-				};
+					 const { character, enemy, totalDamage } = get();
+
+				const currentHP = character.stats.healPoints.current;
+
+				const newHP = Math.max(
+					0,
+					currentHP - enemy.stats.attack
+				);
+
+				const actualDamage = currentHP - newHP;
+
+				set({
+					character: {
+						...character,
+						stats: {
+							...character.stats,
+							healPoints: {
+								...character.stats.healPoints,
+								current: newHP,
+							},
+							death: newHP <= 0,
+						},
+					},
+
+					totalDamage: {
+						...totalDamage,
+						enemy: totalDamage.enemy + actualDamage,
+					},
+				});
+
+				if (newHP <= 0) {
+					set({
+						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
+					});
+				}
+							};
 
 				const executeDefense = () => {
 					// Добавление эффекта защиты
