@@ -433,191 +433,55 @@ export const useBattleStore = create<BattleStoreInterface>()(
 			},
 			escape: () => {},
 			enemyActions: (type) => {
-				const { phaseBattle, enemy, character, totalDamage } = get();
+				const { phaseBattle, isActiveTurn } = get();
 
 				if (phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+				if (isActiveTurn) return;
 
-				get().timeOut(() => {
+				const finishTurn = () => {
 					set({
-					battleMessages: {
-						actor: ACTOR.ENEMY,
-						type: type,
-					}
-				});
-				}, 300);
-								
-				if(character.stats.healPoints.current <= 0) {
-					set({
-						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
+						battleMessages: null,
+						isActiveTurn: false,
+						phaseBattle: PHASE_STATUS.PLAYER_TURN,
 					});
-					return;
 				};
 
-				switch (type) {
-					
-					case ENEMY_ACTION_TYPE.ATTACK: {
-						set({
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.ATTACK,
-							},
-						});
+				const executeAttack = () => {
+					// Расчёт урона
+				};
 
-						get().timeOut(() => {
-							if (get().phaseBattle !== PHASE_STATUS.ENEMY_TURN) return;
+				const executeDefense = () => {
+					// Добавление эффекта защиты
+				};
 
-							const { character, enemy, totalDamage } = get();
+				set({
+					isActiveTurn: true,
+					battleMessages: {
+						actor: ACTOR.ENEMY,
+						type,
+					},
+				});
 
-							const newHP = Math.max(
-								0,
-								character.stats.healPoints.current - enemy.stats.attack
-							);
+				get().timeOut(() => {
+					switch (type) {
+						case ENEMY_ACTION_TYPE.ATTACK:
+							executeAttack();
+							break;
 
-							const actualDamage =
-								character.stats.healPoints.current - newHP;
-
-							set({
-								character: {
-									...character,
-									stats: {
-										...character.stats,
-										healPoints: {
-											...character.stats.healPoints,
-											current: newHP,
-										},
-										death: newHP <= 0,
-									},
-								},
-
-								totalDamage: {
-									...totalDamage,
-									enemy: totalDamage.enemy + actualDamage,
-								},
-
-								battleMessages: null,
-
-								phaseBattle: newHP <= 0
-									? PHASE_STATUS.PLAYER_LOSE
-									: PHASE_STATUS.PLAYER_TURN,
-								
-							});
-						}, 700);
-						break;
+						case ENEMY_ACTION_TYPE.DEFENSE:
+							executeDefense();
+							break;
 					}
-					case ENEMY_ACTION_TYPE.DEFENSE: {
-						const previousDefense = enemy.stats.defense;
-						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
-						
-						set({
-							enemy: {
-								...enemy,
-								stats: {
-									...enemy.stats,
-									defense: newDefense,
-								},
-							},
-							activeBattleEffects: [
-								...get().activeBattleEffects,
-								{
-									id: Date.now().toString(),
-									actor: ACTOR.ENEMY,
-									type: BATTLE_EFFECT.DEFENSE,
-									remainingTurns: 1,
-								}
-							],
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.DEFENSE,
-							},
-							isActiveTurn: true,
-						});
-						get().timeOut(() => {
-							set({
-								enemy: {
-									...enemy,
-									stats: {
-										...enemy.stats,
-										defense: previousDefense,
-									},
-								},
-								phaseBattle: PHASE_STATUS.PLAYER_TURN,
-								battleMessages: null,
-								isActiveTurn: false,
-							});
-						}, 700);
-						
-						
-					}
-					break;
-					case ENEMY_ACTION_TYPE.ESCAPE:{
-						set({
-							phaseBattle: PHASE_STATUS.PLAYER_WIN,
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.ESCAPE,
-							},
-						});
-						get().timeOut(() => {
-							get().clearTimeout();
-							get().setDefaultState()
-						}, 100);
-					}
-					break;
-					case ENEMY_ACTION_TYPE.EVADE:{
-						const newEvade = enemy.stats.evasion * EVADE_MULTIPLIER;
-						set({
-							enemy: {
-								...enemy,
-								stats: {
-									...enemy.stats,
-									evasion: newEvade,
-								},
-							},
-							activeBattleEffects: [
-								...get().activeBattleEffects,
-								{
-									id: Date.now().toString(),
-									actor: ACTOR.ENEMY,
-									type: BATTLE_EFFECT.EVASION,
-									remainingTurns: 1,
-								}
-							],
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.EVADE,
-							},
-							isActiveTurn: true,
-						});
-						get().timeOut(() => {
-							set({
-								battleMessages: null,
-								phaseBattle: PHASE_STATUS.PLAYER_TURN,
-								isActiveTurn: false,
-							});
-						}, 700)
-					}
-					break;
-					case ENEMY_ACTION_TYPE.SKILL:{
-						set({
-							battleMessages: {
-								actor: ACTOR.ENEMY,
-								type: ACTOR_ACTIONS.SKILL,
-							},
-							isActiveTurn: true,
-						});
-						get().timeOut(() => {
-							set({
-								battleMessages: null,
-								phaseBattle: PHASE_STATUS.PLAYER_TURN,
-								isActiveTurn: false,
-							});
-						}, 700);
-					}
-					break;
-				
 
-
-				}
+					if (get().phaseBattle === PHASE_STATUS.ENEMY_TURN) {
+						finishTurn();
+					} else {
+						set({
+							battleMessages: null,
+							isActiveTurn: false,
+						});
+					}
+				}, 700);
 			},
 			setBattleStatus: (status) => {
 				if (get().battleStatus !== status) {
