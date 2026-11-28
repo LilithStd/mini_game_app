@@ -509,6 +509,14 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					},
 				});
 
+				const executeEscape = () => {
+					// Логика побега врага
+				};
+
+				const executeEvade = () => {
+					// Логика уклонения врага
+				};
+
 				get().timeOut(() => {
 					switch (type) {
 						case ENEMY_ACTION_TYPE.ATTACK:
@@ -519,10 +527,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							executeDefense();
 							break;
 						case ENEMY_ACTION_TYPE.ESCAPE:
-							
+							executeEscape();
 							break;
 						case ENEMY_ACTION_TYPE.EVADE:
-							// Логика уклонения врага
+							executeEvade();
 							break;
 						case ENEMY_ACTION_TYPE.SKILL:
 							// Логика использования навыка врагом
