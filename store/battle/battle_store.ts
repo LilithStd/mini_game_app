@@ -450,44 +450,57 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					// Расчёт урона
 					 const { character, enemy, totalDamage } = get();
 
-				const currentHP = character.stats.healPoints.current;
+					const currentHP = character.stats.healPoints.current;
 
-				const newHP = Math.max(
-					0,
-					currentHP - enemy.stats.attack
-				);
+					const newHP = Math.max(
+						0,
+						currentHP - enemy.stats.attack
+					);
 
-				const actualDamage = currentHP - newHP;
+					const actualDamage = currentHP - newHP;
 
-				set({
-					character: {
-						...character,
-						stats: {
-							...character.stats,
-							healPoints: {
-								...character.stats.healPoints,
-								current: newHP,
-							},
-							death: newHP <= 0,
-						},
-					},
-
-					totalDamage: {
-						...totalDamage,
-						enemy: totalDamage.enemy + actualDamage,
-					},
-				});
-
-				if (newHP <= 0) {
 					set({
-						phaseBattle: PHASE_STATUS.PLAYER_LOSE,
-					});
-				}
-							};
+						character: {
+							...character,
+							stats: {
+								...character.stats,
+								healPoints: {
+									...character.stats.healPoints,
+									current: newHP,
+								},
+								death: newHP <= 0,
+							},
+						},
 
-				const executeDefense = () => {
-					// Добавление эффекта защиты
-				};
+						totalDamage: {
+							...totalDamage,
+							enemy: totalDamage.enemy + actualDamage,
+						},
+					});
+
+					if (newHP <= 0) {
+						set({
+							phaseBattle: PHASE_STATUS.PLAYER_LOSE,
+						});
+					}
+								};
+
+					const executeDefense = () => {
+						// Добавление эффекта защиты
+						const { enemy } = get();
+
+						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
+
+						set({
+							enemy: {
+								...enemy,
+								stats: {
+									...enemy.stats,
+									defense: newDefense,
+								},
+							}
+						});
+					};
 
 				set({
 					isActiveTurn: true,
@@ -505,6 +518,9 @@ export const useBattleStore = create<BattleStoreInterface>()(
 
 						case ENEMY_ACTION_TYPE.DEFENSE:
 							executeDefense();
+							break;
+						case ENEMY_ACTION_TYPE.ESCAPE:
+							
 							break;
 					}
 
