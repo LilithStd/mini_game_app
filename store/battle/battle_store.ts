@@ -485,11 +485,10 @@ export const useBattleStore = create<BattleStoreInterface>()(
 					}
 								};
 
-					const executeDefense = () => {
+				const executeDefense = () => {
 						// Добавление эффекта защиты
-						const { enemy } = get();
-
-						const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
+					const { enemy } = get();
+					const newDefense = enemy.stats.defense * DEFENSE_MULTIPLIER;
 
 						set({
 							enemy: {
@@ -521,6 +520,12 @@ export const useBattleStore = create<BattleStoreInterface>()(
 							break;
 						case ENEMY_ACTION_TYPE.ESCAPE:
 							
+							break;
+						case ENEMY_ACTION_TYPE.EVADE:
+							// Логика уклонения врага
+							break;
+						case ENEMY_ACTION_TYPE.SKILL:
+							// Логика использования навыка врагом
 							break;
 					}
 
